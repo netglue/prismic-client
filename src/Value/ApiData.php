@@ -118,4 +118,10 @@ final class ApiData implements JsonSerializable
 
         throw UnexpectedValue::missingMasterRef();
     }
+
+    /** @return string[] */
+    public function tags() : iterable
+    {
+        return $this->tags;
+    }
 }
