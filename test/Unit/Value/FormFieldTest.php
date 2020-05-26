@@ -24,12 +24,4 @@ class FormFieldTest extends TestCase
         $field = FormField::new('foo', 'bar', true, null);
         $this->assertNull($field->defaultValue());
     }
-
-    public function testJsonEncode() : void
-    {
-        $this->assertJsonStringEqualsJsonString(
-            '{"type":"String","multiple":true,"default":"baz"}',
-            json_encode(FormField::new('my-field', 'String', true, 'baz'), JSON_THROW_ON_ERROR)
-        );
-    }
 }

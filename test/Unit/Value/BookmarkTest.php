@@ -16,12 +16,4 @@ class BookmarkTest extends TestCase
         $this->assertEquals('foo', $bookmark->name());
         $this->assertEquals('bar', $bookmark->documentId());
     }
-
-    public function testJsonEncode() : void
-    {
-        $this->assertEquals(
-            '{"foo":"bar"}',
-            json_encode(Bookmark::new('foo', 'bar'), JSON_THROW_ON_ERROR)
-        );
-    }
 }

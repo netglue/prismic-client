@@ -1,0 +1,328 @@
+{
+    "id": "document-id",
+    "uid": "document-uid",
+    "type": "custom-type",
+    "href": "https://repo.cdn.prismic.io/api/v2/documents/search?ref=master-ref&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22document-id%22%29+%5D%5D",
+    "tags": [
+        "tag-1",
+        "tag-2"
+    ],
+    "first_publication_date": "2020-01-01T01:23:45+0000",
+    "last_publication_date": "2020-01-02T01:23:45+0000",
+    "slugs": [
+        "slug-1",
+        "slug-2"
+    ],
+    "linked_documents": [
+        {
+            "id": "other-document",
+            "tags": [],
+            "type": "custom-type",
+            "slug": "other-doc",
+            "lang": "en-gb"
+        }
+    ],
+    "lang": "en-gb",
+    "alternate_languages": [
+        {
+            "id": "translated-id",
+            "uid": "translated-uid",
+            "type": "custom-type",
+            "lang": "en-us"
+        }
+    ],
+    "data": {
+        "single-image": {
+            "dimensions": {
+                "width": 960,
+                "height": 800
+            },
+            "alt": "Star",
+            "copyright": null,
+            "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif?auto=compress,format"
+        },
+        "multi-image": {
+            "dimensions": {
+                "width": 960,
+                "height": 800
+            },
+            "alt": null,
+            "copyright": null,
+            "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif?auto=compress,format",
+            "view-2": {
+                "dimensions": {
+                    "width": 500,
+                    "height": 500
+                },
+                "alt": null,
+                "copyright": null,
+                "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif?auto=compress,format&rect=80,0,800,800&w=500&h=500"
+            },
+            "view-3": {
+                "dimensions": {
+                    "width": 200,
+                    "height": 200
+                },
+                "alt": null,
+                "copyright": null,
+                "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif?auto=compress,format&rect=80,0,800,800&w=200&h=200"
+            }
+        },
+        "date": "2020-02-03",
+        "datetime": "2020-02-03T12:13:14+0000",
+        "colour": "#c94949",
+        "integer": 10.0,
+        "plaintext": "Some Text",
+        "selectfield": "Two",
+        "boolean": true,
+        "geopoint": {
+            "latitude": 50.62507306341435,
+            "longitude": -3.779296875
+        },
+        "richtext": [
+            {
+                "type": "paragraph",
+                "text": "Some formatted text",
+                "spans": []
+            },
+            {
+                "type": "paragraph",
+                "text": "link in span to web",
+                "spans": [
+                    {
+                        "start": 0,
+                        "end": 19,
+                        "type": "hyperlink",
+                        "data": {
+                            "link_type": "Web",
+                            "url": "https://www.google.com",
+                            "target": "_blank"
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "paragraph",
+                "text": "link in span to doc",
+                "spans": [
+                    {
+                        "start": 0,
+                        "end": 19,
+                        "type": "hyperlink",
+                        "data": {
+                            "id": "XszEcxEAACQAZXCd",
+                            "type": "basic-document",
+                            "tags": [],
+                            "slug": "heading-1",
+                            "lang": "en-au",
+                            "uid": "empty-document",
+                            "link_type": "Document",
+                            "isBroken": false
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "paragraph",
+                "text": "link in span to media",
+                "spans": [
+                    {
+                        "start": 0,
+                        "end": 21,
+                        "type": "hyperlink",
+                        "data": {
+                            "link_type": "Media",
+                            "name": "PDF-File.pdf",
+                            "kind": "document",
+                            "url": "https://apiv2-php.cdn.prismic.io/apiv2-php%2Fe836d122-0f3c-4924-9d3e-e8f3f87df676_pdf-file.pdf",
+                            "size": "351047"
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "paragraph",
+                "text": "link in span to image",
+                "spans": [
+                    {
+                        "start": 0,
+                        "end": 21,
+                        "type": "hyperlink",
+                        "data": {
+                            "link_type": "Media",
+                            "name": "star.gif",
+                            "kind": "image",
+                            "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif?auto=compress,format",
+                            "size": "627291",
+                            "height": "800",
+                            "width": "960"
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "paragraph",
+                "text": "Boo yah…",
+                "spans": [
+                    {
+                        "start": 0,
+                        "end": 3,
+                        "type": "strong"
+                    }
+                ]
+            },
+            {
+                "type": "image",
+                "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif?auto=compress,format",
+                "alt": null,
+                "copyright": null,
+                "dimensions": {
+                    "width": 960,
+                    "height": 800
+                }
+            },
+            {
+                "type": "heading1",
+                "text": "Heading 1",
+                "spans": []
+            },
+            {
+                "type": "heading2",
+                "text": "Heading 2",
+                "spans": []
+            },
+            {
+                "type": "paragraph",
+                "text": "Followed by Embed",
+                "spans": []
+            },
+            {
+                "type": "embed",
+                "oembed": {
+                    "width": 480,
+                    "height": 270,
+                    "embed_url": "https://www.youtube.com/watch?v=N9RRv_7qugA",
+                    "type": "video",
+                    "version": "1.0",
+                    "title": "Weddings | Peter Kay: Live at the Manchester Arena",
+                    "author_name": "Peter Kay",
+                    "author_url": "https://www.youtube.com/channel/UC2ud5TZ3izx6Y5oDjJsmy8A",
+                    "provider_name": "YouTube",
+                    "provider_url": "https://www.youtube.com/",
+                    "cache_age": null,
+                    "thumbnail_url": "https://i.ytimg.com/vi/N9RRv_7qugA/hqdefault.jpg",
+                    "thumbnail_width": 480,
+                    "thumbnail_height": 360,
+                    "html": "<iframe width=\"480\" height=\"270\" src=\"https://www.youtube.com/embed/N9RRv_7qugA?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
+                }
+            },
+            {
+                "type": "paragraph",
+                "text": "And more…",
+                "spans": []
+            }
+        ],
+        "link-anytype": {
+            "link_type": "Web",
+            "url": "https://www.google.com"
+        },
+        "link-document": {
+            "id": "XszEcxEAACQAZXCd",
+            "type": "basic-document",
+            "tags": [],
+            "slug": "heading-1",
+            "lang": "en-au",
+            "uid": "empty-document",
+            "link_type": "Document",
+            "isBroken": false
+        },
+        "link-media": {
+            "link_type": "Media",
+            "name": "star.gif",
+            "kind": "image",
+            "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif?auto=compress,format",
+            "size": "627291",
+            "height": "800",
+            "width": "960"
+        },
+        "link-pdf": {
+            "link_type": "Media",
+            "name": "PDF-File.pdf",
+            "kind": "document",
+            "url": "https://apiv2-php.cdn.prismic.io/apiv2-php%2Fe836d122-0f3c-4924-9d3e-e8f3f87df676_pdf-file.pdf",
+            "size": "351047"
+        },
+        "link-web": {
+            "link_type": "Web",
+            "url": "https://www.google.com",
+            "target": "_blank"
+        },
+        "single-embed": {
+            "height": 270,
+            "width": 480,
+            "embed_url": "https://www.youtube.com/watch?v=DYNtc9Ei5tg",
+            "type": "video",
+            "version": "1.0",
+            "title": "Eye of the Cowboy (Tiger)",
+            "author_name": "Not The Cowboys Band",
+            "author_url": "https://www.youtube.com/channel/UCiXC6gJOEXIpoK--jk6NvWw",
+            "provider_name": "YouTube",
+            "provider_url": "https://www.youtube.com/",
+            "cache_age": null,
+            "thumbnail_url": "https://i.ytimg.com/vi/DYNtc9Ei5tg/hqdefault.jpg",
+            "thumbnail_width": 480,
+            "thumbnail_height": 360,
+            "html": "<iframe width=\"480\" height=\"270\" src=\"https://www.youtube.com/embed/DYNtc9Ei5tg?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"
+        },
+        "group": [
+            {
+                "richtext": [
+                    {
+                        "type": "paragraph",
+                        "text": "Carriage Returns Start",
+                        "spans": []
+                    },
+                    {
+                        "type": "paragraph",
+                        "text": "",
+                        "spans": []
+                    },
+                    {
+                        "type": "paragraph",
+                        "text": "",
+                        "spans": []
+                    },
+                    {
+                        "type": "paragraph",
+                        "text": "Carriage Returns End",
+                        "spans": []
+                    }
+                ],
+                "single-image": {},
+                "date": null,
+                "datetime": null,
+                "colour": null,
+                "integer": null,
+                "plaintext": null,
+                "selectfield": "One",
+                "geopoint": {}
+            }
+        ],
+        "slice-zone": [
+            {
+                "slice_type": "quote",
+                "slice_label": null,
+                "items": [
+                    {}
+                ],
+                "primary": {
+                    "quote": [],
+                    "name_of_the_author": [],
+                    "portrait_author": {
+                        "mobile": {}
+                    }
+                }
+            }
+        ]
+    }
+}

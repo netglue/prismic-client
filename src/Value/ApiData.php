@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace Prismic\Value;
 
-use JsonSerializable;
 use Prismic\Exception\UnexpectedValue;
+use Prismic\Exception\UnknownBookmark;
 use Prismic\Exception\UnknownForm;
 use function array_keys;
 use function array_map;
 use function get_object_vars;
 
-final class ApiData implements JsonSerializable
+final class ApiData
 {
     use DataAssertionBehaviour;
 
@@ -29,19 +29,6 @@ final class ApiData implements JsonSerializable
 
     private function __construct()
     {
-    }
-
-    /** @return mixed[] */
-    public function jsonSerialize() : array
-    {
-        return [
-            'refs' => $this->refs,
-            'bookmarks' => $this->bookmarks,
-            'types' => $this->types,
-            'languages' => $this->languages,
-            'tags' => $this->tags,
-            'forms' => $this->forms,
-        ];
     }
 
     public static function factory(object $payload) : ApiData
@@ -123,5 +110,29 @@ final class ApiData implements JsonSerializable
     public function tags() : iterable
     {
         return $this->tags;
+    }
+
+    public function isBookmarked(string $id) : bool
+    {
+        foreach ($this->bookmarks as $bookmark) {
+            if ($bookmark->documentId() === $id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function bookmark(string $name) : Bookmark
+    {
+        foreach ($this->bookmarks as $bookmark) {
+            if ($bookmark->name() !== $name) {
+                continue;
+            }
+
+            return $bookmark;
+        }
+
+        throw UnknownBookmark::withName($name);
     }
 }

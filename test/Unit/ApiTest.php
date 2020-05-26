@@ -63,7 +63,7 @@ class ApiTest extends TestCase
         $this->httpClient->setDefaultResponse($this->response);
         $api = Api::get('https://example.com', null, $this->httpClient);
         $data = $api->data();
-        $this->assertContains('goats', $data->tags());
+        $this->assertContainsEquals('goats', $data->tags());
     }
 
     public function testRepeatedCallsToRetrieveApiDataReturnTheSameInstance() : void

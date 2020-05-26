@@ -16,10 +16,4 @@ class LanguageTest extends TestCase
         $this->assertSame('foo', $lang->id());
         $this->assertSame('bar', $lang->name());
     }
-
-    public function testLanguageCanBeSerializedToJson() : void
-    {
-        $value = json_encode(Language::new('a', 'b'), JSON_THROW_ON_ERROR);
-        $this->assertEquals('{"id":"a","name":"b"}', $value);
-    }
 }

@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace Prismic\Exception;
 
-use InvalidArgumentException;
 use Prismic\Value\FormSpec;
 use function sprintf;
 
-class UnknownFormField extends InvalidArgumentException implements PrismicError
+class UnknownFormField extends InvalidArgument
 {
     public static function withOffendingKey(FormSpec $form, string $key) : self
     {

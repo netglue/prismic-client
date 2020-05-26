@@ -19,12 +19,6 @@ class RefTest extends TestCase
         $this->assertTrue($ref->isMaster());
     }
 
-    public function testRefCanBeSerializedToJson() : void
-    {
-        $value = json_encode(Ref::new('a', 'b', 'c', true), JSON_THROW_ON_ERROR);
-        $this->assertEquals('{"id":"a","ref":"b","label":"c","isMasterRef":true}', $value);
-    }
-
     public function testRefCanBeCastToAString() : void
     {
         $ref = Ref::new('foo', 'bar', 'baz', true);

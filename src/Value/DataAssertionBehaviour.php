@@ -3,9 +3,14 @@ declare(strict_types=1);
 
 namespace Prismic\Value;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use Prismic\Exception\UnexpectedValue;
 use function is_array;
 use function is_bool;
+use function is_float;
+use function is_int;
+use function is_numeric;
 use function is_object;
 use function is_string;
 use function property_exists;
@@ -24,6 +29,36 @@ trait DataAssertionBehaviour
         self::assertPropertyExists($object, $property);
         if (! is_string($object->{$property})) {
             throw UnexpectedValue::withInvalidPropertyType($object, $property, 'string');
+        }
+
+        return $object->{$property};
+    }
+
+    private static function assertObjectPropertyIsInteger(object $object, string $property) : int
+    {
+        self::assertPropertyExists($object, $property);
+        if (! is_int($object->{$property})) {
+            throw UnexpectedValue::withInvalidPropertyType($object, $property, 'integer');
+        }
+
+        return $object->{$property};
+    }
+
+    private static function assertObjectPropertyIsIntegerish(object $object, string $property) : int
+    {
+        self::assertPropertyExists($object, $property);
+        if (! is_numeric($object->{$property})) {
+            throw UnexpectedValue::withInvalidPropertyType($object, $property, 'integer');
+        }
+
+        return (int) $object->{$property};
+    }
+
+    private static function assertObjectPropertyIsFloat(object $object, string $property) : float
+    {
+        self::assertPropertyExists($object, $property);
+        if (! is_float($object->{$property})) {
+            throw UnexpectedValue::withInvalidPropertyType($object, $property, 'float');
         }
 
         return $object->{$property};
@@ -76,5 +111,14 @@ trait DataAssertionBehaviour
         }
 
         return $value;
+    }
+
+    private static function assertObjectPropertyIsUtcDateTime(object $object, string $property) : DateTimeImmutable
+    {
+        return DateTimeImmutable::createFromFormat(
+            DateTimeImmutable::ATOM,
+            self::assertObjectPropertyIsString($object, $property),
+            new DateTimeZone('UTC')
+        );
     }
 }

@@ -1,0 +1,58 @@
+<?php
+declare(strict_types=1);
+
+namespace Prismic\Exception;
+
+use InvalidArgumentException;
+use Prismic\Json;
+use function get_class;
+use function gettype;
+use function is_object;
+use function sprintf;
+
+class InvalidArgument extends InvalidArgumentException implements PrismicError
+{
+    /** @param mixed $received */
+    public static function scalarExpected($received) : self
+    {
+        return new static(sprintf(
+            'A scalar argument was expected but %s was received',
+            is_object($received) ? get_class($received) : gettype($received)
+        ));
+    }
+
+    /** @param mixed $received */
+    public static function numberExpected($received) : self
+    {
+        return new static(sprintf(
+            'Either a float or an integer was expected but %s was received',
+            is_object($received) ? get_class($received) : gettype($received)
+        ));
+    }
+
+    public static function invalidColor(string $value) : self
+    {
+        return new static(sprintf(
+            'Expected a string that looks like a hex colour with a # prefix but received "%s"',
+            $value
+        ));
+    }
+
+    public static function invalidDateFormat(string $expectedFormat, string $value) : self
+    {
+        return new static(sprintf(
+            'Expected a date value in the format %s but received "%s"',
+            $expectedFormat,
+            $value
+        ));
+    }
+
+    public static function unknownLinkType(string $type, object $payload) : self
+    {
+        return new static(sprintf(
+            'The link type "%s" is not a known type of link. Found in the object: %s',
+            $type,
+            Json::encode($payload)
+        ));
+    }
+}

@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Prismic\Value;
 
-use JsonSerializable;
-
-final class Bookmark implements JsonSerializable
+final class Bookmark
 {
     /** @var string */
     private $name;
@@ -31,13 +29,5 @@ final class Bookmark implements JsonSerializable
     public function documentId() : string
     {
         return $this->id;
-    }
-
-    /** @return mixed[] */
-    public function jsonSerialize() : array
-    {
-        return [
-            $this->name => $this->id,
-        ];
     }
 }

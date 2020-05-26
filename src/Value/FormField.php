@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Prismic\Value;
 
-use JsonSerializable;
-
-final class FormField implements JsonSerializable
+final class FormField
 {
     use DataAssertionBehaviour;
 
@@ -59,15 +57,5 @@ final class FormField implements JsonSerializable
     public function defaultValue() :? string
     {
         return $this->default;
-    }
-
-    /** @return mixed[] */
-    public function jsonSerialize() : array
-    {
-        return [
-            'type' => $this->type,
-            'multiple' => $this->multiple,
-            'default' => $this->default,
-        ];
     }
 }

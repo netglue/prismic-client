@@ -12,13 +12,11 @@ class FormSpecTest extends TestCase
 {
     /** @var FormSpec */
     private $form;
-    /** @var string */
-    private $json;
 
     protected function setUp() : void
     {
         parent::setUp();
-        $this->json = <<<EOF
+        $json = <<<EOF
         {
             "name" : "My Form",
             "rel" : "something",
@@ -34,7 +32,7 @@ class FormSpecTest extends TestCase
             }
         }
         EOF;
-        $this->form = FormSpec::factory('my-form', Json::decodeObject($this->json));
+        $this->form = FormSpec::factory('my-form', Json::decodeObject($json));
     }
 
     public function testBasicAccessors() : void
@@ -61,13 +59,5 @@ class FormSpecTest extends TestCase
     {
         $this->expectException(UnknownFormField::class);
         $this->form->field('unknown');
-    }
-
-    public function testJsonEncode() : void
-    {
-        $this->assertJsonStringEqualsJsonString(
-            $this->json,
-            Json::encode($this->form)
-        );
     }
 }

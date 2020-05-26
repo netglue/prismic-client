@@ -3,11 +3,10 @@ declare(strict_types=1);
 
 namespace Prismic\Value;
 
-use JsonSerializable;
 use function assert;
 use function is_string;
 
-final class Language implements JsonSerializable
+final class Language
 {
     /** @var string */
     private $id;
@@ -44,14 +43,5 @@ final class Language implements JsonSerializable
     public function name() : string
     {
         return $this->name;
-    }
-
-    /** @return mixed[] */
-    public function jsonSerialize() : array
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-        ];
     }
 }

@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace Prismic\Value;
 
-use JsonSerializable;
 use Stringable;
 use function assert;
 use function is_bool;
 use function is_string;
 
-final class Ref implements JsonSerializable, Stringable
+final class Ref implements Stringable
 {
     /** @var string */
     private $id;
@@ -45,17 +44,6 @@ final class Ref implements JsonSerializable, Stringable
         assert(is_bool($isMaster));
 
         return self::new($id, $ref, $label, $isMaster);
-    }
-
-    /** @return mixed[] */
-    public function jsonSerialize() : array
-    {
-        return [
-            'id' => $this->id,
-            'ref' => $this->ref,
-            'label' => $this->label,
-            'isMasterRef' => $this->isMasterRef,
-        ];
     }
 
     public function id() : string

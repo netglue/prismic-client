@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace Prismic\Value;
 
-use JsonSerializable;
 use Prismic\Exception\UnknownFormField;
 use function array_keys;
 use function array_map;
 use function get_object_vars;
 
-final class FormSpec implements JsonSerializable
+final class FormSpec
 {
     use DataAssertionBehaviour;
 
@@ -61,24 +60,6 @@ final class FormSpec implements JsonSerializable
                 return FormField::factory($fieldName, $spec);
             }, array_keys($fields), $fields)
         );
-    }
-
-    /** @return mixed[] */
-    public function jsonSerialize() : array
-    {
-        $fields = [];
-        foreach ($this->fields as $field) {
-            $fields[$field->name()] = $field;
-        }
-
-        return [
-            'name' => $this->name,
-            'method' => $this->method,
-            'enctype' => $this->encType,
-            'action' => $this->action,
-            'rel' => $this->rel,
-            'fields' => $fields,
-        ];
     }
 
     public function id() : string
