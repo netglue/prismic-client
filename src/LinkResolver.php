@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Prismic;
 
-use Prismic\Document\Fragment\DocumentLink;
-
 interface LinkResolver
 {
     /**

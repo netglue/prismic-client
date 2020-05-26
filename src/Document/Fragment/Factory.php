@@ -129,7 +129,7 @@ final class Factory
         return true;
     }
 
-    private static  function isEmptyObject(object $value) : bool
+    private static function isEmptyObject(object $value) : bool
     {
         return count(get_object_vars($value)) === 0;
     }

@@ -41,6 +41,7 @@ class Embed implements Fragment
             if ($value !== null && ! is_scalar($value)) {
                 throw InvalidArgument::scalarExpected($value);
             }
+
             $this->attributes[$name] = $value;
         }
     }

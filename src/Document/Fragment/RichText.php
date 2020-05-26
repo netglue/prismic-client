@@ -5,7 +5,6 @@ namespace Prismic\Document\Fragment;
 
 use Traversable;
 use function assert;
-use function is_array;
 use function iterator_to_array;
 
 final class RichText extends BaseCollection

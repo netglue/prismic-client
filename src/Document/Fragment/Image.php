@@ -39,6 +39,7 @@ final class Image implements Fragment
         foreach ($views as $image) {
             $this->addView($image);
         }
+
         $this->addView($this);
         $this->link = $linkTo;
     }

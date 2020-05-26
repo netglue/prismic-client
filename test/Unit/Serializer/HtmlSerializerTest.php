@@ -3,13 +3,11 @@ declare(strict_types=1);
 
 namespace PrismicTest\Serializer;
 
-use Prismic\Document\Fragment\Factory;
 use Prismic\Json;
 use Prismic\Serializer\HtmlSerializer;
 use Prismic\Value\DocumentData;
 use PrismicTest\Framework\TestCase;
 use PrismicTest\TestLinkResolver;
-use function var_dump;
 
 class HtmlSerializerTest extends TestCase
 {

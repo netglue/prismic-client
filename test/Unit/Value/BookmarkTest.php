@@ -5,8 +5,6 @@ namespace PrismicTest\Value;
 
 use Prismic\Value\Bookmark;
 use PrismicTest\Framework\TestCase;
-use function json_encode;
-use const JSON_THROW_ON_ERROR;
 
 class BookmarkTest extends TestCase
 {
