@@ -70,8 +70,23 @@ final class TextElement implements Fragment
         return $this->type;
     }
 
+    public function text() :? string
+    {
+        return $this->text;
+    }
+
     public function isListItem() : bool
     {
-        return $this->type === 'o-list-item' || $this->type === 'list-item';
+        return $this->isOrderedListItem() || $this->isUnorderedListItem();
+    }
+
+    public function isOrderedListItem() : bool
+    {
+        return $this->type === 'o-list-item';
+    }
+
+    public function isUnorderedListItem() : bool
+    {
+        return $this->type === 'list-item';
     }
 }

@@ -8,6 +8,7 @@ use Prismic\Exception\InvalidArgument;
 use Prismic\Value\DataAssertionBehaviour;
 use function array_map;
 use function assert;
+use function count;
 use function get_object_vars;
 use function is_array;
 use function is_bool;
@@ -107,7 +108,29 @@ final class Factory
             return self::textElementFactory($data);
         }
 
+        if (self::isHash($data) && ! self::isEmptyObject($data)) {
+            return Collection::new(array_map(static function ($value) : Fragment {
+                return self::factory($value);
+            }, get_object_vars($data)));
+        }
+
         return new EmptyFragment();
+    }
+
+    private static function isHash(object $object) : bool
+    {
+        foreach (get_object_vars($object) as $key => $value) {
+            if (! is_string($key)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static  function isEmptyObject(object $value) : bool
+    {
+        return count(get_object_vars($value)) === 0;
     }
 
     private static function imageFactory(object $data, string $name = 'main') : Image

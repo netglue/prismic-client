@@ -10,6 +10,7 @@ use function iterator_to_array;
 
 final class RichText extends BaseCollection
 {
+    /** @inheritDoc */
     protected function __construct(iterable $fragments)
     {
         $fragments = $fragments instanceof Traversable ? iterator_to_array($fragments) : $fragments;
@@ -23,16 +24,21 @@ final class RichText extends BaseCollection
                 $firstIndex = null;
                 continue;
             }
+
             if ($currentType !== $fragment->type()) {
-                $fragments[$index] = new Collection([$fragment]);
+                $fragments[$index] = $fragment->isUnorderedListItem()
+                    ? new UnorderedList([$fragment])
+                    : new OrderedList([$fragment]);
                 $currentType = $fragment->type();
                 $firstIndex = $index;
                 continue;
             }
-            assert($fragments[$firstIndex] instanceof Collection);
+
+            assert($fragments[$firstIndex] instanceof ListItems);
             $fragments[$firstIndex]->addFragment($fragment);
             unset($fragments[$index]);
         }
+
         parent::__construct($fragments);
     }
 }

@@ -1,0 +1,49 @@
+{
+    "rich_text": [
+        {
+            "type": "paragraph",
+            "text": "Initial Paragraph",
+            "spans": []
+        },
+        {
+            "type": "list-item",
+            "text": "Unordered 1",
+            "spans": []
+        },
+        {
+            "type": "list-item",
+            "text": "Unordered 2",
+            "spans": []
+        },
+        {
+            "type": "paragraph",
+            "text": "Second Paragraph",
+            "spans": []
+        },
+        {
+            "type": "o-list-item",
+            "text": "Ordered 1",
+            "spans": []
+        },
+        {
+            "type": "o-list-item",
+            "text": "Ordered 2",
+            "spans": []
+        },
+        {
+            "type": "paragraph",
+            "text": "Third Paragraph",
+            "spans": []
+        },
+        {
+            "type": "list-item",
+            "text": "Single Unordered with ordered sibling",
+            "spans": []
+        },
+        {
+            "type": "o-list-item",
+            "text": "Single ordered with unordered sibling",
+            "spans": []
+        }
+    ]
+}

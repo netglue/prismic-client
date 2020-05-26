@@ -5,7 +5,6 @@ namespace Prismic\Document\Fragment;
 
 use Prismic\Document\Fragment;
 use function array_filter;
-use function reset;
 
 class Collection extends BaseCollection
 {
@@ -28,14 +27,5 @@ class Collection extends BaseCollection
         return self::new(array_filter($this->fragments, static function (Fragment $fragment) use ($type) : bool {
             return $fragment instanceof Slice && $fragment->type() === $type;
         }));
-    }
-
-    public function first() : Fragment
-    {
-        if (! $this->count()) {
-            return new EmptyFragment();
-        }
-
-        return reset($this->fragments);
     }
 }
