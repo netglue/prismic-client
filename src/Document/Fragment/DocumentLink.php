@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace Prismic\Document\Fragment;
 
 use Prismic\Document\Fragment;
+use Prismic\Link;
 
-final class DocumentLink implements Fragment
+final class DocumentLink implements Fragment, Link
 {
     /** @var string[] */
     private $tags;
@@ -60,5 +61,46 @@ final class DocumentLink implements Fragment
         iterable $tags = []
     ) : self {
         return new static($id, $uid, $type, $lang, $slug, $isBroken, $tags);
+    }
+
+    public function id() : string
+    {
+        return $this->id;
+    }
+
+    public function uid() : string
+    {
+        return $this->uid;
+    }
+
+    public function type() : string
+    {
+        return $this->type;
+    }
+
+    public function language() : string
+    {
+        return $this->lang;
+    }
+
+    public function isBroken() : bool
+    {
+        return $this->isBroken;
+    }
+
+    /** @return string[] */
+    public function tags() : iterable
+    {
+        return $this->tags;
+    }
+
+    public function slug() : string
+    {
+        return $this->slug;
+    }
+
+    public function __toString() : string
+    {
+        return $this->uid;
     }
 }

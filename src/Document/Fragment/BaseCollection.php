@@ -5,17 +5,15 @@ namespace Prismic\Document\Fragment;
 
 use ArrayIterator;
 use Closure;
-use Countable;
-use Doctrine\Common\Collections\ArrayCollection;
-use IteratorAggregate;
 use Prismic\Document\Fragment;
+use Prismic\Document\FragmentCollection;
 use function array_filter;
 use function count;
 use function end;
 use function reset;
 use const ARRAY_FILTER_USE_BOTH;
 
-abstract class BaseCollection implements Fragment, IteratorAggregate, Countable
+abstract class BaseCollection implements Fragment, FragmentCollection
 {
     /** @var Fragment[] */
     protected $fragments;

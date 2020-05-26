@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace Prismic\Document\Fragment;
 
 use Prismic\Document\Fragment;
+use Prismic\UrlLink;
 
-final class MediaLink implements Fragment
+final class MediaLink implements Fragment, UrlLink
 {
     /** @var string */
     private $url;
@@ -30,5 +31,25 @@ final class MediaLink implements Fragment
         int $fileSize
     ) : self {
         return new static($url, $fileName, $fileSize);
+    }
+
+    public function url() : string
+    {
+        return $this->url;
+    }
+
+    public function filename() : string
+    {
+        return $this->fileName;
+    }
+
+    public function filesize() : int
+    {
+        return $this->fileSize;
+    }
+
+    public function __toString() : string
+    {
+        return $this->fileName;
     }
 }

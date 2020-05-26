@@ -24,12 +24,12 @@ final class GeoPoint implements Fragment
         return new static($lat, $lng);
     }
 
-    public function getLatitude() : float
+    public function latitude() : float
     {
         return $this->latitude;
     }
 
-    public function getLongitude() : float
+    public function longitude() : float
     {
         return $this->longitude;
     }

@@ -5,6 +5,7 @@ namespace Prismic\Document\Fragment;
 
 use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
+use Prismic\Link;
 use Prismic\Value\DataAssertionBehaviour;
 use function array_map;
 use function assert;
@@ -136,7 +137,7 @@ final class Factory
     private static function imageFactory(object $data, string $name = 'main') : Image
     {
         $values = get_object_vars($data);
-        unset($values['dimensions'], $values['alt'], $values['copyright'], $values['url']);
+        unset($values['dimensions'], $values['alt'], $values['copyright'], $values['url'], $values['linkTo']);
         $views = [];
         foreach ($values as $viewName => $view) {
             if (! is_object($view)) {
@@ -148,6 +149,10 @@ final class Factory
 
         $dimensions = self::assertObjectPropertyIsObject($data, 'dimensions');
 
+        $linkTo = property_exists($data, 'linkTo') && is_object($data->linkTo)
+            ? self::linkFactory($data->linkTo)
+            : null;
+
         return Image::new(
             $name,
             self::assertObjectPropertyIsString($data, 'url'),
@@ -155,17 +160,13 @@ final class Factory
             self::assertObjectPropertyIsInteger($dimensions, 'height'),
             self::optionalStringProperty($data, 'alt'),
             self::optionalStringProperty($data, 'copyright'),
-            $views
+            $views,
+            $linkTo
         );
     }
 
-    private static function linkFactory(object $data) : Fragment
+    private static function linkFactory(object $data) : Link
     {
-        // Links often appear in content with zero properties other than 'link_type'
-        if (! property_exists($data, 'url')) {
-            return new EmptyFragment();
-        }
-
         $type = self::assertObjectPropertyIsString($data, 'link_type');
 
         if ($type === 'Web') {
@@ -244,8 +245,30 @@ final class Factory
         return TextElement::new(
             self::assertObjectPropertyIsString($data, 'type'),
             self::optionalStringProperty($data, 'text'),
-            self::assertObjectPropertyIsArray($data, 'spans'),
+            array_map(static function (object $span) : Span {
+                return self::spanFactory($span);
+            }, self::assertObjectPropertyIsArray($data, 'spans')),
             self::optionalStringProperty($data, 'label')
+        );
+    }
+
+    private static function spanFactory(object $data) : Span
+    {
+        $extra = property_exists($data, 'data') && is_object($data->data) ? $data->data : null;
+        $label = null;
+        $link = null;
+        if ($extra) {
+            $label = self::optionalStringProperty($extra, 'label');
+            $linkType = self::optionalStringProperty($extra, 'link_type');
+            $link = $linkType ? self::linkFactory($extra) : null;
+        }
+
+        return Span::new(
+            self::assertObjectPropertyIsString($data, 'type'),
+            self::assertObjectPropertyIsInteger($data, 'start'),
+            self::assertObjectPropertyIsInteger($data, 'end'),
+            $label,
+            $link
         );
     }
 

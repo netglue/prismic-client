@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace Prismic\Document\Fragment;
 
 use Prismic\Document\Fragment;
+use Prismic\UrlLink;
 
-final class WebLink implements Fragment
+final class WebLink implements Fragment, UrlLink
 {
     /** @var string */
     private $url;
@@ -33,5 +34,10 @@ final class WebLink implements Fragment
     public function target() :? string
     {
         return $this->target;
+    }
+
+    public function __toString() : string
+    {
+        return $this->url;
     }
 }

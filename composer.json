@@ -25,6 +25,7 @@
     "require": {
         "php": ">= 7.3",
         "ext-json": "*",
+        "laminas/laminas-escaper": "^2.6",
         "php-http/discovery": "^1.7",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",

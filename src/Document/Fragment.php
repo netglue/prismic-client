@@ -5,5 +5,4 @@ namespace Prismic\Document;
 
 interface Fragment
 {
-
 }

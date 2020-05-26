@@ -10,6 +10,14 @@ use Prismic\Exception\InvalidArgument;
 
 final class DateFragment extends DateTimeImmutable implements Fragment
 {
+    /** @var bool */
+    private $isDay = false;
+
+    public function isDay() : bool
+    {
+        return $this->isDay;
+    }
+
     public static function day(string $value) : self
     {
         $date = DateTimeImmutable::createFromFormat('!Y-m-d', $value, new DateTimeZone('UTC'));
@@ -17,7 +25,10 @@ final class DateFragment extends DateTimeImmutable implements Fragment
             throw InvalidArgument::invalidDateFormat('Y-m-d', $value);
         }
 
-        return self::fromDate($date);
+        $fragment = self::fromDate($date);
+        $fragment->isDay = true;
+
+        return $fragment;
     }
 
     public static function fromAtom(string $value) : self

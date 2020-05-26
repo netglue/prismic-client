@@ -5,6 +5,7 @@ namespace Prismic\Document\Fragment;
 
 use Prismic\Document\Fragment;
 use Prismic\Exception\ImageViewNotFound;
+use Prismic\Link;
 use function array_keys;
 
 final class Image implements Fragment
@@ -23,9 +24,11 @@ final class Image implements Fragment
     private $copyright;
     /** @var self[] */
     private $views;
+    /** @var Link|null */
+    private $link;
 
     /** @param self[] $views */
-    private function __construct(string $name, string $url, int $width, int $height, ?string $alt, ?string $copyright, ?iterable $views)
+    private function __construct(string $name, string $url, int $width, int $height, ?string $alt, ?string $copyright, ?iterable $views, ?Link $linkTo)
     {
         $this->name = $name;
         $this->url = $url;
@@ -37,12 +40,13 @@ final class Image implements Fragment
             $this->addView($image);
         }
         $this->addView($this);
+        $this->link = $linkTo;
     }
 
     /** @param self[] $views */
-    public static function new(string $name, string $url, int $width, int $height, ?string $alt, ?string $copyright, ?iterable $views) : self
+    public static function new(string $name, string $url, int $width, int $height, ?string $alt, ?string $copyright, ?iterable $views, ?Link $linkTo) : self
     {
-        return new static($name, $url, $width, $height, $alt, $copyright, $views);
+        return new static($name, $url, $width, $height, $alt, $copyright, $views, $linkTo);
     }
 
     private function addView(self $image) : void
@@ -88,5 +92,10 @@ final class Image implements Fragment
     public function copyright() :? string
     {
         return $this->copyright;
+    }
+
+    public function linkTo() :? Link
+    {
+        return $this->link;
     }
 }

@@ -7,32 +7,19 @@ use Prismic\Document\Fragment;
 
 final class TextElement implements Fragment
 {
-    /** @var string[] */
-    private $tagMap = [
-        'heading1' => 'h1',
-        'heading2' => 'h2',
-        'heading3' => 'h3',
-        'heading4' => 'h4',
-        'heading5' => 'h5',
-        'heading6' => 'h6',
-        'paragraph' => 'p',
-        'preformatted' => 'pre',
-        'o-list-item' => 'li',
-        'list-item' => 'li',
-    ];
-
     /** @var string */
     private $type;
 
     /** @var string|null */
     private $text;
 
-    /** @var mixed[] */
+    /** @var Span[] */
     private $spans;
 
     /** @var string|null */
     private $label;
 
+    /** @param Span[] $spans */
     private function __construct(string $type, string $text, iterable $spans, ?string $label)
     {
         $this->type = $type;
@@ -41,6 +28,7 @@ final class TextElement implements Fragment
         $this->spans = $spans;
     }
 
+    /** @param Span[] $spans */
     public static function new(
         string $type,
         ?string $text,
@@ -53,6 +41,12 @@ final class TextElement implements Fragment
             $spans,
             $label
         );
+    }
+
+    /** @return Span[] */
+    public function spans() : iterable
+    {
+        return $this->spans;
     }
 
     public function hasLabel() : bool
