@@ -34,10 +34,13 @@ final class DocumentData implements Document
     private $slugs;
     /** @var Collection */
     private $body;
+    /** @var Translation[] */
+    private $translations;
 
     /**
-     * @param string[] $tags
-     * @param string[] $slugs
+     * @param string[]      $tags
+     * @param string[]      $slugs
+     * @param Translation[] $translations
      */
     private function __construct(
         string $id,
@@ -48,6 +51,7 @@ final class DocumentData implements Document
         DateTimeImmutable $lastPublished,
         iterable $tags,
         iterable $slugs,
+        iterable $translations,
         Collection $body
     ) {
         $this->id = $id;
@@ -58,6 +62,7 @@ final class DocumentData implements Document
         $this->lastPublished = $lastPublished;
         $this->setTags(...$tags);
         $this->setSlugs(...$slugs);
+        $this->setTranslations(...$translations);
         $this->body = $body;
     }
 
@@ -68,6 +73,10 @@ final class DocumentData implements Document
             return Factory::factory($value);
         }, get_object_vars($documentBody)));
 
+        $translations = array_map(static function (object $value) : Translation {
+            return Translation::factory($value);
+        }, self::assertObjectPropertyIsArray($data, 'alternate_languages'));
+
         return new static(
             self::assertObjectPropertyIsString($data, 'id'),
             self::assertObjectPropertyIsString($data, 'uid'),
@@ -77,6 +86,7 @@ final class DocumentData implements Document
             self::assertObjectPropertyIsUtcDateTime($data, 'last_publication_date'),
             self::assertObjectPropertyIsArray($data, 'tags'),
             self::assertObjectPropertyIsArray($data, 'slugs'),
+            $translations,
             $body
         );
     }
@@ -136,5 +146,10 @@ final class DocumentData implements Document
     public function body() : Collection
     {
         return $this->body;
+    }
+
+    private function setTranslations(Translation ...$translations) : void
+    {
+        $this->translations = $translations;
     }
 }
