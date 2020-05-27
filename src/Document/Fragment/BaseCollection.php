@@ -8,6 +8,9 @@ use Closure;
 use Prismic\Document\Fragment;
 use Prismic\Document\FragmentCollection;
 use function array_filter;
+use function array_key_exists;
+use function array_keys;
+use function array_values;
 use function count;
 use function end;
 use function reset;
@@ -71,6 +74,42 @@ abstract class BaseCollection implements Fragment, FragmentCollection
     /** @return static */
     public function filter(Closure $p)
     {
-        return new static(array_filter($this->fragments, $p, ARRAY_FILTER_USE_BOTH));
+        $result = array_filter($this->fragments, $p, ARRAY_FILTER_USE_BOTH);
+
+        return new static(
+            $this->isHash($result) ? $result : array_values($result)
+        );
+    }
+
+    /** @param mixed[] $value */
+    private function isHash(iterable $value) : bool
+    {
+        return count(array_filter(array_keys($value), '\is_string')) > 0;
+    }
+
+    public function has(string $name) : bool
+    {
+        return isset($this->fragments[$name]);
+    }
+
+    public function get(string $name) : Fragment
+    {
+        if (! $this->fragments[$name] instanceof Fragment) {
+            return new EmptyFragment();
+        }
+
+        return $this->fragments[$name];
+    }
+
+    /** @inheritDoc */
+    public function offsetExists($index) : bool
+    {
+        return array_key_exists($index, $this->fragments);
+    }
+
+    /** @inheritDoc */
+    public function offsetGet($index) :? Fragment
+    {
+        return $this->fragments[$index] ?? null;
     }
 }

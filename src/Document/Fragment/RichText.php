@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Prismic\Document\Fragment;
 
 use Traversable;
+use function array_values;
 use function assert;
 use function iterator_to_array;
 
@@ -15,29 +16,26 @@ final class RichText extends BaseCollection
         $fragments = $fragments instanceof Traversable ? iterator_to_array($fragments) : $fragments;
         $currentType = null;
         $collection = null;
-        $firstIndex = null;
         foreach ($fragments as $index => $fragment) {
             if (! $fragment instanceof TextElement || ! $fragment->isListItem()) {
                 $currentType = null;
                 $collection = null;
-                $firstIndex = null;
                 continue;
             }
 
             if ($currentType !== $fragment->type()) {
-                $fragments[$index] = $fragment->isUnorderedListItem()
+                $fragments[$index] = $collection = $fragment->isUnorderedListItem()
                     ? new UnorderedList([$fragment])
                     : new OrderedList([$fragment]);
                 $currentType = $fragment->type();
-                $firstIndex = $index;
                 continue;
             }
 
-            assert($fragments[$firstIndex] instanceof ListItems);
-            $fragments[$firstIndex]->addFragment($fragment);
+            assert($collection instanceof ListItems);
+            $collection->addFragment($fragment);
             unset($fragments[$index]);
         }
 
-        parent::__construct($fragments);
+        parent::__construct(array_values($fragments));
     }
 }

@@ -152,4 +152,10 @@ final class DocumentData implements Document
     {
         $this->translations = $translations;
     }
+
+    /** @return Translation[] */
+    public function translations() : iterable
+    {
+        return $this->translations;
+    }
 }

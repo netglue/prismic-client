@@ -38,7 +38,6 @@ use function implode;
 use function nl2br;
 use function preg_split;
 use function sprintf;
-use const PHP_EOL;
 use const PREG_SPLIT_NO_EMPTY;
 
 class HtmlSerializer
@@ -76,19 +75,20 @@ class HtmlSerializer
 
     public function __invoke(Fragment $fragment) : string
     {
-        $output = '';
-
         if ($fragment instanceof ListItems) {
-            $output .= $this->listItems($fragment);
+            return $this->listItems($fragment);
         }
 
         if ($fragment instanceof FragmentCollection) {
+            $output = '';
             foreach ($fragment as $item) {
                 $output .= $this($item);
             }
+
+            return $output;
         }
 
-        return $output . $this->serializeFragment($fragment);
+        return $this->serializeFragment($fragment);
     }
 
     private function serializeFragment(Fragment $fragment) : string
@@ -174,30 +174,32 @@ class HtmlSerializer
         );
     }
 
-    private function listItems(ListItems $fragment) : string
+    private function listItems(ListItems $htmlList) : string
     {
-        if (! count($fragment)) {
+        if (! count($htmlList)) {
             return '';
         }
 
         $items = [];
-        foreach ($fragment as $item) {
+        foreach ($htmlList as $item) {
             $items[] = $this($item);
         }
 
         return sprintf(
             '<%1$s>%2$s</%1$s>',
-            $fragment instanceof OrderedList ? 'ol' : 'ul',
-            implode(PHP_EOL, $items)
+            $htmlList instanceof OrderedList ? 'ol' : 'ul',
+            implode('', $items)
         );
     }
 
     /** @param mixed[] $attributes */
     private function htmlAttributes(array $attributes) : string
     {
-        return ' ' . implode(' ', array_map(function (string $atr, $value) : string {
+        $atrs = implode(' ', array_map(function (string $atr, $value) : string {
             return sprintf('%s="%s"', $atr, $this->escaper->escapeHtml($value));
         }, array_keys($attributes), $attributes));
+
+        return empty($atrs) ? '' : ' ' . $atrs;
     }
 
     private function linkOpenTag(Link $link) :? string

@@ -15,4 +15,14 @@ interface FragmentCollection extends Fragment, IteratorAggregate, Countable
      * @return static
      */
     public function filter(Closure $p);
+
+    public function has(string $name) : bool;
+
+    public function get(string $name) : Fragment;
+
+    /** @param int|string $index */
+    public function offsetGet($index) :? Fragment;
+
+    /** @param int|string $index */
+    public function offsetExists($index) : bool;
 }

@@ -7,6 +7,8 @@ use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Link;
 use Prismic\Value\DataAssertionBehaviour;
+use function array_filter;
+use function array_keys;
 use function array_map;
 use function assert;
 use function count;
@@ -26,8 +28,14 @@ final class Factory
 {
     use DataAssertionBehaviour;
 
-    private function __construct()
+    public function __construct()
     {
+    }
+
+    /** @param mixed $data */
+    public function __invoke($data) : Fragment
+    {
+        return self::factory($data);
     }
 
     /** @param mixed $data */
@@ -120,13 +128,7 @@ final class Factory
 
     private static function isHash(object $object) : bool
     {
-        foreach (get_object_vars($object) as $key => $value) {
-            if (! is_string($key)) {
-                return false;
-            }
-        }
-
-        return true;
+        return count(array_filter(array_keys(get_object_vars($object)), '\is_string')) > 0;
     }
 
     private static function isEmptyObject(object $value) : bool

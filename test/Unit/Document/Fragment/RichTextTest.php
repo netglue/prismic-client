@@ -31,18 +31,17 @@ class RichTextTest extends TestCase
     {
         $richText = $this->listItemsFixture();
         $this->assertCount(7, $richText);
-        $fragments = iterator_to_array($richText, false);
-        $this->assertInstanceOf(TextElement::class, $fragments[0]);
-        $this->assertInstanceOf(UnorderedList::class, $fragments[1]);
-        $this->assertCount(2, $fragments[1]);
-        $this->assertInstanceOf(TextElement::class, $fragments[2]);
-        $this->assertInstanceOf(OrderedList::class, $fragments[3]);
-        $this->assertCount(2, $fragments[3]);
-        $this->assertInstanceOf(TextElement::class, $fragments[4]);
-        $this->assertInstanceOf(UnorderedList::class, $fragments[5]);
-        $this->assertCount(1, $fragments[5]);
-        $this->assertInstanceOf(OrderedList::class, $fragments[6]);
-        $this->assertCount(1, $fragments[6]);
+        $this->assertInstanceOf(TextElement::class, $richText->offsetGet(0));
+        $this->assertInstanceOf(UnorderedList::class, $richText->offsetGet(1));
+        $this->assertCount(2, $richText->offsetGet(1));
+        $this->assertInstanceOf(TextElement::class, $richText->offsetGet(2));
+        $this->assertInstanceOf(OrderedList::class, $richText->offsetGet(3));
+        $this->assertCount(2, $richText->offsetGet(3));
+        $this->assertInstanceOf(TextElement::class, $richText->offsetGet(4));
+        $this->assertInstanceOf(UnorderedList::class, $richText->offsetGet(5));
+        $this->assertCount(1, $richText->offsetGet(5));
+        $this->assertInstanceOf(OrderedList::class, $richText->offsetGet(6));
+        $this->assertCount(1, $richText->offsetGet(6));
     }
 
     public function testThatListItemOrderIsRetained() : void

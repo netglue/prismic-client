@@ -12,8 +12,10 @@ use Prismic\Document\Fragment\Number;
 use Prismic\Document\Fragment\Slice;
 use Prismic\Json;
 use Prismic\Value\DocumentData;
+use Prismic\Value\Translation;
 use PrismicTest\Framework\TestCase;
 use function assert;
+use function reset;
 
 class DocumentDataTest extends TestCase
 {
@@ -144,5 +146,17 @@ class DocumentDataTest extends TestCase
         $slice = $slices->slicesOfType('quote')->first();
         assert($slice instanceof Slice);
         $this->addToAssertionCount(2);
+    }
+
+    public function testThatTranslationsContainsTheExpectedValue() : void
+    {
+        $translations = $this->document->translations();
+        $this->assertCount(1, $translations);
+        $value = reset($translations);
+        assert($value instanceof Translation);
+        $this->assertSame('translated-id', $value->documentId());
+        $this->assertSame('translated-uid', $value->documentUid());
+        $this->assertSame('custom-type', $value->documentType());
+        $this->assertSame('en-us', $value->language());
     }
 }
