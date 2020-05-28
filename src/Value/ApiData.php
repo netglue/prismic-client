@@ -135,4 +135,16 @@ final class ApiData
 
         throw UnknownBookmark::withName($name);
     }
+
+    /** @return Type[] */
+    public function types() : iterable
+    {
+        return $this->types;
+    }
+
+    /** @return Bookmark[] */
+    public function bookmarks() : iterable
+    {
+        return $this->bookmarks;
+    }
 }

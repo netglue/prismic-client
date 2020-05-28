@@ -4,16 +4,22 @@ declare(strict_types=1);
 namespace Prismic;
 
 use ArrayIterator;
+use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
+use DateTimeZone;
 use IteratorAggregate;
 use Prismic\Value\DataAssertionBehaviour;
 use Prismic\Value\DocumentData;
 use Psr\Http\Message\ResponseInterface;
 use function array_map;
+use function array_merge;
+use function count;
 use function current;
+use function max;
 use function preg_match;
 use function reset;
+use function sprintf;
 
 class Response implements IteratorAggregate
 {
@@ -41,7 +47,7 @@ class Response implements IteratorAggregate
     private $results;
 
     /** @var DateTimeImmutable|null */
-    private $date;
+    private $cacheDate;
 
     /** @var int|null */
     private $maxAge;
@@ -69,8 +75,8 @@ class Response implements IteratorAggregate
     {
         $instance = self::factory(Json::decodeObject((string) $response->getBody()));
         $dateHeader = current($response->getHeader('Date'));
-        $instance->date = $dateHeader
-            ? DateTimeImmutable::createFromFormat(DateTimeInterface::RFC7231, $dateHeader)
+        $instance->cacheDate = $dateHeader
+            ? DateTimeImmutable::createFromFormat(DateTimeInterface::RFC7231, $dateHeader, new DateTimeZone('UTC'))
             : null;
         $cacheControl = current($response->getHeader('Cache-Control'));
         if (preg_match('/^max-age\s*=\s*(\d+)$/', (string) $cacheControl, $groups) === 1) {
@@ -97,38 +103,73 @@ class Response implements IteratorAggregate
         );
     }
 
-    public function getCurrentPageNumber() : int
+    /**
+     * Returns the expiry date for the API response used to create this result set.
+     *
+     * If the result set was not created with an HTTP response, the expiry date is not known and in this case, the
+     * current date is returned.
+     *
+     * All dates are UTC
+     */
+    public function expiresAt() : DateTimeImmutable
+    {
+        if (! $this->cacheDate || ! $this->maxAge) {
+            return (new DateTimeImmutable())->setTimezone(new DateTimeZone('UTC'));
+        }
+
+        return $this->cacheDate->add(new DateInterval(sprintf('PT%dS', $this->maxAge)));
+    }
+
+    /**
+     * The page number this result set represents in a paginated result
+     */
+    public function currentPageNumber() : int
     {
         return $this->page;
     }
 
-    public function getResultsPerPage() : int
+    /**
+     * The expected number of results per page
+     */
+    public function resultsPerPage() : int
     {
         return $this->perPage;
     }
 
-    public function getTotalResults() : int
+    /**
+     * The total number of documents found in the api that match the query
+     */
+    public function totalResults() : int
     {
         return $this->totalResults;
     }
 
-    public function getTotalPageCount() : int
+    /**
+     * The total number of pages in the api that match for the matching results.
+     */
+    public function pageCount() : int
     {
         return $this->pageCount;
     }
 
-    public function getNextPageUrl() :? string
+    /**
+     * Absolute URL to retrieve the next page of results from the remote api.
+     */
+    public function nextPage() :? string
     {
         return $this->nextPage;
     }
 
-    public function getPrevPageUrl() :? string
+    /**
+     * Absolute URL to retrieve the previous page of results from the remote api.
+     */
+    public function previousPage() :? string
     {
         return $this->prevPage;
     }
 
     /** @return DocumentData[] */
-    public function getResults() : array
+    public function results() : array
     {
         return $this->results;
     }
@@ -141,11 +182,31 @@ class Response implements IteratorAggregate
 
     public function first() :? DocumentData
     {
-        return reset($this->results);
+        $first = reset($this->results);
+        return $first instanceof DocumentData ? $first : null;
     }
 
+    /**
+     * Merge the results of two responses together.
+     *
+     * The primary purpose of this method is to collect paginated results into a single response and should not be used
+     * to merge unrelated result sets in {@link Api::findAll()}. If you need to combine results yourself, just use
+     * $combined = array_merge($response1->results(), $response2->results());
+     *
+     * @internal
+     */
     public function merge(self $with) : self
     {
-        // @TODO
+        $results = array_merge($this->results, $with->results);
+
+        return new static(
+            1,
+            count($results),
+            $this->totalResults,
+            max($this->pageCount - 1, 1),
+            $with->nextPage,
+            $this->prevPage,
+            $results
+        );
     }
 }

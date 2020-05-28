@@ -55,10 +55,21 @@ class FactoryTest extends TestCase
         $this->assertInstanceOf($expectedType, $fragment);
     }
 
+    public function testThatALinkWithOnlyALinkTypeSpecifiedIsTreatedAsAnEmptyFragment() : void
+    {
+        $link = Json::decodeObject('{
+            "link_type": "Document"
+        }');
+
+        $fragment = Factory::factory($link);
+        $this->assertInstanceOf(EmptyFragment::class, $fragment);
+    }
+
     public function testUnknownLinkTypeIsExceptional() : void
     {
         $link = Json::decodeObject('{
-            "link_type": "Not Right"
+            "link_type": "Not Right",
+            "some_other_property" : "is required to avoid skipping an invalid link"
         }');
 
         $this->expectException(InvalidArgument::class);

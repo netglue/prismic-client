@@ -5,6 +5,8 @@ namespace Prismic;
 
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
+use Prismic\Document\Fragment\DocumentLink;
+use Prismic\Exception\InvalidArgument;
 use Prismic\Exception\RequestFailure;
 use Prismic\Value\ApiData;
 use Prismic\Value\DocumentData;
@@ -95,6 +97,11 @@ final class Api
         );
     }
 
+    public function host() : string
+    {
+        return $this->baseUri->getHost();
+    }
+
     public function data() : ApiData
     {
         if ($this->data) {
@@ -115,10 +122,32 @@ final class Api
     {
         $request = $this->requestFactory->createRequest($method, $uri);
         try {
-            return $this->httpClient->sendRequest($request);
+            $response = $this->httpClient->sendRequest($request);
         } catch (ClientExceptionInterface $clientException) {
             throw RequestFailure::withClientException($clientException);
         }
+
+        $status = $response->getStatusCode();
+
+        switch ($status) {
+            default:
+            case $status < 300:
+                break;
+
+            case $status >= 300 && $status < 400:
+                throw RequestFailure::withRedirectResponse($request, $response);
+                break;
+
+            case $status >= 400 && $status < 500:
+                throw RequestFailure::withClientError($request, $response);
+                break;
+
+            case $status >= 500:
+                throw RequestFailure::withServerError($request, $response);
+                break;
+        }
+
+        return $response;
     }
 
     /**
@@ -196,9 +225,7 @@ final class Api
      */
     public function findByBookmark(string $bookmark) :? DocumentData
     {
-        return $this->findById(
-            $this->data()->bookmark($bookmark)->documentId()
-        );
+        return $this->findById($this->data()->bookmark($bookmark)->documentId());
     }
 
     /** @param mixed $value */
@@ -257,37 +284,83 @@ final class Api
         return $this->previewRef() !== null;
     }
 
-    private function validatePreviewToken() : void
+    /**
+     * Validate a preview token
+     *
+     * Preview tokens are an URI provided by the api, normally via a get request to your app. This method ensures that
+     * the hostname of the given uri matches the host name of the configured repository as a request to the url will
+     * be made in order to start a preview session.
+     */
+    private function validatePreviewToken(string $token) : UriInterface
     {
-        // @TODO
+        $uri = $this->uriFactory->createUri($token);
+        /**
+         * Because the API host will possibly be name.cdn.prismic.io but the preview domain can be name.prismic.io
+         * we can only reliably verify the same parent domain name if we parse both domains with something that uses
+         * the public suffix list, like https://github.com/jeremykendall/php-domain-parser for example. We really
+         * don't want to have to go through all that, so for now we will just strip/hard-code the 'cdn' part which
+         * causes the problem.
+         */
+        $previewHost = str_replace('.cdn.', '.', $uri->getHost());
+        $apiHost = str_replace('.cdn.', '.', $this->baseUri->getHost());
+        if ($previewHost !== $apiHost) {
+            throw InvalidArgument::mismatchedPreviewHost($this->baseUri, $uri);
+        }
+
+        return $uri;
     }
 
-    public function previewSession() : string
+    /**
+     * Start a preview session
+     *
+     * If the preview session can be resolved to a single relevant document, this method will return a document link
+     * for that document with which you can construct a url using your {@link LinkResolver} to redirect the user to.
+     */
+    public function previewSession(string $token) :? DocumentLink
     {
-        // @TODO
+        $uri = $this->validatePreviewToken($token);
+        $responseBody = Json::decodeObject((string) $this->sendRequest($uri)->getBody());
+        if (isset($responseBody->mainDocument)) {
+            $document = $this->findById($responseBody->mainDocument);
+            if ($document) {
+                return $document->asLink();
+            }
+        }
+
+        return null;
     }
 
     public function next(Response $response) :? Response
     {
-        // @TODO
+        if (! $response->nextPage()) {
+            return null;
+        }
+
+        return Response::withHttpResponse(
+            $this->sendRequest(
+                $this->uriFactory->createUri($response->nextPage())
+            )
+        );
     }
 
     public function previous(Response $response) :? Response
     {
-        // @TODO
+        if (! $response->previousPage()) {
+            return null;
+        }
+
+        return Response::withHttpResponse(
+            $this->sendRequest(
+                $this->uriFactory->createUri($response->previousPage())
+            )
+        );
     }
 
     public function findAll(Query $query) : Response
     {
         $response = $this->query($query);
-        while ($response->getNextPageUrl() !== null) {
-            $response = $response->merge(
-                Response::withHttpResponse(
-                    $this->sendRequest(
-                        $this->uriFactory->createUri($response->getNextPageUrl())
-                    )
-                )
-            );
+        while ($next = $this->next($response)) {
+            $response = $response->merge($next);
         }
 
         return $response;

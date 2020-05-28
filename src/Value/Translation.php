@@ -9,14 +9,14 @@ final class Translation
 
     /** @var string */
     private $id;
-    /** @var string */
+    /** @var string|null */
     private $uid;
     /** @var string */
     private $type;
     /** @var string */
     private $lang;
 
-    private function __construct(string $id, string $uid, string $type, string $lang)
+    private function __construct(string $id, ?string $uid, string $type, string $lang)
     {
         $this->id = $id;
         $this->uid = $uid;
@@ -24,7 +24,7 @@ final class Translation
         $this->lang = $lang;
     }
 
-    public static function new(string $id, string $uid, string $type, string $lang) : self
+    public static function new(string $id, ?string $uid, string $type, string $lang) : self
     {
         return new static($id, $uid, $type, $lang);
     }
@@ -33,7 +33,7 @@ final class Translation
     {
         return self::new(
             self::assertObjectPropertyIsString($object, 'id'),
-            self::assertObjectPropertyIsString($object, 'uid'),
+            self::optionalStringProperty($object, 'uid'),
             self::assertObjectPropertyIsString($object, 'type'),
             self::assertObjectPropertyIsString($object, 'lang'),
         );
@@ -44,7 +44,7 @@ final class Translation
         return $this->id;
     }
 
-    public function documentUid() : string
+    public function documentUid() :? string
     {
         return $this->uid;
     }

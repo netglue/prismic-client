@@ -105,7 +105,7 @@ class HtmlSerializerTest extends TestCase
             ],
             'Paragraph with document link' => [
                 5,
-                '<p>Paragraph with <a href="document://doc-uid">document link</a>.</p>',
+                '<p>Paragraph with <a href="document://doc-id">document link</a>.</p>',
             ],
             'Empty Paragraph' => [
                 6,

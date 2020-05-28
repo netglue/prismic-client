@@ -4,10 +4,8 @@ declare(strict_types=1);
 namespace Prismic\Value;
 
 use ArrayIterator;
-use Exception;
 use IteratorAggregate;
 use Prismic\Exception\UnknownFormField;
-use Traversable;
 use function array_keys;
 use function array_map;
 use function get_object_vars;

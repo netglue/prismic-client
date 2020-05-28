@@ -58,6 +58,12 @@ class ApiTest extends TestCase
         }
     }
 
+    public function testThatTheHostnameOfTheRepoCanBeRetrieved() : void
+    {
+        $api = Api::get('https://foo.example.com/api/v2');
+        $this->assertSame('foo.example.com', $api->host());
+    }
+
     public function testThatASuccessfulResponseWillYieldExpectedApiData() : void
     {
         $this->httpClient->setDefaultResponse($this->response);

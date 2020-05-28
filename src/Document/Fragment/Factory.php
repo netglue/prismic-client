@@ -102,7 +102,9 @@ final class Factory
         }
 
         if (property_exists($data, 'link_type')) {
-            return self::linkFactory($data);
+            return count(get_object_vars($data)) > 1
+                ? self::linkFactory($data)
+                : new EmptyFragment();
         }
 
         if (property_exists($data, 'embed_url')) {
@@ -199,14 +201,19 @@ final class Factory
         }
 
         if ($type === 'Document') {
+            $isBroken = self::assertObjectPropertyIsBoolean($data, 'isBroken');
+            $lang = self::optionalStringProperty($data, 'lang');
+            // The language for broken document links is null in some situations
+            $lang = $isBroken && ! $lang ? '*' : $lang;
+
             return DocumentLink::new(
                 self::assertObjectPropertyIsString($data, 'id'),
-                self::assertObjectPropertyIsString($data, 'uid'),
+                self::optionalStringProperty($data, 'uid'),
                 self::assertObjectPropertyIsString($data, 'type'),
-                self::assertObjectPropertyIsString($data, 'lang'),
+                $lang,
                 self::assertObjectPropertyIsString($data, 'slug'),
-                self::assertObjectPropertyIsBoolean($data, 'isBroken'),
-                self::assertObjectPropertyIsArray($data, 'tags'),
+                $isBroken,
+                self::assertObjectPropertyIsArray($data, 'tags')
             );
         }
 
