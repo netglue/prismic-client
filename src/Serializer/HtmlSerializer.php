@@ -11,12 +11,14 @@ use Prismic\Document\Fragment\BooleanFragment;
 use Prismic\Document\Fragment\Color;
 use Prismic\Document\Fragment\DateFragment;
 use Prismic\Document\Fragment\DocumentLink;
+use Prismic\Document\Fragment\Embed;
 use Prismic\Document\Fragment\EmptyFragment;
 use Prismic\Document\Fragment\GeoPoint;
 use Prismic\Document\Fragment\Image;
 use Prismic\Document\Fragment\ImageLink;
 use Prismic\Document\Fragment\ListItems;
 use Prismic\Document\Fragment\MediaLink;
+use Prismic\Document\Fragment\Number;
 use Prismic\Document\Fragment\OrderedList;
 use Prismic\Document\Fragment\Slice;
 use Prismic\Document\Fragment\Span;
@@ -24,6 +26,7 @@ use Prismic\Document\Fragment\StringFragment;
 use Prismic\Document\Fragment\TextElement;
 use Prismic\Document\Fragment\WebLink;
 use Prismic\Document\FragmentCollection;
+use Prismic\Exception\UnexpectedValue;
 use Prismic\Link;
 use Prismic\LinkResolver;
 use function array_filter;
@@ -95,9 +98,26 @@ class HtmlSerializer
     {
         switch (get_class($fragment)) {
             case BooleanFragment::class:
+                assert($fragment instanceof BooleanFragment);
+
+                return sprintf(
+                    '<kbd class="boolean">%s</kbd>',
+                    $fragment() ? 'true' : 'false'
+                );
+
+                break;
+
+            case Number::class:
+                assert($fragment instanceof Number);
+
+                return sprintf(
+                    '<kbd class="number">%d</kbd>',
+                    (string) $fragment
+                );
+
+                break;
+
             case EmptyFragment::class:
-            case Color::class:
-            default:
                 return '';
 
                 break;
@@ -126,6 +146,17 @@ class HtmlSerializer
                     '<span class="geopoint" data-latitude="%1$s" data-longitude="%2$s">%1$s, %2$s</span>',
                     $fragment->latitude(),
                     $fragment->latitude()
+                );
+
+                break;
+
+            case Color::class:
+                assert($fragment instanceof Color);
+
+                return sprintf(
+                    '<kbd class="color" style="background-color: %1$s; color: %2$s">%1$s</kbd>',
+                    (string) $fragment,
+                    (string) $fragment->invert()
                 );
 
                 break;
@@ -160,7 +191,19 @@ class HtmlSerializer
                 return $this->textElement($fragment);
 
                 break;
+
+            case Embed::class:
+                assert($fragment instanceof Embed);
+
+                return $this->embed($fragment);
+
+                break;
         }
+
+        throw new UnexpectedValue(sprintf(
+            'I don’t know how to serialize %s instances',
+            get_class($fragment)
+        ));
     }
 
     private function date(DateFragment $fragment) : string
@@ -339,5 +382,22 @@ class HtmlSerializer
         }
 
         return nl2br(implode('', $nodes));
+    }
+
+    private function embed(Embed $embed) : string
+    {
+        $attributes = $this->htmlAttributes(array_filter([
+            'data-oembed-provider' => $embed->provider(),
+            'data-oembed-type' => $embed->type(),
+            'data-oembed-url' => $embed->url(),
+            'data-oembed-width' => $embed->width(),
+            'data-oembed-height' => $embed->height(),
+        ]));
+
+        return sprintf(
+            '<div%1$s>%2$s</div>',
+            $attributes,
+            $embed->html()
+        );
     }
 }

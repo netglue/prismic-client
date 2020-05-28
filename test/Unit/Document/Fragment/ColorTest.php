@@ -47,4 +47,19 @@ class ColorTest extends TestCase
         $expect = hexdec('000000');
         $this->assertSame($expect, $colour->asInteger());
     }
+
+    public function inversions() : iterable
+    {
+        return [
+            ['#ff0000', '#00ffff'],
+        ];
+    }
+
+    /** @dataProvider inversions */
+    public function testInversions(string $input, string $expect) : void
+    {
+        $base = Color::new($input);
+        $inverted = $base->invert();
+        $this->assertSame($expect, (string) $inverted);
+    }
 }

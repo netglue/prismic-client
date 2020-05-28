@@ -113,6 +113,20 @@ trait DataAssertionBehaviour
         return $value;
     }
 
+    private static function optionalIntegerProperty(object $object, string $property) :? int
+    {
+        if (! property_exists($object, $property) || $object->{$property} === null) {
+            return null;
+        }
+
+        $value = $object->{$property};
+        if (! is_numeric($value)) {
+            throw UnexpectedValue::withInvalidPropertyType($object, $property, 'number');
+        }
+
+        return (int) $value;
+    }
+
     private static function assertObjectPropertyIsUtcDateTime(object $object, string $property) : DateTimeImmutable
     {
         return DateTimeImmutable::createFromFormat(

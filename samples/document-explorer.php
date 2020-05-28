@@ -18,10 +18,15 @@ namespace Prismic\Sample {
     use Prismic\Api;
     use Prismic\DefaultLinkResolver;
     use Prismic\Document;
+    use Prismic\Document\Fragment;
     use Prismic\Document\Fragment\DocumentLink;
+    use Prismic\Document\Fragment\EmptyFragment;
     use Prismic\Exception\PrismicError;
     use Prismic\Response;
     use Prismic\Serializer\HtmlSerializer;
+    use function end;
+    use function explode;
+    use function get_class;
     use function getenv;
     use function implode;
     use function sprintf;

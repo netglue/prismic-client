@@ -222,12 +222,18 @@ final class Factory
 
     private static function embedFactory(object $data) : Fragment
     {
-        $type = self::assertObjectPropertyIsString($data, 'type');
-        $url = self::assertObjectPropertyIsString($data, 'embed_url');
         $props = get_object_vars($data);
-        unset($props['type'], $props['embed_url']);
+        unset($props['type'], $props['embed_url'], $props['provider_name'], $props['html'], $props['width'], $props['height']);
 
-        return Embed::new($type, $url, $props);
+        return Embed::new(
+            self::assertObjectPropertyIsString($data, 'type'),
+            self::assertObjectPropertyIsString($data, 'embed_url'),
+            self::optionalStringProperty($data, 'provider_name'),
+            self::optionalStringProperty($data, 'html'),
+            self::optionalIntegerProperty($data, 'width'),
+            self::optionalIntegerProperty($data, 'height'),
+            $props
+        );
     }
 
     private static function sliceFactory(object $data) : Fragment

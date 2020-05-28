@@ -5,10 +5,11 @@ namespace Prismic\Document\Fragment;
 
 use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
+use Stringable;
 use function is_float;
 use function is_int;
 
-final class Number implements Fragment
+final class Number implements Fragment, Stringable
 {
     /** @var int|float */
     private $value;
@@ -29,6 +30,12 @@ final class Number implements Fragment
         return new static($number);
     }
 
+    /** @return int|float */
+    public function value()
+    {
+        return $this->value;
+    }
+
     public function toInteger() : int
     {
         return (int) $this->value;
@@ -37,5 +44,10 @@ final class Number implements Fragment
     public function toFloat() : float
     {
         return (float) $this->value;
+    }
+
+    public function __toString() : string
+    {
+        return (string) $this->value;
     }
 }

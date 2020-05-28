@@ -64,7 +64,8 @@ class RequestFailure extends RuntimeException implements PrismicError
     {
         $url = sprintf('%s?%s', $request->getUri()->getPath(), $request->getUri()->getQuery());
         $error = new static(sprintf(
-            'The api host %s requires an access token for the url "%s"',
+            'Authentication failed for the api host "%s" and the url "%s"' . PHP_EOL .
+            'Either a token is required and not present, or an invalid token was provided',
             $request->getUri()->getHost(),
             $url
         ));
