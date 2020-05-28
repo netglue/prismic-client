@@ -12,6 +12,7 @@
     <!-- Paths to check -->
     <file>src</file>
     <file>test</file>
+    <exclude-pattern>test/config/config.php</exclude-pattern>
 
     <!-- Inherit rules from Doctrine Coding Standard -->
     <rule ref="Doctrine">
