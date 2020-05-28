@@ -56,4 +56,9 @@ final class Slice implements Fragment
     {
         return $this->items;
     }
+
+    public function isEmpty() : bool
+    {
+        return $this->primary->isEmpty() && $this->items->isEmpty();
+    }
 }

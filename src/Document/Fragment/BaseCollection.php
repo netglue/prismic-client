@@ -53,6 +53,21 @@ abstract class BaseCollection implements Fragment, FragmentCollection
         return count($this->fragments);
     }
 
+    public function isEmpty() : bool
+    {
+        if ($this->count() === 0) {
+            return true;
+        }
+
+        foreach ($this as $fragment) {
+            if (! $fragment->isEmpty()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function first() : Fragment
     {
         if (! $this->count()) {
@@ -87,14 +102,16 @@ abstract class BaseCollection implements Fragment, FragmentCollection
         return count(array_filter(array_keys($value), '\is_string')) > 0;
     }
 
-    public function has(string $name) : bool
+    /** @inheritDoc */
+    public function has($name) : bool
     {
         return isset($this->fragments[$name]);
     }
 
-    public function get(string $name) : Fragment
+    /** @inheritDoc */
+    public function get($name) : Fragment
     {
-        if (! $this->fragments[$name] instanceof Fragment) {
+        if (! $this->has($name)) {
             return new EmptyFragment();
         }
 
@@ -104,12 +121,19 @@ abstract class BaseCollection implements Fragment, FragmentCollection
     /** @inheritDoc */
     public function offsetExists($index) : bool
     {
-        return array_key_exists($index, $this->fragments);
+        return $this->has($index);
     }
 
     /** @inheritDoc */
-    public function offsetGet($index) :? Fragment
+    public function offsetGet($index) : Fragment
     {
-        return $this->fragments[$index] ?? null;
+        return $this->get($index);
+    }
+
+    public function nonEmpty() : self
+    {
+        return $this->filter(static function (Fragment $fragment) : bool {
+            return ! $fragment->isEmpty();
+        });
     }
 }

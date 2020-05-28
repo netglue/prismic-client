@@ -5,4 +5,5 @@ namespace Prismic\Document;
 
 interface Fragment
 {
+    public function isEmpty() : bool;
 }

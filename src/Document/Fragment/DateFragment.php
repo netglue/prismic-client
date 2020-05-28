@@ -45,4 +45,9 @@ final class DateFragment extends DateTimeImmutable implements Fragment
     {
         return (new self())->setTimestamp($date->getTimestamp())->setTimezone($date->getTimezone());
     }
+
+    public function isEmpty() : bool
+    {
+        return false;
+    }
 }

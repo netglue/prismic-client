@@ -7,4 +7,8 @@ use Prismic\Document\Fragment;
 
 final class EmptyFragment implements Fragment
 {
+    public function isEmpty() : bool
+    {
+        return true;
+    }
 }

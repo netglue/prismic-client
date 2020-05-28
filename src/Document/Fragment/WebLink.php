@@ -40,4 +40,9 @@ final class WebLink implements Fragment, UrlLink
     {
         return $this->url;
     }
+
+    public function isEmpty() : bool
+    {
+        return false;
+    }
 }

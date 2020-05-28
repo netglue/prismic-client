@@ -83,4 +83,9 @@ final class TextElement implements Fragment
     {
         return $this->type === 'list-item';
     }
+
+    public function isEmpty() : bool
+    {
+        return $this->text === '';
+    }
 }

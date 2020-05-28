@@ -119,4 +119,9 @@ final class Image implements Fragment, IteratorAggregate, Countable
     {
         return count($this->views);
     }
+
+    public function isEmpty() : bool
+    {
+        return false;
+    }
 }

@@ -104,4 +104,9 @@ class Embed implements Fragment
     {
         return $this->attributes;
     }
+
+    public function isEmpty() : bool
+    {
+        return false;
+    }
 }

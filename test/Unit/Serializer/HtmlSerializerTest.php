@@ -9,6 +9,7 @@ use Prismic\Document\Fragment\OrderedList;
 use Prismic\Document\Fragment\RichText;
 use Prismic\Document\Fragment\UnorderedList;
 use Prismic\Document\FragmentCollection;
+use Prismic\Exception\UnexpectedValue;
 use Prismic\Json;
 use Prismic\Serializer\HtmlSerializer;
 use Prismic\Value\DocumentData;
@@ -183,5 +184,19 @@ class HtmlSerializerTest extends TestCase
             $expectedMarkup,
             ($this->serializer)($richText->offsetGet($fragmentIndex))
         );
+    }
+
+    public function testExceptionThrownWhenAnUnknownFragmentTypeIsEncountered() : void
+    {
+        $fragment = new class implements Fragment {
+            public function isEmpty() : bool
+            {
+                return false;
+            }
+        };
+
+        $this->expectException(UnexpectedValue::class);
+        $this->expectExceptionMessage('I don’t know how to serialize');
+        ($this->serializer)($fragment);
     }
 }

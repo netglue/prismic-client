@@ -50,4 +50,9 @@ final class Number implements Fragment, Stringable
     {
         return (string) $this->value;
     }
+
+    public function isEmpty() : bool
+    {
+        return false;
+    }
 }

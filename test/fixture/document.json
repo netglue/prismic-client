@@ -39,7 +39,7 @@
             },
             "alt": "Star",
             "copyright": null,
-            "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif?auto=compress,format"
+            "url": "https://example.com/single-image.gif"
         },
         "multi-image": {
             "dimensions": {
@@ -48,7 +48,7 @@
             },
             "alt": null,
             "copyright": null,
-            "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif?auto=compress,format",
+            "url": "https://example.com/multi-image.gif",
             "view-2": {
                 "dimensions": {
                     "width": 500,
@@ -56,7 +56,7 @@
                 },
                 "alt": null,
                 "copyright": null,
-                "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif?auto=compress,format&rect=80,0,800,800&w=500&h=500"
+                "url": "https://example.com/image-view-2.gif"
             },
             "view-3": {
                 "dimensions": {
@@ -65,7 +65,7 @@
                 },
                 "alt": null,
                 "copyright": null,
-                "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif?auto=compress,format&rect=80,0,800,800&w=200&h=200"
+                "url": "https://example.com/image-view-3.gif"
             }
         },
         "date": "2020-02-03",
@@ -227,12 +227,12 @@
             "url": "https://www.google.com"
         },
         "link-document": {
-            "id": "XszEcxEAACQAZXCd",
+            "id": "doc-id",
             "type": "basic-document",
             "tags": [],
-            "slug": "heading-1",
-            "lang": "en-au",
-            "uid": "empty-document",
+            "slug": "some-slug",
+            "lang": "en-gb",
+            "uid": "my-uid",
             "link_type": "Document",
             "isBroken": false
         },
@@ -240,7 +240,7 @@
             "link_type": "Media",
             "name": "star.gif",
             "kind": "image",
-            "url": "https://wroomdev.s3.amazonaws.com/tutoblanktemplate%2F97109f41-140e-4dc9-a2c8-96fb10f14051_star.gif?auto=compress,format",
+            "url": "https://example.com/star.gif",
             "size": "627291",
             "height": "800",
             "width": "960"

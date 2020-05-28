@@ -117,4 +117,9 @@ final class DocumentLink implements Fragment, Link
     {
         return $this->id;
     }
+
+    public function isEmpty() : bool
+    {
+        return false;
+    }
 }

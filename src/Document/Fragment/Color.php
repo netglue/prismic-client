@@ -79,4 +79,9 @@ final class Color implements Fragment, Stringable
 
         return self::new(sprintf('#%s', implode('', $parts)));
     }
+
+    public function isEmpty() : bool
+    {
+        return false;
+    }
 }
