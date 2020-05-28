@@ -8,7 +8,6 @@ use Closure;
 use Prismic\Document\Fragment;
 use Prismic\Document\FragmentCollection;
 use function array_filter;
-use function array_key_exists;
 use function array_keys;
 use function array_values;
 use function count;
