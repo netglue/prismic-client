@@ -325,15 +325,23 @@ class HtmlSerializer
             '<%1$s%2$s>%3$s</%1$s>',
             $this->tagMap[$fragment->type()],
             $attributes,
-            $this->insertSpans($fragment->text(), $fragment->spans())
+            $this->insertSpans($fragment, $fragment->text(), $fragment->spans())
         );
     }
 
     /** @param Span[] $spans */
-    private function insertSpans(string $text, array $spans) : string
+    private function insertSpans(TextElement $fragment, string $text, array $spans) : string
     {
+        $wrapper = $fragment->type() === 'preformatted'
+            ? static function (string $str) : string {
+                return $str;
+            }
+        : static function (string $str) : string {
+            return nl2br($str);
+        };
+
         if (empty($spans) || empty($text)) {
-            return nl2br($this->escaper->escapeHtml($text));
+            return $wrapper($this->escaper->escapeHtml($text));
         }
 
         /** @var string[] $nodes */
@@ -381,7 +389,7 @@ class HtmlSerializer
             $nodes[$end] = sprintf('%s%s', $nodes[$end], $closeTag);
         }
 
-        return nl2br(implode('', $nodes));
+        return $wrapper(implode('', $nodes));
     }
 
     private function embed(Embed $embed) : string

@@ -5,6 +5,7 @@ namespace Prismic\Value;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use DateTimeZone;
 use Prismic\Document;
 use Prismic\Document\Fragment;
 use Prismic\Document\Fragment\Collection;
@@ -78,6 +79,18 @@ final class DocumentData implements Document
         $translations = array_map(static function (object $value) : Translation {
             return Translation::factory($value);
         }, self::assertObjectPropertyIsArray($data, 'alternate_languages'));
+
+        /**
+         * In Preview mode, Document dates are nullified, FFS.
+         */
+        foreach (['first_publication_date', 'last_publication_date'] as $prop) {
+            if (isset($data->{$prop}) && $data->{$prop} !== null) {
+                continue;
+            }
+
+            $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+            $data->{$prop} = $now->format(DateTimeImmutable::ATOM);
+        }
 
         return new static(
             self::assertObjectPropertyIsString($data, 'id'),

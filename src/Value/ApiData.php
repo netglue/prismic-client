@@ -114,13 +114,18 @@ final class ApiData
 
     public function isBookmarked(string $id) : bool
     {
+        return $this->bookmarkFromDocumentId($id) instanceof Bookmark;
+    }
+
+    public function bookmarkFromDocumentId(string $id) :? Bookmark
+    {
         foreach ($this->bookmarks as $bookmark) {
             if ($bookmark->documentId() === $id) {
-                return true;
+                return $bookmark;
             }
         }
 
-        return false;
+        return null;
     }
 
     public function bookmark(string $name) : Bookmark

@@ -18,26 +18,28 @@ namespace Prismic\Sample {
     use Prismic\Api;
     use Prismic\DefaultLinkResolver;
     use Prismic\Document;
-    use Prismic\Document\Fragment;
     use Prismic\Document\Fragment\DocumentLink;
-    use Prismic\Document\Fragment\EmptyFragment;
     use Prismic\Exception\PrismicError;
     use Prismic\Response;
     use Prismic\Serializer\HtmlSerializer;
-    use function end;
-    use function explode;
-    use function get_class;
+    use Prismic\Value\Bookmark;
+    use Prismic\Value\DocumentData;
+    use function urlencode;
+    use const PHP_EOL;
+    use function array_filter;
+    use function array_map;
     use function getenv;
+    use function header;
     use function implode;
     use function sprintf;
-    use const PHP_EOL;
+    use function strpos;
 
     /**
      * Provide the correct URL of your repository, and optionally,
      * a permanent access token if your API visibility is set to private.
      */
     const PRISMIC_CONFIG = [
-        'api'   => 'https://your-repository-name.cdn.prismic.io/api/v2',
+        'api'   => 'https://phpclient.cdn.prismic.io/api/v2',
         'token' => null,
     ];
 
@@ -58,7 +60,6 @@ namespace Prismic\Sample {
     {
         /** @var Api */
         private $api;
-
         /** @var Document  */
         private $document;
         /** @var HtmlSerializer */
@@ -76,7 +77,17 @@ namespace Prismic\Sample {
                 $this->serializer = new HtmlSerializer(new Resolver());
             } catch (PrismicError $e) {
                 $this->invalidRepo($e);
-                exit;
+            }
+
+            if (isset($_GET['token']) && strpos($_SERVER['REQUEST_URI'], '/preview') === 0) {
+                $doc = $this->api->previewSession($_GET['token']);
+                $url = '/';
+                if ($doc) {
+                    $url = (new Resolver())->resolve($doc);
+                    $url = $url ?: '/';
+                }
+                header('Location: ' . $url);
+                exit(0);
             }
         }
 
@@ -99,7 +110,7 @@ namespace Prismic\Sample {
                 <<<TITLE
                 <div class="jumbotron jumbotron-fluid">
                     <div class="container">
-                        <h1 class="display-4">Document ID# %s</h1>
+                        <h1 class="display-4">Document ID <code>%s</code></h1>
                         <p class="lead">Document Type: <code>%s</code>. Published %s and last updated %s</p>
                     </div>
                 </div>
@@ -114,16 +125,18 @@ namespace Prismic\Sample {
                 <<<BODY
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-8 border border-info">
+                        <div class="col-md-8 border border-info bg-light">
                             %s
                         </div>
                         <div class="col-md-4">
+                            %s
                             %s
                         </div>
                     </div>
                 </div>
                 BODY,
                 ($this->serializer)($this->document->body()),
+                $this->listBookmarks(),
                 $this->listRecentDocs(20)
             );
 
@@ -139,23 +152,65 @@ namespace Prismic\Sample {
             );
         }
 
-        private function listRecentDocs(int $count = 10) : string
+        /** @param DocumentData[] $documents */
+        private function documentList(iterable $documents, string $title, callable $anchor) : string
         {
-            $markup = [];
-            $markup[] = '<div class="list-group mb-4">';
-            $markup[] = '<div class="list-group-item list-group-item-dark"><h5 class="my-0">Recent Documents</h5></div>';
-            foreach ($this->recentDocs($count) as $link) {
-                $markup[] = sprintf(
-                    '<a class="list-group-item list-group-item-action d-flex w-100 justify-content-between %4$s" href="/?id=%1$s"><small>%2$s</small> <span class="badge badge-primary badge-pill align-self-end">%3$s</span></a>',
-                    $link->id(),
-                    $link->uid() ?? $link->id(),
-                    $link->type(),
-                    $this->document->id() === $link->id() ? 'active' : ''
+            $list = '';
+            foreach ($documents as $document) {
+                $list .= sprintf(
+                    <<<ITEM
+                    <a class="list-group-item list-group-item-action d-flex w-100 justify-content-between %s"
+                        href="/?id=%s">
+                        <small>%s</small>
+                        <span class="badge badge-primary badge-pill align-self-end">%s</span>
+                    </a>
+                    ITEM,
+                    $this->document->id() === $document->id() ? 'active' : '',
+                    $document->id(),
+                    $anchor($document),
+                    $document->type(),
                 );
             }
-            $markup[] = '</div>';
 
-            return implode(PHP_EOL, $markup);
+            return sprintf(
+                <<<MARKUP
+                <div class="list-group mb-4">
+                    <div class="list-group-item list-group-item-dark"><h5 class="my-0">%s</h5></div>
+                    %s
+                </div>
+                MARKUP,
+                $title,
+                $list
+            );
+        }
+
+        private function listRecentDocs(int $count = 10) : string
+        {
+            return $this->documentList(
+                $this->recentDocs($count),
+                'Recent Documents',
+                static function (DocumentData $data) : string {
+                    return $data->uid() ?: $data->id();
+                }
+            );
+        }
+
+        private function listBookmarks() : string
+        {
+            $api = $this->api;
+            $bookmarks = array_filter(array_map(function (Bookmark $bookmark) :? DocumentData {
+                return $this->api->findByBookmark($bookmark->name());
+            }, $this->api->data()->bookmarks()));
+
+            return $this->documentList(
+                $bookmarks,
+                'Bookmarks',
+                static function (DocumentData $data) use ($api) : string {
+                    $bookmark = $api->data()->bookmarkFromDocumentId($data->id());
+
+                    return $bookmark ? $bookmark->name() : $data->id();
+                }
+            );
         }
 
         public function header() : string
@@ -175,7 +230,13 @@ namespace Prismic\Sample {
                         img {
                             max-width: 100%;
                             height: auto;
-                        }    
+                        }
+                        pre {
+                            background-color: black;
+                            color: white;
+                            padding: 1em;
+                            border-radius: 0.3em;
+                        }
                     </style>
                 </head>
                 <body>
@@ -184,7 +245,24 @@ namespace Prismic\Sample {
 
         public function footer() : string
         {
-            return '</body></html>';
+            $newToolbar = sprintf(
+                '<script async defer src="https://static.cdn.prismic.io/prismic.js?repo=%s&new=true"></script>',
+                $this->api->host()
+            );
+
+            $oldToolbar = sprintf(
+                <<<MARKUP
+                <script>
+                    window.prismic = {
+                        endpoint: '%s'
+                    };
+                </script>
+                <script type="text/javascript" src="https://static.cdn.prismic.io/prismic.min.js?new=true"></script>
+                MARKUP,
+                getenv('PRISMIC_API') ?: PRISMIC_CONFIG['api']
+            );
+
+            return sprintf('%s</body></html>', $oldToolbar);
         }
 
         private function invalidRepo(PrismicError $e) : void

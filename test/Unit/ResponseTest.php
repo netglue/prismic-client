@@ -5,6 +5,7 @@ namespace PrismicTest;
 
 use Prismic\Json;
 use Prismic\Response;
+use Prismic\Value\DocumentData;
 use PrismicTest\Framework\TestCase;
 
 class ResponseTest extends TestCase
@@ -19,5 +20,7 @@ class ResponseTest extends TestCase
         $this->assertNotNull($response->expiresAt());
         $this->assertSame('https://example.com/next', $response->nextPage());
         $this->assertSame('https://example.com/prev', $response->previousPage());
+        $this->assertCount(1, $response->results());
+        $this->assertContainsOnlyInstancesOf(DocumentData::class, $response->results());
     }
 }
