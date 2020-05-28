@@ -64,6 +64,16 @@ final class FormSpec implements IteratorAggregate
         );
     }
 
+    public function name() :? string
+    {
+        return $this->name;
+    }
+
+    public function rel() :? string
+    {
+        return $this->rel;
+    }
+
     public function id() : string
     {
         return $this->id;

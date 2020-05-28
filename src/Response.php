@@ -183,6 +183,7 @@ class Response implements IteratorAggregate
     public function first() :? DocumentData
     {
         $first = reset($this->results);
+
         return $first instanceof DocumentData ? $first : null;
     }
 

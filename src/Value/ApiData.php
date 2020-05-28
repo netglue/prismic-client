@@ -147,4 +147,10 @@ final class ApiData
     {
         return $this->bookmarks;
     }
+
+    /** @return Language[] */
+    public function languages() : iterable
+    {
+        return $this->languages;
+    }
 }

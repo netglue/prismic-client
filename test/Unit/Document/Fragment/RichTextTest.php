@@ -13,7 +13,6 @@ use Prismic\Document\Fragment\UnorderedList;
 use Prismic\Json;
 use PrismicTest\Framework\TestCase;
 use function assert;
-use function iterator_to_array;
 
 class RichTextTest extends TestCase
 {

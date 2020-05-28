@@ -48,6 +48,7 @@ class ColorTest extends TestCase
         $this->assertSame($expect, $colour->asInteger());
     }
 
+    /** @return mixed[] */
     public function inversions() : iterable
     {
         return [

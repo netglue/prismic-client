@@ -130,20 +130,22 @@ final class Api
         $status = $response->getStatusCode();
 
         switch ($status) {
-            default:
             case $status < 300:
                 break;
 
             case $status >= 300 && $status < 400:
                 throw RequestFailure::withRedirectResponse($request, $response);
+
                 break;
 
             case $status >= 400 && $status < 500:
                 throw RequestFailure::withClientError($request, $response);
+
                 break;
 
             case $status >= 500:
                 throw RequestFailure::withServerError($request, $response);
+
                 break;
         }
 

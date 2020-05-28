@@ -62,7 +62,7 @@ class ApiTest extends TestCase
         $this->assertSame($type, $document->type());
     }
 
-    /** @return mixed */
+    /** @return mixed[] */
     public function bookmarkDataProvider() : iterable
     {
         foreach ($this->apiInstances() as $api) {

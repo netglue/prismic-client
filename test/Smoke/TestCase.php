@@ -19,6 +19,7 @@ class TestCase extends PHPUnitTestCase
         if ($repo) {
             $endpoints[$repo] = $token;
         }
+
         $configPath = __DIR__ . '/../config/config.php';
 
         if (! file_exists($configPath)) {
@@ -51,6 +52,7 @@ class TestCase extends PHPUnitTestCase
     {
         foreach ($this->compileEndPoints() as $url => $token) {
             $api = Api::get($url, $token);
+
             yield $api->host() => $api;
         }
     }
