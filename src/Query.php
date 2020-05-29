@@ -3,55 +3,76 @@ declare(strict_types=1);
 
 namespace Prismic;
 
+use Http\Discovery\Psr17FactoryDiscovery;
 use Prismic\Value\FormSpec;
 use Prismic\Value\Ref;
+use Psr\Http\Message\UriFactoryInterface;
 use function array_filter;
 use function array_map;
-use function http_build_query;
+use function array_merge_recursive;
 use function implode;
 use function sprintf;
+use function urlencode;
 
 class Query
 {
     /** @var FormSpec */
     private $form;
 
-    /** @var string[]|int[] */
+    /** @var string[][]|int[][] */
     private $parameters;
+
+    /** @var UriFactoryInterface */
+    private $uriFactory;
 
     public function __construct(FormSpec $form)
     {
         $this->form = $form;
-        $this->parameters = $this->defaultParameters();
+        $this->parameters = [];
+        $this->uriFactory = Psr17FactoryDiscovery::findUrlFactory();
     }
 
     public function toUrl() : string
     {
-        /**
-         * @TODO Api URLs that already include ?integrationfield=whatever in the base URL will be broken
-         *       by blindly setting BASE_URL?QUERY - Query must be merged.
-         *       Furthermore, once set() handles multiple values, we will need to remove the integer keys
-         *       introduced by http_build_query, i.e. ?q[0]=first&q[1]=second needs to become
-         *       ?q=first&q=second
-         */
-        return sprintf(
-            '%s?%s',
-            $this->form->action(),
-            http_build_query($this->parameters)
-        );
+        $uri = $this->uriFactory->createUri($this->form->action());
+        $query = $uri->getQuery();
+        $query .= empty($query) ? $this->buildQuery() : '&' . $this->buildQuery();
+
+        return (string) $uri->withQuery($query);
+    }
+
+    private function buildQuery() : string
+    {
+        $flatten = static function (string $name, array $params) : string {
+            $query = [];
+            foreach ($params as $param) {
+                $query[] = sprintf('%s=%s', $name, urlencode((string) $param));
+            }
+
+            return implode('&', $query);
+        };
+
+        $query = [];
+        $parameters = array_merge_recursive($this->defaultParameters(), $this->parameters);
+        foreach ($parameters as $name => $parameterList) {
+            $query[] = $flatten($name, $parameterList);
+        }
+
+        return implode('&', $query);
     }
 
     /** @param int|string $value */
     public function set(string $key, $value) : self
     {
-        /**
-         * @TODO: Multiple values are not currently supported by this.
-         *        Consider a form with a default 'q=[whatever]'. Setting 'q' will obliterate that default.
-         */
         $field = $this->form->field($key);
         $field->validateValue($value);
         $parameters = $this->parameters;
-        $parameters[$key] = $value;
+        $parameters[$key] = $parameters[$key] ?? [];
+        if ($field->isMultiple()) {
+            $parameters[$key][] = $value;
+        } else {
+            $parameters[$key] = [$value];
+        }
 
         return $this->withParameters($parameters);
     }
@@ -74,7 +95,7 @@ class Query
                 continue;
             }
 
-            $parameters[$field->name()] = $field->defaultValue();
+            $parameters[$field->name()] = [$field->defaultValue()];
         }
 
         return $parameters;
@@ -186,11 +207,6 @@ class Query
     {
         $predicates = array_filter($predicates);
         if (empty($predicates)) {
-            /**
-             * @TODO This will break default q in custom forms.
-             *       We should decide whether an empty query appends to the existing, or resets to the
-             *       form default.
-             */
             $parameters = $this->parameters;
             unset($parameters['q']);
 
