@@ -27,6 +27,13 @@ class Query
 
     public function toUrl() : string
     {
+        /**
+         * @TODO Api URLs that already include ?integrationfield=whatever in the base URL will be broken
+         *       by blindly setting BASE_URL?QUERY - Query must be merged.
+         *       Furthermore, once set() handles multiple values, we will need to remove the integer keys
+         *       introduced by http_build_query, i.e. ?q[0]=first&q[1]=second needs to become
+         *       ?q=first&q=second
+         */
         return sprintf(
             '%s?%s',
             $this->form->action(),
@@ -37,6 +44,10 @@ class Query
     /** @param int|string $value */
     public function set(string $key, $value) : self
     {
+        /**
+         * @TODO: Multiple values are not currently supported by this.
+         *        Consider a form with a default 'q=[whatever]'. Setting 'q' will obliterate that default.
+         */
         $field = $this->form->field($key);
         $field->validateValue($value);
         $parameters = $this->parameters;
@@ -175,6 +186,11 @@ class Query
     {
         $predicates = array_filter($predicates);
         if (empty($predicates)) {
+            /**
+             * @TODO This will break default q in custom forms.
+             *       We should decide whether an empty query appends to the existing, or resets to the
+             *       form default.
+             */
             $parameters = $this->parameters;
             unset($parameters['q']);
 

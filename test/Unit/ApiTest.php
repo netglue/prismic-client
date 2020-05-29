@@ -41,24 +41,6 @@ class ApiTest extends TestCase
         }
         JSON;
 
-    private const RELEASE_PREVIEW_PAYLOAD = <<<JSON
-        {
-          "label": "Release Name",
-          "ref": "preview-ref",
-          "mainDocument": "target-document-id",
-          "type": "RELEASE"
-        }
-        JSON;
-
-    private const LIVE_PREVIEW_PAYLOAD = <<<JSON
-        {
-          "label": "Live now",
-          "ref": "preview-ref",
-          "mainDocument": "target-document-id",
-          "type": "LIVE"
-        }
-        JSON;
-
     private const NO_DOCUMENT_PREVIEW_PAYLOAD = <<<JSON
         {
           "label": "No Document",

@@ -8,7 +8,6 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use function sprintf;
-use const PHP_EOL;
 
 class RequestFailure extends RuntimeException implements PrismicError
 {

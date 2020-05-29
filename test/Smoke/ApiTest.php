@@ -7,6 +7,7 @@ use Prismic\Api;
 use Prismic\Exception\RequestFailure;
 use Prismic\Predicate;
 use Prismic\Value\Ref;
+use function count;
 use function sprintf;
 
 class ApiTest extends TestCase

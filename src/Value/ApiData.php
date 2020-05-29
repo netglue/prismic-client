@@ -83,7 +83,9 @@ final class ApiData
         return $this->getForm($name) instanceof FormSpec;
     }
 
-    /** @throws UnknownForm if $name does not correspond to a known form. */
+    /**
+     * @throws UnknownForm if $name does not correspond to a known form.
+     */
     public function form(string $name) : FormSpec
     {
         $form = $this->getForm($name);
@@ -129,7 +131,9 @@ final class ApiData
         return null;
     }
 
-    /** @throws UnknownBookmark if $name does not correspond to a known bookmark. */
+    /**
+     * @throws UnknownBookmark if $name does not correspond to a known bookmark.
+     */
     public function bookmark(string $name) : Bookmark
     {
         foreach ($this->bookmarks as $bookmark) {
