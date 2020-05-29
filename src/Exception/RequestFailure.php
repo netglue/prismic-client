@@ -29,12 +29,11 @@ class RequestFailure extends RuntimeException implements PrismicError
 
     public static function withRedirectResponse(RequestInterface $request, ResponseInterface $response) : self
     {
-        $url = sprintf('%s?%s', $request->getUri()->getPath(), $request->getUri()->getQuery());
         $error = new static(sprintf(
             'The request to the URL "%s" resulted in a %d redirect. I don’t know what to do with that.',
-            $url,
+            (string) $request->getUri(),
             $response->getStatusCode()
-        ));
+        ), $response->getStatusCode());
         $error->request = $request;
         $error->response = $response;
 
@@ -44,32 +43,16 @@ class RequestFailure extends RuntimeException implements PrismicError
     public static function withClientError(RequestInterface $request, ResponseInterface $response) : self
     {
         $status = $response->getStatusCode();
-        if ($status === 401) {
-            return self::with401($request, $response);
+        if ($status === 401 || $status === 403) {
+            return AuthenticationError::with($request, $response);
         }
 
-        $url = sprintf('%s?%s', $request->getUri()->getPath(), $request->getUri()->getQuery());
         $error = new static(sprintf(
-            'Error %d. The request to the URL "%s" was rejected by the api. The error response body was %s',
+            'Error %d. The request to the URL "%s" was rejected by the api. The error response body was "%s"',
             $status,
-            $url,
+            (string) $request->getUri(),
             (string) $response->getBody()
-        ));
-        $error->request = $request;
-        $error->response = $response;
-
-        return $error;
-    }
-
-    public static function with401(RequestInterface $request, ResponseInterface $response) : self
-    {
-        $url = sprintf('%s?%s', $request->getUri()->getPath(), $request->getUri()->getQuery());
-        $error = new static(sprintf(
-            'Authentication failed for the api host "%s" and the url "%s"' . PHP_EOL .
-            'Either a token is required and not present, or an invalid token was provided',
-            $request->getUri()->getHost(),
-            $url
-        ));
+        ), $response->getStatusCode());
         $error->request = $request;
         $error->response = $response;
 
@@ -78,12 +61,11 @@ class RequestFailure extends RuntimeException implements PrismicError
 
     public static function withServerError(RequestInterface $request, ResponseInterface $response) : self
     {
-        $url = sprintf('%s?%s', $request->getUri()->getPath(), $request->getUri()->getQuery());
         $error = new static(sprintf(
-            'The request to the URL "%s" resulted in a server error. The error response body was %s',
-            $url,
+            'The request to the URL "%s" resulted in a server error. The error response body was "%s"',
+            (string) $request->getUri(),
             (string) $response->getBody()
-        ));
+        ), $response->getStatusCode());
         $error->request = $request;
         $error->response = $response;
 

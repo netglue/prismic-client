@@ -21,6 +21,7 @@ use function http_build_query;
 use function parse_str;
 use function sprintf;
 use function str_replace;
+use function urldecode;
 
 final class Api
 {
@@ -295,7 +296,7 @@ final class Api
      */
     private function validatePreviewToken(string $token) : UriInterface
     {
-        $uri = $this->uriFactory->createUri($token);
+        $uri = $this->uriFactory->createUri(urldecode($token));
         /**
          * Because the API host will possibly be name.cdn.prismic.io but the preview domain can be name.prismic.io
          * we can only reliably verify the same parent domain name if we parse both domains with something that uses

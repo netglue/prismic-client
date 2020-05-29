@@ -109,7 +109,7 @@ namespace Prismic\Sample {
             $title = sprintf(
                 <<<TITLE
                 <div class="jumbotron jumbotron-fluid">
-                    <div class="container">
+                    <div class="container-fluid">
                         <h1 class="display-4">Document ID <code>%s</code></h1>
                         <p class="lead">Document Type: <code>%s</code>. Published %s and last updated %s</p>
                     </div>
@@ -123,8 +123,8 @@ namespace Prismic\Sample {
 
             $body = sprintf(
                 <<<BODY
-                <div class="container">
-                    <div class="row">
+                <div class="container-fluid">
+                    <div class="row m-2">
                         <div class="col-md-8 border border-info bg-light">
                             %s
                         </div>

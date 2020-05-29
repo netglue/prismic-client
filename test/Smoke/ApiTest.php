@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace PrismicSmokeTest;
 
 use Prismic\Api;
+use Prismic\Exception\RequestFailure;
 use Prismic\Predicate;
+use Prismic\Value\Ref;
 use function sprintf;
 
 class ApiTest extends TestCase
@@ -81,5 +83,40 @@ class ApiTest extends TestCase
          */
         $api->findByBookmark($bookmark);
         $this->addToAssertionCount(1);
+    }
+
+    /** @dataProvider apiDataProvider */
+    public function testThatNextAndPreviousReturnTheExpectedResults(Api $api) : void
+    {
+        $query = $api->createQuery()
+            ->resultsPerPage(1);
+
+        $first = $api->query($query);
+        $this->assertNull($first->previousPage());
+        $this->assertNull($api->previous($first));
+
+        if (! count($first->results()) || $first->totalResults() < 2) {
+            $this->markTestSkipped('Not enough documents in this repository to test.');
+
+            return;
+        }
+
+        $second = $api->next($first);
+        $this->assertNotNull($second->previousPage());
+        $firstAgain = $api->previous($second);
+        $this->assertNotNull($firstAgain);
+
+        $this->assertSame($first->nextPage(), $firstAgain->nextPage());
+    }
+
+    /** @dataProvider apiDataProvider */
+    public function testThatSettingAnUnknownRefWillCauseAnException(Api $api) : void
+    {
+        $query = $api->createQuery()
+            ->resultsPerPage(1)
+            ->ref(Ref::new('SomeId', 'unknownRef', 'Some Label', false));
+
+        $this->expectException(RequestFailure::class);
+        $api->query($query);
     }
 }
