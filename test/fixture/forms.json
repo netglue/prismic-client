@@ -54,7 +54,7 @@
     "everything": {
         "method": "GET",
         "enctype": "application/x-www-form-urlencoded",
-        "action": "https://example.com",
+        "action": "https://example.com/api/v2",
         "fields": {
             "ref": {
                 "type": "String",
