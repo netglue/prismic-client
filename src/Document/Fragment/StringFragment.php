@@ -25,4 +25,9 @@ final class StringFragment implements Fragment, Stringable
     {
         return $this->value;
     }
+
+    public function isEmpty() : bool
+    {
+        return $this->value === '';
+    }
 }

@@ -1,0 +1,49 @@
+{
+    "rich_text": [
+        {
+            "type": "heading1",
+            "text": "Heading 1",
+            "spans": []
+        },
+        {
+            "type": "heading2",
+            "text": "Heading 2",
+            "spans": []
+        },
+        {
+            "type": "heading3",
+            "text": "Heading 3",
+            "spans": []
+        },
+        {
+            "type": "heading4",
+            "text": "Heading 4",
+            "spans": []
+        },
+        {
+            "type": "heading5",
+            "text": "Heading 5",
+            "spans": []
+        },
+        {
+            "type": "heading6",
+            "text": "Heading 6",
+            "spans": []
+        },
+        {
+            "type": "paragraph",
+            "text": "Paragraph",
+            "spans": []
+        },
+        {
+            "type": "preformatted",
+            "text": "pre-formatted text",
+            "spans": []
+        },
+        {
+            "type": "paragraph",
+            "text": "Escape special & <tags>",
+            "spans": []
+        }
+    ]
+}

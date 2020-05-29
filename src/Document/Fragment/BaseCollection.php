@@ -8,6 +8,8 @@ use Closure;
 use Prismic\Document\Fragment;
 use Prismic\Document\FragmentCollection;
 use function array_filter;
+use function array_keys;
+use function array_values;
 use function count;
 use function end;
 use function reset;
@@ -50,6 +52,21 @@ abstract class BaseCollection implements Fragment, FragmentCollection
         return count($this->fragments);
     }
 
+    public function isEmpty() : bool
+    {
+        if ($this->count() === 0) {
+            return true;
+        }
+
+        foreach ($this as $fragment) {
+            if (! $fragment->isEmpty()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function first() : Fragment
     {
         if (! $this->count()) {
@@ -71,6 +88,51 @@ abstract class BaseCollection implements Fragment, FragmentCollection
     /** @return static */
     public function filter(Closure $p)
     {
-        return new static(array_filter($this->fragments, $p, ARRAY_FILTER_USE_BOTH));
+        $result = array_filter($this->fragments, $p, ARRAY_FILTER_USE_BOTH);
+
+        return new static(
+            $this->isHash($result) ? $result : array_values($result)
+        );
+    }
+
+    /** @param mixed[] $value */
+    private function isHash(iterable $value) : bool
+    {
+        return count(array_filter(array_keys($value), '\is_string')) > 0;
+    }
+
+    /** @inheritDoc */
+    public function has($name) : bool
+    {
+        return isset($this->fragments[$name]);
+    }
+
+    /** @inheritDoc */
+    public function get($name) : Fragment
+    {
+        if (! $this->has($name)) {
+            return new EmptyFragment();
+        }
+
+        return $this->fragments[$name];
+    }
+
+    /** @inheritDoc */
+    public function offsetExists($index) : bool
+    {
+        return $this->has($index);
+    }
+
+    /** @inheritDoc */
+    public function offsetGet($index) : Fragment
+    {
+        return $this->get($index);
+    }
+
+    public function nonEmpty() : self
+    {
+        return $this->filter(static function (Fragment $fragment) : bool {
+            return ! $fragment->isEmpty();
+        });
     }
 }

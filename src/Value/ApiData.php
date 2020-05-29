@@ -83,6 +83,9 @@ final class ApiData
         return $this->getForm($name) instanceof FormSpec;
     }
 
+    /**
+     * @throws UnknownForm if $name does not correspond to a known form.
+     */
     public function form(string $name) : FormSpec
     {
         $form = $this->getForm($name);
@@ -114,15 +117,23 @@ final class ApiData
 
     public function isBookmarked(string $id) : bool
     {
+        return $this->bookmarkFromDocumentId($id) instanceof Bookmark;
+    }
+
+    public function bookmarkFromDocumentId(string $id) :? Bookmark
+    {
         foreach ($this->bookmarks as $bookmark) {
             if ($bookmark->documentId() === $id) {
-                return true;
+                return $bookmark;
             }
         }
 
-        return false;
+        return null;
     }
 
+    /**
+     * @throws UnknownBookmark if $name does not correspond to a known bookmark.
+     */
     public function bookmark(string $name) : Bookmark
     {
         foreach ($this->bookmarks as $bookmark) {
@@ -134,5 +145,23 @@ final class ApiData
         }
 
         throw UnknownBookmark::withName($name);
+    }
+
+    /** @return Type[] */
+    public function types() : iterable
+    {
+        return $this->types;
+    }
+
+    /** @return Bookmark[] */
+    public function bookmarks() : iterable
+    {
+        return $this->bookmarks;
+    }
+
+    /** @return Language[] */
+    public function languages() : iterable
+    {
+        return $this->languages;
     }
 }

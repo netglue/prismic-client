@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Prismic\Document;
 use Prismic\Document\Fragment;
 use Prismic\Link;
 
@@ -12,7 +13,7 @@ final class DocumentLink implements Fragment, Link
     private $tags;
     /** @var string */
     private $id;
-    /** @var string */
+    /** @var string|null */
     private $uid;
     /** @var string */
     private $type;
@@ -26,7 +27,7 @@ final class DocumentLink implements Fragment, Link
     /** @param string[] $tags */
     private function __construct(
         string $id,
-        string $uid,
+        ?string $uid,
         string $type,
         string $lang,
         string $slug,
@@ -53,7 +54,7 @@ final class DocumentLink implements Fragment, Link
     /** @param string[] $tags */
     public static function new(
         string $id,
-        string $uid,
+        ?string $uid,
         string $type,
         string $lang,
         string $slug,
@@ -63,12 +64,25 @@ final class DocumentLink implements Fragment, Link
         return new static($id, $uid, $type, $lang, $slug, $isBroken, $tags);
     }
 
+    public static function withDocument(Document $document) : self
+    {
+        return new static(
+            $document->id(),
+            $document->uid(),
+            $document->type(),
+            $document->lang(),
+            $document->slug(),
+            false,
+            $document->tags()
+        );
+    }
+
     public function id() : string
     {
         return $this->id;
     }
 
-    public function uid() : string
+    public function uid() :? string
     {
         return $this->uid;
     }
@@ -101,6 +115,11 @@ final class DocumentLink implements Fragment, Link
 
     public function __toString() : string
     {
-        return $this->uid;
+        return $this->id;
+    }
+
+    public function isEmpty() : bool
+    {
+        return false;
     }
 }

@@ -1,0 +1,159 @@
+{
+    "rich_text": [
+        {
+            "type": "paragraph",
+            "text": "Paragraph with multiple bold and italic spans.",
+            "spans": [
+                {
+                    "start": 24,
+                    "end": 28,
+                    "type": "strong"
+                },
+                {
+                    "start": 33,
+                    "end": 39,
+                    "type": "em"
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "Paragraph with inline labels spanning words.",
+            "spans": [
+                {
+                    "start": 15,
+                    "end": 21,
+                    "type": "label",
+                    "data": {
+                        "label": "foo"
+                    }
+                },
+                {
+                    "start": 29,
+                    "end": 37,
+                    "type": "label",
+                    "data": {
+                        "label": "bar"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "Paragraph labelled at block level",
+            "spans": [],
+            "label": "foo"
+        },
+        {
+            "type": "paragraph",
+            "text": "Paragraph with web link.",
+            "spans": [
+                {
+                    "start": 15,
+                    "end": 23,
+                    "type": "hyperlink",
+                    "data": {
+                        "link_type": "Web",
+                        "url": "https://example.com",
+                        "target": "_blank"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "Paragraph with broken link.",
+            "spans": [
+                {
+                    "start": 15,
+                    "end": 26,
+                    "type": "hyperlink",
+                    "data": {
+                        "link_type": "Document",
+                        "id": "doc",
+                        "type": "doc",
+                        "uid": "doc",
+                        "tags": [],
+                        "slug": "slimy",
+                        "lang": "en-gb",
+                        "isBroken": true
+                    }
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "Paragraph with document link.",
+            "spans": [
+                {
+                    "start": 15,
+                    "end": 28,
+                    "type": "hyperlink",
+                    "data": {
+                        "link_type": "Document",
+                        "id": "doc-id",
+                        "type": "doc-type",
+                        "uid": "doc-uid",
+                        "tags": [],
+                        "slug": "slimy",
+                        "lang": "en-gb",
+                        "isBroken": false
+                    }
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "",
+            "spans": []
+        },
+        {
+            "type": "paragraph",
+            "text": "Paragraph with nested spans of several types.",
+            "spans": [
+                {
+                    "start": 10,
+                    "end": 44,
+                    "type": "strong"
+                },
+                {
+                    "start": 15,
+                    "end": 27,
+                    "type": "label",
+                    "data": {
+                        "label": "test-label"
+                    }
+                },
+                {
+                    "start": 31,
+                    "end": 38,
+                    "type": "em"
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "Paragraph with multiple spans at the same index.",
+            "spans": [
+                {
+                    "start": 24,
+                    "end": 47,
+                    "type": "label",
+                    "data": {
+                        "label": "test-label"
+                    }
+                },
+                {
+                    "start": 24,
+                    "end": 47,
+                    "type": "em"
+                },
+                {
+                    "start": 24,
+                    "end": 47,
+                    "type": "strong"
+                }
+            ]
+        }
+    ]
+}

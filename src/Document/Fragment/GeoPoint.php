@@ -33,4 +33,9 @@ final class GeoPoint implements Fragment
     {
         return $this->longitude;
     }
+
+    public function isEmpty() : bool
+    {
+        return false;
+    }
 }

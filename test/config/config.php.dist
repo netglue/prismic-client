@@ -1,0 +1,14 @@
+<?php
+declare(strict_types=1);
+
+return [
+    /**
+     * To run the smoke tests with multiple API sources add the urls and optional access tokens here
+     */
+    'endpoints' => [
+        [
+            'url' => 'https://some-repo.cdn.prismic.io/api/v2',
+            'token' => null,
+        ],
+    ],
+];

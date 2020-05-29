@@ -5,6 +5,8 @@ namespace Prismic\Exception;
 
 use InvalidArgumentException;
 use Prismic\Json;
+use Prismic\Value\FormField;
+use Psr\Http\Message\UriInterface;
 use function get_class;
 use function gettype;
 use function is_object;
@@ -53,6 +55,43 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
             'The link type "%s" is not a known type of link. Found in the object: %s',
             $type,
             Json::encode($payload)
+        ));
+    }
+
+    /** @param mixed $invalidValue */
+    public static function fieldExpectsString(FormField $field, $invalidValue) : self
+    {
+        return new static(sprintf(
+            'The form field "%s" expects a string value but received %s',
+            $field->name(),
+            is_object($invalidValue) ? get_class($invalidValue) : gettype($invalidValue)
+        ));
+    }
+
+    /** @param mixed $invalidValue */
+    public static function fieldExpectsNumber(FormField $field, $invalidValue) : self
+    {
+        return new static(sprintf(
+            'The form field "%s" expects an integer value but received %s',
+            $field->name(),
+            is_object($invalidValue) ? get_class($invalidValue) : gettype($invalidValue)
+        ));
+    }
+
+    public static function withInvalidPreviewToken(string $token) : self
+    {
+        return new static(sprintf(
+            'The preview token provided is not a valid url: "%s"',
+            $token
+        ));
+    }
+
+    public static function mismatchedPreviewHost(UriInterface $apiUri, UriInterface $previewUri) : self
+    {
+        return new static(sprintf(
+            'The preview url has been rejected because its host name "%s" does not match the api host "%s"',
+            $previewUri->getHost(),
+            $apiUri->getHost()
         ));
     }
 }

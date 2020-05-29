@@ -1,0 +1,29 @@
+{
+    "page": 1,
+    "results_per_page": 1,
+    "results_size": 1,
+    "total_results_size": 99,
+    "total_pages": 99,
+    "next_page": "https://example.com/next",
+    "prev_page": "https://example.com/prev",
+    "results": [
+        {
+            "id": "DOC_ID",
+            "uid": "DOC_UID",
+            "type": "doc",
+            "href": "https://example.com/api/v2/documents/search?ref=MASTER",
+            "tags": [],
+            "first_publication_date": "2020-01-01T01:23:45+0000",
+            "last_publication_date": "2020-01-01T01:23:45+0000",
+            "slugs": [
+                "slug-1"
+            ],
+            "linked_documents": [],
+            "lang": "en-gb",
+            "alternate_languages": [],
+            "data": {
+                "number": 1.0
+            }
+        }
+    ]
+}

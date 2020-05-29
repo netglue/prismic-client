@@ -3,12 +3,16 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
 use Prismic\Document\Fragment;
 use Prismic\Exception\ImageViewNotFound;
 use Prismic\Link;
 use function array_keys;
+use function count;
 
-final class Image implements Fragment
+final class Image implements Fragment, IteratorAggregate, Countable
 {
     /** @var string */
     private $name;
@@ -55,6 +59,11 @@ final class Image implements Fragment
         $this->views[$image->name] = $image;
     }
 
+    public function viewName() : string
+    {
+        return $this->name;
+    }
+
     public function getView(string $name) : Image
     {
         if (isset($this->views[$name])) {
@@ -98,5 +107,21 @@ final class Image implements Fragment
     public function linkTo() :? Link
     {
         return $this->link;
+    }
+
+    /** @return self[] */
+    public function getIterator() : iterable
+    {
+        return new ArrayIterator($this->views);
+    }
+
+    public function count() : int
+    {
+        return count($this->views);
+    }
+
+    public function isEmpty() : bool
+    {
+        return false;
     }
 }

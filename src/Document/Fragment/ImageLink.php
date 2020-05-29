@@ -72,4 +72,9 @@ final class ImageLink implements Fragment, UrlLink
     {
         return $this->fileName;
     }
+
+    public function isEmpty() : bool
+    {
+        return false;
+    }
 }

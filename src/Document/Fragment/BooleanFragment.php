@@ -24,4 +24,9 @@ final class BooleanFragment implements Fragment
     {
         return $this->value;
     }
+
+    public function isEmpty() : bool
+    {
+        return false;
+    }
 }

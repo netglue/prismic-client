@@ -1,0 +1,75 @@
+{
+    "description": "Several Image specs with differing properties. Also, images that are embedded in Rich Text fragments",
+    "single_image": {
+        "dimensions": {
+            "width": 800,
+            "height": 600
+        },
+        "alt": "ALT TAG",
+        "copyright": "Copyright Info",
+        "url": "https://example.com/image.gif"
+    },
+    "image_with_views": {
+        "dimensions": {
+            "width": 800,
+            "height": 600
+        },
+        "alt": "ALT TAG",
+        "copyright": "Copyright Info",
+        "url": "https://example.com/image.gif",
+        "view-one": {
+            "dimensions": {
+                "width": 500,
+                "height": 500
+            },
+            "alt": null,
+            "copyright": null,
+            "url": "https://example.com/view-one.gif"
+        },
+        "view-two": {
+            "dimensions": {
+                "width": 100,
+                "height": 100
+            },
+            "alt": null,
+            "copyright": null,
+            "url": "https://example.com/view-two.gif"
+        }
+    },
+    "rich_text": [
+        {
+            "type": "paragraph",
+            "text": "Image inside RichText",
+            "spans": []
+        },
+        {
+            "type": "image",
+            "url": "https://example.com/image-in-rich-text.gif",
+            "alt": null,
+            "copyright": null,
+            "dimensions": {
+                "width": 960,
+                "height": 800
+            }
+        },
+        {
+            "type": "paragraph",
+            "text": "Image inside RichText that links somewhere",
+            "spans": []
+        },
+        {
+            "type": "image",
+            "url": "https://example.com/linked-image-in-rich-text.gif",
+            "alt": null,
+            "copyright": null,
+            "dimensions": {
+                "width": 960,
+                "height": 800
+            },
+            "linkTo": {
+                "link_type": "Web",
+                "url": "https://example.com"
+            }
+        }
+    ]
+}

@@ -6,7 +6,10 @@ namespace Prismic\Document\Fragment;
 use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
 use Stringable;
+use function array_map;
+use function dechex;
 use function hexdec;
+use function implode;
 use function preg_match;
 use function sprintf;
 use function sscanf;
@@ -66,5 +69,19 @@ final class Color implements Fragment, Stringable
     public function __toString() : string
     {
         return $this->value;
+    }
+
+    public function invert() : self
+    {
+        $parts = array_map(static function (int $channel) : string {
+            return sprintf('%02s', dechex(255 - $channel));
+        }, $this->asRgb());
+
+        return self::new(sprintf('#%s', implode('', $parts)));
+    }
+
+    public function isEmpty() : bool
+    {
+        return false;
     }
 }

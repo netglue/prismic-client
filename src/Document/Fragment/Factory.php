@@ -7,6 +7,8 @@ use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Link;
 use Prismic\Value\DataAssertionBehaviour;
+use function array_filter;
+use function array_keys;
 use function array_map;
 use function assert;
 use function count;
@@ -26,8 +28,14 @@ final class Factory
 {
     use DataAssertionBehaviour;
 
-    private function __construct()
+    public function __construct()
     {
+    }
+
+    /** @param mixed $data */
+    public function __invoke($data) : Fragment
+    {
+        return self::factory($data);
     }
 
     /** @param mixed $data */
@@ -94,7 +102,9 @@ final class Factory
         }
 
         if (property_exists($data, 'link_type')) {
-            return self::linkFactory($data);
+            return count(get_object_vars($data)) > 1
+                ? self::linkFactory($data)
+                : new EmptyFragment();
         }
 
         if (property_exists($data, 'embed_url')) {
@@ -120,13 +130,7 @@ final class Factory
 
     private static function isHash(object $object) : bool
     {
-        foreach (get_object_vars($object) as $key => $value) {
-            if (! is_string($key)) {
-                return false;
-            }
-        }
-
-        return true;
+        return count(array_filter(array_keys(get_object_vars($object)), '\is_string')) > 0;
     }
 
     private static function isEmptyObject(object $value) : bool
@@ -197,14 +201,19 @@ final class Factory
         }
 
         if ($type === 'Document') {
+            $isBroken = self::assertObjectPropertyIsBoolean($data, 'isBroken');
+            $lang = self::optionalStringProperty($data, 'lang');
+            // The language for broken document links is null in some situations
+            $lang = $isBroken && ! $lang ? '*' : $lang;
+
             return DocumentLink::new(
                 self::assertObjectPropertyIsString($data, 'id'),
-                self::assertObjectPropertyIsString($data, 'uid'),
+                self::optionalStringProperty($data, 'uid'),
                 self::assertObjectPropertyIsString($data, 'type'),
-                self::assertObjectPropertyIsString($data, 'lang'),
+                $lang,
                 self::assertObjectPropertyIsString($data, 'slug'),
-                self::assertObjectPropertyIsBoolean($data, 'isBroken'),
-                self::assertObjectPropertyIsArray($data, 'tags'),
+                $isBroken,
+                self::assertObjectPropertyIsArray($data, 'tags')
             );
         }
 
@@ -213,12 +222,18 @@ final class Factory
 
     private static function embedFactory(object $data) : Fragment
     {
-        $type = self::assertObjectPropertyIsString($data, 'type');
-        $url = self::assertObjectPropertyIsString($data, 'embed_url');
         $props = get_object_vars($data);
-        unset($props['type'], $props['embed_url']);
+        unset($props['type'], $props['embed_url'], $props['provider_name'], $props['html'], $props['width'], $props['height']);
 
-        return Embed::new($type, $url, $props);
+        return Embed::new(
+            self::assertObjectPropertyIsString($data, 'type'),
+            self::assertObjectPropertyIsString($data, 'embed_url'),
+            self::optionalStringProperty($data, 'provider_name'),
+            self::optionalStringProperty($data, 'html'),
+            self::optionalIntegerProperty($data, 'width'),
+            self::optionalIntegerProperty($data, 'height'),
+            $props
+        );
     }
 
     private static function sliceFactory(object $data) : Fragment

@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace Prismic\Value;
 
+use ArrayIterator;
+use IteratorAggregate;
 use Prismic\Exception\UnknownFormField;
 use function array_keys;
 use function array_map;
 use function get_object_vars;
 
-final class FormSpec
+final class FormSpec implements IteratorAggregate
 {
     use DataAssertionBehaviour;
 
@@ -62,6 +64,16 @@ final class FormSpec
         );
     }
 
+    public function name() :? string
+    {
+        return $this->name;
+    }
+
+    public function rel() :? string
+    {
+        return $this->rel;
+    }
+
     public function id() : string
     {
         return $this->id;
@@ -106,5 +118,11 @@ final class FormSpec
         }
 
         return $field;
+    }
+
+    /** @return FormField[] */
+    public function getIterator() : iterable
+    {
+        return new ArrayIterator($this->fields);
     }
 }

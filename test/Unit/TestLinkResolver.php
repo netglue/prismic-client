@@ -15,6 +15,6 @@ class TestLinkResolver extends DefaultLinkResolver
             return null;
         }
 
-        return sprintf('document://%s', $link->uid());
+        return sprintf('document://%s', $link->id());
     }
 }

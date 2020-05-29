@@ -52,4 +52,9 @@ final class MediaLink implements Fragment, UrlLink
     {
         return $this->fileName;
     }
+
+    public function isEmpty() : bool
+    {
+        return false;
+    }
 }
