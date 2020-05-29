@@ -24,13 +24,11 @@ namespace Prismic\Sample {
     use Prismic\Serializer\HtmlSerializer;
     use Prismic\Value\Bookmark;
     use Prismic\Value\DocumentData;
-    use function urlencode;
-    use const PHP_EOL;
     use function array_filter;
     use function array_map;
     use function getenv;
     use function header;
-    use function implode;
+    use function htmlspecialchars;
     use function sprintf;
     use function strpos;
 
@@ -270,14 +268,22 @@ namespace Prismic\Sample {
 
         private function invalidRepo(PrismicError $e) : void
         {
-            $markup = [];
-            $markup[] = '<div class="alert alert-danger my-4"><h2>Failed to Retrieve Api Data</h2>';
-            $markup[] = '<p>Check the repository URL and access token you configured before running this script.</p>';
-            $markup[] = sprintf('<p><code>%s</code>', $e->getMessage());
-            $markup[] = sprintf('<pre>%s</pre>', $e->getTraceAsString());
-            $markup[] = '</div>';
-
-            echo $this->header() . implode(PHP_EOL, $markup) . $this->footer();
+            $markup = <<<MARKUP
+                <div class="container">
+                    <div class="alert alert-danger my-4">
+                        <h2>An exception was thrown 🤦‍♂️</h2>
+                        <p>Make sure that you’ve set the environment variable for <code>PRISMIC_API</code> to the full URL
+                           of your repository such as '<code>https://myrepo.prismic.io/api/v2</code>' and, if required, the
+                           environment variable <code>PRISMIC_TOKEN</code> to a valid access token for your repo.</p>
+                        <p>Alternatively, you can edit this file and put those values in the constant <code>PRISMIC_CONFIG</code></p>
+                        <h4>Exception Message: <code>%s</code></h4>
+                        <h4>Exception Trace:</h4>
+                        <pre>%s</pre>
+                    </div>
+                </div>
+                MARKUP;
+            $markup = sprintf($markup, $e->getMessage(), htmlspecialchars($e->getTraceAsString()));
+            echo $this->header() . $markup . $this->footer();
         }
     }
 }
