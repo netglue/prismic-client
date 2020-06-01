@@ -93,8 +93,8 @@ class ApiTest extends TestCase
             ->resultsPerPage(1);
 
         $first = $api->query($query);
-        $this->assertNull($first->previousPage());
-        $this->assertNull($api->previous($first));
+        $this->assertNull($first->previousPage(), 'The first page of a result set should not have a previous page');
+        $this->assertNull($api->previous($first), 'Calling previous with the Api on the first page should yield null');
 
         if (! count($first->results()) || $first->totalResults() < 2) {
             $this->markTestSkipped('Not enough documents in this repository to test.');
