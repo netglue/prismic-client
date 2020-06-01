@@ -78,14 +78,6 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
         ));
     }
 
-    public static function withInvalidPreviewToken(string $token) : self
-    {
-        return new static(sprintf(
-            'The preview token provided is not a valid url: "%s"',
-            $token
-        ));
-    }
-
     public static function mismatchedPreviewHost(UriInterface $apiUri, UriInterface $previewUri) : self
     {
         return new static(sprintf(
