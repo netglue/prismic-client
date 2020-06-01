@@ -5,6 +5,7 @@ namespace Prismic;
 
 use DateTimeInterface;
 use Prismic\Document\Fragment\DocumentLink;
+use Prismic\Value\DocumentData;
 use Prismic\Value\Translation;
 
 interface Document
@@ -52,4 +53,9 @@ interface Document
      * Convenience method to return a link to this document that is suitable for passing to a {@link LinkResolver}
      */
     public function asLink() : DocumentLink;
+
+    /**
+     * Return the value object containing all of the document content fragments
+     */
+    public function data() : DocumentData;
 }
