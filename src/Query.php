@@ -9,8 +9,9 @@ use Prismic\Value\Ref;
 use Psr\Http\Message\UriFactoryInterface;
 use function array_filter;
 use function array_map;
-use function array_merge_recursive;
+use function array_merge;
 use function implode;
+use function is_scalar;
 use function sprintf;
 use function urlencode;
 
@@ -41,10 +42,29 @@ class Query
         return (string) $uri->withQuery($query);
     }
 
+    /** @return mixed[] */
+    private function mergeWithDefaults() : array
+    {
+        $parameters = $this->defaultParameters();
+        foreach ($this->parameters as $name => $value) {
+            if (is_scalar($value)) {
+                $parameters[$name] = $value;
+                continue;
+            }
+
+            $parameters[$name] = isset($parameters[$name])
+                ? array_merge($parameters[$name], $value)
+                : $value;
+        }
+
+        return $parameters;
+    }
+
     private function buildQuery() : string
     {
-        $flatten = static function (string $name, array $params) : string {
+        $flatten = static function (string $name, $params) : string {
             $query = [];
+            $params = is_scalar($params) ? [$params] : $params;
             foreach ($params as $param) {
                 $query[] = sprintf('%s=%s', $name, urlencode((string) $param));
             }
@@ -53,9 +73,8 @@ class Query
         };
 
         $query = [];
-        $parameters = array_merge_recursive($this->defaultParameters(), $this->parameters);
-        foreach ($parameters as $name => $parameterList) {
-            $query[] = $flatten($name, $parameterList);
+        foreach ($this->mergeWithDefaults() as $name => $value) {
+            $query[] = $flatten($name, $value);
         }
 
         return implode('&', $query);
@@ -67,11 +86,14 @@ class Query
         $field = $this->form->field($key);
         $field->validateValue($value);
         $parameters = $this->parameters;
-        $parameters[$key] = $parameters[$key] ?? [];
+        if (! isset($parameters[$key])) {
+            $parameters[$key] = $field->isMultiple() ? [] : null;
+        }
+
         if ($field->isMultiple()) {
             $parameters[$key][] = $value;
         } else {
-            $parameters[$key] = [$value];
+            $parameters[$key] = $value;
         }
 
         return $this->withParameters($parameters);
@@ -95,7 +117,17 @@ class Query
                 continue;
             }
 
-            $parameters[$field->name()] = [$field->defaultValue()];
+            $key = $field->name();
+
+            if (! isset($parameters[$key])) {
+                $parameters[$key] = $field->isMultiple() ? [] : null;
+            }
+
+            if ($field->isMultiple()) {
+                $parameters[$key][] = $field->defaultValue();
+            } else {
+                $parameters[$key] = $field->defaultValue();
+            }
         }
 
         return $parameters;
