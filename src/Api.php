@@ -8,7 +8,8 @@ use Http\Discovery\Psr18ClientDiscovery;
 use Prismic\Document\Fragment\DocumentLink;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Exception\RequestFailure;
-use Prismic\ResultSet\StandardResultSet;
+use Prismic\ResultSet\ResultSetFactory;
+use Prismic\ResultSet\StandardResultSetFactory;
 use Prismic\Value\ApiData;
 use Prismic\Value\Ref;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -18,7 +19,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
 use function http_build_query;
-use function is_a;
 use function parse_str;
 use function sprintf;
 use function str_replace;
@@ -71,13 +71,11 @@ final class Api
     private $requestCookies;
 
     /**
-     * This is the type of result set that will be used to return results from the api.
+     * This factory is responsible for creating result sets from HTTP responses
      *
-     * The class must exist and it must implement {@link ResultSet}
-     *
-     * @var string
+     * @var ResultSetFactory
      */
-    private $resultSetClass;
+    private $resultSetFactory;
 
     private function __construct(
         string $apiBaseUri,
@@ -85,7 +83,7 @@ final class Api
         ?string $accessToken,
         RequestFactoryInterface $requestFactory,
         UriFactoryInterface $uriFactory,
-        string $resultSetClass
+        ResultSetFactory $resultSetFactory
     ) {
         $this->requestCookies = $_COOKIE ?? [];
         $this->uriFactory = $uriFactory;
@@ -93,11 +91,7 @@ final class Api
         $this->httpClient = $httpClient;
         $this->requestFactory = $requestFactory;
         $this->accessToken = $accessToken;
-        if (! is_a($resultSetClass, ResultSet::class, true)) {
-            throw InvalidArgument::invalidResultSetClass($resultSetClass);
-        }
-
-        $this->resultSetClass = $resultSetClass;
+        $this->resultSetFactory = $resultSetFactory;
     }
 
     public static function get(
@@ -113,7 +107,7 @@ final class Api
             (string) $accessToken === '' ? null : $accessToken,
             $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory(),
             $uriFactory ?? Psr17FactoryDiscovery::findUrlFactory(),
-            StandardResultSet::class
+            new StandardResultSetFactory()
         );
     }
 
@@ -204,7 +198,7 @@ final class Api
      */
     public function query(Query $query) : ResultSet
     {
-        return $this->resultSetClass::withHttpResponse($this->sendRequest(
+        return $this->resultSetFactory->withHttpResponse($this->sendRequest(
             $this->uriFactory->createUri($query->toUrl())
         ));
     }
@@ -358,7 +352,7 @@ final class Api
             return null;
         }
 
-        return $this->resultSetClass::withHttpResponse(
+        return $this->resultSetFactory->withHttpResponse(
             $this->sendRequest(
                 $this->uriFactory->createUri($resultSet->nextPage())
             )
@@ -371,7 +365,7 @@ final class Api
             return null;
         }
 
-        return $this->resultSetClass::withHttpResponse(
+        return $this->resultSetFactory->withHttpResponse(
             $this->sendRequest(
                 $this->uriFactory->createUri($resultSet->previousPage())
             )
