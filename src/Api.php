@@ -38,6 +38,8 @@ final class Api
 
     /**
      * Name of the cookie that will be used to remember the experiment reference
+     *
+     * This constant is currently unused because it is no longer possible to run A/B tests with Prismic
      */
     public const EXPERIMENTS_COOKIE = 'io.prismic.experiment';
 
