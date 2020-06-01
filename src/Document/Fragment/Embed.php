@@ -61,12 +61,18 @@ class Embed implements Fragment
     private function setAttributes(iterable $attributes) : void
     {
         foreach ($attributes as $name => $value) {
-            if ($value !== null && ! is_scalar($value)) {
-                throw InvalidArgument::scalarExpected($value);
-            }
-
-            $this->attributes[$name] = $value;
+            $this->setAttribute($name, $value);
         }
+    }
+
+    /** @param string|int|float|bool $value */
+    private function setAttribute(string $name, $value) : void
+    {
+        if ($value !== null && ! is_scalar($value)) {
+            throw InvalidArgument::scalarExpected($value);
+        }
+
+        $this->attributes[$name] = $value;
     }
 
     public function url() : string
@@ -99,7 +105,7 @@ class Embed implements Fragment
         return $this->height;
     }
 
-    /** @return mixed[] */
+    /** @return string[]|int[]|float[]|bool[]|null[] */
     public function attributes() : iterable
     {
         return $this->attributes;
@@ -108,5 +114,11 @@ class Embed implements Fragment
     public function isEmpty() : bool
     {
         return false;
+    }
+
+    /** @return string|int|float|bool|null */
+    public function attribute(string $name)
+    {
+        return $this->attributes[$name] ?? null;
     }
 }

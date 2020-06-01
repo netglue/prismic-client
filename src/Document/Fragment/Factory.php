@@ -222,9 +222,6 @@ final class Factory
 
     private static function embedFactory(object $data) : Fragment
     {
-        $props = get_object_vars($data);
-        unset($props['type'], $props['embed_url'], $props['provider_name'], $props['html'], $props['width'], $props['height']);
-
         return Embed::new(
             self::assertObjectPropertyIsString($data, 'type'),
             self::assertObjectPropertyIsString($data, 'embed_url'),
@@ -232,7 +229,7 @@ final class Factory
             self::optionalStringProperty($data, 'html'),
             self::optionalIntegerProperty($data, 'width'),
             self::optionalIntegerProperty($data, 'height'),
-            $props
+            get_object_vars($data)
         );
     }
 
