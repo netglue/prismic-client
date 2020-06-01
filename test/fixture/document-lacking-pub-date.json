@@ -1,0 +1,16 @@
+{
+    "id": "document-id",
+    "uid": "document-uid",
+    "type": "custom-type",
+    "href": "https://example.com",
+    "tags": [],
+    "first_publication_date": null,
+    "last_publication_date": null,
+    "slugs": [],
+    "linked_documents": [],
+    "lang": "en-gb",
+    "alternate_languages": [],
+    "data": {
+        "description": "Sometimes, with documents in preview, perhaps never published or that pre-date the addition of these dates in API, the dates are null."
+    }
+}
