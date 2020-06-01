@@ -4,15 +4,9 @@ declare(strict_types=1);
 namespace Prismic;
 
 use IteratorAggregate;
-use Psr\Http\Message\ResponseInterface;
 
 interface ResultSet extends IteratorAggregate
 {
-    /**
-     * Named constructor, that, when given an HTTP response can yield a ResultSet instance
-     */
-    public static function withHttpResponse(ResponseInterface $response) : self;
-
     /**
      * The page number this result set represents in a paginated result
      */
