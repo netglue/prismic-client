@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Prismic;
 
 use DateTimeInterface;
+use Prismic\Document\Fragment\DocumentLink;
+use Prismic\Value\Translation;
 
 interface Document
 {
@@ -42,4 +44,12 @@ interface Document
 
     /** The last time the document was changed */
     public function lastPublished() : DateTimeInterface;
+
+    /** @return Translation[] */
+    public function translations() : iterable;
+
+    /**
+     * Convenience method to return a link to this document that is suitable for passing to a {@link LinkResolver}
+     */
+    public function asLink() : DocumentLink;
 }

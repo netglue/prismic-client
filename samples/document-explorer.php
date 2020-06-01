@@ -20,7 +20,7 @@ namespace Prismic\Sample {
     use Prismic\Document;
     use Prismic\Document\Fragment\DocumentLink;
     use Prismic\Exception\PrismicError;
-    use Prismic\Response;
+    use Prismic\ResultSet;
     use Prismic\Serializer\HtmlSerializer;
     use Prismic\Value\Bookmark;
     use Prismic\Value\DocumentData;
@@ -141,7 +141,7 @@ namespace Prismic\Sample {
             return $title . $body;
         }
 
-        private function recentDocs(int $count = 10) : Response
+        private function recentDocs(int $count = 10) : ResultSet
         {
             return $this->api->query(
                 $this->api->createQuery()

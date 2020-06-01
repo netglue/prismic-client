@@ -8,7 +8,6 @@ use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
-use IteratorAggregate;
 use Prismic\Value\DataAssertionBehaviour;
 use Prismic\Value\DocumentData;
 use Psr\Http\Message\ResponseInterface;
@@ -21,7 +20,7 @@ use function preg_match;
 use function reset;
 use function sprintf;
 
-class Response implements IteratorAggregate
+class Response implements ResultSet
 {
     use DataAssertionBehaviour;
 
@@ -71,7 +70,7 @@ class Response implements IteratorAggregate
         $this->results = $results;
     }
 
-    public static function withHttpResponse(ResponseInterface $response) : self
+    public static function withHttpResponse(ResponseInterface $response) : ResultSet
     {
         $instance = self::factory(Json::decodeObject((string) $response->getBody()));
         $dateHeader = current($response->getHeader('Date'));
@@ -180,7 +179,7 @@ class Response implements IteratorAggregate
         return new ArrayIterator($this->results);
     }
 
-    public function first() :? DocumentData
+    public function first() :? Document
     {
         $first = reset($this->results);
 
@@ -196,7 +195,7 @@ class Response implements IteratorAggregate
      *
      * @internal
      */
-    public function merge(self $with) : self
+    public function merge(ResultSet $with) : ResultSet
     {
         $results = array_merge($this->results, $with->results);
 

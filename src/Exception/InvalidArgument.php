@@ -5,6 +5,7 @@ namespace Prismic\Exception;
 
 use InvalidArgumentException;
 use Prismic\Json;
+use Prismic\ResultSet;
 use Prismic\Value\FormField;
 use Psr\Http\Message\UriInterface;
 use function get_class;
@@ -85,5 +86,14 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
             $previewUri->getHost(),
             $apiUri->getHost()
         ));
+    }
+
+    public static function invalidResultSetClass(string $resultSetClass) : self
+    {
+        return new static(
+            'The custom result set type "%s" does not implement %s',
+            $resultSetClass,
+            ResultSet::class
+        );
     }
 }
