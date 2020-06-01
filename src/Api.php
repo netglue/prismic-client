@@ -99,7 +99,8 @@ final class Api
         ?string $accessToken = null,
         ?ClientInterface $httpClient = null,
         ?RequestFactoryInterface $requestFactory = null,
-        ?UriFactoryInterface $uriFactory = null
+        ?UriFactoryInterface $uriFactory = null,
+        ?ResultSetFactory $resultSetFactory = null
     ) : self {
         return new self(
             $apiBaseUri,
@@ -107,7 +108,7 @@ final class Api
             (string) $accessToken === '' ? null : $accessToken,
             $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory(),
             $uriFactory ?? Psr17FactoryDiscovery::findUrlFactory(),
-            new StandardResultSetFactory()
+            $resultSetFactory ?? new StandardResultSetFactory()
         );
     }
 
