@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace PrismicTest;
 
-use bar;
 use Prismic\Json;
 use Prismic\Predicate;
 use Prismic\Query;
