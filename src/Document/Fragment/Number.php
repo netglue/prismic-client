@@ -30,6 +30,16 @@ final class Number implements Fragment, Stringable
         return new static($number);
     }
 
+    public function isFloat() : bool
+    {
+        return is_float($this->value);
+    }
+
+    public function isInteger() : bool
+    {
+        return is_int($this->value);
+    }
+
     /** @return int|float */
     public function value()
     {
