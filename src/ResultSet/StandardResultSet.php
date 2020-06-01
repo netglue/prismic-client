@@ -1,13 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Prismic;
+namespace Prismic\ResultSet;
 
 use ArrayIterator;
 use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use Prismic\Document;
+use Prismic\Json;
+use Prismic\ResultSet;
 use Prismic\Value\DataAssertionBehaviour;
 use Prismic\Value\DocumentData;
 use Psr\Http\Message\ResponseInterface;
@@ -20,7 +23,7 @@ use function preg_match;
 use function reset;
 use function sprintf;
 
-class Response implements ResultSet
+class StandardResultSet implements ResultSet
 {
     use DataAssertionBehaviour;
 
@@ -119,61 +122,43 @@ class Response implements ResultSet
         return $this->cacheDate->add(new DateInterval(sprintf('PT%dS', $this->maxAge)));
     }
 
-    /**
-     * The page number this result set represents in a paginated result
-     */
     public function currentPageNumber() : int
     {
         return $this->page;
     }
 
-    /**
-     * The expected number of results per page
-     */
     public function resultsPerPage() : int
     {
         return $this->perPage;
     }
 
-    /**
-     * The total number of documents found in the api that match the query
-     */
     public function totalResults() : int
     {
         return $this->totalResults;
     }
 
-    /**
-     * The total number of pages in the api that match for the matching results.
-     */
     public function pageCount() : int
     {
         return $this->pageCount;
     }
 
-    /**
-     * Absolute URL to retrieve the next page of results from the remote api.
-     */
     public function nextPage() :? string
     {
         return $this->nextPage;
     }
 
-    /**
-     * Absolute URL to retrieve the previous page of results from the remote api.
-     */
     public function previousPage() :? string
     {
         return $this->prevPage;
     }
 
-    /** @return DocumentData[] */
+    /** @inheritDoc */
     public function results() : array
     {
         return $this->results;
     }
 
-    /** @return DocumentData[] */
+    /** @inheritDoc */
     public function getIterator() : iterable
     {
         return new ArrayIterator($this->results);
@@ -186,15 +171,6 @@ class Response implements ResultSet
         return $first instanceof DocumentData ? $first : null;
     }
 
-    /**
-     * Merge the results of two responses together.
-     *
-     * The primary purpose of this method is to collect paginated results into a single response and should not be used
-     * to merge unrelated result sets in {@link Api::findAll()}. If you need to combine results yourself, just use
-     * $combined = array_merge($response1->results(), $response2->results());
-     *
-     * @internal
-     */
     public function merge(ResultSet $with) : ResultSet
     {
         $results = array_merge($this->results, $with->results);

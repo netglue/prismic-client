@@ -43,12 +43,23 @@ interface ResultSet extends IteratorAggregate
      */
     public function previousPage() :? string;
 
-    /** @return Document[] */
+    /**
+     * Return the document results as an array
+     *
+     * @return Document[]
+     */
     public function results() : array;
 
-    /** @return Document[] */
+    /**
+     * Retrieve an iterator for iterating over results
+     *
+     * @return Document[]
+     */
     public function getIterator() : iterable;
 
+    /**
+     * Return the first document in the result set or null if the result set is empty
+     */
     public function first() :? Document;
 
     /**

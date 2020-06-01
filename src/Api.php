@@ -8,6 +8,7 @@ use Http\Discovery\Psr18ClientDiscovery;
 use Prismic\Document\Fragment\DocumentLink;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Exception\RequestFailure;
+use Prismic\ResultSet\StandardResultSet;
 use Prismic\Value\ApiData;
 use Prismic\Value\Ref;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -110,7 +111,7 @@ final class Api
             (string) $accessToken === '' ? null : $accessToken,
             $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory(),
             $uriFactory ?? Psr17FactoryDiscovery::findUrlFactory(),
-            Response::class
+            StandardResultSet::class
         );
     }
 
