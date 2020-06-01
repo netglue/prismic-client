@@ -148,6 +148,14 @@ class Query
      */
     public function fetch(string ...$fields) : self
     {
+        $fields = array_filter($fields);
+        if (empty($fields)) {
+            $parameters = $this->parameters;
+            unset($parameters['fetch']);
+
+            return $this->withParameters($parameters);
+        }
+
         return $this->set('fetch', implode(',', $fields));
     }
 
@@ -161,6 +169,14 @@ class Query
      */
     public function fetchLinks(string ...$fields) : self
     {
+        $fields = array_filter($fields);
+        if (empty($fields)) {
+            $parameters = $this->parameters;
+            unset($parameters['fetchLinks']);
+
+            return $this->withParameters($parameters);
+        }
+
         return $this->set('fetchLinks', implode(',', $fields));
     }
 
