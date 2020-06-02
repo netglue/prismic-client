@@ -63,4 +63,10 @@ class ColorTest extends TestCase
         $inverted = $base->invert();
         $this->assertSame($expect, (string) $inverted);
     }
+
+    public function testThatColorsAreNotConsideredEmpty() : void
+    {
+        $colour = Color::new('#000000');
+        $this->assertFalse($colour->isEmpty());
+    }
 }
