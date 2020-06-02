@@ -68,4 +68,10 @@ class ImageTest extends TestCase
             $this->assertInstanceOf(Image::class, $view);
         }
     }
+
+    public function testThatImagesAreNotConsideredEmpty() : void
+    {
+        $image = $this->singleImage();
+        $this->assertFalse($image->isEmpty());
+    }
 }
