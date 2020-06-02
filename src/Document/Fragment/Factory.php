@@ -41,10 +41,6 @@ final class Factory
     /** @param mixed $data */
     public static function factory($data) : Fragment
     {
-        if ($data === null || $data === []) {
-            return new EmptyFragment();
-        }
-
         if (is_scalar($data)) {
             return self::scalarFactory($data);
         }
@@ -53,7 +49,7 @@ final class Factory
             return self::objectFactory($data);
         }
 
-        if (is_array($data)) {
+        if (is_array($data) && $data !== []) {
             return self::arrayFactory($data);
         }
 
