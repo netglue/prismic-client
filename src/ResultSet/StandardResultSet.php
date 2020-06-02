@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Prismic;
+namespace Prismic\ResultSet;
 
-use ArrayIterator;
 use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
-use IteratorAggregate;
+use Prismic\Json;
+use Prismic\ResultSet;
 use Prismic\Value\DataAssertionBehaviour;
 use Prismic\Value\DocumentData;
 use Psr\Http\Message\ResponseInterface;
@@ -18,33 +18,12 @@ use function count;
 use function current;
 use function max;
 use function preg_match;
-use function reset;
 use function sprintf;
 
-class Response implements IteratorAggregate
+final class StandardResultSet implements ResultSet
 {
     use DataAssertionBehaviour;
-
-    /** @var int */
-    private $page;
-
-    /** @var int */
-    private $perPage;
-
-    /** @var int */
-    private $totalResults;
-
-    /** @var int */
-    private $pageCount;
-
-    /** @var string|null */
-    private $nextPage;
-
-    /** @var string|null */
-    private $prevPage;
-
-    /** @var DocumentData[] */
-    private $results;
+    use TypicalResultSetBehaviour;
 
     /** @var DateTimeImmutable|null */
     private $cacheDate;
@@ -71,7 +50,7 @@ class Response implements IteratorAggregate
         $this->results = $results;
     }
 
-    public static function withHttpResponse(ResponseInterface $response) : self
+    public static function withHttpResponse(ResponseInterface $response) : ResultSet
     {
         $instance = self::factory(Json::decodeObject((string) $response->getBody()));
         $dateHeader = current($response->getHeader('Date'));
@@ -120,92 +99,16 @@ class Response implements IteratorAggregate
         return $this->cacheDate->add(new DateInterval(sprintf('PT%dS', $this->maxAge)));
     }
 
-    /**
-     * The page number this result set represents in a paginated result
-     */
-    public function currentPageNumber() : int
+    public function merge(ResultSet $with) : ResultSet
     {
-        return $this->page;
-    }
-
-    /**
-     * The expected number of results per page
-     */
-    public function resultsPerPage() : int
-    {
-        return $this->perPage;
-    }
-
-    /**
-     * The total number of documents found in the api that match the query
-     */
-    public function totalResults() : int
-    {
-        return $this->totalResults;
-    }
-
-    /**
-     * The total number of pages in the api that match for the matching results.
-     */
-    public function pageCount() : int
-    {
-        return $this->pageCount;
-    }
-
-    /**
-     * Absolute URL to retrieve the next page of results from the remote api.
-     */
-    public function nextPage() :? string
-    {
-        return $this->nextPage;
-    }
-
-    /**
-     * Absolute URL to retrieve the previous page of results from the remote api.
-     */
-    public function previousPage() :? string
-    {
-        return $this->prevPage;
-    }
-
-    /** @return DocumentData[] */
-    public function results() : array
-    {
-        return $this->results;
-    }
-
-    /** @return DocumentData[] */
-    public function getIterator() : iterable
-    {
-        return new ArrayIterator($this->results);
-    }
-
-    public function first() :? DocumentData
-    {
-        $first = reset($this->results);
-
-        return $first instanceof DocumentData ? $first : null;
-    }
-
-    /**
-     * Merge the results of two responses together.
-     *
-     * The primary purpose of this method is to collect paginated results into a single response and should not be used
-     * to merge unrelated result sets in {@link Api::findAll()}. If you need to combine results yourself, just use
-     * $combined = array_merge($response1->results(), $response2->results());
-     *
-     * @internal
-     */
-    public function merge(self $with) : self
-    {
-        $results = array_merge($this->results, $with->results);
+        $results = array_merge($this->results, $with->results());
 
         return new static(
             1,
             count($results),
             $this->totalResults,
             max($this->pageCount - 1, 1),
-            $with->nextPage,
+            $with->nextPage(),
             $this->prevPage,
             $results
         );

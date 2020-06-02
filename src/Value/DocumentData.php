@@ -183,4 +183,9 @@ final class DocumentData implements Document
     {
         return DocumentLink::withDocument($this);
     }
+
+    public function data() : DocumentData
+    {
+        return $this;
+    }
 }

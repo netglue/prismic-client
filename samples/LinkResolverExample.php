@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace My;
+namespace Prismic\Example;
 
 use Prismic\DefaultLinkResolver;
 use Prismic\Document\Fragment\DocumentLink;

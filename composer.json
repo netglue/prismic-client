@@ -20,7 +20,8 @@
     "autoload-dev": {
         "psr-4": {
             "PrismicTest\\": "test/Unit",
-            "PrismicSmokeTest\\": "test/Smoke"
+            "PrismicSmokeTest\\": "test/Smoke",
+            "Prismic\\Example\\": "samples"
         }
     },
     "require": {

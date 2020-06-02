@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace PrismicTest;
+namespace PrismicTest\ResultSet;
 
 use Prismic\Json;
-use Prismic\Response;
+use Prismic\ResultSet\StandardResultSet;
 use Prismic\Value\DocumentData;
 use PrismicTest\Framework\TestCase;
 
-class ResponseTest extends TestCase
+class StandardResultTest extends TestCase
 {
     public function testBasicAccessors() : void
     {
-        $response = Response::factory(Json::decodeObject($this->jsonFixtureByFileName('response.json')));
+        $response = StandardResultSet::factory(Json::decodeObject($this->jsonFixtureByFileName('response.json')));
         $this->assertSame(1, $response->resultsPerPage());
         $this->assertSame(1, $response->currentPageNumber());
         $this->assertSame(99, $response->totalResults());

@@ -8,8 +8,9 @@ use Http\Discovery\Psr18ClientDiscovery;
 use Prismic\Document\Fragment\DocumentLink;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Exception\RequestFailure;
+use Prismic\ResultSet\ResultSetFactory;
+use Prismic\ResultSet\StandardResultSetFactory;
 use Prismic\Value\ApiData;
-use Prismic\Value\DocumentData;
 use Prismic\Value\Ref;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -37,6 +38,8 @@ final class Api
 
     /**
      * Name of the cookie that will be used to remember the experiment reference
+     *
+     * This constant is currently unused because it is no longer possible to run A/B tests with Prismic
      */
     public const EXPERIMENTS_COOKIE = 'io.prismic.experiment';
 
@@ -67,12 +70,20 @@ final class Api
      */
     private $requestCookies;
 
+    /**
+     * This factory is responsible for creating result sets from HTTP responses
+     *
+     * @var ResultSetFactory
+     */
+    private $resultSetFactory;
+
     private function __construct(
         string $apiBaseUri,
         ClientInterface $httpClient,
         ?string $accessToken,
         RequestFactoryInterface $requestFactory,
-        UriFactoryInterface $uriFactory
+        UriFactoryInterface $uriFactory,
+        ResultSetFactory $resultSetFactory
     ) {
         $this->requestCookies = $_COOKIE ?? [];
         $this->uriFactory = $uriFactory;
@@ -80,6 +91,7 @@ final class Api
         $this->httpClient = $httpClient;
         $this->requestFactory = $requestFactory;
         $this->accessToken = $accessToken;
+        $this->resultSetFactory = $resultSetFactory;
     }
 
     public static function get(
@@ -87,14 +99,16 @@ final class Api
         ?string $accessToken = null,
         ?ClientInterface $httpClient = null,
         ?RequestFactoryInterface $requestFactory = null,
-        ?UriFactoryInterface $uriFactory = null
+        ?UriFactoryInterface $uriFactory = null,
+        ?ResultSetFactory $resultSetFactory = null
     ) : self {
         return new self(
             $apiBaseUri,
             $httpClient ?? Psr18ClientDiscovery::find(),
             (string) $accessToken === '' ? null : $accessToken,
             $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory(),
-            $uriFactory ?? Psr17FactoryDiscovery::findUrlFactory()
+            $uriFactory ?? Psr17FactoryDiscovery::findUrlFactory(),
+            $resultSetFactory ?? new StandardResultSetFactory()
         );
     }
 
@@ -183,9 +197,9 @@ final class Api
     /**
      * Submit the given query to the API
      */
-    public function query(Query $query) : Response
+    public function query(Query $query) : ResultSet
     {
-        return Response::withHttpResponse($this->sendRequest(
+        return $this->resultSetFactory->withHttpResponse($this->sendRequest(
             $this->uriFactory->createUri($query->toUrl())
         ));
     }
@@ -193,7 +207,7 @@ final class Api
     /**
      * Convenience method to return the first document for the given query
      */
-    public function queryFirst(Query $query) :? DocumentData
+    public function queryFirst(Query $query) :? Document
     {
         return $this->query($query)->first();
     }
@@ -201,7 +215,7 @@ final class Api
     /**
      * Locate a single document by its unique identifier
      */
-    public function findById(string $id) :? DocumentData
+    public function findById(string $id) :? Document
     {
         $query = $this->createQuery()
             ->lang('*')
@@ -213,7 +227,7 @@ final class Api
     /**
      * Locate a single document by its type and user unique id
      */
-    public function findByUid(string $type, string $uid, string $lang = '*') :? DocumentData
+    public function findByUid(string $type, string $uid, string $lang = '*') :? Document
     {
         $path = sprintf('my.%s.uid', $type);
         $query = $this->createQuery()
@@ -226,7 +240,7 @@ final class Api
     /**
      * Locate the document referenced by the given bookmark
      */
-    public function findByBookmark(string $bookmark) :? DocumentData
+    public function findByBookmark(string $bookmark) :? Document
     {
         return $this->findById($this->data()->bookmark($bookmark)->documentId());
     }
@@ -333,39 +347,39 @@ final class Api
         return null;
     }
 
-    public function next(Response $response) :? Response
+    public function next(ResultSet $resultSet) :? ResultSet
     {
-        if (! $response->nextPage()) {
+        if (! $resultSet->nextPage()) {
             return null;
         }
 
-        return Response::withHttpResponse(
+        return $this->resultSetFactory->withHttpResponse(
             $this->sendRequest(
-                $this->uriFactory->createUri($response->nextPage())
+                $this->uriFactory->createUri($resultSet->nextPage())
             )
         );
     }
 
-    public function previous(Response $response) :? Response
+    public function previous(ResultSet $resultSet) :? ResultSet
     {
-        if (! $response->previousPage()) {
+        if (! $resultSet->previousPage()) {
             return null;
         }
 
-        return Response::withHttpResponse(
+        return $this->resultSetFactory->withHttpResponse(
             $this->sendRequest(
-                $this->uriFactory->createUri($response->previousPage())
+                $this->uriFactory->createUri($resultSet->previousPage())
             )
         );
     }
 
-    public function findAll(Query $query) : Response
+    public function findAll(Query $query) : ResultSet
     {
-        $response = $this->query($query);
-        while ($next = $this->next($response)) {
-            $response = $response->merge($next);
+        $resultSet = $this->query($query);
+        while ($next = $this->next($resultSet)) {
+            $resultSet = $resultSet->merge($next);
         }
 
-        return $response;
+        return $resultSet;
     }
 }

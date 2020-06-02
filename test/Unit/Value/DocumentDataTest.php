@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace PrismicTest\Value;
 
+use DateInterval;
+use DateTimeImmutable;
 use Prismic\Document\Fragment\BooleanFragment;
 use Prismic\Document\Fragment\Collection;
 use Prismic\Document\Fragment\Color;
@@ -158,5 +160,28 @@ class DocumentDataTest extends TestCase
         $this->assertSame('translated-uid', $value->documentUid());
         $this->assertSame('custom-type', $value->documentType());
         $this->assertSame('en-us', $value->language());
+    }
+
+    public function testThatDataMethodReturnsSelf() : void
+    {
+        $this->assertSame($this->document, $this->document->data());
+    }
+
+    public function testThatNowIsUsedForPublicationDatesWhenThePayloadIsNull() : void
+    {
+        $data = DocumentData::factory(
+            Json::decodeObject(
+                $this->jsonFixtureByFileName('document-lacking-pub-date.json')
+            )
+        );
+
+        $minute = new DateInterval('PT60S');
+        $now = (new DateTimeImmutable('now'))->sub($minute);
+        $then = (new DateTimeImmutable('now'))->add($minute);
+
+        $this->assertGreaterThanOrEqual($now, $data->firstPublished());
+        $this->assertLessThanOrEqual($then, $data->firstPublished());
+        $this->assertGreaterThanOrEqual($now, $data->lastPublished());
+        $this->assertLessThanOrEqual($then, $data->lastPublished());
     }
 }

@@ -92,20 +92,27 @@ class QueryTest extends TestCase
     /** @dataProvider queryUrlProvider */
     public function testThatQueryValueIsAppendedToQueryString(Query $query, string $expectedUrl) : void
     {
-        $query = $query->set('q', 'foo');
-        $this->assertSame($expectedUrl, $query->toUrl());
+        $clone = $query->set('q', 'foo');
+        $this->assertSame($expectedUrl, $clone->toUrl());
+        $this->assertNotSame($query, $clone);
+        $this->assertNotSame($query->toUrl(), $clone->toUrl());
     }
 
     /** @dataProvider queryProvider */
     public function testThatSettingResultsPerPageAltersUrl(Query $query) : void
     {
+        $clone = $query->resultsPerPage(99);
         $this->assertStringContainsString(
             'pageSize=20',
             $query->toUrl()
         );
         $this->assertStringContainsString(
             'pageSize=99',
-            $query->resultsPerPage(99)->toUrl()
+            $clone->toUrl()
+        );
+        $this->assertStringNotContainsString(
+            'pageSize=20',
+            $clone->toUrl()
         );
     }
 
