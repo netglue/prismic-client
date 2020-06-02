@@ -9,6 +9,8 @@
             "email": "george@net-glue.co.uk"
         }
     ],
+    "keywords": ["prismic", "prismicio", "cms", "psr-18", "psr-7", "psr-17"],
+    "homepage": "https://github.com/netglue/prismic-client",
     "config": {
         "sort-packages": true
     },
