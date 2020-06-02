@@ -10,8 +10,8 @@ class Collection extends BaseCollection
 {
     public function slicesOfType(string $type) : self
     {
-        return self::new(array_filter($this->fragments, static function (Fragment $fragment) use ($type) : bool {
+        return $this->filter(static function (Fragment $fragment) use ($type) : bool {
             return $fragment instanceof Slice && $fragment->type() === $type;
-        }));
+        });
     }
 }
