@@ -15,7 +15,7 @@ class ExampleHydratingResultSetTest extends TestCase
     public function hydratingApiProvider() : iterable
     {
         foreach ($this->compileEndPoints() as $url => $token) {
-            $api = Api::get($url, $token);
+            $api = Api::get($url, $token, $this->httpClient());
             $typeMap = [];
             foreach ($api->data()->types() as $type) {
                 $typeMap[$type->id()] = CustomDocumentType::class;
@@ -24,7 +24,7 @@ class ExampleHydratingResultSetTest extends TestCase
             $factory = new MyResultSetFactory($typeMap);
 
             yield $api->host() => [
-                Api::get($url, $token, null, null, null, $factory),
+                Api::get($url, $token, $this->httpClient(), null, null, $factory),
             ];
         }
     }
