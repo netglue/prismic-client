@@ -57,16 +57,16 @@ class HtmlSerializer
     private $resolver;
     /** @var string[] */
     private $tagMap = [
-        'heading1' => 'h1',
-        'heading2' => 'h2',
-        'heading3' => 'h3',
-        'heading4' => 'h4',
-        'heading5' => 'h5',
-        'heading6' => 'h6',
-        'paragraph' => 'p',
-        'preformatted' => 'pre',
-        'o-list-item' => 'li',
-        'list-item' => 'li',
+        TextElement::TYPE_HEADING1 => 'h1',
+        TextElement::TYPE_HEADING2 => 'h2',
+        TextElement::TYPE_HEADING3 => 'h3',
+        TextElement::TYPE_HEADING4 => 'h4',
+        TextElement::TYPE_HEADING5 => 'h5',
+        TextElement::TYPE_HEADING6 => 'h6',
+        TextElement::TYPE_PARAGRAPH => 'p',
+        TextElement::TYPE_PREFORMATTED => 'pre',
+        TextElement::TYPE_ORDERED_LIST_ITEM => 'li',
+        TextElement::TYPE_UNORDERED_LIST_ITEM => 'li',
     ];
 
     public function __construct(LinkResolver $resolver)
