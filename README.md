@@ -34,7 +34,7 @@ You will also require a PSR-18 HTTP client implementation, of which there are ma
 
 To use the curl adapter from `php-http`, issue a `composer require php-http/curl-client`
 
-##Documentation
+## Documentation
 
 Docs are a work in progress and are hosted in a public prismic repository _(obviously!)_
 
