@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Prismic\Test;
+namespace PrismicTest;
 
 use DateTime;
 use Prismic\Exception\InvalidArgument;
