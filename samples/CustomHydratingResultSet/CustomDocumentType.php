@@ -21,7 +21,7 @@ class CustomDocumentType implements Document
 
     public function get(string $name) :? Fragment
     {
-        return $this->data->body()->get($name);
+        return $this->data->content()->get($name);
     }
 
     public function getTitle() : string

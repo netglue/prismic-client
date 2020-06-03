@@ -24,7 +24,7 @@ class HtmlSerializerTest extends TestCase
     {
         $documentCount = 0;
         foreach ($api->findAll($api->createQuery()) as $document) {
-            ($this->serializer)($document->body());
+            ($this->serializer)($document->content());
             $documentCount++;
         }
 

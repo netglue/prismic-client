@@ -46,7 +46,7 @@ class PortfolioItem implements Document
      */
     private function getFragment(string $name) : Fragment
     {
-        return $this->data->body()->get($name);
+        return $this->data->content()->get($name);
     }
 
     /**

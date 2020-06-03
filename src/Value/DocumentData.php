@@ -11,6 +11,7 @@ use Prismic\Document\Fragment;
 use Prismic\Document\Fragment\Collection;
 use Prismic\Document\Fragment\DocumentLink;
 use Prismic\Document\Fragment\Factory;
+use Prismic\Document\FragmentCollection;
 use function array_map;
 use function get_object_vars;
 use function reset;
@@ -55,7 +56,7 @@ final class DocumentData implements Document
         iterable $tags,
         iterable $slugs,
         iterable $translations,
-        Collection $body
+        FragmentCollection $body
     ) {
         $this->id = $id;
         $this->uid = $uid;
@@ -163,7 +164,7 @@ final class DocumentData implements Document
         $this->slugs = $slugs;
     }
 
-    public function body() : Collection
+    public function content() : FragmentCollection
     {
         return $this->body;
     }

@@ -56,7 +56,7 @@ class HtmlSerializerTest extends TestCase
             )
         );
 
-        ($this->serializer)($document->body());
+        ($this->serializer)($document->content());
         $this->addToAssertionCount(1);
     }
 

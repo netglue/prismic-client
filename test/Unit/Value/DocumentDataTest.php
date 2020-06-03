@@ -84,21 +84,21 @@ class DocumentDataTest extends TestCase
 
     public function testThatDocumentBodyHasExpectedColourFragment() : void
     {
-        $colour = $this->document->body()->get('colour');
+        $colour = $this->document->content()->get('colour');
         $this->assertInstanceOf(Color::class, $colour);
         $this->assertSame('#c94949', (string) $colour);
     }
 
     public function testThatDocumentBodyHasExpectedNumber() : void
     {
-        $number = $this->document->body()->get('integer');
+        $number = $this->document->content()->get('integer');
         assert($number instanceof Number);
         $this->assertSame(10, $number->toInteger());
     }
 
     public function testThatDocumentBodyHasExpectedDateFragment() : void
     {
-        $date = $this->document->body()->get('date');
+        $date = $this->document->content()->get('date');
         assert($date instanceof DateFragment);
         $this->assertSame(
             '2020-02-03 00:00:00 0',
@@ -108,7 +108,7 @@ class DocumentDataTest extends TestCase
 
     public function testThatDocumentBodyHasExpectedDateTimeFragment() : void
     {
-        $date = $this->document->body()->get('datetime');
+        $date = $this->document->content()->get('datetime');
         assert($date instanceof DateFragment);
         $this->assertSame(
             '2020-02-03 12:13:14 0',
@@ -118,14 +118,14 @@ class DocumentDataTest extends TestCase
 
     public function testThatDocumentBodyHasExpectedBooleanValue() : void
     {
-        $bool = $this->document->body()->get('boolean');
+        $bool = $this->document->content()->get('boolean');
         assert($bool instanceof BooleanFragment);
         $this->assertTrue($bool());
     }
 
     public function testThatDocumentBodyHasSingleImageFragment() : void
     {
-        $image = $this->document->body()->get('single-image');
+        $image = $this->document->content()->get('single-image');
         assert($image instanceof Image);
         $this->assertSame('Star', $image->alt());
         $this->assertSame($image, $image->getView('main'));
@@ -133,7 +133,7 @@ class DocumentDataTest extends TestCase
 
     public function testThatDocumentBodyHasImageWithMultipleSizes() : void
     {
-        $image = $this->document->body()->get('multi-image');
+        $image = $this->document->content()->get('multi-image');
         assert($image instanceof Image);
         $view = $image->getView('view-2');
         $this->assertNotSame($image, $view);
@@ -143,7 +143,7 @@ class DocumentDataTest extends TestCase
 
     public function testThatTheSliceZoneIsACollection() : void
     {
-        $slices = $this->document->body()->get('slice-zone');
+        $slices = $this->document->content()->get('slice-zone');
         assert($slices instanceof Collection);
         $slice = $slices->slicesOfType('quote')->first();
         assert($slice instanceof Slice);

@@ -102,7 +102,7 @@ class Explorer
                     </div>
                 </div>
                 BODY,
-            ($this->serializer)($this->document->body()),
+            ($this->serializer)($this->document->content()),
             $this->listBookmarks(),
             $this->listRecentDocs(20)
         );
