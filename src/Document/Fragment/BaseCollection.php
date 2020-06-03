@@ -15,7 +15,7 @@ use function end;
 use function reset;
 use const ARRAY_FILTER_USE_BOTH;
 
-abstract class BaseCollection implements Fragment, FragmentCollection
+abstract class BaseCollection implements FragmentCollection
 {
     /** @var Fragment[] */
     protected $fragments;
