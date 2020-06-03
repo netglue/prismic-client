@@ -29,7 +29,6 @@ class RichTextTest extends TestCase
     public function testThatListItemsAreCollectedAsExpected() : void
     {
         $richText = $this->listItemsFixture();
-        $this->assertCount(7, $richText);
         $this->assertInstanceOf(TextElement::class, $richText->offsetGet(0));
         $this->assertInstanceOf(UnorderedList::class, $richText->offsetGet(1));
         $this->assertCount(2, $richText->offsetGet(1));

@@ -44,6 +44,36 @@
             "type": "o-list-item",
             "text": "Single ordered with unordered sibling",
             "spans": []
+        },
+        {
+            "type" : "paragraph",
+            "text": "A list longer than 2 elements",
+            "spans": []
+        },
+        {
+            "type": "list-item",
+            "text": "1",
+            "spans": []
+        },
+        {
+            "type": "list-item",
+            "text": "2",
+            "spans": []
+        },
+        {
+            "type": "list-item",
+            "text": "3",
+            "spans": []
+        },
+        {
+            "type": "list-item",
+            "text": "4",
+            "spans": []
+        },
+        {
+            "type": "list-item",
+            "text": "5",
+            "spans": []
         }
     ]
 }

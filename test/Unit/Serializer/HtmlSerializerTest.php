@@ -48,6 +48,16 @@ class HtmlSerializerTest extends TestCase
         return $richText;
     }
 
+    private function listItemsFixture() : RichText
+    {
+        $body = Factory::factory(Json::decodeObject($this->jsonFixtureByFileName('list-items.json')));
+        assert($body instanceof FragmentCollection);
+        $richText = $body->get('rich_text');
+        assert($richText instanceof RichText);
+
+        return $richText;
+    }
+
     public function testDocumentBodyIsSerializedWithoutError() : void
     {
         $document = DocumentData::factory(
@@ -62,16 +72,27 @@ class HtmlSerializerTest extends TestCase
 
     public function testListSerialisation() : void
     {
-        $collection = (new Factory())(Json::decodeObject($this->jsonFixtureByFileName('list-items.json')));
-        assert($collection instanceof FragmentCollection);
-        $richText = $collection->get('rich_text');
-        assert($richText instanceof RichText);
+        $richText = $this->listItemsFixture();
         $list = $richText->filter(static function (Fragment $fragment) : bool {
             return $fragment instanceof UnorderedList;
         })->first();
         assert($list instanceof UnorderedList);
         $markup = $this->serializer->__invoke($list);
         $this->assertEquals('<ul><li>Unordered 1</li><li>Unordered 2</li></ul>', $markup);
+    }
+
+    public function testListSerialisationWithLargeList() : void
+    {
+        $richText = $this->listItemsFixture();
+        $lists = $richText->filter(static function (Fragment $fragment) : bool {
+            return $fragment instanceof UnorderedList;
+        });
+        $this->assertTrue($lists->has(2), 'There should be a list at index 2');
+        $largeList = $lists->get(2);
+        assert($largeList instanceof UnorderedList);
+        $this->assertCount(5, $largeList, 'There should be 5 items in the list fixture');
+        $markup = $this->serializer->__invoke($largeList);
+        $this->assertEquals('<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>', $markup);
     }
 
     public function testAnEmptyListWillYieldAnEmptyString() : void
