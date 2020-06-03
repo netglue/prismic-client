@@ -156,8 +156,8 @@ class FactoryTest extends TestCase
         $images = $richText->filter(static function (Fragment $fragment) : bool {
             return $fragment instanceof Image;
         });
-        $this->assertTrue($images->offsetExists(1));
-        $image = $images->offsetGet(1);
+        $this->assertTrue($images->has(1));
+        $image = $images->get(1);
         assert($image instanceof Image);
         $this->assertNotNull($image->linkTo());
     }

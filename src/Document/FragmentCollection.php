@@ -16,15 +16,31 @@ interface FragmentCollection extends Fragment, IteratorAggregate, Countable
      */
     public function filter(Closure $p);
 
-    /** @param int|string $name */
+    /**
+     * Whether a fragment exists in the collection with the given offset
+     *
+     * @param int|string $name
+     */
     public function has($name) : bool;
 
-    /** @param int|string $name */
+    /**
+     * Return the fragment at the given offset, or an empty fragment
+     *
+     * @param int|string $name
+     */
     public function get($name) : Fragment;
 
-    /** @param int|string $index */
-    public function offsetGet($index) : Fragment;
+    /**
+     * Return the first fragment found in the collection
+     *
+     * If the collection is empty, this method will return an @link EmptyFragment
+     */
+    public function first() : Fragment;
 
-    /** @param int|string $index */
-    public function offsetExists($index) : bool;
+    /**
+     * Return the last fragment found in the collection
+     *
+     * If the collection is empty, this method will return an @link EmptyFragment
+     */
+    public function last() : Fragment;
 }

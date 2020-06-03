@@ -123,18 +123,6 @@ abstract class BaseCollection implements FragmentCollection
         return $this->fragments[$name];
     }
 
-    /** @inheritDoc */
-    public function offsetExists($index) : bool
-    {
-        return $this->has($index);
-    }
-
-    /** @inheritDoc */
-    public function offsetGet($index) : Fragment
-    {
-        return $this->get($index);
-    }
-
     public function nonEmpty() : self
     {
         return $this->filter(static function (Fragment $fragment) : bool {

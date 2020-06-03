@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- Added `first()` and `last()` to the collection contract.
 
 ### Changed
 
@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- `ArrayAccess` style methods `offsetExists` and `offsetGet` removed from `FragmentCollection`. The collection will not implement `ArrayAccess` so stay with tradition and use get and has exclusively.
 
 ### Fixed
 

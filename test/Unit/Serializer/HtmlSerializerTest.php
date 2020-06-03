@@ -150,7 +150,7 @@ class HtmlSerializerTest extends TestCase
         $richText = $this->richTextSpansFixture();
         $this->assertEquals(
             $expectedMarkup,
-            ($this->serializer)($richText->offsetGet($fragmentIndex))
+            ($this->serializer)($richText->get($fragmentIndex))
         );
     }
 
@@ -203,7 +203,7 @@ class HtmlSerializerTest extends TestCase
         $richText = $this->richTextBlockElementsFixture();
         $this->assertEquals(
             $expectedMarkup,
-            ($this->serializer)($richText->offsetGet($fragmentIndex))
+            ($this->serializer)($richText->get($fragmentIndex))
         );
     }
 
