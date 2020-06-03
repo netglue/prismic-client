@@ -28,7 +28,7 @@ class PredicateTest extends TestCase
     public function testAtPredicate(string $fragment, $value, string $expect) : void
     {
         $predicate = Predicate::at($fragment, $value);
-        $this->assertEquals($expect, (string) $predicate);
+        $this->assertEquals($expect, $predicate->q());
     }
 
     /** @return mixed[] */
@@ -316,5 +316,16 @@ class PredicateTest extends TestCase
         $this->assertEquals('[:d = at(my.doc.field, true)]', $p->q());
         $p = Predicate::at('my.doc.field', false);
         $this->assertEquals('[:d = at(my.doc.field, false)]', $p->q());
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @dataProvider atProvider
+     */
+    public function testPredicatesCanBeCastToString(string $fragment, $value, string $expect) : void
+    {
+        $predicate = Predicate::at($fragment, $value);
+        $this->assertEquals($expect, $predicate->__toString());
     }
 }
