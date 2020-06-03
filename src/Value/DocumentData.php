@@ -36,7 +36,7 @@ final class DocumentData implements Document
     private $tags;
     /** @var string[] */
     private $slugs;
-    /** @var Collection */
+    /** @var FragmentCollection */
     private $body;
     /** @var Translation[] */
     private $translations;
