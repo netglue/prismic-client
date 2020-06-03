@@ -1,7 +1,7 @@
 name: PHPUnit Test Suite
 on:
   schedule:
-    - cron: 0 9 * * 1
+    - cron: '0 9 * * 1'
   push:
     branches:
       - master
