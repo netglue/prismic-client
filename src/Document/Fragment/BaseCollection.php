@@ -38,7 +38,13 @@ abstract class BaseCollection implements FragmentCollection
     /** @param int|string|null $key */
     final protected function addFragment(Fragment $fragment, $key = null) : void
     {
-        $this->fragments[$key] = $fragment;
+        if (! empty($key)) {
+            $this->fragments[$key] = $fragment;
+
+            return;
+        }
+
+        $this->fragments[] = $fragment;
     }
 
     /** @return Fragment[] */

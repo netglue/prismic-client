@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- Fixed: numerically indexed collections were missing elements because internal arrays were receiving keys that evaluated to empty strings.
 
 ## 0.1.0-beta - 2020-06-02
 
