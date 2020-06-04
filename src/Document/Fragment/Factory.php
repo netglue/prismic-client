@@ -207,7 +207,6 @@ final class Factory
                 self::optionalStringProperty($data, 'uid'),
                 self::assertObjectPropertyIsString($data, 'type'),
                 $lang,
-                self::assertObjectPropertyIsString($data, 'slug'),
                 $isBroken,
                 self::assertObjectPropertyIsArray($data, 'tags')
             );

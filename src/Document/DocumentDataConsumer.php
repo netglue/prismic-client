@@ -34,17 +34,6 @@ trait DocumentDataConsumer
         return $this->data->tags();
     }
 
-    /** @return string[] */
-    public function slugs() : iterable
-    {
-        return $this->data->slugs();
-    }
-
-    public function slug() : string
-    {
-        return $this->data->slug();
-    }
-
     public function lang() : string
     {
         return $this->data->lang();

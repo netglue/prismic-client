@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.2.0 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- `\Prismic\Document::slugs()`, `\Prismic\Document::slug()` and references and methods elsewhere to "slugs". The [feature is deprecated](https://user-guides.prismic.io/en/articles/1794385-what-are-slugs) and replaced with UIDs so there is little point in keeping support for them hanging around in this lib.
+
+### Fixed
+
+- Nothing.
+
 ## 0.1.0 - 2020-06-03
 
 ### Added

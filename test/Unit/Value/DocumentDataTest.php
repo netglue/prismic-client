@@ -76,12 +76,6 @@ class DocumentDataTest extends TestCase
         $this->assertContainsEquals('tag-2', $this->document->tags());
     }
 
-    public function testSlugs() : void
-    {
-        $this->assertContainsEquals('slug-1', $this->document->slugs());
-        $this->assertContainsEquals('slug-2', $this->document->slugs());
-    }
-
     public function testThatDocumentBodyHasExpectedColourFragment() : void
     {
         $colour = $this->document->content()->get('colour');

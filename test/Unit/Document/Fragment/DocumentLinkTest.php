@@ -17,7 +17,6 @@ class DocumentLinkTest extends TestCase
             'uid',
             'type',
             'en-gb',
-            'slime',
             false,
             [1,2],
         );
@@ -30,7 +29,6 @@ class DocumentLinkTest extends TestCase
             'uid',
             'type',
             'en-gb',
-            'slime',
             false,
             ['a','b'],
         );
@@ -61,12 +59,6 @@ class DocumentLinkTest extends TestCase
     public function testThatLanguageIsExpectedValue(DocumentLink $link) : void
     {
         $this->assertSame('en-gb', $link->language());
-    }
-
-    /** @depends testConstructor */
-    public function testThatSlugIsExpectedValue(DocumentLink $link) : void
-    {
-        $this->assertSame('slime', $link->slug());
     }
 
     /** @depends testConstructor */

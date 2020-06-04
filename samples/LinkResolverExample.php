@@ -19,7 +19,6 @@ class LinkResolverExample extends DefaultLinkResolver
          * $link->uid()  - Unique to each TYPE of document, i.e. 'about-us'.
          *               - The UID is guaranteed to exist if your document type has a specific UID field
          * $link->type() - The type of document, i.e. 'web-page'
-         * $link->slug() - Computed by prismic, based normally on a heading somewhere, i.e. 'the-document-title'
          * $link->tags() - An array of tags where each element is a string
          * $link->lang() - The language of the document
          */
