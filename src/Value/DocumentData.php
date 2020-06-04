@@ -14,7 +14,6 @@ use Prismic\Document\Fragment\Factory;
 use Prismic\Document\FragmentCollection;
 use function array_map;
 use function get_object_vars;
-use function reset;
 
 final class DocumentData implements Document
 {
@@ -34,8 +33,6 @@ final class DocumentData implements Document
     private $lastPublished;
     /** @var string[] */
     private $tags;
-    /** @var string[] */
-    private $slugs;
     /** @var FragmentCollection */
     private $body;
     /** @var Translation[] */
@@ -43,7 +40,6 @@ final class DocumentData implements Document
 
     /**
      * @param string[]      $tags
-     * @param string[]      $slugs
      * @param Translation[] $translations
      */
     private function __construct(
@@ -54,7 +50,6 @@ final class DocumentData implements Document
         DateTimeImmutable $firstPublished,
         DateTimeImmutable $lastPublished,
         iterable $tags,
-        iterable $slugs,
         iterable $translations,
         FragmentCollection $body
     ) {
@@ -65,7 +60,6 @@ final class DocumentData implements Document
         $this->firstPublished = $firstPublished;
         $this->lastPublished = $lastPublished;
         $this->setTags(...$tags);
-        $this->setSlugs(...$slugs);
         $this->setTranslations(...$translations);
         $this->body = $body;
     }
@@ -101,7 +95,6 @@ final class DocumentData implements Document
             self::assertObjectPropertyIsUtcDateTime($data, 'first_publication_date'),
             self::assertObjectPropertyIsUtcDateTime($data, 'last_publication_date'),
             self::assertObjectPropertyIsArray($data, 'tags'),
-            self::assertObjectPropertyIsArray($data, 'slugs'),
             $translations,
             $body
         );
@@ -128,17 +121,6 @@ final class DocumentData implements Document
         return $this->tags;
     }
 
-    /** @inheritDoc */
-    public function slugs() : iterable
-    {
-        return $this->slugs;
-    }
-
-    public function slug() : string
-    {
-        return reset($this->slugs);
-    }
-
     public function lang() : string
     {
         return $this->lang;
@@ -157,11 +139,6 @@ final class DocumentData implements Document
     private function setTags(string ...$tags) : void
     {
         $this->tags = $tags;
-    }
-
-    private function setSlugs(string ...$slugs) : void
-    {
-        $this->slugs = $slugs;
     }
 
     public function content() : FragmentCollection

@@ -26,17 +26,6 @@ interface Document
     /** @return string[] */
     public function tags() : iterable;
 
-    /** @return string[] */
-    public function slugs() : iterable;
-
-    /**
-     * The document slug
-     *
-     * Normally the most recent (first) slug found. Often the same as the uid.
-     * A string can be guaranteed because the API <strong>always</strong> assigns a slug to every document.
-     */
-    public function slug() : string;
-
     /** the document language code such as "en-gb" */
     public function lang() : string;
 
