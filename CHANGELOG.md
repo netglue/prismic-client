@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#4](https://github.com/netglue/prismic-client/pull/4) Adds the `Prismic\ApiClient` interface. Whilst there's only 1 implementation here, it makes it easier to stub the api out in tests if consumers have an interface to type hint on rather than an implementation.
 
 ### Changed
 
@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- `\Prismic\Document::slugs()`, `\Prismic\Document::slug()` and references and methods elsewhere to "slugs". The [feature is deprecated](https://user-guides.prismic.io/en/articles/1794385-what-are-slugs) and replaced with UIDs so there is little point in keeping support for them hanging around in this lib.
+- [#3](https://github.com/netglue/prismic-client/pull/3) `\Prismic\Document::slugs()`, `\Prismic\Document::slug()` and references and methods elsewhere to "slugs". The [feature is deprecated](https://user-guides.prismic.io/en/articles/1794385-what-are-slugs) and replaced with UIDs so there is little point in keeping support for them hanging around in this lib.
 
 ### Fixed
 
