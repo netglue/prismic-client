@@ -6,6 +6,8 @@ This is an unofficial PHP client for the [Prismic.io](https://prismic.io) headle
 
 There is practically zero backwards compatibility with other prismic clients so this is in no way a drop-in replacement. That said, you should find that much of it remains _similar_.
 
+This client is still a work in progress and has not been well tested in real projects yet. There are likely to be BC breaks until it reaches a 1.0 release.
+
 ## Features
 
 * Uses a [PSR-18](https://www.php-fig.org/psr/psr-18) HTTP client for communicating with the API, so there is no dependency on a particular client implementation. The library depends on you either manually providing an HTTP client or falls back on [HTTPlug Discovery](https://github.com/php-http/discovery) to figure out an already available client.
