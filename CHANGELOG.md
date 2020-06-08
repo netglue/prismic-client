@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.3.0 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Changed the `Api::get()` method so that it wraps exceptions caused by failures to locate HTTP related dependencies in `Prismic\Exception\PrismicError` exceptions. This allows library consumers to simplify exception handling.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.2.0 - 2020-06-04
 
 ### Added
