@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace Prismic;
 
+use Http\Discovery\Exception as DiscoveryError;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Prismic\Document\Fragment\DocumentLink;
 use Prismic\Exception\InvalidArgument;
+use Prismic\Exception\PrismicError;
 use Prismic\Exception\RequestFailure;
+use Prismic\Exception\RuntimeError;
 use Prismic\ResultSet\ResultSetFactory;
 use Prismic\ResultSet\StandardResultSetFactory;
 use Prismic\Value\ApiData;
@@ -77,6 +80,11 @@ final class Api implements ApiClient
         $this->resultSetFactory = $resultSetFactory;
     }
 
+    /**
+     * @throws PrismicError if an Http Client cannot be discovered and one was not injected.
+     * @throws PrismicError if a PSR Request factory cannot be discovered and one was not injected.
+     * @throws PrismicError if a PSR URI factory cannot be discovered and one was not injected.
+     */
     public static function get(
         string $apiBaseUri,
         ?string $accessToken = null,
@@ -85,12 +93,34 @@ final class Api implements ApiClient
         ?UriFactoryInterface $uriFactory = null,
         ?ResultSetFactory $resultSetFactory = null
     ) : self {
+        $factory = static function ($given, callable $locator, string $message) {
+            if ($given) {
+                return $given;
+            }
+
+            try {
+                return $locator();
+            } catch (DiscoveryError $error) {
+                throw new RuntimeError(
+                    $message,
+                    $error->getCode(),
+                    $error
+                );
+            }
+        };
+
         return new self(
             $apiBaseUri,
-            $httpClient ?? Psr18ClientDiscovery::find(),
+            $factory($httpClient, static function () : ClientInterface {
+                return Psr18ClientDiscovery::find();
+            }, 'An HTTP client cannot be determined.'),
             (string) $accessToken === '' ? null : $accessToken,
-            $requestFactory ?? Psr17FactoryDiscovery::findRequestFactory(),
-            $uriFactory ?? Psr17FactoryDiscovery::findUrlFactory(),
+            $factory($requestFactory, static function () : RequestFactoryInterface {
+                return Psr17FactoryDiscovery::findRequestFactory();
+            }, 'A request factory cannot be determined'),
+            $factory($uriFactory, static function () : UriFactoryInterface {
+                return Psr17FactoryDiscovery::findUrlFactory();
+            }, 'A URI factory cannot be determined'),
             $resultSetFactory ?? new StandardResultSetFactory()
         );
     }

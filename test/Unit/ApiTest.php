@@ -4,6 +4,10 @@ declare(strict_types=1);
 namespace PrismicTest;
 
 use Http\Client\Curl\Client;
+use Http\Discovery\ClassDiscovery;
+use Http\Discovery\Exception\NotFoundException;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
 use Http\Message\RequestMatcher\RequestMatcher;
 use Http\Mock\Client as MockClient;
 use Laminas\Diactoros\Response\JsonResponse;
@@ -13,12 +17,16 @@ use Laminas\Diactoros\StreamFactory;
 use Prismic\Api;
 use Prismic\Exception\AuthenticationError;
 use Prismic\Exception\InvalidArgument;
+use Prismic\Exception\PrismicError;
 use Prismic\Exception\RequestFailure;
 use Prismic\Json;
 use PrismicTest\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use ReflectionProperty;
 use function sprintf;
 use function uniqid;
 use function urlencode;
@@ -336,5 +344,70 @@ class ApiTest extends TestCase
             ))
         );
         $this->assertInstanceOf(RequestInterface::class, $sentRequest);
+    }
+
+    /** @return string[] */
+    private function getPsrDiscoveryStrategies() : array
+    {
+        $prop = new ReflectionProperty(ClassDiscovery::class, 'strategies');
+        $prop->setAccessible(true);
+
+        return $prop->getValue();
+    }
+
+    public function testThatAnExceptionIsThrownWhenAnHttpClientCannotBeDiscovered() : void
+    {
+        $strategies = $this->getPsrDiscoveryStrategies();
+        Psr18ClientDiscovery::setStrategies([]);
+        try {
+            Api::get('foo');
+            $this->fail('An exception was not thrown');
+        } catch (PrismicError $error) {
+            $this->assertStringContainsString('An HTTP client cannot be determined', $error->getMessage());
+            $this->assertInstanceOf(NotFoundException::class, $error->getPrevious());
+
+            return;
+        } finally {
+            Psr18ClientDiscovery::setStrategies($strategies);
+        }
+    }
+
+    public function testThatAnExceptionIsThrownWhenARequestFactoryCannotBeDiscovered() : void
+    {
+        $strategies = $this->getPsrDiscoveryStrategies();
+        Psr17FactoryDiscovery::setStrategies([]);
+        try {
+            Api::get('foo', null, $this->createMock(ClientInterface::class));
+            $this->fail('An exception was not thrown');
+        } catch (PrismicError $error) {
+            $this->assertStringContainsString('A request factory cannot be determined', $error->getMessage());
+            $this->assertInstanceOf(NotFoundException::class, $error->getPrevious());
+
+            return;
+        } finally {
+            Psr17FactoryDiscovery::setStrategies($strategies);
+        }
+    }
+
+    public function testThatAnExceptionIsThrownWhenAnUriFactoryCannotBeDiscovered() : void
+    {
+        $strategies = $this->getPsrDiscoveryStrategies();
+        Psr17FactoryDiscovery::setStrategies([]);
+        try {
+            Api::get(
+                'foo',
+                null,
+                $this->createMock(ClientInterface::class),
+                $this->createMock(RequestFactoryInterface::class),
+            );
+            $this->fail('An exception was not thrown');
+        } catch (PrismicError $error) {
+            $this->assertStringContainsString('A URI factory cannot be determined', $error->getMessage());
+            $this->assertInstanceOf(NotFoundException::class, $error->getPrevious());
+
+            return;
+        } finally {
+            Psr17FactoryDiscovery::setStrategies($strategies);
+        }
     }
 }
