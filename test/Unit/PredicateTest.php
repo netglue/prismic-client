@@ -7,6 +7,10 @@ use DateTime;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Predicate;
 use PrismicTest\Framework\TestCase;
+use function assert;
+use function serialize;
+use function unserialize;
+use function var_export;
 
 class PredicateTest extends TestCase
 {
@@ -327,5 +331,32 @@ class PredicateTest extends TestCase
     {
         $predicate = Predicate::at($fragment, $value);
         $this->assertEquals($expect, $predicate->__toString());
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @dataProvider atProvider
+     */
+    public function testSetState(string $fragment, $value, string $expect) : void
+    {
+        $predicate = Predicate::at($fragment, $value);
+        $rehydrated = null;
+        eval('$rehydrated = ' . var_export($predicate, true) . ';');
+        assert($rehydrated instanceof Predicate);
+        $this->assertSame($expect, $rehydrated->q());
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @dataProvider atProvider
+     */
+    public function testPredicatesAreSerializable(string $fragment, $value, string $expect) : void
+    {
+        $predicate = Predicate::at($fragment, $value);
+        $rehydrated = unserialize(serialize($predicate));
+        assert($rehydrated instanceof Predicate);
+        $this->assertSame($expect, $rehydrated->q());
     }
 }

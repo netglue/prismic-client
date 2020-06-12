@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file, in reverse 
 ### Changed
 
 - Changed the `Api::get()` method so that it wraps exceptions caused by failures to locate HTTP related dependencies in `Prismic\Exception\PrismicError` exceptions. This allows library consumers to simplify exception handling.
+- Predicates can now be safely rehydrated in a round trip using `eval` and `var_export` which is useful if you want to store predicates as configuration.
 
 ### Deprecated
 
