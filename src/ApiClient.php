@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Prismic;
 
 use Prismic\Document\Fragment\DocumentLink;
+use Prismic\Exception\InvalidPreviewToken;
 use Prismic\Value\ApiData;
 use Prismic\Value\Ref;
 
@@ -107,6 +108,9 @@ interface ApiClient
      *
      * If the preview session can be resolved to a single relevant document, this method will return a document link
      * for that document with which you can construct a url using your {@link LinkResolver} to redirect the user to.
+     *
+     * @throws InvalidPreviewToken if the token is invalid.
+     * @throws InvalidPreviewToken if the token is is not an url.
      */
     public function previewSession(string $token) :? DocumentLink;
 }

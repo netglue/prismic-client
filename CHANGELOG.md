@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.3.1 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Changed and documented the exception type thrown in `Api::previewSession()` to `InvalidPreviewToken` and also made sure a completely invalid url also throws the same type when for example a token causes an exception in the underlying uri factory.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.3.0 - 2020-06-12
 
 ### Added

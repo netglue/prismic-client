@@ -7,7 +7,7 @@ use Http\Discovery\Exception as DiscoveryError;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Prismic\Document\Fragment\DocumentLink;
-use Prismic\Exception\InvalidArgument;
+use Prismic\Exception\InvalidPreviewToken;
 use Prismic\Exception\PrismicError;
 use Prismic\Exception\RequestFailure;
 use Prismic\Exception\RuntimeError;
@@ -21,6 +21,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
+use Throwable;
 use function http_build_query;
 use function parse_str;
 use function sprintf;
@@ -279,10 +280,17 @@ final class Api implements ApiClient
      * Preview tokens are an URI provided by the api, normally via a get request to your app. This method ensures that
      * the hostname of the given uri matches the host name of the configured repository as a request to the url will
      * be made in order to start a preview session.
+     *
+     * @throws InvalidPreviewToken if the token is invalid.
      */
     private function validatePreviewToken(string $token) : UriInterface
     {
-        $uri = $this->uriFactory->createUri(urldecode($token));
+        try {
+            $uri = $this->uriFactory->createUri(urldecode($token));
+        } catch (Throwable $error) {
+            throw InvalidPreviewToken::withInvalidUrl($error);
+        }
+
         /**
          * Because the API host will possibly be name.cdn.prismic.io but the preview domain can be name.prismic.io
          * we can only reliably verify the same parent domain name if we parse both domains with something that uses
@@ -293,7 +301,7 @@ final class Api implements ApiClient
         $previewHost = str_replace('.cdn.', '.', $uri->getHost());
         $apiHost = str_replace('.cdn.', '.', $this->baseUri->getHost());
         if ($previewHost !== $apiHost) {
-            throw InvalidArgument::mismatchedPreviewHost($this->baseUri, $uri);
+            throw InvalidPreviewToken::mismatchedPreviewHost($this->baseUri, $uri);
         }
 
         return $uri;

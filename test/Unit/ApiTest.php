@@ -16,7 +16,7 @@ use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Diactoros\StreamFactory;
 use Prismic\Api;
 use Prismic\Exception\AuthenticationError;
-use Prismic\Exception\InvalidArgument;
+use Prismic\Exception\InvalidPreviewToken;
 use Prismic\Exception\PrismicError;
 use Prismic\Exception\RequestFailure;
 use Prismic\Json;
@@ -298,9 +298,17 @@ class ApiTest extends TestCase
     public function testThatAnExceptionIsThrownWhenThePreviewTokenDoesNotMatchTheRepositoryHostname() : void
     {
         $api = Api::get('https://example.com/api/v2', null, $this->httpClient);
-        $this->expectException(InvalidArgument::class);
+        $this->expectException(InvalidPreviewToken::class);
         $this->expectExceptionMessage('The preview url has been rejected because its host name "foobar.com" does not match the api host "example.com"');
         $api->previewSession('https://foobar.com/something-nefarious');
+    }
+
+    public function testThatAnExceptionIsThrownWhenThePreviewTokenIsAnInvalidUrl() : void
+    {
+        $api = Api::get('https://example.com/api/v2', null, $this->httpClient);
+        $this->expectException(InvalidPreviewToken::class);
+        $this->expectExceptionMessage('The given preview token is not a valid url');
+        $api->previewSession('whatsup:// this is not a url');
     }
 
     /** @return mixed[] */
