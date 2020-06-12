@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.3.2 - 2020-06-12
+
+### Added
+
+- `Prismic\Exception\PreviewTokenExpired` to indicate that the given preview token is considered expired by the remote api.
+
+### Changed
+
+- Documented `Api::previewSession()` with additional exception information.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.3.1 - 2020-06-12
 
 ### Added

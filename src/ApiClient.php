@@ -5,6 +5,8 @@ namespace Prismic;
 
 use Prismic\Document\Fragment\DocumentLink;
 use Prismic\Exception\InvalidPreviewToken;
+use Prismic\Exception\PreviewTokenExpired;
+use Prismic\Exception\RequestFailure;
 use Prismic\Value\ApiData;
 use Prismic\Value\Ref;
 
@@ -111,6 +113,8 @@ interface ApiClient
      *
      * @throws InvalidPreviewToken if the token is invalid.
      * @throws InvalidPreviewToken if the token is is not an url.
+     * @throws PreviewTokenExpired if the the token provided has expired.
+     * @throws RequestFailure if an error occurs communicating with the API.
      */
     public function previewSession(string $token) :? DocumentLink;
 }

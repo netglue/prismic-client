@@ -46,6 +46,10 @@ class RequestFailure extends RuntimeException implements PrismicError
             return AuthenticationError::with($request, $response);
         }
 
+        if (PreviewTokenExpired::isPreviewTokenExpiry($response)) {
+            return PreviewTokenExpired::with($request, $response);
+        }
+
         $error = new static(sprintf(
             'Error %d. The request to the URL "%s" was rejected by the api. The error response body was "%s"',
             $status,
