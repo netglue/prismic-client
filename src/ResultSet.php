@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace Prismic;
 
+use Countable;
 use IteratorAggregate;
 
-interface ResultSet extends IteratorAggregate
+interface ResultSet extends IteratorAggregate, Countable
 {
     /**
      * The page number this result set represents in a paginated result

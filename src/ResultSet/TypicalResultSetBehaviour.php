@@ -5,6 +5,7 @@ namespace Prismic\ResultSet;
 
 use ArrayIterator;
 use Prismic\Document;
+use function count;
 use function reset;
 
 trait TypicalResultSetBehaviour
@@ -77,5 +78,10 @@ trait TypicalResultSetBehaviour
         $first = reset($this->results);
 
         return $first instanceof Document ? $first : null;
+    }
+
+    public function count() : int
+    {
+        return count($this->results);
     }
 }

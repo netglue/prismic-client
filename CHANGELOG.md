@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.3.3 - TBD
+
+### Added
+
+- Added `count()` method to TypicalResultSetBehaviour`.
+
+### Changed
+
+- ResultSet interface now extends countable ensuring that result sets are countable.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.3.2 - 2020-06-12
 
 ### Added

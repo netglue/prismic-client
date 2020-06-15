@@ -24,6 +24,24 @@
             "data": {
                 "number": 1.0
             }
+        },
+        {
+            "id": "DOC2_ID",
+            "uid": "DOC2_UID",
+            "type": "doc",
+            "href": "https://example.com/api/v2/documents/search?ref=MASTER",
+            "tags": [],
+            "first_publication_date": "2020-01-01T01:23:45+0000",
+            "last_publication_date": "2020-01-01T01:23:45+0000",
+            "slugs": [
+                "slug-2"
+            ],
+            "linked_documents": [],
+            "lang": "en-gb",
+            "alternate_languages": [],
+            "data": {
+                "number": 2.0
+            }
         }
     ]
 }
