@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+- Require version [1.8](https://github.com/php-http/discovery/releases/tag/1.8.0) for HTTP Plug discovery lib, altering API unit test to not use reflection to [retrieve default strategies](https://github.com/php-http/discovery/pull/172).
 
 ### Deprecated
 

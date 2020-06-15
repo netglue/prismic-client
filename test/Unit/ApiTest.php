@@ -354,18 +354,9 @@ class ApiTest extends TestCase
         $this->assertInstanceOf(RequestInterface::class, $sentRequest);
     }
 
-    /** @return string[] */
-    private function getPsrDiscoveryStrategies() : array
-    {
-        $prop = new ReflectionProperty(ClassDiscovery::class, 'strategies');
-        $prop->setAccessible(true);
-
-        return $prop->getValue();
-    }
-
     public function testThatAnExceptionIsThrownWhenAnHttpClientCannotBeDiscovered() : void
     {
-        $strategies = $this->getPsrDiscoveryStrategies();
+        $strategies = Psr18ClientDiscovery::getStrategies();
         Psr18ClientDiscovery::setStrategies([]);
         try {
             Api::get('foo');
@@ -382,7 +373,7 @@ class ApiTest extends TestCase
 
     public function testThatAnExceptionIsThrownWhenARequestFactoryCannotBeDiscovered() : void
     {
-        $strategies = $this->getPsrDiscoveryStrategies();
+        $strategies = Psr17FactoryDiscovery::getStrategies();
         Psr17FactoryDiscovery::setStrategies([]);
         try {
             Api::get('foo', null, $this->createMock(ClientInterface::class));
@@ -399,7 +390,7 @@ class ApiTest extends TestCase
 
     public function testThatAnExceptionIsThrownWhenAnUriFactoryCannotBeDiscovered() : void
     {
-        $strategies = $this->getPsrDiscoveryStrategies();
+        $strategies = Psr17FactoryDiscovery::getStrategies();
         Psr17FactoryDiscovery::setStrategies([]);
         try {
             Api::get(
