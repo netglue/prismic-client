@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace PrismicTest;
 
 use Http\Client\Curl\Client;
-use Http\Discovery\ClassDiscovery;
 use Http\Discovery\Exception\NotFoundException;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -26,7 +25,6 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use ReflectionProperty;
 use function sprintf;
 use function uniqid;
 use function urlencode;
