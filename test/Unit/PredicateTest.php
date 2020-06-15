@@ -10,7 +10,6 @@ use PrismicTest\Framework\TestCase;
 use function assert;
 use function serialize;
 use function unserialize;
-use function var_dump;
 use function var_export;
 
 class PredicateTest extends TestCase
