@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- `Primsic\Predicate::hasTag()` which is a helpful shortcut to find documents that are tagged with a specific value. This avoids a very common problem of forgetting that `document.tags` must be given an array when you use the `at` predicate. 
 
 ### Changed
 

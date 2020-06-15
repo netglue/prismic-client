@@ -10,6 +10,7 @@ use PrismicTest\Framework\TestCase;
 use function assert;
 use function serialize;
 use function unserialize;
+use function var_dump;
 use function var_export;
 
 class PredicateTest extends TestCase
@@ -358,5 +359,11 @@ class PredicateTest extends TestCase
         $rehydrated = unserialize(serialize($predicate));
         assert($rehydrated instanceof Predicate);
         $this->assertSame($expect, $rehydrated->q());
+    }
+
+    public function testHasTag() : void
+    {
+        $predicate = Predicate::hasTag('foo');
+        $this->assertEquals('[:d = at(document.tags, "foo")]', (string) $predicate);
     }
 }

@@ -99,6 +99,11 @@ final class Predicate implements Stringable
         return new static('at', $fragment, [$value]);
     }
 
+    public static function hasTag(string $tag) : self
+    {
+        return new static('at', 'document.tags', [$tag]);
+    }
+
     /**
      * @param string|string[] $value
      */
