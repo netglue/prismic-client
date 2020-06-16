@@ -101,7 +101,7 @@ final class Predicate implements Stringable
 
     public static function hasTag(string $tag) : self
     {
-        return new static('at', 'document.tags', [$tag]);
+        return static::at('document.tags', [$tag]);
     }
 
     /**
