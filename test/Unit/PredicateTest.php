@@ -363,6 +363,6 @@ class PredicateTest extends TestCase
     public function testHasTag() : void
     {
         $predicate = Predicate::hasTag('foo');
-        $this->assertEquals('[:d = at(document.tags, "foo")]', (string) $predicate);
+        $this->assertEquals('[:d = at(document.tags, ["foo"])]', (string) $predicate);
     }
 }
