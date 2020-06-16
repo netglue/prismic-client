@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.3.5 - 2020-06-16
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Fixed [#5](https://github.com/netglue/prismic-client/issues/5) `Predicate::hasTag()` is now correctly implemented.
+
 ## 0.3.4 - 2020-06-15
 
 ### Added
