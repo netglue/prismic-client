@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.3.6 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Added some doc comments to `Predicate::similar()` and altered the threshold argument name to more clearly communicate its behaviour.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.3.5 - 2020-06-16
 
 ### Added

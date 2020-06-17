@@ -143,9 +143,15 @@ final class Predicate implements Stringable
         return new static('fulltext', $fragment, [$value]);
     }
 
-    public static function similar(string $documentId, int $maxResults) : self
+    /**
+     * Find Similar Documents
+     *
+     * The $documentOccurrenceThreshold is defined as the maximum number of documents that a term may appear
+     * in to still be considered relevant.
+     */
+    public static function similar(string $documentId, int $documentOccurrenceThreshold) : self
     {
-        return new static('similar', $documentId, [$maxResults]);
+        return new static('similar', $documentId, [$documentOccurrenceThreshold]);
     }
 
     /**
