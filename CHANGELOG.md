@@ -11,6 +11,8 @@ All notable changes to this project will be documented in this file, in reverse 
 ### Changed
 
 - Added some doc comments to `Predicate::similar()` and altered the threshold argument name to more clearly communicate its behaviour.
+- Minor change to CS requires a space between different types of use statement.
+- Allow doctrine coding standard 7.0 || 8.0 with updated local overrides.
 
 ### Deprecated
 
