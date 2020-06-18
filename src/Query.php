@@ -3,16 +3,15 @@ declare(strict_types=1);
 
 namespace Prismic;
 
-use Http\Discovery\Psr17FactoryDiscovery;
 use Prismic\Value\FormSpec;
 use Prismic\Value\Ref;
-use Psr\Http\Message\UriFactoryInterface;
 use function array_filter;
 use function array_map;
 use function array_merge;
 use function implode;
 use function is_scalar;
 use function sprintf;
+use function strpos;
 use function urlencode;
 
 class Query
@@ -23,23 +22,19 @@ class Query
     /** @var string[][]|int[][] */
     private $parameters;
 
-    /** @var UriFactoryInterface */
-    private $uriFactory;
-
     public function __construct(FormSpec $form)
     {
         $this->form = $form;
         $this->parameters = [];
-        $this->uriFactory = Psr17FactoryDiscovery::findUrlFactory();
     }
 
     public function toUrl() : string
     {
-        $uri = $this->uriFactory->createUri($this->form->action());
-        $query = $uri->getQuery();
-        $query .= empty($query) ? $this->buildQuery() : '&' . $this->buildQuery();
+        $uri = $this->form->action();
+        $hasQuery = (strpos($uri, '?') !== false);
+        $uri .= $hasQuery ? '&' : '?';
 
-        return (string) $uri->withQuery($query);
+        return $uri . $this->buildQuery();
     }
 
     /** @return mixed[] */

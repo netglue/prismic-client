@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- Removed hidden dependency on Psr17 URI Factory Discovery in `\Prismic\Query`
 
 ### Fixed
 
