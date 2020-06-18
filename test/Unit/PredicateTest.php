@@ -21,7 +21,8 @@ class PredicateTest extends TestCase
         return [
             ['document.type', 'blog-post', '[:d = at(document.type, "blog-post")]'],
             ['my.doc-type.frag-name', 'foo', '[:d = at(my.doc-type.frag-name, "foo")]'],
-            ['document.tags', ['one', 'two', 'three'], '[:d = at(document.tags, ["one", "two", "three"])]'],
+            ['document.tags', ['one', 'two', 'three'], '[:d = at(document.tags, ["one","two","three"])]'],
+            ['my.mytype.boolean', true, '[:d = at(my.mytype.boolean, true)]'],
         ];
     }
 
@@ -43,7 +44,8 @@ class PredicateTest extends TestCase
             ['document.type', 'blog-post', '[:d = not(document.type, "blog-post")]'],
             ['my.doc-type.frag-name', 'foo', '[:d = not(my.doc-type.frag-name, "foo")]'],
             ['my.doc-type.price', 100, '[:d = not(my.doc-type.price, 100)]'],
-            ['document.tags', ['one', 'two', 'three'], '[:d = not(document.tags, ["one", "two", "three"])]'],
+            ['document.tags', ['one', 'two', 'three'], '[:d = not(document.tags, ["one","two","three"])]'],
+            ['my.doc.boolean', true, '[:d = not(my.doc.boolean, true)]'],
         ];
     }
 
@@ -62,8 +64,8 @@ class PredicateTest extends TestCase
     public function anyProvider() : array
     {
         return [
-            ['document.id', ['id1', 'id2'], '[:d = any(document.id, ["id1", "id2"])]'],
-            ['document.tags', ['one', 'two', 'three'], '[:d = any(document.tags, ["one", "two", "three"])]'],
+            ['document.id', ['id1', 'id2'], '[:d = any(document.id, ["id1","id2"])]'],
+            ['document.tags', ['one', 'two', 'three'], '[:d = any(document.tags, ["one","two","three"])]'],
             ['document.tags', ['one'], '[:d = any(document.tags, ["one"])]'],
         ];
     }
@@ -83,8 +85,8 @@ class PredicateTest extends TestCase
     public function inProvider() : array
     {
         return [
-            ['document.id', ['id1', 'id2'], '[:d = in(document.id, ["id1", "id2"])]'],
-            ['my.page.uid', ['uid1', 'uid2'], '[:d = in(my.page.uid, ["uid1", "uid2"])]'],
+            ['document.id', ['id1', 'id2'], '[:d = in(document.id, ["id1","id2"])]'],
+            ['my.page.uid', ['uid1', 'uid2'], '[:d = in(my.page.uid, ["uid1","uid2"])]'],
         ];
     }
 
