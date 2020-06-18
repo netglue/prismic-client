@@ -49,10 +49,10 @@ final class Json
      *
      * @throws JsonError If encoding the value fails for any reason.
      */
-    public static function encode($value) : string
+    public static function encode($value, int $flags = 0) : string
     {
         try {
-            return json_encode($value, JSON_THROW_ON_ERROR);
+            return json_encode($value, JSON_THROW_ON_ERROR|$flags);
         } catch (JsonException $exception) {
             throw JsonError::serializeFailed($exception);
         }

@@ -23,6 +23,7 @@ class PredicateUseCaseTest extends TestCase
             'Contains Tab'       => ["Stray\tTab"],
             'Contains Newline'   => ["New\nLine"],
             'Contains Backslash' => ['Back \ Slash'],
+            'Contains Fwdslash'  => ['Forward / Slash'],
             'Contains Form Feed' => ["Form\fFeed"],
             'Contains CR'        => ["Carriage\rReturn"],
             'Contains Backspace' => ['Back' . chr(8) . 'Space'],

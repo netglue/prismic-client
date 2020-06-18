@@ -10,6 +10,7 @@ use Stringable;
 use function array_values;
 use function is_array;
 use function is_numeric;
+use const JSON_UNESCAPED_SLASHES;
 
 final class Predicate implements Stringable
 {
@@ -74,7 +75,7 @@ final class Predicate implements Stringable
             $value = array_values($value);
         }
 
-        return Json::encode($value);
+        return Json::encode($value, JSON_UNESCAPED_SLASHES);
     }
 
     /**
