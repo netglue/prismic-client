@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.3.7 - TBD
+
+### Added
+
+- Extra `$flags` parameter to `\Prismic\Json::encode()` to allow passing standard Json extension options to `json_encode`.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Encoding of predicate values. Turns out that escaping forward slashes in the query is unacceptable to the api.
+
 ## 0.3.6 - 2020-06-18
 
 ### Added
