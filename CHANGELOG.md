@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- Incorrect serialisation of Predicate values, a hangover from the official api client, means that simple operations such as providing a quoted string in a fulltext search, i.e. `Predicate::fulltext('document', 'A "Quoted" string')` would yield 400 errors from the API. This is now fixed and new tests added prove it.
 
 ## 0.3.5 - 2020-06-16
 

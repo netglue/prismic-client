@@ -7,11 +7,9 @@ use DateTimeInterface;
 use Prismic\Exception\InvalidArgument;
 use Stringable;
 
-use function implode;
+use function array_values;
 use function is_array;
-use function is_bool;
 use function is_numeric;
-use function is_string;
 
 final class Predicate implements Stringable
 {
@@ -72,24 +70,11 @@ final class Predicate implements Stringable
      */
     private function serializeField($value) : string
     {
-        if (is_string($value)) {
-            return '"' . $value . '"';
-        }
-
-        if (is_bool($value)) {
-            return $value ? 'true' : 'false';
-        }
-
         if (is_array($value)) {
-            $fields = [];
-            foreach ($value as $elt) {
-                $fields[] = $this->serializeField($elt);
-            }
-
-            return '[' . implode(', ', $fields) . ']';
+            $value = array_values($value);
         }
 
-        return (string) $value;
+        return Json::encode($value);
     }
 
     /**
