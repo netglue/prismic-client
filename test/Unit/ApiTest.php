@@ -25,9 +25,11 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+
 use function sprintf;
 use function uniqid;
 use function urlencode;
+
 use const CURLOPT_TIMEOUT_MS;
 
 class ApiTest extends TestCase

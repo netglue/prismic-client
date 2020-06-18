@@ -29,6 +29,7 @@ use Prismic\Document\FragmentCollection;
 use Prismic\Exception\UnexpectedValue;
 use Prismic\Link;
 use Prismic\LinkResolver;
+
 use function array_filter;
 use function array_keys;
 use function array_map;
@@ -41,6 +42,7 @@ use function implode;
 use function nl2br;
 use function preg_split;
 use function sprintf;
+
 use const PREG_SPLIT_NO_EMPTY;
 
 class HtmlSerializer

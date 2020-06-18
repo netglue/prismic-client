@@ -9,6 +9,7 @@ use Prismic\Document\FragmentCollection;
 use Prismic\Exception\ImageViewNotFound;
 use Prismic\Json;
 use PrismicTest\Framework\TestCase;
+
 use function assert;
 
 class ImageTest extends TestCase

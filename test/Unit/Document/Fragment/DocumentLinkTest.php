@@ -18,7 +18,7 @@ class DocumentLinkTest extends TestCase
             'type',
             'en-gb',
             false,
-            [1,2],
+            [1, 2],
         );
     }
 
@@ -30,7 +30,7 @@ class DocumentLinkTest extends TestCase
             'type',
             'en-gb',
             false,
-            ['a','b'],
+            ['a', 'b'],
         );
         $this->addToAssertionCount(1);
 

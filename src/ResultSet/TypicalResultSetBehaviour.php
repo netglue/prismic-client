@@ -5,6 +5,7 @@ namespace Prismic\ResultSet;
 
 use ArrayIterator;
 use Prismic\Document;
+
 use function count;
 use function reset;
 

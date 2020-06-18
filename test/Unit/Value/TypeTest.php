@@ -5,7 +5,9 @@ namespace PrismicTest\Value;
 
 use Prismic\Value\Type;
 use PrismicTest\Framework\TestCase;
+
 use function json_encode;
+
 use const JSON_THROW_ON_ERROR;
 
 class TypeTest extends TestCase

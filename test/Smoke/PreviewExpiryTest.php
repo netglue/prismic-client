@@ -5,6 +5,7 @@ namespace PrismicSmokeTest;
 
 use Prismic\Api;
 use Prismic\Exception\PreviewTokenExpired;
+
 use function sprintf;
 use function str_replace;
 

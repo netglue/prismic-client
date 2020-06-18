@@ -12,6 +12,7 @@ use Prismic\Document\Fragment\TextElement;
 use Prismic\Document\Fragment\UnorderedList;
 use Prismic\Json;
 use PrismicTest\Framework\TestCase;
+
 use function assert;
 
 class RichTextTest extends TestCase

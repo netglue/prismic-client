@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Prismic\Exception;
 
 use Prismic\Value\FormSpec;
+
 use function sprintf;
 
 class UnknownFormField extends InvalidArgument

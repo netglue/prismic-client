@@ -26,7 +26,7 @@ class DocumentDataConsumerTest extends TestCase
             )
         );
 
-        $this->subject = new class($this->document) implements Document
+        $this->subject = new class ($this->document) implements Document
         {
             use DocumentDataConsumer;
 

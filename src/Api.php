@@ -22,6 +22,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
 use Throwable;
+
 use function http_build_query;
 use function parse_str;
 use function sprintf;
@@ -164,8 +165,10 @@ final class Api implements ApiClient
 
             case $status >= 300 && $status < 400:
                 throw RequestFailure::withRedirectResponse($request, $response);
+
             case $status >= 400 && $status < 500:
                 throw RequestFailure::withClientError($request, $response);
+
             case $status >= 500:
                 throw RequestFailure::withServerError($request, $response);
         }

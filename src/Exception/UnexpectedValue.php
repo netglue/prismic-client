@@ -5,6 +5,7 @@ namespace Prismic\Exception;
 
 use Prismic\Json;
 use UnexpectedValueException;
+
 use function gettype;
 use function sprintf;
 

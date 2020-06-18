@@ -12,6 +12,7 @@ use Prismic\ResultSet;
 use Prismic\Value\DataAssertionBehaviour;
 use Prismic\Value\DocumentData;
 use Psr\Http\Message\ResponseInterface;
+
 use function array_map;
 use function array_merge;
 use function count;

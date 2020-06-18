@@ -6,6 +6,7 @@ namespace Prismic;
 use DateTimeInterface;
 use Prismic\Exception\InvalidArgument;
 use Stringable;
+
 use function implode;
 use function is_array;
 use function is_bool;

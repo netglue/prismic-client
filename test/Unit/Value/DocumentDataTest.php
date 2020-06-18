@@ -16,6 +16,7 @@ use Prismic\Json;
 use Prismic\Value\DocumentData;
 use Prismic\Value\Translation;
 use PrismicTest\Framework\TestCase;
+
 use function assert;
 use function reset;
 

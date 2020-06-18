@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Prismic\Document\Fragment;
 
 use Traversable;
+
 use function assert;
 use function iterator_to_array;
 

@@ -6,8 +6,10 @@ namespace Prismic;
 use JsonException;
 use Prismic\Exception\JsonError;
 use TypeError;
+
 use function json_decode;
 use function json_encode;
+
 use const JSON_THROW_ON_ERROR;
 
 final class Json

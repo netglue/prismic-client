@@ -5,6 +5,7 @@ namespace PrismicTest;
 
 use Prismic\DefaultLinkResolver;
 use Prismic\Document\Fragment\DocumentLink;
+
 use function sprintf;
 
 class TestLinkResolver extends DefaultLinkResolver

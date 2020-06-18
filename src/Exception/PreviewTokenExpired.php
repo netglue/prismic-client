@@ -6,6 +6,7 @@ namespace Prismic\Exception;
 use Prismic\Json;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+
 use function sprintf;
 use function strpos;
 

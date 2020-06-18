@@ -17,6 +17,7 @@ use Prismic\Exception\InvalidArgument;
 use Prismic\Exception\UnexpectedValue;
 use Prismic\Json;
 use PrismicTest\Framework\TestCase;
+
 use function assert;
 
 class FactoryTest extends TestCase

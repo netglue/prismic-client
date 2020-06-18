@@ -7,12 +7,14 @@ use ArrayIterator;
 use Closure;
 use Prismic\Document\Fragment;
 use Prismic\Document\FragmentCollection;
+
 use function array_filter;
 use function array_keys;
 use function array_values;
 use function count;
 use function end;
 use function reset;
+
 use const ARRAY_FILTER_USE_BOTH;
 
 abstract class BaseCollection implements FragmentCollection

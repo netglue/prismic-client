@@ -5,6 +5,7 @@ namespace Prismic\Exception;
 
 use Psr\Http\Message\UriInterface;
 use Throwable;
+
 use function sprintf;
 
 class InvalidPreviewToken extends InvalidArgument

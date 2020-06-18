@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Prismic\Exception;
 
 use Prismic\Document\Fragment\Image;
+
 use function implode;
 use function sprintf;
 

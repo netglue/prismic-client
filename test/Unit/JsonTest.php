@@ -7,6 +7,7 @@ use JsonException;
 use Prismic\Exception\JsonError;
 use Prismic\Json;
 use PrismicTest\Framework\TestCase;
+
 use const STDOUT;
 
 class JsonTest extends TestCase

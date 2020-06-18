@@ -8,6 +8,7 @@ use Prismic\Predicate;
 use Prismic\Query;
 use Prismic\Value\FormSpec;
 use PrismicTest\Framework\TestCase;
+
 use function array_merge;
 use function sprintf;
 use function substr_count;

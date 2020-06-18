@@ -12,6 +12,7 @@ use Prismic\Document\Fragment\Collection;
 use Prismic\Document\Fragment\DocumentLink;
 use Prismic\Document\Fragment\Factory;
 use Prismic\Document\FragmentCollection;
+
 use function array_map;
 use function get_object_vars;
 

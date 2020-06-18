@@ -5,6 +5,7 @@ namespace Prismic\Document\Fragment;
 
 use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
+
 use function is_scalar;
 
 class Embed implements Fragment

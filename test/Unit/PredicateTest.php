@@ -7,6 +7,7 @@ use DateTime;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Predicate;
 use PrismicTest\Framework\TestCase;
+
 use function assert;
 use function serialize;
 use function unserialize;

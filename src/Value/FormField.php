@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Prismic\Value;
 
 use Prismic\Exception\InvalidArgument;
+
 use function is_numeric;
 use function is_string;
 

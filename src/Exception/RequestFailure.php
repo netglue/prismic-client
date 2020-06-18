@@ -7,6 +7,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
+
 use function sprintf;
 
 class RequestFailure extends RuntimeException implements PrismicError

@@ -9,6 +9,7 @@ use Prismic\Document\Fragment\Factory;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Json;
 use PrismicTest\Framework\TestCase;
+
 use function assert;
 
 class EmbedTest extends TestCase

@@ -6,6 +6,7 @@ namespace Prismic\Exception;
 use InvalidArgumentException;
 use Prismic\Json;
 use Prismic\Value\FormField;
+
 use function get_class;
 use function gettype;
 use function is_object;

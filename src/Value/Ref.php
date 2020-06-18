@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Prismic\Value;
 
 use Stringable;
+
 use function assert;
 use function is_bool;
 use function is_string;

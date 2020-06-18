@@ -6,6 +6,7 @@ namespace PrismicTest\Document\Fragment;
 use Prismic\Document\Fragment\Color;
 use Prismic\Exception\InvalidArgument;
 use PrismicTest\Framework\TestCase;
+
 use function hexdec;
 
 class ColorTest extends TestCase

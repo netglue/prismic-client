@@ -15,6 +15,7 @@ use Prismic\Serializer\HtmlSerializer;
 use Prismic\Value\DocumentData;
 use PrismicTest\Framework\TestCase;
 use PrismicTest\TestLinkResolver;
+
 use function assert;
 
 class HtmlSerializerTest extends TestCase

@@ -6,6 +6,7 @@ namespace Prismic\Document\Fragment;
 use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
 use Stringable;
+
 use function array_map;
 use function dechex;
 use function hexdec;

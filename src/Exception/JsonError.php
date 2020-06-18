@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Prismic\Exception;
 
 use JsonException;
+
 use function sprintf;
 
 class JsonError extends JsonException implements PrismicError

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace PrismicTest\Framework;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+
 use function file_exists;
 use function file_get_contents;
 use function sprintf;

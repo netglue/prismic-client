@@ -6,6 +6,7 @@ namespace Prismic\Value;
 use Prismic\Exception\UnexpectedValue;
 use Prismic\Exception\UnknownBookmark;
 use Prismic\Exception\UnknownForm;
+
 use function array_keys;
 use function array_map;
 use function get_object_vars;
