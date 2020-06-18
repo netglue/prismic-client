@@ -52,7 +52,7 @@ final class Json
     public static function encode($value, int $flags = 0) : string
     {
         try {
-            return json_encode($value, JSON_THROW_ON_ERROR|$flags);
+            return json_encode($value, JSON_THROW_ON_ERROR | $flags);
         } catch (JsonException $exception) {
             throw JsonError::serializeFailed($exception);
         }
