@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- Added public constant `EXPECTED_ERROR_MESSAGE` to PreviewTokenExpired exception so that it's easy to change the expected value if the API changes its response in this scenario.
 
 ### Changed
 
