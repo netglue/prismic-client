@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.4.1 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Embeds within rich text fragments were being parsed into 2 elements - one for the type and one for the embed itself 
+
 ## 0.4.0 - 2020-06-22
 
 ### Added

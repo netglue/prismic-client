@@ -104,6 +104,10 @@ final class Factory
                 : new EmptyFragment();
         }
 
+        if (property_exists($data, 'oembed')) {
+            return self::embedFactory(self::assertObjectPropertyIsObject($data, 'oembed'));
+        }
+
         if (property_exists($data, 'embed_url')) {
             return self::embedFactory($data);
         }
