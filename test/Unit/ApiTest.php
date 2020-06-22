@@ -22,7 +22,6 @@ use Prismic\Json;
 use PrismicTest\Framework\CacheKeyInvalid;
 use PrismicTest\Framework\TestCase;
 use Psr\Cache\CacheItemPoolInterface;
-use Psr\Cache\InvalidArgumentException as InvalidCacheKeyError;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
