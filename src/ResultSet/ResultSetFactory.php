@@ -9,4 +9,6 @@ use Psr\Http\Message\ResponseInterface;
 interface ResultSetFactory
 {
     public function withHttpResponse(ResponseInterface $response) : ResultSet;
+
+    public function withJsonObject(object $object) : ResultSet;
 }

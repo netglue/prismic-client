@@ -12,4 +12,9 @@ final class StandardResultSetFactory implements ResultSetFactory
     {
         return StandardResultSet::withHttpResponse($response);
     }
+
+    public function withJsonObject(object $object) : ResultSet
+    {
+        return StandardResultSet::factory($object);
+    }
 }

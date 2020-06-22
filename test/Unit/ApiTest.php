@@ -19,7 +19,10 @@ use Prismic\Exception\InvalidPreviewToken;
 use Prismic\Exception\PrismicError;
 use Prismic\Exception\RequestFailure;
 use Prismic\Json;
+use PrismicTest\Framework\CacheKeyInvalid;
 use PrismicTest\Framework\TestCase;
+use Psr\Cache\CacheItemPoolInterface;
+use Psr\Cache\InvalidArgumentException as InvalidCacheKeyError;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -407,6 +410,23 @@ class ApiTest extends TestCase
             return;
         } finally {
             Psr17FactoryDiscovery::setStrategies($strategies);
+        }
+    }
+
+    public function testThatExceptionsThrownDueToInvalidCacheKeysAreWrapped() : void
+    {
+        $cacheException = new CacheKeyInvalid();
+        $cache = $this->createMock(CacheItemPoolInterface::class);
+        $cache->method('getItem')
+            ->willThrowException($cacheException);
+
+        $api = Api::get('http://example.com', null, $this->httpClient, null, null, null, $cache);
+
+        try {
+            $api->data();
+            static::fail('An exception was not thrown');
+        } catch (PrismicError $error) {
+            static::assertSame($cacheException, $error->getPrevious());
         }
     }
 }

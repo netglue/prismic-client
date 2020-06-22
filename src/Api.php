@@ -15,6 +15,9 @@ use Prismic\ResultSet\ResultSetFactory;
 use Prismic\ResultSet\StandardResultSetFactory;
 use Prismic\Value\ApiData;
 use Prismic\Value\Ref;
+use Psr\Cache\CacheItemInterface;
+use Psr\Cache\CacheItemPoolInterface;
+use Psr\Cache\InvalidArgumentException as InvalidPsrCacheKey;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -25,6 +28,7 @@ use Throwable;
 
 use function http_build_query;
 use function parse_str;
+use function sha1;
 use function sprintf;
 use function str_replace;
 use function urldecode;
@@ -65,13 +69,17 @@ final class Api implements ApiClient
      */
     private $resultSetFactory;
 
+    /** @var CacheItemPoolInterface|null */
+    private $cache;
+
     private function __construct(
         string $apiBaseUri,
         ClientInterface $httpClient,
         ?string $accessToken,
         RequestFactoryInterface $requestFactory,
         UriFactoryInterface $uriFactory,
-        ResultSetFactory $resultSetFactory
+        ResultSetFactory $resultSetFactory,
+        ?CacheItemPoolInterface $cache
     ) {
         $this->requestCookies = $_COOKIE ?? [];
         $this->uriFactory = $uriFactory;
@@ -80,6 +88,7 @@ final class Api implements ApiClient
         $this->requestFactory = $requestFactory;
         $this->accessToken = $accessToken;
         $this->resultSetFactory = $resultSetFactory;
+        $this->cache = $cache;
     }
 
     /**
@@ -93,7 +102,8 @@ final class Api implements ApiClient
         ?ClientInterface $httpClient = null,
         ?RequestFactoryInterface $requestFactory = null,
         ?UriFactoryInterface $uriFactory = null,
-        ?ResultSetFactory $resultSetFactory = null
+        ?ResultSetFactory $resultSetFactory = null,
+        ?CacheItemPoolInterface $cache = null
     ) : self {
         $factory = static function ($given, callable $locator, string $message) {
             if ($given) {
@@ -123,7 +133,8 @@ final class Api implements ApiClient
             $factory($uriFactory, static function () : UriFactoryInterface {
                 return Psr17FactoryDiscovery::findUrlFactory();
             }, 'A URI factory cannot be determined'),
-            $resultSetFactory ?? new StandardResultSetFactory()
+            $resultSetFactory ?? new StandardResultSetFactory(),
+            $cache
         );
     }
 
@@ -142,10 +153,62 @@ final class Api implements ApiClient
             ? $this->uriWithQueryValue($this->baseUri, 'access_token', $this->accessToken)
             : $this->baseUri;
 
-        $response = $this->sendRequest($uri);
-        $this->data = ApiData::factory(Json::decodeObject((string) $response->getBody()));
+        $this->data = ApiData::factory($this->jsonResponse($uri));
 
         return $this->data;
+    }
+
+    private function jsonResponse(UriInterface $uri, string $method = 'GET') : object
+    {
+        if (! $this->cache) {
+            return $this->decodeResponse($this->sendRequest($uri, $method));
+        }
+
+        // Keys must be hashed to prevent cache exceptions due to invalid characters
+        $cacheKey = sha1($method . ' ' . $uri);
+        try {
+            $item = $this->cache->getItem($cacheKey);
+        } catch (InvalidPsrCacheKey $e) {
+            throw new RuntimeError(
+                sprintf('The caching library in use threw an exception for the cache key: %s', $cacheKey),
+                500,
+                $e
+            );
+        }
+
+        if ($item->isHit()) {
+            return $this->retrieveCachedResponseBody($item);
+        }
+
+        $response = $this->sendRequest($uri, $method);
+        $this->cacheResponse($uri, $method, $response, $item);
+
+        return $this->decodeResponse($response);
+    }
+
+    private function decodeResponse(ResponseInterface $response) : object
+    {
+        return Json::decodeObject((string) $response->getBody());
+    }
+
+    private function retrieveCachedResponseBody(CacheItemInterface $item) : object
+    {
+        $data = $item->get();
+
+        return Json::decodeObject($data['body'] ?? null);
+    }
+
+    private function cacheResponse(UriInterface $uri, string $method, ResponseInterface $response, CacheItemInterface $item) : void
+    {
+        $data = [
+            'uri' => (string) $uri,
+            'method' => $method,
+            'body' => (string) $response->getBody(),
+            'status' => $response->getStatusCode(),
+            'headers' => $response->getHeaders(),
+        ];
+        $item->set($data);
+        $this->cache->save($item);
     }
 
     private function sendRequest(UriInterface $uri, string $method = 'GET') : ResponseInterface
@@ -194,7 +257,7 @@ final class Api implements ApiClient
 
     public function query(Query $query) : ResultSet
     {
-        return $this->resultSetFactory->withHttpResponse($this->sendRequest(
+        return $this->resultSetFactory->withJsonObject($this->jsonResponse(
             $this->uriFactory->createUri($query->toUrl())
         ));
     }
@@ -313,7 +376,7 @@ final class Api implements ApiClient
     public function previewSession(string $token) :? DocumentLink
     {
         $uri = $this->validatePreviewToken($token);
-        $responseBody = Json::decodeObject((string) $this->sendRequest($uri)->getBody());
+        $responseBody = $this->decodeResponse($this->sendRequest($uri));
         if (isset($responseBody->mainDocument)) {
             $document = $this->findById($responseBody->mainDocument);
             if ($document) {
@@ -330,8 +393,8 @@ final class Api implements ApiClient
             return null;
         }
 
-        return $this->resultSetFactory->withHttpResponse(
-            $this->sendRequest(
+        return $this->resultSetFactory->withJsonObject(
+            $this->jsonResponse(
                 $this->uriFactory->createUri($resultSet->nextPage())
             )
         );
@@ -343,8 +406,8 @@ final class Api implements ApiClient
             return null;
         }
 
-        return $this->resultSetFactory->withHttpResponse(
-            $this->sendRequest(
+        return $this->resultSetFactory->withJsonObject(
+            $this->jsonResponse(
                 $this->uriFactory->createUri($resultSet->previousPage())
             )
         );

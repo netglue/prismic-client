@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.4.0 - TBD
+
+### Added
+
+- BC Break: `Prismic\ResultSet\ResultSetFactory` declares a new method `withJsonObject` that is now used to construct Result Sets internally. This is due to implementing caching in the library - keeping BC would have required the provision of a Response factory, or, including a response implementation in order to rehydrate http responses from the cache - this would have added bloat and additional dependencies.
+
+### Changed
+
+- The constructor `Api::get()` now accepts a `Psr\Cache\CacheItemPool` as the final argument so that the client can cache response bodies internally. It's not how I wanted things to go, but experience with trying to cache with the HTTP client alone have proven less than ideal in a number of scenarios with several approaches.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.3.7 - 2020-06-18
 
 ### Added
