@@ -11,7 +11,7 @@ This client is still a work in progress and has not been well tested in real pro
 ## Features
 
 * Uses a [PSR-18](https://www.php-fig.org/psr/psr-18) HTTP client for communicating with the API, so there is no dependency on a particular client implementation. The library depends on you either manually providing an HTTP client or falls back on [HTTPlug Discovery](https://github.com/php-http/discovery) to figure out an already available client.
-* **No caching**. Which I consider a feature 😜. You'll obviously want to cache your repository content, and you should, but instead of building in cache support and dependencies into the library, use an HTTP client that can cache responses for you with a PSR-6 cache pool [like this little beauty](https://github.com/php-http/cache-plugin)…
+* **Optional caching**. You can choose to cache using an HTTP client that can cache responses for you [like this little beauty](https://github.com/php-http/cache-plugin), or provide a PSR cache pool to the named constructor.
 * Helpful methods in the primary interface to retrieve next/previous paginated result sets or merge all paginated results to a single result set.
 * Predictable and consistent exceptions to help you recover gracefully from error conditions.
 * Iterable and filterable collections to represent Slices, groups and RichText making it trivial to locate particular types of content.
