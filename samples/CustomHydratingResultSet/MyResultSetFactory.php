@@ -32,6 +32,11 @@ class MyResultSetFactory implements ResultSetFactory
         /** Decode the response body */
         $data = Json::decodeObject((string) $response->getBody());
 
+        return $this->withJsonObject($data);
+    }
+
+    public function withJsonObject(object $data) : ResultSet
+    {
         /** Iterate over the results and construct the appropriate document type */
         $results = [];
         foreach ($data->results as $documentData) {
