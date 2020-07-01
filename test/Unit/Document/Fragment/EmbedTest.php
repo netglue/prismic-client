@@ -56,8 +56,6 @@ class EmbedTest extends TestCase
     /** @dataProvider embedProvider */
     public function testThatAttributesAreTheSameAsCorrespondingNamedMethods(Embed $embed) : void
     {
-        $this->assertSame($embed->width(), $embed->attribute('width'));
-        $this->assertSame($embed->height(), $embed->attribute('height'));
         $this->assertSame($embed->url(), $embed->attribute('embed_url'));
         $this->assertSame($embed->type(), $embed->attribute('type'));
         $this->assertSame($embed->provider(), $embed->attribute('provider_name'));

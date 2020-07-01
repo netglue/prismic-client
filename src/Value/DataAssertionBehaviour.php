@@ -114,7 +114,7 @@ trait DataAssertionBehaviour
         return $value;
     }
 
-    private static function optionalIntegerProperty(object $object, string $property) :? int
+    private static function optionalIntegerPropertyOrNull(object $object, string $property) :? int
     {
         if (! property_exists($object, $property) || $object->{$property} === null) {
             return null;
@@ -122,7 +122,7 @@ trait DataAssertionBehaviour
 
         $value = $object->{$property};
         if (! is_numeric($value)) {
-            throw UnexpectedValue::withInvalidPropertyType($object, $property, 'number');
+            return null;
         }
 
         return (int) $value;
