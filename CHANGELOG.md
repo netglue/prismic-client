@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.4.2 - 2020-07-01
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Because oEmbeds may have a string for width and height, the accessors for these properties will return null in the case where a string is present. The original attribute value can still be retrieved.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- An oEmbed with a string width or height such as "100%" will no longer cause an exception.
+
 ## 0.4.1 - 2020-06-22
 
 ### Added
