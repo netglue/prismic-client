@@ -12,6 +12,7 @@ jobs:
 
   tools:
     name: "What’s in the Tools Directory?"
+    runs-on: ubuntu-latest
     steps:
       - name: "Show Tools"
         run: "ls -l ./tools/"
