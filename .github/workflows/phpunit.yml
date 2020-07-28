@@ -32,9 +32,9 @@ jobs:
           - "7.4"
           - "8.0"
 
-      dependencies:
-        - "lowest"
-        - "highest"
+        dependencies:
+          - "lowest"
+          - "highest"
     steps:
       - uses: actions/checkout@v2
 
