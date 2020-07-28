@@ -9,6 +9,13 @@ on:
     branches:
       - master
 jobs:
+
+  tools:
+    name: "What’s in the Tools Directory?"
+    steps:
+      - name: "Show Tools"
+        run: "ls -l ./tools/"
+
   run-tests:
     name: PHP ${{ matrix.php-versions }}
     runs-on: ubuntu-latest
@@ -19,52 +26,65 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.3', '7.4', '8.0']
+        php-version:
+          - "7.3"
+          - "7.4"
+          - "8.0"
+
+      dependencies:
+        - "lowest"
+        - "highest"
     steps:
       - uses: actions/checkout@v2
+
       - name: Setup PHP Extension Cache
         id: cache-env
         uses: shivammathur/cache-extensions@v1
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php-version }}
           extensions: ${{ env.php_extentions }}
           key: ${{ env.php_extensions_cache_key }}
+
       - name: Cache PHP Extensions
         uses: actions/cache@v1
         with:
           path: ${{ steps.cache-env.outputs.dir }}
           key: ${{ steps.cache-env.outputs.key }}
           restore-keys: ${{ steps.cache-env.outputs.key }}
+
       - name: Setup PHP Action
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php-version }}
           extensions: ${{ env.php_extentions }}
           coverage: pcov
           ini-values: apc.enabled=1, apc.enable_cli=1
-      - name: Check PHP Setup
-        run: |
-          php -v
-          php -m
-          php -i
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer dependencies
-        uses: actions/cache@v1
+
+      - name: "Cache dependencies installed with composer"
+        uses: "actions/cache@v1"
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-${{ matrix.php-versions }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --ignore-platform-reqs
+          path: "~/.composer/cache"
+          key: "php${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "php${{ matrix.php-version }}-composer-${{ matrix.dependencies }}-"
+
+      - name: "Install lowest dependencies with composer"
+        if: "matrix.dependencies == 'lowest'"
+        run: "composer update --no-ansi --no-interaction --no-progress --prefer-lowest"
+
+      - name: "Install highest dependencies with composer"
+        if: "matrix.dependencies == 'highest'"
+        run: "composer update --no-ansi --no-interaction --no-progress"
+
       - name: Setup Smoke Test Repos
         run: echo $repo_config > test/config/config.php
         if: ${{ env.repo_config != '' }}
+
       - name: Check CS
         run: composer cs-check
+
       - name: PHPUnit
         run: php -dpcov.directory=. -dpcov.enabled=1 -dpcov.exclude="~vendor~" ./vendor/bin/phpunit --stop-on-error --coverage-clover=coverage.xml
+
       - name: Upload Coverage to CodeCov
         uses: codecov/codecov-action@v1
         with:
