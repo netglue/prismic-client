@@ -132,7 +132,7 @@ final class Api implements ApiClient
                 return Psr17FactoryDiscovery::findRequestFactory();
             }, 'A request factory cannot be determined'),
             $factory($uriFactory, static function (): UriFactoryInterface {
-                return Psr17FactoryDiscovery::findUrlFactory();
+                return Psr17FactoryDiscovery::findUriFactory();
             }, 'A URI factory cannot be determined'),
             $resultSetFactory ?? new StandardResultSetFactory(),
             $cache

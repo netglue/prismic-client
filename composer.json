@@ -30,7 +30,7 @@
         "php": "^7.3||^8.0",
         "ext-json": "*",
         "laminas/laminas-escaper": "^2.6",
-        "php-http/discovery": "^1.8",
+        "php-http/discovery": "^1.11",
         "psr/cache": "^1.0",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
