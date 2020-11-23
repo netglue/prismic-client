@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Value;
@@ -32,12 +33,12 @@ final class FormField
         $this->default = $default;
     }
 
-    public static function new(string $name, string $type, bool $multiple, ?string $default) : self
+    public static function new(string $name, string $type, bool $multiple, ?string $default): self
     {
         return new static($name, $type, $multiple, $default);
     }
 
-    public static function factory(string $name, object $value) : self
+    public static function factory(string $name, object $value): self
     {
         return new static(
             $name,
@@ -47,38 +48,38 @@ final class FormField
         );
     }
 
-    public function name() : string
+    public function name(): string
     {
         return $this->name;
     }
 
-    public function type() : string
+    public function type(): string
     {
         return $this->type;
     }
 
-    public function isMultiple() : bool
+    public function isMultiple(): bool
     {
         return $this->multiple;
     }
 
-    public function defaultValue() :? string
+    public function defaultValue(): ?string
     {
         return $this->default;
     }
 
-    public function expectsString() : bool
+    public function expectsString(): bool
     {
         return $this->type === self::TYPE_STRING;
     }
 
-    public function expectsInteger() : bool
+    public function expectsInteger(): bool
     {
         return $this->type === self::TYPE_INTEGER;
     }
 
     /** @param mixed $value */
-    public function validateValue($value) : void
+    public function validateValue($value): void
     {
         if (! is_string($value) && $this->expectsString()) {
             throw InvalidArgument::fieldExpectsString($this, $value);

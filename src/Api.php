@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic;
@@ -104,7 +105,7 @@ final class Api implements ApiClient
         ?UriFactoryInterface $uriFactory = null,
         ?ResultSetFactory $resultSetFactory = null,
         ?CacheItemPoolInterface $cache = null
-    ) : self {
+    ): self {
         $factory = static function ($given, callable $locator, string $message) {
             if ($given) {
                 return $given;
@@ -123,14 +124,14 @@ final class Api implements ApiClient
 
         return new self(
             $apiBaseUri,
-            $factory($httpClient, static function () : ClientInterface {
+            $factory($httpClient, static function (): ClientInterface {
                 return Psr18ClientDiscovery::find();
             }, 'An HTTP client cannot be determined.'),
             (string) $accessToken === '' ? null : $accessToken,
-            $factory($requestFactory, static function () : RequestFactoryInterface {
+            $factory($requestFactory, static function (): RequestFactoryInterface {
                 return Psr17FactoryDiscovery::findRequestFactory();
             }, 'A request factory cannot be determined'),
-            $factory($uriFactory, static function () : UriFactoryInterface {
+            $factory($uriFactory, static function (): UriFactoryInterface {
                 return Psr17FactoryDiscovery::findUrlFactory();
             }, 'A URI factory cannot be determined'),
             $resultSetFactory ?? new StandardResultSetFactory(),
@@ -138,12 +139,12 @@ final class Api implements ApiClient
         );
     }
 
-    public function host() : string
+    public function host(): string
     {
         return $this->baseUri->getHost();
     }
 
-    public function data() : ApiData
+    public function data(): ApiData
     {
         if ($this->data) {
             return $this->data;
@@ -158,7 +159,7 @@ final class Api implements ApiClient
         return $this->data;
     }
 
-    private function jsonResponse(UriInterface $uri, string $method = 'GET') : object
+    private function jsonResponse(UriInterface $uri, string $method = 'GET'): object
     {
         if (! $this->cache) {
             return $this->decodeResponse($this->sendRequest($uri, $method));
@@ -186,20 +187,24 @@ final class Api implements ApiClient
         return $this->decodeResponse($response);
     }
 
-    private function decodeResponse(ResponseInterface $response) : object
+    private function decodeResponse(ResponseInterface $response): object
     {
         return Json::decodeObject((string) $response->getBody());
     }
 
-    private function retrieveCachedResponseBody(CacheItemInterface $item) : object
+    private function retrieveCachedResponseBody(CacheItemInterface $item): object
     {
         $data = $item->get();
 
         return Json::decodeObject($data['body'] ?? null);
     }
 
-    private function cacheResponse(UriInterface $uri, string $method, ResponseInterface $response, CacheItemInterface $item) : void
-    {
+    private function cacheResponse(
+        UriInterface $uri,
+        string $method,
+        ResponseInterface $response,
+        CacheItemInterface $item
+    ): void {
         $data = [
             'uri' => (string) $uri,
             'method' => $method,
@@ -211,7 +216,7 @@ final class Api implements ApiClient
         $this->cache->save($item);
     }
 
-    private function sendRequest(UriInterface $uri, string $method = 'GET') : ResponseInterface
+    private function sendRequest(UriInterface $uri, string $method = 'GET'): ResponseInterface
     {
         $request = $this->requestFactory->createRequest($method, $uri);
         try {
@@ -239,7 +244,7 @@ final class Api implements ApiClient
         return $response;
     }
 
-    public function ref() : Ref
+    public function ref(): Ref
     {
         $ref = $this->previewRef();
         if ($ref) {
@@ -249,25 +254,25 @@ final class Api implements ApiClient
         return $this->data()->master();
     }
 
-    public function createQuery(string $form = self::DEFAULT_FORM) : Query
+    public function createQuery(string $form = self::DEFAULT_FORM): Query
     {
         return (new Query($this->data()->form($form)))
             ->ref($this->ref());
     }
 
-    public function query(Query $query) : ResultSet
+    public function query(Query $query): ResultSet
     {
         return $this->resultSetFactory->withJsonObject($this->jsonResponse(
             $this->uriFactory->createUri($query->toUrl())
         ));
     }
 
-    public function queryFirst(Query $query) :? Document
+    public function queryFirst(Query $query): ?Document
     {
         return $this->query($query)->first();
     }
 
-    public function findById(string $id) :? Document
+    public function findById(string $id): ?Document
     {
         $query = $this->createQuery()
             ->lang('*')
@@ -276,7 +281,7 @@ final class Api implements ApiClient
         return $this->queryFirst($query);
     }
 
-    public function findByUid(string $type, string $uid, string $lang = '*') :? Document
+    public function findByUid(string $type, string $uid, string $lang = '*'): ?Document
     {
         $path = sprintf('my.%s.uid', $type);
         $query = $this->createQuery()
@@ -286,13 +291,13 @@ final class Api implements ApiClient
         return $this->queryFirst($query);
     }
 
-    public function findByBookmark(string $bookmark) :? Document
+    public function findByBookmark(string $bookmark): ?Document
     {
         return $this->findById($this->data()->bookmark($bookmark)->documentId());
     }
 
     /** @param mixed $value */
-    private function uriWithQueryValue(UriInterface $uri, string $parameter, $value) : UriInterface
+    private function uriWithQueryValue(UriInterface $uri, string $parameter, $value): UriInterface
     {
         $params = [];
         parse_str((string) $uri, $params);
@@ -302,7 +307,7 @@ final class Api implements ApiClient
     }
 
     /** @inheritDoc */
-    public function setRequestCookies(array $cookies) : void
+    public function setRequestCookies(array $cookies): void
     {
         $this->requestCookies = $cookies;
     }
@@ -310,7 +315,7 @@ final class Api implements ApiClient
     /**
      * If a preview cookie is set, return the ref stored in that cookie
      */
-    private function previewRef() :? Ref
+    private function previewRef(): ?Ref
     {
         $cookieNames = [
             str_replace(['.', ' '], '_', self::PREVIEW_COOKIE),
@@ -335,7 +340,7 @@ final class Api implements ApiClient
     /**
      * Whether the current ref in use is a preview, i.e. the user is in preview mode
      */
-    public function inPreview() : bool
+    public function inPreview(): bool
     {
         return $this->previewRef() !== null;
     }
@@ -349,7 +354,7 @@ final class Api implements ApiClient
      *
      * @throws InvalidPreviewToken if the token is invalid.
      */
-    private function validatePreviewToken(string $token) : UriInterface
+    private function validatePreviewToken(string $token): UriInterface
     {
         try {
             $uri = $this->uriFactory->createUri(urldecode($token));
@@ -373,7 +378,7 @@ final class Api implements ApiClient
         return $uri;
     }
 
-    public function previewSession(string $token) :? DocumentLink
+    public function previewSession(string $token): ?DocumentLink
     {
         $uri = $this->validatePreviewToken($token);
         $responseBody = $this->decodeResponse($this->sendRequest($uri));
@@ -387,7 +392,7 @@ final class Api implements ApiClient
         return null;
     }
 
-    public function next(ResultSet $resultSet) :? ResultSet
+    public function next(ResultSet $resultSet): ?ResultSet
     {
         if (! $resultSet->nextPage()) {
             return null;
@@ -400,7 +405,7 @@ final class Api implements ApiClient
         );
     }
 
-    public function previous(ResultSet $resultSet) :? ResultSet
+    public function previous(ResultSet $resultSet): ?ResultSet
     {
         if (! $resultSet->previousPage()) {
             return null;
@@ -413,7 +418,7 @@ final class Api implements ApiClient
         );
     }
 
-    public function findAll(Query $query) : ResultSet
+    public function findAll(Query $query): ResultSet
     {
         $resultSet = $this->query($query);
         while ($next = $this->next($resultSet)) {

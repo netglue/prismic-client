@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -13,12 +14,12 @@ final class DateFragment extends DateTimeImmutable implements Fragment
     /** @var bool */
     private $isDay = false;
 
-    public function isDay() : bool
+    public function isDay(): bool
     {
         return $this->isDay;
     }
 
-    public static function day(string $value) : self
+    public static function day(string $value): self
     {
         $date = DateTimeImmutable::createFromFormat('!Y-m-d', $value, new DateTimeZone('UTC'));
         if (! $date instanceof DateTimeImmutable) {
@@ -31,7 +32,7 @@ final class DateFragment extends DateTimeImmutable implements Fragment
         return $fragment;
     }
 
-    public static function fromAtom(string $value) : self
+    public static function fromAtom(string $value): self
     {
         $date = DateTimeImmutable::createFromFormat(self::ATOM, $value, new DateTimeZone('UTC'));
         if (! $date instanceof DateTimeImmutable) {
@@ -41,12 +42,12 @@ final class DateFragment extends DateTimeImmutable implements Fragment
         return self::fromDate($date);
     }
 
-    private static function fromDate(DateTimeImmutable $date) : self
+    private static function fromDate(DateTimeImmutable $date): self
     {
         return (new self())->setTimestamp($date->getTimestamp())->setTimezone($date->getTimezone());
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return false;
     }

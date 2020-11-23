@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -27,32 +28,32 @@ class Span
         $this->link = $link;
     }
 
-    public static function new(string $type, int $start, int $end, ?string $label, ?Link $link) : self
+    public static function new(string $type, int $start, int $end, ?string $label, ?Link $link): self
     {
         return new static($type, $start, $end, $label, $link);
     }
 
-    public function type() : string
+    public function type(): string
     {
         return $this->type;
     }
 
-    public function start() : int
+    public function start(): int
     {
         return $this->start;
     }
 
-    public function end() : int
+    public function end(): int
     {
         return $this->end;
     }
 
-    public function label() :? string
+    public function label(): ?string
     {
         return $this->label;
     }
 
-    public function link() :? Link
+    public function link(): ?Link
     {
         return $this->link;
     }

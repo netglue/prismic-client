@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Value;
@@ -8,7 +9,7 @@ use PrismicTest\Framework\TestCase;
 
 class TranslationTest extends TestCase
 {
-    public function testBasicAccessors() : void
+    public function testBasicAccessors(): void
     {
         $t = Translation::new('id', 'uid', 'type', 'lang');
         $this->assertSame('id', $t->documentId());

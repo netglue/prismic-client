@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest;
@@ -10,7 +11,7 @@ use function sprintf;
 
 class TestLinkResolver extends DefaultLinkResolver
 {
-    protected function resolveDocumentLink(DocumentLink $link) :? string
+    protected function resolveDocumentLink(DocumentLink $link): ?string
     {
         if ($link->isBroken()) {
             return null;

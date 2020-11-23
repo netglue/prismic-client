@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest;
@@ -19,7 +20,7 @@ class QueryTest extends TestCase
     /** @var object */
     private $formData;
 
-    private function formData() : object
+    private function formData(): object
     {
         if (! $this->formData) {
             $this->formData = Json::decodeObject($this->jsonFixtureByFileName('forms.json'));
@@ -29,7 +30,7 @@ class QueryTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function queryWithoutDefaultQueryProvider() : iterable
+    public function queryWithoutDefaultQueryProvider(): iterable
     {
         return [
             'Standard Form' => [
@@ -42,7 +43,7 @@ class QueryTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function queryWithDefaultQueryProvider() : iterable
+    public function queryWithDefaultQueryProvider(): iterable
     {
         return [
             'Collection' => [
@@ -52,7 +53,7 @@ class QueryTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function queryProvider() : iterable
+    public function queryProvider(): iterable
     {
         return array_merge(
             $this->queryWithoutDefaultQueryProvider(),
@@ -61,7 +62,7 @@ class QueryTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function defaultUrlProvider() : iterable
+    public function defaultUrlProvider(): iterable
     {
         $queries = $this->queryProvider();
         $queries['Standard Form'][1] = 'https://example.com/api/v2?page=1&pageSize=20';
@@ -74,13 +75,13 @@ class QueryTest extends TestCase
     /**
      * @dataProvider defaultUrlProvider
      */
-    public function testDefaultUrl(Query $query, string $expectedUrl) : void
+    public function testDefaultUrl(Query $query, string $expectedUrl): void
     {
         $this->assertSame($expectedUrl, $query->toUrl());
     }
 
     /** @return mixed[] */
-    public function queryUrlProvider() : iterable
+    public function queryUrlProvider(): iterable
     {
         $queries = $this->queryProvider();
         $queries['Standard Form'][1] = 'https://example.com/api/v2?page=1&pageSize=20&q=foo';
@@ -91,7 +92,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryUrlProvider */
-    public function testThatQueryValueIsAppendedToQueryString(Query $query, string $expectedUrl) : void
+    public function testThatQueryValueIsAppendedToQueryString(Query $query, string $expectedUrl): void
     {
         $clone = $query->set('q', 'foo');
         $this->assertSame($expectedUrl, $clone->toUrl());
@@ -100,7 +101,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryProvider */
-    public function testThatSettingResultsPerPageAltersUrl(Query $query) : void
+    public function testThatSettingResultsPerPageAltersUrl(Query $query): void
     {
         $clone = $query->resultsPerPage(99);
         $this->assertStringContainsString(
@@ -118,7 +119,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryProvider */
-    public function testThatSettingAfterAltersUrl(Query $query) : void
+    public function testThatSettingAfterAltersUrl(Query $query): void
     {
         $this->assertStringNotContainsString(
             'after=DOC_ID',
@@ -131,7 +132,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryProvider */
-    public function testSettingPageNumberAltersUrl(Query $query) : void
+    public function testSettingPageNumberAltersUrl(Query $query): void
     {
         $this->assertStringContainsString(
             'page=1',
@@ -144,7 +145,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryProvider */
-    public function testThatFetchLinksIsNotInitiallySet(Query $query) : void
+    public function testThatFetchLinksIsNotInitiallySet(Query $query): void
     {
         $this->assertStringNotContainsString(
             'fetchLinks',
@@ -153,7 +154,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryProvider */
-    public function testThatFetchIsNotInitiallySet(Query $query) : void
+    public function testThatFetchIsNotInitiallySet(Query $query): void
     {
         $this->assertStringNotContainsString(
             'fetch',
@@ -162,7 +163,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryProvider */
-    public function testThatFetchCanBeProvidedWithStringArguments(Query $query) : void
+    public function testThatFetchCanBeProvidedWithStringArguments(Query $query): void
     {
         $this->assertStringContainsString(
             urlencode('first,second'),
@@ -171,7 +172,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryProvider */
-    public function testThatFetchCanBeProvidedWithIterableArgument(Query $query) : void
+    public function testThatFetchCanBeProvidedWithIterableArgument(Query $query): void
     {
         $this->assertStringContainsString(
             urlencode('first,second'),
@@ -180,7 +181,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryProvider */
-    public function testThatFetchLinksCanBeProvidedWithIterableArgument(Query $query) : void
+    public function testThatFetchLinksCanBeProvidedWithIterableArgument(Query $query): void
     {
         $this->assertStringContainsString(
             urlencode('first,second'),
@@ -189,7 +190,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryProvider */
-    public function testThatCallingFetchWithoutArgumentsRemovesParameterFromUrl(Query $query) : void
+    public function testThatCallingFetchWithoutArgumentsRemovesParameterFromUrl(Query $query): void
     {
         $this->assertStringNotContainsString(
             'fetch=',
@@ -198,7 +199,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryProvider */
-    public function testThatCallingFetchLinksWithoutArgumentsRemovesParameterFromUrl(Query $query) : void
+    public function testThatCallingFetchLinksWithoutArgumentsRemovesParameterFromUrl(Query $query): void
     {
         $this->assertStringNotContainsString(
             'fetchLinks=',
@@ -207,13 +208,13 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryWithDefaultQueryProvider */
-    public function testQueriesForFormsWithADefaultQueryWillContainQueryInUrl(Query $query) : void
+    public function testQueriesForFormsWithADefaultQueryWillContainQueryInUrl(Query $query): void
     {
         $this->assertStringContainsString('q=', $query->toUrl());
     }
 
     /** @dataProvider queryWithDefaultQueryProvider */
-    public function testThatQueriesAreAppendedToDefaultQuery(Query $query) : void
+    public function testThatQueriesAreAppendedToDefaultQuery(Query $query): void
     {
         $predicate = Predicate::at('document.id', 'baz');
         $expect = urlencode((string) $predicate);
@@ -225,7 +226,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryProvider */
-    public function testThatSettingTheQueryWillAlterTheUrl(Query $query) : void
+    public function testThatSettingTheQueryWillAlterTheUrl(Query $query): void
     {
         $predicate = Predicate::at('document.id', 'baz');
         $expect = urlencode((string) $predicate);
@@ -233,7 +234,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryWithoutDefaultQueryProvider */
-    public function testThatSettingEmptyPredicatesWillRemoveExistingQuery(Query $query) : void
+    public function testThatSettingEmptyPredicatesWillRemoveExistingQuery(Query $query): void
     {
         $predicate = Predicate::at('document.id', 'baz');
         $expect = urlencode((string) $predicate);
@@ -242,14 +243,14 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryWithDefaultQueryProvider */
-    public function testThatSettingEmptyPredicatesDoesNotRemoveDefaultQuery(Query $query) : void
+    public function testThatSettingEmptyPredicatesDoesNotRemoveDefaultQuery(Query $query): void
     {
         $query = $query->query();
         $this->assertStringContainsString('q=', $query->toUrl());
     }
 
     /** @dataProvider queryProvider */
-    public function testThatOrderIsImplodedWithSquareBrackets(Query $query) : void
+    public function testThatOrderIsImplodedWithSquareBrackets(Query $query): void
     {
         $expect = urlencode('[a,b,c]');
         $this->assertStringContainsString(
@@ -259,7 +260,7 @@ class QueryTest extends TestCase
     }
 
     /** @dataProvider queryProvider */
-    public function testThatOrderCanBeRemoved(Query $query) : void
+    public function testThatOrderCanBeRemoved(Query $query): void
     {
         $expect = urlencode('[a,b,c]');
         $this->assertStringNotContainsString(

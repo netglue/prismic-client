@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -7,7 +8,7 @@ use Prismic\Document\Fragment;
 
 final class EmptyFragment implements Fragment
 {
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return true;
     }

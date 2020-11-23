@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -34,31 +35,31 @@ final class Slice implements Fragment
         ?string $label,
         FragmentCollection $primary,
         FragmentCollection $items
-    ) : self {
+    ): self {
         return new static($type, $label, $primary, $items);
     }
 
-    public function type() : string
+    public function type(): string
     {
         return $this->type;
     }
 
-    public function label() :? string
+    public function label(): ?string
     {
         return $this->label;
     }
 
-    public function primary() : FragmentCollection
+    public function primary(): FragmentCollection
     {
         return $this->primary;
     }
 
-    public function items() : FragmentCollection
+    public function items(): FragmentCollection
     {
         return $this->items;
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return $this->primary->isEmpty() && $this->items->isEmpty();
     }

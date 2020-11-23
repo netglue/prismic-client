@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -32,13 +33,13 @@ abstract class BaseCollection implements FragmentCollection
     }
 
     /** @param Fragment[] $fragments */
-    public static function new(iterable $fragments) : self
+    public static function new(iterable $fragments): self
     {
         return new static($fragments);
     }
 
     /** @param int|string|null $key */
-    final protected function addFragment(Fragment $fragment, $key = null) : void
+    final protected function addFragment(Fragment $fragment, $key = null): void
     {
         if (! empty($key)) {
             $this->fragments[$key] = $fragment;
@@ -50,17 +51,17 @@ abstract class BaseCollection implements FragmentCollection
     }
 
     /** @return Fragment[] */
-    public function getIterator() : iterable
+    public function getIterator(): iterable
     {
         return new ArrayIterator($this->fragments);
     }
 
-    public function count() : int
+    public function count(): int
     {
         return count($this->fragments);
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         if ($this->count() === 0) {
             return true;
@@ -75,7 +76,7 @@ abstract class BaseCollection implements FragmentCollection
         return true;
     }
 
-    public function first() : Fragment
+    public function first(): Fragment
     {
         if (! $this->count()) {
             return new EmptyFragment();
@@ -84,7 +85,7 @@ abstract class BaseCollection implements FragmentCollection
         return reset($this->fragments);
     }
 
-    public function last() : Fragment
+    public function last(): Fragment
     {
         if (! $this->count()) {
             return new EmptyFragment();
@@ -104,19 +105,19 @@ abstract class BaseCollection implements FragmentCollection
     }
 
     /** @param mixed[] $value */
-    private function isHash(iterable $value) : bool
+    private function isHash(iterable $value): bool
     {
         return count(array_filter(array_keys($value), '\is_string')) > 0;
     }
 
     /** @inheritDoc */
-    public function has($name) : bool
+    public function has($name): bool
     {
         return isset($this->fragments[$name]);
     }
 
     /** @inheritDoc */
-    public function get($name) : Fragment
+    public function get($name): Fragment
     {
         if (! $this->has($name)) {
             return new EmptyFragment();
@@ -125,9 +126,9 @@ abstract class BaseCollection implements FragmentCollection
         return $this->fragments[$name];
     }
 
-    public function nonEmpty() : self
+    public function nonEmpty(): self
     {
-        return $this->filter(static function (Fragment $fragment) : bool {
+        return $this->filter(static function (Fragment $fragment): bool {
             return ! $fragment->isEmpty();
         });
     }

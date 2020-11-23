@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic;
@@ -7,7 +8,7 @@ use Prismic\Document\Fragment\DocumentLink;
 
 abstract class DefaultLinkResolver implements LinkResolver
 {
-    public function resolve(Link $link) :? string
+    public function resolve(Link $link): ?string
     {
         if ($link instanceof UrlLink) {
             return $link->url();
@@ -20,5 +21,5 @@ abstract class DefaultLinkResolver implements LinkResolver
         return null;
     }
 
-    abstract protected function resolveDocumentLink(DocumentLink $link) :? string;
+    abstract protected function resolveDocumentLink(DocumentLink $link): ?string;
 }

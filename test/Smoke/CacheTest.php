@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicSmokeTest;
@@ -14,7 +15,7 @@ use function uniqid;
 class CacheTest extends TestCase
 {
     /** @return Api[][] */
-    public function cachingApiClientProvider() : iterable
+    public function cachingApiClientProvider(): iterable
     {
         foreach ($this->compileEndPoints() as $uri => $token) {
             $api = Api::get($uri, $token, null, null, null, null, $this->psrCachePool());
@@ -24,7 +25,7 @@ class CacheTest extends TestCase
     }
 
     /** @dataProvider cachingApiClientProvider */
-    public function testThatRepeatedQueriesHitTheCache(ApiClient $api) : void
+    public function testThatRepeatedQueriesHitTheCache(ApiClient $api): void
     {
         $cache = $this->psrCachePool();
 

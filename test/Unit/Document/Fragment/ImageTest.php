@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
@@ -17,14 +18,14 @@ class ImageTest extends TestCase
     /** @var FragmentCollection */
     private $collection;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->collection = Factory::factory(Json::decodeObject($this->jsonFixtureByFileName('images.json')));
         assert($this->collection instanceof FragmentCollection);
     }
 
-    private function singleImage() : Image
+    private function singleImage(): Image
     {
         $image = $this->collection->get('single_image');
         assert($image instanceof Image);
@@ -32,7 +33,7 @@ class ImageTest extends TestCase
         return $image;
     }
 
-    public function testBasicAccessors() : void
+    public function testBasicAccessors(): void
     {
         $image = $this->singleImage();
         $this->assertSame('ALT TAG', $image->alt());
@@ -43,7 +44,7 @@ class ImageTest extends TestCase
         $this->assertNull($image->linkTo());
     }
 
-    public function testThatAMainViewIsAvailableForImagesWithoutAnyViews() : void
+    public function testThatAMainViewIsAvailableForImagesWithoutAnyViews(): void
     {
         $image = $this->singleImage();
         $this->assertSame('main', $image->viewName());
@@ -51,26 +52,26 @@ class ImageTest extends TestCase
         $this->assertSame($image, $image->getView('main'));
     }
 
-    public function testAttemptingToFetchAnUnknownImageViewIsExceptional() : void
+    public function testAttemptingToFetchAnUnknownImageViewIsExceptional(): void
     {
         $image = $this->singleImage();
         $this->expectException(ImageViewNotFound::class);
         $image->getView('whatever');
     }
 
-    public function testThatImagesAreCountable() : void
+    public function testThatImagesAreCountable(): void
     {
         $this->assertCount(1, $this->singleImage());
     }
 
-    public function testThatImagesAreIterable() : void
+    public function testThatImagesAreIterable(): void
     {
         foreach ($this->singleImage() as $view) {
             $this->assertInstanceOf(Image::class, $view);
         }
     }
 
-    public function testThatImagesAreNotConsideredEmpty() : void
+    public function testThatImagesAreNotConsideredEmpty(): void
     {
         $image = $this->singleImage();
         $this->assertFalse($image->isEmpty());

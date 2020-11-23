@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -34,13 +35,13 @@ final class Factory
     }
 
     /** @param mixed $data */
-    public function __invoke($data) : Fragment
+    public function __invoke($data): Fragment
     {
         return self::factory($data);
     }
 
     /** @param mixed $data */
-    public static function factory($data) : Fragment
+    public static function factory($data): Fragment
     {
         if (is_scalar($data)) {
             return self::scalarFactory($data);
@@ -58,7 +59,7 @@ final class Factory
     }
 
     /** @param int|float|bool|string $data */
-    private static function scalarFactory($data) : Fragment
+    private static function scalarFactory($data): Fragment
     {
         if (is_bool($data)) {
             return BooleanFragment::new($data);
@@ -85,7 +86,7 @@ final class Factory
         return StringFragment::new($data);
     }
 
-    private static function objectFactory(object $data) : Fragment
+    private static function objectFactory(object $data): Fragment
     {
         if (property_exists($data, 'dimensions')) {
             return self::imageFactory($data);
@@ -121,7 +122,7 @@ final class Factory
         }
 
         if (self::isHash($data) && ! self::isEmptyObject($data)) {
-            return Collection::new(array_map(static function ($value) : Fragment {
+            return Collection::new(array_map(static function ($value): Fragment {
                 return self::factory($value);
             }, get_object_vars($data)));
         }
@@ -129,17 +130,17 @@ final class Factory
         return new EmptyFragment();
     }
 
-    private static function isHash(object $object) : bool
+    private static function isHash(object $object): bool
     {
         return count(array_filter(array_keys(get_object_vars($object)), '\is_string')) > 0;
     }
 
-    private static function isEmptyObject(object $value) : bool
+    private static function isEmptyObject(object $value): bool
     {
         return count(get_object_vars($value)) === 0;
     }
 
-    private static function imageFactory(object $data, string $name = 'main') : Image
+    private static function imageFactory(object $data, string $name = 'main'): Image
     {
         $values = get_object_vars($data);
         unset($values['dimensions'], $values['alt'], $values['copyright'], $values['url'], $values['linkTo']);
@@ -170,7 +171,7 @@ final class Factory
         );
     }
 
-    private static function linkFactory(object $data) : Link
+    private static function linkFactory(object $data): Link
     {
         $type = self::assertObjectPropertyIsString($data, 'link_type');
 
@@ -220,7 +221,7 @@ final class Factory
         throw InvalidArgument::unknownLinkType($type, $data);
     }
 
-    private static function embedFactory(object $data) : Fragment
+    private static function embedFactory(object $data): Fragment
     {
         return Embed::new(
             self::assertObjectPropertyIsString($data, 'type'),
@@ -233,14 +234,14 @@ final class Factory
         );
     }
 
-    private static function sliceFactory(object $data) : Fragment
+    private static function sliceFactory(object $data): Fragment
     {
-        $items = Collection::new(array_map(static function ($value) : Fragment {
+        $items = Collection::new(array_map(static function ($value): Fragment {
             return self::factory($value);
         }, self::assertObjectPropertyIsArray($data, 'items')));
 
         $primary = get_object_vars(self::assertObjectPropertyIsObject($data, 'primary'));
-        $primary = Collection::new(array_map(static function ($value) : Fragment {
+        $primary = Collection::new(array_map(static function ($value): Fragment {
             return self::factory($value);
         }, $primary));
 
@@ -252,19 +253,19 @@ final class Factory
         );
     }
 
-    private static function textElementFactory(object $data) : Fragment
+    private static function textElementFactory(object $data): Fragment
     {
         return TextElement::new(
             self::assertObjectPropertyIsString($data, 'type'),
             self::optionalStringProperty($data, 'text'),
-            array_map(static function (object $span) : Span {
+            array_map(static function (object $span): Span {
                 return self::spanFactory($span);
             }, self::assertObjectPropertyIsArray($data, 'spans')),
             self::optionalStringProperty($data, 'label')
         );
     }
 
-    private static function spanFactory(object $data) : Span
+    private static function spanFactory(object $data): Span
     {
         $extra = property_exists($data, 'data') && is_object($data->data) ? $data->data : null;
         $label = null;
@@ -285,7 +286,7 @@ final class Factory
     }
 
     /** @param mixed[] $data */
-    private static function arrayFactory(array $data) : Fragment
+    private static function arrayFactory(array $data): Fragment
     {
         $fragments = [];
         $richText = false;

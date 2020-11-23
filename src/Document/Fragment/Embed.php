@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -54,12 +55,12 @@ class Embed implements Fragment
         ?int $width,
         ?int $height,
         iterable $attributes
-    ) : self {
+    ): self {
         return new static($type, $url, $provider, $html, $width, $height, $attributes);
     }
 
     /** @param mixed[] $attributes */
-    private function setAttributes(iterable $attributes) : void
+    private function setAttributes(iterable $attributes): void
     {
         foreach ($attributes as $name => $value) {
             $this->setAttribute($name, $value);
@@ -67,7 +68,7 @@ class Embed implements Fragment
     }
 
     /** @param string|int|float|bool $value */
-    private function setAttribute(string $name, $value) : void
+    private function setAttribute(string $name, $value): void
     {
         if ($value !== null && ! is_scalar($value)) {
             throw InvalidArgument::scalarExpected($value);
@@ -76,43 +77,43 @@ class Embed implements Fragment
         $this->attributes[$name] = $value;
     }
 
-    public function url() : string
+    public function url(): string
     {
         return $this->url;
     }
 
-    public function type() : string
+    public function type(): string
     {
         return $this->type;
     }
 
-    public function provider() :? string
+    public function provider(): ?string
     {
         return $this->provider;
     }
 
-    public function html() :? string
+    public function html(): ?string
     {
         return $this->html;
     }
 
-    public function width() :? int
+    public function width(): ?int
     {
         return $this->width;
     }
 
-    public function height() :? int
+    public function height(): ?int
     {
         return $this->height;
     }
 
     /** @return string[]|int[]|float[]|bool[]|null[] */
-    public function attributes() : iterable
+    public function attributes(): iterable
     {
         return $this->attributes;
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return false;
     }

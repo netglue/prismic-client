@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicSmokeTest;
@@ -8,7 +9,7 @@ use Prismic\Api;
 class QueryTest extends TestCase
 {
     /** @dataProvider apiDataProvider */
-    public function testThatOrderingResultsIsPossible(Api $api) : void
+    public function testThatOrderingResultsIsPossible(Api $api): void
     {
         $query = $api->createQuery()
             ->resultsPerPage(10);

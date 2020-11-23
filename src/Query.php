@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic;
@@ -29,7 +30,7 @@ class Query
         $this->parameters = [];
     }
 
-    public function toUrl() : string
+    public function toUrl(): string
     {
         $uri = $this->form->action();
         $hasQuery = (strpos($uri, '?') !== false);
@@ -39,7 +40,7 @@ class Query
     }
 
     /** @return mixed[] */
-    private function mergeWithDefaults() : array
+    private function mergeWithDefaults(): array
     {
         $parameters = $this->defaultParameters();
         foreach ($this->parameters as $name => $value) {
@@ -56,9 +57,9 @@ class Query
         return $parameters;
     }
 
-    private function buildQuery() : string
+    private function buildQuery(): string
     {
-        $flatten = static function (string $name, $params) : string {
+        $flatten = static function (string $name, $params): string {
             $query = [];
             $params = is_scalar($params) ? [$params] : $params;
             foreach ($params as $param) {
@@ -77,7 +78,7 @@ class Query
     }
 
     /** @param int|string $value */
-    public function set(string $key, $value) : self
+    public function set(string $key, $value): self
     {
         $field = $this->form->field($key);
         $field->validateValue($value);
@@ -96,7 +97,7 @@ class Query
     }
 
     /** @param int[]|string[] $parameters */
-    private function withParameters(array $parameters) : self
+    private function withParameters(array $parameters): self
     {
         $clone = new static($this->form);
         $clone->parameters = $parameters;
@@ -105,7 +106,7 @@ class Query
     }
 
     /** @return string[]|int[] */
-    private function defaultParameters() : iterable
+    private function defaultParameters(): iterable
     {
         $parameters = [];
         foreach ($this->form as $field) {
@@ -134,7 +135,7 @@ class Query
      *
      * The default is 20 per page and the maximum is 100
      */
-    public function resultsPerPage(int $count) : self
+    public function resultsPerPage(int $count): self
     {
         return $this->set('pageSize', $count);
     }
@@ -142,7 +143,7 @@ class Query
     /**
      * Set the result page to retrieve.
      */
-    public function page(int $page) : self
+    public function page(int $page): self
     {
         return $this->set('page', $page);
     }
@@ -153,7 +154,7 @@ class Query
      * If the language is unspecified, by default results will only include documents that are found in the
      * default language for your repository.
      */
-    public function lang(string $lang) : self
+    public function lang(string $lang): self
     {
         return $this->set('lang', $lang);
     }
@@ -161,7 +162,7 @@ class Query
     /**
      * Set the after parameter: the id of the document to start the results from (excluding that document).
      */
-    public function after(string $documentId) : self
+    public function after(string $documentId): self
     {
         return $this->set('after', $documentId);
     }
@@ -174,7 +175,7 @@ class Query
      *
      * Note that paths are not prefixed with "my." like they are for predicates
      */
-    public function fetch(string ...$fields) : self
+    public function fetch(string ...$fields): self
     {
         $fields = array_filter($fields);
         if (empty($fields)) {
@@ -195,7 +196,7 @@ class Query
      *
      * Note that paths are not prefixed with "my." like they are for predicates
      */
-    public function fetchLinks(string ...$fields) : self
+    public function fetchLinks(string ...$fields): self
     {
         $fields = array_filter($fields);
         if (empty($fields)) {
@@ -214,7 +215,7 @@ class Query
      * By default, the ref is not set, but it is a required parameter.
      * Failing to set the ref will result in a 400 error from the Rest Api
      */
-    public function ref(Ref $ref) : self
+    public function ref(Ref $ref): self
     {
         return $this->set('ref', (string) $ref);
     }
@@ -228,7 +229,7 @@ class Query
      * The default direction is ascending.
      * To sort descending append the "desc" keyword like this: "my.my-type.field-name desc"
      */
-    public function order(string ...$fields) : self
+    public function order(string ...$fields): self
     {
         $fields = array_filter($fields);
         if (empty($fields)) {
@@ -247,7 +248,7 @@ class Query
      * Pass in either a single or multiple predicate arguments, or an array of predicates.
      * You can also provide an empty array to remove the existing predicates.
      */
-    public function query(Predicate ...$predicates) : self
+    public function query(Predicate ...$predicates): self
     {
         $predicates = array_filter($predicates);
         if (empty($predicates)) {
@@ -257,7 +258,7 @@ class Query
             return $this->withParameters($parameters);
         }
 
-        $query = '[' . implode('', array_map(static function (Predicate $predicate) : string {
+        $query = '[' . implode('', array_map(static function (Predicate $predicate): string {
             return $predicate->q();
         }, $predicates)) . ']';
 

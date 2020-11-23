@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicSmokeTest\Example;
@@ -12,7 +13,7 @@ use PrismicSmokeTest\TestCase;
 class ExampleHydratingResultSetTest extends TestCase
 {
     /** @return Api[][] */
-    public function hydratingApiProvider() : iterable
+    public function hydratingApiProvider(): iterable
     {
         foreach ($this->compileEndPoints() as $url => $token) {
             $api = Api::get($url, $token, $this->httpClient());
@@ -30,7 +31,7 @@ class ExampleHydratingResultSetTest extends TestCase
     }
 
     /** @dataProvider hydratingApiProvider */
-    public function testBasicFunctionalityIsSane(Api $api) : void
+    public function testBasicFunctionalityIsSane(Api $api): void
     {
         $query = $api->createQuery()->resultsPerPage(1);
         $resultSet = $api->query($query);

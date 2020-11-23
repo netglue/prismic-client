@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -15,17 +16,17 @@ final class BooleanFragment implements Fragment
         $this->value = $value;
     }
 
-    public static function new(bool $value) : self
+    public static function new(bool $value): self
     {
         return new static($value);
     }
 
-    public function __invoke() : bool
+    public function __invoke(): bool
     {
         return $this->value;
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return false;
     }

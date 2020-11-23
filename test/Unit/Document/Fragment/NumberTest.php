@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
@@ -9,13 +10,13 @@ use PrismicTest\Framework\TestCase;
 
 class NumberTest extends TestCase
 {
-    public function testNonNumbersAreExceptional() : void
+    public function testNonNumbersAreExceptional(): void
     {
         $this->expectException(InvalidArgument::class);
         Number::new('foo');
     }
 
-    public function testConstructor() : Number
+    public function testConstructor(): Number
     {
         $number = Number::new(1);
         $this->addToAssertionCount(1);
@@ -24,25 +25,25 @@ class NumberTest extends TestCase
     }
 
     /** @depends testConstructor */
-    public function testValueIsExpectedValue(Number $number) : void
+    public function testValueIsExpectedValue(Number $number): void
     {
         $this->assertSame(1, $number->value());
     }
 
     /** @depends testConstructor */
-    public function testToIntegerIsExpectedValue(Number $number) : void
+    public function testToIntegerIsExpectedValue(Number $number): void
     {
         $this->assertSame(1, $number->toInteger());
     }
 
     /** @depends testConstructor */
-    public function testToFloatIsExpectedValue(Number $number) : void
+    public function testToFloatIsExpectedValue(Number $number): void
     {
         $this->assertSame(1.0, $number->toFloat());
     }
 
     /** @return mixed[] */
-    public function numberProvider() : iterable
+    public function numberProvider(): iterable
     {
         return [
             '1' => [Number::new(1)],
@@ -55,12 +56,12 @@ class NumberTest extends TestCase
     }
 
     /** @dataProvider numberProvider */
-    public function testANumberIsNotConsideredEmpty(Number $number) : void
+    public function testANumberIsNotConsideredEmpty(Number $number): void
     {
         $this->assertFalse($number->isEmpty());
     }
 
-    public function testThatAFloatIsAFloatAndAnIntIsAnInt() : void
+    public function testThatAFloatIsAFloatAndAnIntIsAnInt(): void
     {
         $this->assertTrue(Number::new(1)->isInteger());
         $this->assertTrue(Number::new(1.0)->isFloat());

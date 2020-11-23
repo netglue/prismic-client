@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -33,8 +34,16 @@ final class Image implements Fragment, IteratorAggregate, Countable
     private $link;
 
     /** @param self[] $views */
-    private function __construct(string $name, string $url, int $width, int $height, ?string $alt, ?string $copyright, ?iterable $views, ?Link $linkTo)
-    {
+    private function __construct(
+        string $name,
+        string $url,
+        int $width,
+        int $height,
+        ?string $alt,
+        ?string $copyright,
+        ?iterable $views,
+        ?Link $linkTo
+    ) {
         $this->name = $name;
         $this->url = $url;
         $this->width = $width;
@@ -50,22 +59,30 @@ final class Image implements Fragment, IteratorAggregate, Countable
     }
 
     /** @param self[] $views */
-    public static function new(string $name, string $url, int $width, int $height, ?string $alt, ?string $copyright, ?iterable $views, ?Link $linkTo) : self
-    {
-        return new static($name, $url, $width, $height, $alt, $copyright, $views, $linkTo);
+    public static function new(
+        string $name,
+        string $url,
+        int $width,
+        int $height,
+        ?string $alt,
+        ?string $copyright,
+        ?iterable $views,
+        ?Link $linkTo
+    ): self {
+        return new self($name, $url, $width, $height, $alt, $copyright, $views, $linkTo);
     }
 
-    private function addView(self $image) : void
+    private function addView(self $image): void
     {
         $this->views[$image->name] = $image;
     }
 
-    public function viewName() : string
+    public function viewName(): string
     {
         return $this->name;
     }
 
-    public function getView(string $name) : Image
+    public function getView(string $name): Image
     {
         if (isset($this->views[$name])) {
             return $this->views[$name];
@@ -75,53 +92,53 @@ final class Image implements Fragment, IteratorAggregate, Countable
     }
 
     /** @return string[] */
-    public function knownViews() : array
+    public function knownViews(): array
     {
         return array_keys($this->views);
     }
 
-    public function alt() :? string
+    public function alt(): ?string
     {
         return $this->alt;
     }
 
-    public function height() : int
+    public function height(): int
     {
         return $this->height;
     }
 
-    public function width() : int
+    public function width(): int
     {
         return $this->width;
     }
 
-    public function url() : string
+    public function url(): string
     {
         return $this->url;
     }
 
-    public function copyright() :? string
+    public function copyright(): ?string
     {
         return $this->copyright;
     }
 
-    public function linkTo() :? Link
+    public function linkTo(): ?Link
     {
         return $this->link;
     }
 
     /** @return self[] */
-    public function getIterator() : iterable
+    public function getIterator(): iterable
     {
         return new ArrayIterator($this->views);
     }
 
-    public function count() : int
+    public function count(): int
     {
         return count($this->views);
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return false;
     }

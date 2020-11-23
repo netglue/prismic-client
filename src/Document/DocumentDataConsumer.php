@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document;
@@ -13,54 +14,54 @@ trait DocumentDataConsumer
     /** @var DocumentData */
     private $data;
 
-    public function id() : string
+    public function id(): string
     {
         return $this->data->id();
     }
 
-    public function uid() :? string
+    public function uid(): ?string
     {
         return $this->data->uid();
     }
 
-    public function type() : string
+    public function type(): string
     {
         return $this->data->type();
     }
 
     /** @return string[] */
-    public function tags() : iterable
+    public function tags(): iterable
     {
         return $this->data->tags();
     }
 
-    public function lang() : string
+    public function lang(): string
     {
         return $this->data->lang();
     }
 
-    public function firstPublished() : DateTimeInterface
+    public function firstPublished(): DateTimeInterface
     {
         return $this->data->firstPublished();
     }
 
-    public function lastPublished() : DateTimeInterface
+    public function lastPublished(): DateTimeInterface
     {
         return $this->data->lastPublished();
     }
 
     /** @return Translation[] */
-    public function translations() : iterable
+    public function translations(): iterable
     {
         return $this->data->translations();
     }
 
-    public function asLink() : DocumentLink
+    public function asLink(): DocumentLink
     {
         return $this->data->asLink();
     }
 
-    public function data() : DocumentData
+    public function data(): DocumentData
     {
         return $this->data;
     }

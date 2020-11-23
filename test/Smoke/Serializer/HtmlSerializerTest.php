@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicSmokeTest\Serializer;
@@ -13,14 +14,14 @@ class HtmlSerializerTest extends TestCase
     /** @var HtmlSerializer */
     private $serializer;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->serializer = new HtmlSerializer(new TestLinkResolver());
     }
 
     /** @dataProvider apiDataProvider */
-    public function testThatAllDocumentsCanBeRenderedWithOutError(Api $api) : void
+    public function testThatAllDocumentsCanBeRenderedWithOutError(Api $api): void
     {
         $documentCount = 0;
         foreach ($api->findAll($api->createQuery()) as $document) {

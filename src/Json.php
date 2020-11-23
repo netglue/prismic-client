@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic;
@@ -17,7 +18,7 @@ final class Json
     /**
      * @throws JsonError If decoding the payload fails for any reason.
      */
-    public static function decodeObject(string $jsonString) : object
+    public static function decodeObject(string $jsonString): object
     {
         try {
             return json_decode($jsonString, false, 512, JSON_THROW_ON_ERROR);
@@ -49,7 +50,7 @@ final class Json
      *
      * @throws JsonError If encoding the value fails for any reason.
      */
-    public static function encode($value, int $flags = 0) : string
+    public static function encode($value, int $flags = 0): string
     {
         try {
             return json_encode($value, JSON_THROW_ON_ERROR | $flags);

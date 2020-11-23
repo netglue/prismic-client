@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Exception;
@@ -10,7 +11,7 @@ use function sprintf;
 
 class ImageViewNotFound extends InvalidArgument
 {
-    public static function withNameAndImage(string $name, Image $image) : self
+    public static function withNameAndImage(string $name, Image $image): self
     {
         return new static(sprintf(
             'The image view "%s" does not exist. Known view names are: %s',

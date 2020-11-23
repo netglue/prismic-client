@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
@@ -8,7 +9,7 @@ use PrismicTest\Framework\TestCase;
 
 class GeoPointTest extends TestCase
 {
-    public function testConstructor() : GeoPoint
+    public function testConstructor(): GeoPoint
     {
         $point = GeoPoint::new(1.234, 5.678);
         $this->addToAssertionCount(1);
@@ -17,19 +18,19 @@ class GeoPointTest extends TestCase
     }
 
     /** @depends testConstructor */
-    public function testLatitudeIsExpectedValue(GeoPoint $point) : void
+    public function testLatitudeIsExpectedValue(GeoPoint $point): void
     {
         $this->assertEquals(1.234, $point->latitude());
     }
 
     /** @depends testConstructor */
-    public function testLongitudeIsExpectedValue(GeoPoint $point) : void
+    public function testLongitudeIsExpectedValue(GeoPoint $point): void
     {
         $this->assertEquals(5.678, $point->longitude());
     }
 
     /** @depends testConstructor */
-    public function testThatGeoPointsAreNotConsideredEmpty(GeoPoint $point) : void
+    public function testThatGeoPointsAreNotConsideredEmpty(GeoPoint $point): void
     {
         $this->assertFalse($point->isEmpty());
     }

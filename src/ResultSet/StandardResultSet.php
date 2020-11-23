@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\ResultSet;
@@ -51,7 +52,7 @@ final class StandardResultSet implements ResultSet
         $this->results = $results;
     }
 
-    public static function withHttpResponse(ResponseInterface $response) : ResultSet
+    public static function withHttpResponse(ResponseInterface $response): ResultSet
     {
         $instance = self::factory(Json::decodeObject((string) $response->getBody()));
         $dateHeader = current($response->getHeader('Date'));
@@ -66,9 +67,9 @@ final class StandardResultSet implements ResultSet
         return $instance;
     }
 
-    public static function factory(object $data) : self
+    public static function factory(object $data): self
     {
-        $results = array_map(static function (object $document) : DocumentData {
+        $results = array_map(static function (object $document): DocumentData {
             return DocumentData::factory($document);
         }, self::assertObjectPropertyIsArray($data, 'results'));
 
@@ -91,7 +92,7 @@ final class StandardResultSet implements ResultSet
      *
      * All dates are UTC
      */
-    public function expiresAt() : DateTimeImmutable
+    public function expiresAt(): DateTimeImmutable
     {
         if (! $this->cacheDate || ! $this->maxAge) {
             return (new DateTimeImmutable())->setTimezone(new DateTimeZone('UTC'));
@@ -100,7 +101,7 @@ final class StandardResultSet implements ResultSet
         return $this->cacheDate->add(new DateInterval(sprintf('PT%dS', $this->maxAge)));
     }
 
-    public function merge(ResultSet $with) : ResultSet
+    public function merge(ResultSet $with): ResultSet
     {
         $results = array_merge($this->results, $with->results());
 

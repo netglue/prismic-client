@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Value;
@@ -32,43 +33,43 @@ final class ApiData
     {
     }
 
-    public static function factory(object $payload) : ApiData
+    public static function factory(object $payload): ApiData
     {
         $data = new static();
-        $data->refs = array_map(static function (object $ref) : Ref {
+        $data->refs = array_map(static function (object $ref): Ref {
             return Ref::factory($ref);
         }, self::assertObjectPropertyIsArray($payload, 'refs'));
 
         $bookmarks = get_object_vars(self::assertObjectPropertyIsObject($payload, 'bookmarks'));
-        $data->bookmarks = array_map(static function (string $name, string $id) : Bookmark {
+        $data->bookmarks = array_map(static function (string $name, string $id): Bookmark {
             return Bookmark::new($name, $id);
         }, array_keys($bookmarks), $bookmarks);
 
         $types = get_object_vars(self::assertObjectPropertyIsObject($payload, 'types'));
-        $data->types = array_map(static function (string $id, string $name) : Type {
+        $data->types = array_map(static function (string $id, string $name): Type {
             return Type::new($id, $name);
         }, array_keys($types), $types);
 
-        $data->languages = array_map(static function (object $lang) : Language {
+        $data->languages = array_map(static function (object $lang): Language {
             return Language::factory($lang);
         }, self::assertObjectPropertyIsArray($payload, 'languages'));
 
         $data->setTags(...self::assertObjectPropertyIsArray($payload, 'tags'));
 
         $forms = get_object_vars(self::assertObjectPropertyIsObject($payload, 'forms'));
-        $data->forms = array_map(static function (string $id, object $form) : FormSpec {
+        $data->forms = array_map(static function (string $id, object $form): FormSpec {
             return FormSpec::factory($id, $form);
         }, array_keys($forms), $forms);
 
         return $data;
     }
 
-    private function setTags(string ...$tags) : void
+    private function setTags(string ...$tags): void
     {
         $this->tags = $tags;
     }
 
-    private function getForm(string $name) :? FormSpec
+    private function getForm(string $name): ?FormSpec
     {
         foreach ($this->forms as $form) {
             if ($form->id() === $name) {
@@ -79,7 +80,7 @@ final class ApiData
         return null;
     }
 
-    public function hasForm(string $name) : bool
+    public function hasForm(string $name): bool
     {
         return $this->getForm($name) instanceof FormSpec;
     }
@@ -87,7 +88,7 @@ final class ApiData
     /**
      * @throws UnknownForm if $name does not correspond to a known form.
      */
-    public function form(string $name) : FormSpec
+    public function form(string $name): FormSpec
     {
         $form = $this->getForm($name);
         if (! $form) {
@@ -97,7 +98,7 @@ final class ApiData
         return $form;
     }
 
-    public function master() : Ref
+    public function master(): Ref
     {
         foreach ($this->refs as $ref) {
             if (! $ref->isMaster()) {
@@ -111,17 +112,17 @@ final class ApiData
     }
 
     /** @return string[] */
-    public function tags() : iterable
+    public function tags(): iterable
     {
         return $this->tags;
     }
 
-    public function isBookmarked(string $id) : bool
+    public function isBookmarked(string $id): bool
     {
         return $this->bookmarkFromDocumentId($id) instanceof Bookmark;
     }
 
-    public function bookmarkFromDocumentId(string $id) :? Bookmark
+    public function bookmarkFromDocumentId(string $id): ?Bookmark
     {
         foreach ($this->bookmarks as $bookmark) {
             if ($bookmark->documentId() === $id) {
@@ -135,7 +136,7 @@ final class ApiData
     /**
      * @throws UnknownBookmark if $name does not correspond to a known bookmark.
      */
-    public function bookmark(string $name) : Bookmark
+    public function bookmark(string $name): Bookmark
     {
         foreach ($this->bookmarks as $bookmark) {
             if ($bookmark->name() !== $name) {
@@ -149,19 +150,19 @@ final class ApiData
     }
 
     /** @return Type[] */
-    public function types() : iterable
+    public function types(): iterable
     {
         return $this->types;
     }
 
     /** @return Bookmark[] */
-    public function bookmarks() : iterable
+    public function bookmarks(): iterable
     {
         return $this->bookmarks;
     }
 
     /** @return Language[] */
-    public function languages() : iterable
+    public function languages(): iterable
     {
         return $this->languages;
     }

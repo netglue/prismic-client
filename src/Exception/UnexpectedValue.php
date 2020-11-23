@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Exception;
@@ -11,7 +12,7 @@ use function sprintf;
 
 class UnexpectedValue extends UnexpectedValueException implements PrismicError
 {
-    public static function withMissingProperty(object $object, string $property) : self
+    public static function withMissingProperty(object $object, string $property): self
     {
         $message = sprintf(
             'Expected an object to contain the property "%s" but it was not present: Received %s',
@@ -22,7 +23,7 @@ class UnexpectedValue extends UnexpectedValueException implements PrismicError
         return new static($message);
     }
 
-    public static function withInvalidPropertyType(object $object, string $property, string $expectedType) : self
+    public static function withInvalidPropertyType(object $object, string $property, string $expectedType): self
     {
         return new static(sprintf(
             'Expected the object property "%s" to be a %s but received %s. Object: %s',
@@ -33,7 +34,7 @@ class UnexpectedValue extends UnexpectedValueException implements PrismicError
         ));
     }
 
-    public static function missingMasterRef() : self
+    public static function missingMasterRef(): self
     {
         return new self('No master ref can be determined');
     }

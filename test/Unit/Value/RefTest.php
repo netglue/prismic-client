@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Value;
@@ -8,7 +9,7 @@ use PrismicTest\Framework\TestCase;
 
 class RefTest extends TestCase
 {
-    public function testExpectedBehaviour() : void
+    public function testExpectedBehaviour(): void
     {
         $ref = Ref::new('foo', 'bar', 'baz', true);
         $this->assertSame('foo', $ref->id());
@@ -17,7 +18,7 @@ class RefTest extends TestCase
         $this->assertTrue($ref->isMaster());
     }
 
-    public function testRefCanBeCastToAString() : void
+    public function testRefCanBeCastToAString(): void
     {
         $ref = Ref::new('foo', 'bar', 'baz', true);
         $this->assertSame('bar', (string) $ref);

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -22,7 +23,7 @@ final class Number implements Fragment, Stringable
     }
 
     /** @param int|float $number */
-    public static function new($number) : self
+    public static function new($number): self
     {
         if (! is_int($number) && ! is_float($number)) {
             throw InvalidArgument::numberExpected($number);
@@ -31,12 +32,12 @@ final class Number implements Fragment, Stringable
         return new static($number);
     }
 
-    public function isFloat() : bool
+    public function isFloat(): bool
     {
         return is_float($this->value);
     }
 
-    public function isInteger() : bool
+    public function isInteger(): bool
     {
         return is_int($this->value);
     }
@@ -47,22 +48,22 @@ final class Number implements Fragment, Stringable
         return $this->value;
     }
 
-    public function toInteger() : int
+    public function toInteger(): int
     {
         return (int) $this->value;
     }
 
-    public function toFloat() : float
+    public function toFloat(): float
     {
         return (float) $this->value;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return (string) $this->value;
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return false;
     }

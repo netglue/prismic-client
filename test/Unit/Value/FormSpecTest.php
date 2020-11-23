@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Value;
@@ -13,7 +14,7 @@ class FormSpecTest extends TestCase
     /** @var FormSpec */
     private $form;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $json = <<<EOF
@@ -35,7 +36,7 @@ class FormSpecTest extends TestCase
         $this->form = FormSpec::factory('my-form', Json::decodeObject($json));
     }
 
-    public function testBasicAccessors() : void
+    public function testBasicAccessors(): void
     {
         $this->assertEquals('GET', $this->form->method());
         $this->assertEquals('https://example.com', $this->form->action());
@@ -43,19 +44,19 @@ class FormSpecTest extends TestCase
         $this->assertEquals('my-form', $this->form->id());
     }
 
-    public function testHasField() : void
+    public function testHasField(): void
     {
         $this->assertFalse($this->form->hasField('unknown'));
         $this->assertTrue($this->form->hasField('my-field'));
     }
 
-    public function testFormFieldsCanBeRetrieved() : void
+    public function testFormFieldsCanBeRetrieved(): void
     {
         $field = $this->form->field('my-field');
         $this->assertSame('Integer', $field->type());
     }
 
-    public function testItsExceptionalToFetchAnUnknownFormField() : void
+    public function testItsExceptionalToFetchAnUnknownFormField(): void
     {
         $this->expectException(UnknownFormField::class);
         $this->form->field('unknown');

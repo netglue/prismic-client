@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Exception;
@@ -15,7 +16,7 @@ use function sprintf;
 class InvalidArgument extends InvalidArgumentException implements PrismicError
 {
     /** @param mixed $received */
-    public static function scalarExpected($received) : self
+    public static function scalarExpected($received): self
     {
         return new static(sprintf(
             'A scalar argument was expected but %s was received',
@@ -24,7 +25,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
     }
 
     /** @param mixed $received */
-    public static function numberExpected($received) : self
+    public static function numberExpected($received): self
     {
         return new static(sprintf(
             'Either a float or an integer was expected but %s was received',
@@ -32,7 +33,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
         ));
     }
 
-    public static function invalidColor(string $value) : self
+    public static function invalidColor(string $value): self
     {
         return new static(sprintf(
             'Expected a string that looks like a hex colour with a # prefix but received "%s"',
@@ -40,7 +41,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
         ));
     }
 
-    public static function invalidDateFormat(string $expectedFormat, string $value) : self
+    public static function invalidDateFormat(string $expectedFormat, string $value): self
     {
         return new static(sprintf(
             'Expected a date value in the format %s but received "%s"',
@@ -49,7 +50,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
         ));
     }
 
-    public static function unknownLinkType(string $type, object $payload) : self
+    public static function unknownLinkType(string $type, object $payload): self
     {
         return new static(sprintf(
             'The link type "%s" is not a known type of link. Found in the object: %s',
@@ -59,7 +60,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
     }
 
     /** @param mixed $invalidValue */
-    public static function fieldExpectsString(FormField $field, $invalidValue) : self
+    public static function fieldExpectsString(FormField $field, $invalidValue): self
     {
         return new static(sprintf(
             'The form field "%s" expects a string value but received %s',
@@ -69,7 +70,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
     }
 
     /** @param mixed $invalidValue */
-    public static function fieldExpectsNumber(FormField $field, $invalidValue) : self
+    public static function fieldExpectsNumber(FormField $field, $invalidValue): self
     {
         return new static(sprintf(
             'The form field "%s" expects an integer value but received %s',

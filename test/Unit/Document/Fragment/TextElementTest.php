@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
@@ -9,7 +10,7 @@ use TypeError;
 
 class TextElementTest extends TestCase
 {
-    public function testConstructor() : TextElement
+    public function testConstructor(): TextElement
     {
         $text = TextElement::new(
             'paragraph',
@@ -23,63 +24,63 @@ class TextElementTest extends TestCase
     }
 
     /** @depends testConstructor */
-    public function testTypeIsExpectedValue(TextElement $text) : void
+    public function testTypeIsExpectedValue(TextElement $text): void
     {
-        $this->assertSame('paragraph', $text->type());
+        self::assertSame('paragraph', $text->type());
     }
 
     /** @depends testConstructor */
-    public function testTextHasExpectedValue(TextElement $text) : void
+    public function testTextHasExpectedValue(TextElement $text): void
     {
-        $this->assertSame('Some Words', $text->text());
+        self::assertSame('Some Words', $text->text());
     }
 
     /** @depends testConstructor */
-    public function testThatElementWithLabelIsDeemedHavingLabel(TextElement $text) : void
+    public function testThatElementWithLabelIsDeemedHavingLabel(TextElement $text): void
     {
-        $this->assertTrue($text->hasLabel());
+        self::assertTrue($text->hasLabel());
     }
 
     /** @depends testConstructor */
-    public function testLabelIsExpectedValue(TextElement $text) : void
+    public function testLabelIsExpectedValue(TextElement $text): void
     {
-        $this->assertSame('groovy', $text->label());
+        self::assertSame('groovy', $text->label());
     }
 
     /** @depends testConstructor */
-    public function testThatAnElementWithNonEmptyTextIsDeemedNonEmpty(TextElement $text) : void
+    public function testThatAnElementWithNonEmptyTextIsDeemedNonEmpty(TextElement $text): void
     {
-        $this->assertFalse($text->isEmpty());
+        self::assertFalse($text->isEmpty());
     }
 
-    public function testThatAnElementWithEmptyTextIsConsideredEmpty() : void
+    public function testThatAnElementWithEmptyTextIsConsideredEmpty(): void
     {
         $empty = TextElement::new('foo', '', [], null);
-        $this->assertTrue($empty->isEmpty());
+        self::assertTrue($empty->isEmpty());
     }
 
-    public function testThatLabelIsOptionallyNull() : void
+    public function testThatLabelIsOptionallyNull(): void
     {
         $text = TextElement::new('foo', '', [], null);
-        $this->assertNull($text->label());
-        $this->assertFalse($text->hasLabel());
+        self::assertNull($text->label());
+        self::assertFalse($text->hasLabel());
     }
 
-    public function testThatNullTextValueWillYieldEmptyString() : void
+    public function testThatNullTextValueWillYieldEmptyString(): void
     {
         $text = TextElement::new('foo', null, [], null);
-        $this->assertSame('', $text->text());
-        $this->assertTrue($text->isEmpty());
+        self::assertSame('', $text->text());
+        self::assertTrue($text->isEmpty());
     }
 
-    public function testThatItIsATypeErrorForSpanToContainNonSpan() : void
+    public function testThatItIsATypeErrorForSpanToContainNonSpan(): void
     {
         $this->expectException(TypeError::class);
         TextElement::new('foo', null, ['dingdong'], null);
     }
 
     /** @return mixed[] */
-    public function headingTypeProvider() : iterable
+    public function headingTypeProvider(): iterable
     {
         return [
             TextElement::TYPE_HEADING1 => [TextElement::TYPE_HEADING1],
@@ -92,32 +93,32 @@ class TextElementTest extends TestCase
     }
 
     /** @dataProvider headingTypeProvider */
-    public function testThatHeadingsAreConsideredHeadings(string $type) : void
+    public function testThatHeadingsAreConsideredHeadings(string $type): void
     {
         $text = TextElement::new($type, 'Foo', [], null);
-        $this->assertTrue($text->isHeading());
+        self::assertTrue($text->isHeading());
     }
 
-    public function testThatListItemsAreConsideredListItems() : void
+    public function testThatListItemsAreConsideredListItems(): void
     {
         $li = TextElement::new(TextElement::TYPE_UNORDERED_LIST_ITEM, 'foo', [], null);
-        $this->assertTrue($li->isListItem());
-        $this->assertTrue($li->isUnorderedListItem());
-        $this->assertFalse($li->isOrderedListItem());
+        self::assertTrue($li->isListItem());
+        self::assertTrue($li->isUnorderedListItem());
+        self::assertFalse($li->isOrderedListItem());
         $li = TextElement::new(TextElement::TYPE_ORDERED_LIST_ITEM, 'foo', [], null);
-        $this->assertTrue($li->isListItem());
-        $this->assertTrue($li->isOrderedListItem());
-        $this->assertFalse($li->isUnorderedListItem());
+        self::assertTrue($li->isListItem());
+        self::assertTrue($li->isOrderedListItem());
+        self::assertFalse($li->isUnorderedListItem());
     }
 
-    public function testThatAParagraphIsConsideredAParagraph() : void
+    public function testThatAParagraphIsConsideredAParagraph(): void
     {
         $p = TextElement::new(TextElement::TYPE_PARAGRAPH, 'foo', [], null);
-        $this->assertTrue($p->isParagraph());
+        self::assertTrue($p->isParagraph());
     }
 
     /** @return mixed[] */
-    public function typeCheckProvider() : iterable
+    public function typeCheckProvider(): iterable
     {
         return [
             TextElement::TYPE_HEADING1            => [TextElement::TYPE_HEADING1,            false, true,  false, false, false, false],
@@ -134,14 +135,14 @@ class TextElementTest extends TestCase
     }
 
     /** @dataProvider typeCheckProvider */
-    public function testTypes(string $type, bool $empty, bool $heading, bool $paragraph, bool $list, bool $ordered, bool $unordered) : void
+    public function testTypes(string $type, bool $empty, bool $heading, bool $paragraph, bool $list, bool $ordered, bool $unordered): void
     {
         $item = TextElement::new($type, 'Foo', [], null);
-        $this->assertSame($empty, $item->isEmpty());
-        $this->assertSame($heading, $item->isHeading());
-        $this->assertSame($paragraph, $item->isParagraph());
-        $this->assertSame($list, $item->isListItem());
-        $this->assertSame($ordered, $item->isOrderedListItem());
-        $this->assertSame($unordered, $item->isUnorderedListItem());
+        self::assertSame($empty, $item->isEmpty());
+        self::assertSame($heading, $item->isHeading());
+        self::assertSame($paragraph, $item->isParagraph());
+        self::assertSame($list, $item->isListItem());
+        self::assertSame($ordered, $item->isOrderedListItem());
+        self::assertSame($unordered, $item->isUnorderedListItem());
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Value;
@@ -28,12 +29,12 @@ final class Ref implements Stringable
         $this->isMasterRef = $isMasterRef;
     }
 
-    public static function new(string $id, string $ref, string $label, bool $isMasterRef) : self
+    public static function new(string $id, string $ref, string $label, bool $isMasterRef): self
     {
         return new static($id, $ref, $label, $isMasterRef);
     }
 
-    public static function factory(object $object) : self
+    public static function factory(object $object): self
     {
         $id = $object->id ?? null;
         $ref = $object->ref ?? null;
@@ -47,27 +48,27 @@ final class Ref implements Stringable
         return self::new($id, $ref, $label, $isMaster);
     }
 
-    public function id() : string
+    public function id(): string
     {
         return $this->id;
     }
 
-    public function ref() : string
+    public function ref(): string
     {
         return $this->ref;
     }
 
-    public function label() : string
+    public function label(): string
     {
         return $this->label;
     }
 
-    public function isMaster() : bool
+    public function isMaster(): bool
     {
         return $this->isMasterRef;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->ref;
     }

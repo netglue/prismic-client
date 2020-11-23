@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Document;
@@ -17,7 +18,7 @@ class DocumentDataConsumerTest extends TestCase
     /** @var Document */
     private $subject;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->document = DocumentData::factory(
@@ -37,7 +38,7 @@ class DocumentDataConsumerTest extends TestCase
         };
     }
 
-    public function testProxyMethods() : void
+    public function testProxyMethods(): void
     {
         $this->assertSame($this->document->id(), $this->subject->id());
         $this->assertSame($this->document->uid(), $this->subject->uid());

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicSmokeTest;
@@ -12,7 +13,7 @@ use function str_replace;
 class PreviewExpiryTest extends TestCase
 {
     /** @dataProvider apiDataProvider */
-    public function testThatRequestsToInvalidPreviewUrlsOnTheSameHostYieldPreviewExpiryExceptions(Api $api) : void
+    public function testThatRequestsToInvalidPreviewUrlsOnTheSameHostYieldPreviewExpiryExceptions(Api $api): void
     {
         // Tokens come back from the api with the cdn subdomain stripped
         $host = str_replace('.cdn.', '.', $api->host());

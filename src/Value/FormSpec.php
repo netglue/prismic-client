@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Value;
@@ -48,7 +49,7 @@ final class FormSpec implements IteratorAggregate
         $this->fields = $fields;
     }
 
-    public static function factory(string $id, object $object) : self
+    public static function factory(string $id, object $object): self
     {
         $fields = get_object_vars(self::assertObjectPropertyIsObject($object, 'fields'));
 
@@ -59,43 +60,43 @@ final class FormSpec implements IteratorAggregate
             self::optionalStringProperty($object, 'rel'),
             self::assertObjectPropertyIsString($object, 'enctype'),
             self::assertObjectPropertyIsString($object, 'action'),
-            ...array_map(static function (string $fieldName, object $spec) : FormField {
+            ...array_map(static function (string $fieldName, object $spec): FormField {
                 return FormField::factory($fieldName, $spec);
             }, array_keys($fields), $fields)
         );
     }
 
-    public function name() :? string
+    public function name(): ?string
     {
         return $this->name;
     }
 
-    public function rel() :? string
+    public function rel(): ?string
     {
         return $this->rel;
     }
 
-    public function id() : string
+    public function id(): string
     {
         return $this->id;
     }
 
-    public function action() : string
+    public function action(): string
     {
         return $this->action;
     }
 
-    public function method() : string
+    public function method(): string
     {
         return $this->method;
     }
 
-    public function encType() : string
+    public function encType(): string
     {
         return $this->encType;
     }
 
-    private function getField(string $name) :? FormField
+    private function getField(string $name): ?FormField
     {
         foreach ($this->fields as $field) {
             if ($field->name() === $name) {
@@ -106,12 +107,12 @@ final class FormSpec implements IteratorAggregate
         return null;
     }
 
-    public function hasField(string $name) : bool
+    public function hasField(string $name): bool
     {
         return $this->getField($name) instanceof FormField;
     }
 
-    public function field(string $name) : FormField
+    public function field(string $name): FormField
     {
         $field = $this->getField($name);
         if (! $field) {
@@ -122,7 +123,7 @@ final class FormSpec implements IteratorAggregate
     }
 
     /** @return FormField[] */
-    public function getIterator() : iterable
+    public function getIterator(): iterable
     {
         return new ArrayIterator($this->fields);
     }

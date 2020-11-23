@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Value;
@@ -20,12 +21,12 @@ final class Language
         $this->name = $name;
     }
 
-    public static function new(string $id, string $name) : self
+    public static function new(string $id, string $name): self
     {
         return new static($id, $name);
     }
 
-    public static function factory(object $object) : self
+    public static function factory(object $object): self
     {
         $id = $object->id ?? null;
         $name = $object->name ?? null;
@@ -35,12 +36,12 @@ final class Language
         return self::new($id, $name);
     }
 
-    public function id() : string
+    public function id(): string
     {
         return $this->id;
     }
 
-    public function name() : string
+    public function name(): string
     {
         return $this->name;
     }

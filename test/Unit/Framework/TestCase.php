@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Framework;
@@ -11,7 +12,7 @@ use function sprintf;
 
 abstract class TestCase extends PHPUnitTestCase
 {
-    protected function jsonFixtureByFileName(string $fileName) : string
+    protected function jsonFixtureByFileName(string $fileName): string
     {
         $path = __DIR__ . '/../../fixture/' . $fileName;
         if (! file_exists($path)) {

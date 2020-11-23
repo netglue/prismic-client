@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Value;
@@ -8,7 +9,7 @@ use PrismicTest\Framework\TestCase;
 
 class BookmarkTest extends TestCase
 {
-    public function testNewInstance() : void
+    public function testNewInstance(): void
     {
         $bookmark = Bookmark::new('foo', 'bar');
         $this->assertEquals('foo', $bookmark->name());

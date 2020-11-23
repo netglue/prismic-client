@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest;
@@ -16,7 +17,7 @@ use function var_export;
 class PredicateTest extends TestCase
 {
     /** @return mixed[] */
-    public function atProvider() : array
+    public function atProvider(): array
     {
         return [
             ['document.type', 'blog-post', '[:d = at(document.type, "blog-post")]'],
@@ -31,14 +32,14 @@ class PredicateTest extends TestCase
      *
      * @dataProvider atProvider
      */
-    public function testAtPredicate(string $fragment, $value, string $expect) : void
+    public function testAtPredicate(string $fragment, $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
         $this->assertEquals($expect, $predicate->q());
     }
 
     /** @return mixed[] */
-    public function notProvider() : array
+    public function notProvider(): array
     {
         return [
             ['document.type', 'blog-post', '[:d = not(document.type, "blog-post")]'],
@@ -54,14 +55,14 @@ class PredicateTest extends TestCase
      *
      * @dataProvider notProvider
      */
-    public function testNotPredicate(string $fragment, $value, string $expect) : void
+    public function testNotPredicate(string $fragment, $value, string $expect): void
     {
         $predicate = Predicate::not($fragment, $value);
         $this->assertEquals($expect, $predicate->q());
     }
 
     /** @return mixed[] */
-    public function anyProvider() : array
+    public function anyProvider(): array
     {
         return [
             ['document.id', ['id1', 'id2'], '[:d = any(document.id, ["id1","id2"])]'],
@@ -75,14 +76,14 @@ class PredicateTest extends TestCase
      *
      * @dataProvider anyProvider
      */
-    public function testAnyPredicate(string $fragment, $value, string $expect) : void
+    public function testAnyPredicate(string $fragment, $value, string $expect): void
     {
         $predicate = Predicate::any($fragment, $value);
         $this->assertEquals($expect, $predicate->q());
     }
 
     /** @return mixed[] */
-    public function inProvider() : array
+    public function inProvider(): array
     {
         return [
             ['document.id', ['id1', 'id2'], '[:d = in(document.id, ["id1","id2"])]'],
@@ -95,38 +96,38 @@ class PredicateTest extends TestCase
      *
      * @dataProvider inProvider
      */
-    public function testInPredicate(string $fragment, $value, string $expect) : void
+    public function testInPredicate(string $fragment, $value, string $expect): void
     {
         $predicate = Predicate::in($fragment, $value);
         $this->assertEquals($expect, $predicate->q());
     }
 
-    public function testHasPredicate() : void
+    public function testHasPredicate(): void
     {
         $predicate = Predicate::has('my.article.author');
         $this->assertEquals('[:d = has(my.article.author)]', $predicate->q());
     }
 
-    public function testMissingPredicate() : void
+    public function testMissingPredicate(): void
     {
         $predicate = Predicate::missing('my.article.author');
         $this->assertEquals('[:d = missing(my.article.author)]', $predicate->q());
     }
 
-    public function testFulltextPredicate() : void
+    public function testFulltextPredicate(): void
     {
         $predicate = Predicate::fulltext('document', 'some value');
         $this->assertEquals('[:d = fulltext(document, "some value")]', $predicate->q());
     }
 
-    public function testSimilarPredicate() : void
+    public function testSimilarPredicate(): void
     {
         $predicate = Predicate::similar('someId', 5);
         $this->assertEquals('[:d = similar("someId", 5)]', $predicate->q());
     }
 
     /** @return mixed[] */
-    public function ltProvider() : array
+    public function ltProvider(): array
     {
         return [
             ['my.page.num', 1, '[:d = number.lt(my.page.num, 1)]'],
@@ -140,20 +141,20 @@ class PredicateTest extends TestCase
      *
      * @dataProvider ltProvider
      */
-    public function testNumberLT(string $fragment, $value, string $expect) : void
+    public function testNumberLT(string $fragment, $value, string $expect): void
     {
         $predicate = Predicate::lt($fragment, $value);
         $this->assertEquals($expect, $predicate->q());
     }
 
-    public function testLtThrowsExceptionForNonNumber() : void
+    public function testLtThrowsExceptionForNonNumber(): void
     {
         $this->expectException(InvalidArgument::class);
         Predicate::lt('my.product.price', 'foo');
     }
 
     /** @return mixed[] */
-    public function gtProvider() : array
+    public function gtProvider(): array
     {
         return [
             ['my.page.num', 1, '[:d = number.gt(my.page.num, 1)]'],
@@ -167,20 +168,20 @@ class PredicateTest extends TestCase
      *
      * @dataProvider gtProvider
      */
-    public function testNumberGt(string $fragment, $value, string $expect) : void
+    public function testNumberGt(string $fragment, $value, string $expect): void
     {
         $predicate = Predicate::gt($fragment, $value);
         $this->assertEquals($expect, $predicate->q());
     }
 
-    public function testGtThrowsExceptionForNonNumber() : void
+    public function testGtThrowsExceptionForNonNumber(): void
     {
         $this->expectException(InvalidArgument::class);
         Predicate::gt('my.product.price', 'foo');
     }
 
     /** @return mixed[] */
-    public function rangeProvider() : array
+    public function rangeProvider(): array
     {
         return [
             ['my.page.num', 1, 2,  '[:d = number.inRange(my.page.num, 1, 2)]'],
@@ -195,19 +196,19 @@ class PredicateTest extends TestCase
      *
      * @dataProvider rangeProvider
      */
-    public function testNumberInRange(string $fragment, $low, $high, string $expect) : void
+    public function testNumberInRange(string $fragment, $low, $high, string $expect): void
     {
         $predicate = Predicate::inRange($fragment, $low, $high);
         $this->assertEquals($expect, $predicate->q());
     }
 
-    public function testExceptionThrownByInRangeForNonNumbers() : void
+    public function testExceptionThrownByInRangeForNonNumbers(): void
     {
         $this->expectException(InvalidArgument::class);
         Predicate::inRange('my.whatever', 'foo', 'foo');
     }
 
-    public function testDateBefore() : void
+    public function testDateBefore(): void
     {
         $predicate = Predicate::dateBefore('foo', 1);
         $this->assertEquals('[:d = date.before(foo, 1)]', $predicate->q());
@@ -219,7 +220,7 @@ class PredicateTest extends TestCase
         $this->assertEquals('[:d = date.before(foo, 1000)]', $predicate->q());
     }
 
-    public function testDateAfter() : void
+    public function testDateAfter(): void
     {
         $predicate = Predicate::dateAfter('foo', 1);
         $this->assertEquals('[:d = date.after(foo, 1)]', $predicate->q());
@@ -231,7 +232,7 @@ class PredicateTest extends TestCase
         $this->assertEquals('[:d = date.after(foo, 1000)]', $predicate->q());
     }
 
-    public function testDateBetween() : void
+    public function testDateBetween(): void
     {
         $predicate = Predicate::dateBetween('foo', 1, 2);
         $this->assertEquals('[:d = date.between(foo, 1, 2)]', $predicate->q());
@@ -243,7 +244,7 @@ class PredicateTest extends TestCase
         $this->assertEquals('[:d = date.between(foo, 1000, 1000)]', $predicate->q());
     }
 
-    public function testDayOfMonth() : void
+    public function testDayOfMonth(): void
     {
         $predicate = Predicate::dayOfMonth('foo', 1);
         $this->assertEquals('[:d = date.day-of-month(foo, 1)]', $predicate->q());
@@ -261,7 +262,7 @@ class PredicateTest extends TestCase
         $this->assertEquals('[:d = date.day-of-month-after(foo, 1)]', $predicate->q());
     }
 
-    public function testDayOfWeek() : void
+    public function testDayOfWeek(): void
     {
         $date = DateTime::createFromFormat('!U', '1');
 
@@ -275,7 +276,7 @@ class PredicateTest extends TestCase
         $this->assertEquals('[:d = date.day-of-week-before(foo, 4)]', $predicate->q());
     }
 
-    public function testMonth() : void
+    public function testMonth(): void
     {
         $date = DateTime::createFromFormat('!U', '1');
 
@@ -289,7 +290,7 @@ class PredicateTest extends TestCase
         $this->assertEquals('[:d = date.month-before(foo, 1)]', $predicate->q());
     }
 
-    public function testYear() : void
+    public function testYear(): void
     {
         $date = DateTime::createFromFormat('!U', '1');
 
@@ -297,7 +298,7 @@ class PredicateTest extends TestCase
         $this->assertEquals('[:d = date.year(foo, 1970)]', $predicate->q());
     }
 
-    public function testHour() : void
+    public function testHour(): void
     {
         $date = DateTime::createFromFormat('!U', '1');
 
@@ -311,13 +312,13 @@ class PredicateTest extends TestCase
         $this->assertEquals('[:d = date.hour-before(foo, 0)]', $predicate->q());
     }
 
-    public function testGeopointNear() : void
+    public function testGeopointNear(): void
     {
         $p = Predicate::near('my.store.coordinates', 40.689757, -74.0451453, 15);
         $this->assertEquals('[:d = geopoint.near(my.store.coordinates, 40.689757, -74.0451453, 15)]', $p->q());
     }
 
-    public function testAtPredicateAcceptsBooleanValue() : void
+    public function testAtPredicateAcceptsBooleanValue(): void
     {
         $p = Predicate::at('my.doc.field', true);
         $this->assertEquals('[:d = at(my.doc.field, true)]', $p->q());
@@ -330,7 +331,7 @@ class PredicateTest extends TestCase
      *
      * @dataProvider atProvider
      */
-    public function testPredicatesCanBeCastToString(string $fragment, $value, string $expect) : void
+    public function testPredicatesCanBeCastToString(string $fragment, $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
         $this->assertEquals($expect, $predicate->__toString());
@@ -341,7 +342,7 @@ class PredicateTest extends TestCase
      *
      * @dataProvider atProvider
      */
-    public function testSetState(string $fragment, $value, string $expect) : void
+    public function testSetState(string $fragment, $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
         $rehydrated = null;
@@ -355,7 +356,7 @@ class PredicateTest extends TestCase
      *
      * @dataProvider atProvider
      */
-    public function testPredicatesAreSerializable(string $fragment, $value, string $expect) : void
+    public function testPredicatesAreSerializable(string $fragment, $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
         $rehydrated = unserialize(serialize($predicate));
@@ -363,7 +364,7 @@ class PredicateTest extends TestCase
         $this->assertSame($expect, $rehydrated->q());
     }
 
-    public function testHasTag() : void
+    public function testHasTag(): void
     {
         $predicate = Predicate::hasTag('foo');
         $this->assertEquals('[:d = at(document.tags, ["foo"])]', (string) $predicate);
