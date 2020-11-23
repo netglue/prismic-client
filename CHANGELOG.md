@@ -12,6 +12,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Added PHP 8.0 to the build matrix and updated composer constraints to indicate PHP 8.0 support.
 - Update PHPUnit config for compatibility with 9.x
+- Removed coding standard customisations and fixed project wide so that CS is consistent with Doctrine/Slevomat
+- Bump minimum http discovery lib to 1.11 and change usage of deprecated method `findUrlFactory` to `findUriFactory`
 
 ### Deprecated
 
