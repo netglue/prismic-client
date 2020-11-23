@@ -22,6 +22,7 @@ jobs:
         php-version:
           - '7.3'
           - '7.4'
+          - '8.0'
     steps:
       - uses: actions/checkout@v2
       - name: Setup PHP Extension Cache
@@ -59,7 +60,7 @@ jobs:
           key: ${{ runner.os }}-${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest --ignore-platform-reqs
+        run: composer install --prefer-dist --no-progress --ignore-platform-reqs
       - name: Setup Smoke Test Repos
         run: echo $repo_config > test/config/config.php
         if: ${{ env.repo_config != '' }}
