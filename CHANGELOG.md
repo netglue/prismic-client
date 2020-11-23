@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+- Added PHP 8.0 to the build matrix and updated composer constraints to indicate PHP 8.0 support.
 
 ### Deprecated
 
