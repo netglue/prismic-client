@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicSmokeTest;
@@ -12,7 +13,7 @@ use function sprintf;
 class PredicateUseCaseTest extends TestCase
 {
     /** @return string[][] */
-    public function searchTermProvider() : iterable
+    public function searchTermProvider(): iterable
     {
         return [
             'Double Quoted'      => ['"Quoted String"'],
@@ -31,7 +32,7 @@ class PredicateUseCaseTest extends TestCase
     }
 
     /** @dataProvider searchTermProvider */
-    public function testThatFullTextSearchIsPossibleWithAVarietyOfTerms(string $term) : void
+    public function testThatFullTextSearchIsPossibleWithAVarietyOfTerms(string $term): void
     {
         foreach ($this->apiInstances() as $host => $api) {
             $query = $api->createQuery()

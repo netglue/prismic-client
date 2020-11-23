@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
@@ -10,21 +11,21 @@ use PrismicTest\Framework\TestCase;
 
 class CollectionTest extends TestCase
 {
-    public function testEmptyCollectionReturnsEmptyFragmentForFirstAndLast() : void
+    public function testEmptyCollectionReturnsEmptyFragmentForFirstAndLast(): void
     {
         $collection = Collection::new([]);
         $this->assertInstanceOf(EmptyFragment::class, $collection->first());
         $this->assertInstanceOf(EmptyFragment::class, $collection->last());
     }
 
-    public function testAnEmptyCollectionIsConsideredEmpty() : void
+    public function testAnEmptyCollectionIsConsideredEmpty(): void
     {
         $this->assertTrue(
             Collection::new([])->isEmpty()
         );
     }
 
-    public function testCollectionOfEmptyFragmentsIsConsideredEmpty() : void
+    public function testCollectionOfEmptyFragmentsIsConsideredEmpty(): void
     {
         $collection = Collection::new([
             new EmptyFragment(),
@@ -34,14 +35,14 @@ class CollectionTest extends TestCase
         $this->assertTrue($collection->isEmpty());
     }
 
-    public function testACollectionWithNonEmptyFragmentIsNotConsideredEmpty() : void
+    public function testACollectionWithNonEmptyFragmentIsNotConsideredEmpty(): void
     {
         $this->assertFalse(
             Collection::new([StringFragment::new('Foo')])->isEmpty()
         );
     }
 
-    public function testThatFirstAndLastReturnTheExpectedValues() : void
+    public function testThatFirstAndLastReturnTheExpectedValues(): void
     {
         $list = [
             'a' => StringFragment::new('a'),
@@ -54,21 +55,21 @@ class CollectionTest extends TestCase
         $this->assertSame($list['d'], $collection->last());
     }
 
-    public function testThatGetWithUnknownNameWillReturnEmptyFragment() : void
+    public function testThatGetWithUnknownNameWillReturnEmptyFragment(): void
     {
         $collection = Collection::new([]);
         $this->assertFalse($collection->has('not-there'));
         $this->assertInstanceOf(EmptyFragment::class, $collection->get('not-there'));
     }
 
-    public function testThatGetWithUnknownIndexWillReturnEmptyFragment() : void
+    public function testThatGetWithUnknownIndexWillReturnEmptyFragment(): void
     {
         $collection = Collection::new([]);
         $this->assertFalse($collection->has(0));
         $this->assertInstanceOf(EmptyFragment::class, $collection->get(0));
     }
 
-    public function testThatFilteringReIndexesNumericKeys() : void
+    public function testThatFilteringReIndexesNumericKeys(): void
     {
         $string = StringFragment::new('a');
         $collection = Collection::new([
@@ -82,7 +83,7 @@ class CollectionTest extends TestCase
         $this->assertSame($string, $filtered->get(0));
     }
 
-    public function testThatFilteringDoesNotAlterStringKeys() : void
+    public function testThatFilteringDoesNotAlterStringKeys(): void
     {
         $string = StringFragment::new('a');
         $collection = Collection::new([

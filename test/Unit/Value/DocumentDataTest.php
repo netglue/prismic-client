@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Value;
@@ -25,7 +26,7 @@ class DocumentDataTest extends TestCase
     /** @var DocumentData */
     private $document;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->document = DocumentData::factory(
@@ -35,27 +36,27 @@ class DocumentDataTest extends TestCase
         );
     }
 
-    public function testId() : void
+    public function testId(): void
     {
         $this->assertSame('document-id', $this->document->id());
     }
 
-    public function testUid() : void
+    public function testUid(): void
     {
         $this->assertSame('document-uid', $this->document->uid());
     }
 
-    public function testType() : void
+    public function testType(): void
     {
         $this->assertSame('custom-type', $this->document->type());
     }
 
-    public function testLang() : void
+    public function testLang(): void
     {
         $this->assertSame('en-gb', $this->document->lang());
     }
 
-    public function testFirstPublished() : void
+    public function testFirstPublished(): void
     {
         $this->assertSame(
             '2020-01-01 01:23:45 0',
@@ -63,7 +64,7 @@ class DocumentDataTest extends TestCase
         );
     }
 
-    public function testLastPublished() : void
+    public function testLastPublished(): void
     {
         $this->assertSame(
             '2020-01-02 01:23:45 0',
@@ -71,27 +72,27 @@ class DocumentDataTest extends TestCase
         );
     }
 
-    public function testTags() : void
+    public function testTags(): void
     {
         $this->assertContainsEquals('tag-1', $this->document->tags());
         $this->assertContainsEquals('tag-2', $this->document->tags());
     }
 
-    public function testThatDocumentBodyHasExpectedColourFragment() : void
+    public function testThatDocumentBodyHasExpectedColourFragment(): void
     {
         $colour = $this->document->content()->get('colour');
         $this->assertInstanceOf(Color::class, $colour);
         $this->assertSame('#c94949', (string) $colour);
     }
 
-    public function testThatDocumentBodyHasExpectedNumber() : void
+    public function testThatDocumentBodyHasExpectedNumber(): void
     {
         $number = $this->document->content()->get('integer');
         assert($number instanceof Number);
         $this->assertSame(10, $number->toInteger());
     }
 
-    public function testThatDocumentBodyHasExpectedDateFragment() : void
+    public function testThatDocumentBodyHasExpectedDateFragment(): void
     {
         $date = $this->document->content()->get('date');
         assert($date instanceof DateFragment);
@@ -101,7 +102,7 @@ class DocumentDataTest extends TestCase
         );
     }
 
-    public function testThatDocumentBodyHasExpectedDateTimeFragment() : void
+    public function testThatDocumentBodyHasExpectedDateTimeFragment(): void
     {
         $date = $this->document->content()->get('datetime');
         assert($date instanceof DateFragment);
@@ -111,14 +112,14 @@ class DocumentDataTest extends TestCase
         );
     }
 
-    public function testThatDocumentBodyHasExpectedBooleanValue() : void
+    public function testThatDocumentBodyHasExpectedBooleanValue(): void
     {
         $bool = $this->document->content()->get('boolean');
         assert($bool instanceof BooleanFragment);
         $this->assertTrue($bool());
     }
 
-    public function testThatDocumentBodyHasSingleImageFragment() : void
+    public function testThatDocumentBodyHasSingleImageFragment(): void
     {
         $image = $this->document->content()->get('single-image');
         assert($image instanceof Image);
@@ -126,7 +127,7 @@ class DocumentDataTest extends TestCase
         $this->assertSame($image, $image->getView('main'));
     }
 
-    public function testThatDocumentBodyHasImageWithMultipleSizes() : void
+    public function testThatDocumentBodyHasImageWithMultipleSizes(): void
     {
         $image = $this->document->content()->get('multi-image');
         assert($image instanceof Image);
@@ -136,7 +137,7 @@ class DocumentDataTest extends TestCase
         $this->assertNotSame($image, $view);
     }
 
-    public function testThatTheSliceZoneIsACollection() : void
+    public function testThatTheSliceZoneIsACollection(): void
     {
         $slices = $this->document->content()->get('slice-zone');
         assert($slices instanceof Collection);
@@ -145,7 +146,7 @@ class DocumentDataTest extends TestCase
         $this->addToAssertionCount(2);
     }
 
-    public function testThatTranslationsContainsTheExpectedValue() : void
+    public function testThatTranslationsContainsTheExpectedValue(): void
     {
         $translations = $this->document->translations();
         $this->assertCount(1, $translations);
@@ -157,12 +158,12 @@ class DocumentDataTest extends TestCase
         $this->assertSame('en-us', $value->language());
     }
 
-    public function testThatDataMethodReturnsSelf() : void
+    public function testThatDataMethodReturnsSelf(): void
     {
         $this->assertSame($this->document, $this->document->data());
     }
 
-    public function testThatNowIsUsedForPublicationDatesWhenThePayloadIsNull() : void
+    public function testThatNowIsUsedForPublicationDatesWhenThePayloadIsNull(): void
     {
         $data = DocumentData::factory(
             Json::decodeObject(

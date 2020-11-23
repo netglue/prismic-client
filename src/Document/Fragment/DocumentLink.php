@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -42,7 +43,7 @@ final class DocumentLink implements Fragment, Link
         }
     }
 
-    private function addTag(string $tag) : void
+    private function addTag(string $tag): void
     {
         $this->tags[] = $tag;
     }
@@ -55,11 +56,11 @@ final class DocumentLink implements Fragment, Link
         string $lang,
         bool $isBroken = false,
         iterable $tags = []
-    ) : self {
+    ): self {
         return new static($id, $uid, $type, $lang, $isBroken, $tags);
     }
 
-    public static function withDocument(Document $document) : self
+    public static function withDocument(Document $document): self
     {
         return new static(
             $document->id(),
@@ -71,43 +72,43 @@ final class DocumentLink implements Fragment, Link
         );
     }
 
-    public function id() : string
+    public function id(): string
     {
         return $this->id;
     }
 
-    public function uid() :? string
+    public function uid(): ?string
     {
         return $this->uid;
     }
 
-    public function type() : string
+    public function type(): string
     {
         return $this->type;
     }
 
-    public function language() : string
+    public function language(): string
     {
         return $this->lang;
     }
 
-    public function isBroken() : bool
+    public function isBroken(): bool
     {
         return $this->isBroken;
     }
 
     /** @return string[] */
-    public function tags() : iterable
+    public function tags(): iterable
     {
         return $this->tags;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->id;
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return false;
     }

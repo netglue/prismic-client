@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic;
@@ -35,7 +36,7 @@ final class Predicate implements Stringable
     }
 
     /** @param mixed[] $data */
-    public static function __set_state(array $data) : self
+    public static function __set_state(array $data): self
     {
         return new static(
             $data['name'],
@@ -44,12 +45,12 @@ final class Predicate implements Stringable
         );
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->q();
     }
 
-    public function q() : string
+    public function q(): string
     {
         $query = '[:d = ' . $this->name . '(';
         if ($this->name === 'similar') {
@@ -70,7 +71,7 @@ final class Predicate implements Stringable
     /**
      * @param mixed $value
      */
-    private function serializeField($value) : string
+    private function serializeField($value): string
     {
         if (is_array($value)) {
             $value = array_values($value);
@@ -82,12 +83,12 @@ final class Predicate implements Stringable
     /**
      * @param string|string[] $value
      */
-    public static function at(string $fragment, $value) : self
+    public static function at(string $fragment, $value): self
     {
         return new static('at', $fragment, [$value]);
     }
 
-    public static function hasTag(string $tag) : self
+    public static function hasTag(string $tag): self
     {
         return static::at('document.tags', [$tag]);
     }
@@ -95,7 +96,7 @@ final class Predicate implements Stringable
     /**
      * @param string|string[] $value
      */
-    public static function not(string $fragment, $value) : self
+    public static function not(string $fragment, $value): self
     {
         return new static('not', $fragment, [$value]);
     }
@@ -103,7 +104,7 @@ final class Predicate implements Stringable
     /**
      * @param mixed[] $values
      */
-    public static function any(string $fragment, array $values) : self
+    public static function any(string $fragment, array $values): self
     {
         return new static('any', $fragment, [$values]);
     }
@@ -111,22 +112,22 @@ final class Predicate implements Stringable
     /**
      * @param mixed[] $values
      */
-    public static function in(string $fragment, array $values) : self
+    public static function in(string $fragment, array $values): self
     {
         return new static('in', $fragment, [$values]);
     }
 
-    public static function has(string $fragment) : self
+    public static function has(string $fragment): self
     {
         return new static('has', $fragment);
     }
 
-    public static function missing(string $fragment) : self
+    public static function missing(string $fragment): self
     {
         return new static('missing', $fragment);
     }
 
-    public static function fulltext(string $fragment, string $value) : self
+    public static function fulltext(string $fragment, string $value): self
     {
         return new static('fulltext', $fragment, [$value]);
     }
@@ -137,7 +138,7 @@ final class Predicate implements Stringable
      * The $documentOccurrenceThreshold is defined as the maximum number of documents that a term may appear
      * in to still be considered relevant.
      */
-    public static function similar(string $documentId, int $documentOccurrenceThreshold) : self
+    public static function similar(string $documentId, int $documentOccurrenceThreshold): self
     {
         return new static('similar', $documentId, [$documentOccurrenceThreshold]);
     }
@@ -145,7 +146,7 @@ final class Predicate implements Stringable
     /**
      * @param int|float|string $lowerBound A number or numeric string
      */
-    public static function lt(string $fragment, $lowerBound) : self
+    public static function lt(string $fragment, $lowerBound): self
     {
         if (! is_numeric($lowerBound)) {
             throw new InvalidArgument(
@@ -159,7 +160,7 @@ final class Predicate implements Stringable
     /**
      * @param int|float|string $upperBound A number or numeric string
      */
-    public static function gt(string $fragment, $upperBound) : self
+    public static function gt(string $fragment, $upperBound): self
     {
         if (! is_numeric($upperBound)) {
             throw new InvalidArgument(
@@ -174,7 +175,7 @@ final class Predicate implements Stringable
      * @param int|float|string $lowerBound A number or numeric string
      * @param int|float|string $upperBound A number or numeric string
      */
-    public static function inRange(string $fragment, $lowerBound, $upperBound) : self
+    public static function inRange(string $fragment, $lowerBound, $upperBound): self
     {
         if (! is_numeric($upperBound) || ! is_numeric($lowerBound)) {
             throw new InvalidArgument(
@@ -188,7 +189,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $before
      */
-    public static function dateBefore(string $fragment, $before) : self
+    public static function dateBefore(string $fragment, $before): self
     {
         if ($before instanceof DateTimeInterface) {
             $before = $before->getTimestamp() * 1000;
@@ -200,7 +201,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $after
      */
-    public static function dateAfter(string $fragment, $after) : self
+    public static function dateAfter(string $fragment, $after): self
     {
         if ($after instanceof DateTimeInterface) {
             $after = $after->getTimestamp() * 1000;
@@ -213,7 +214,7 @@ final class Predicate implements Stringable
      * @param DateTimeInterface|int|string $before
      * @param DateTimeInterface|int|string $after
      */
-    public static function dateBetween(string $fragment, $before, $after) : self
+    public static function dateBetween(string $fragment, $before, $after): self
     {
         if ($before instanceof DateTimeInterface) {
             $before = $before->getTimestamp() * 1000;
@@ -229,7 +230,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $day
      */
-    public static function dayOfMonth(string $fragment, $day) : self
+    public static function dayOfMonth(string $fragment, $day): self
     {
         if ($day instanceof DateTimeInterface) {
             $day = (int) $day->format('j');
@@ -241,7 +242,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $day
      */
-    public static function dayOfMonthBefore(string $fragment, $day) : self
+    public static function dayOfMonthBefore(string $fragment, $day): self
     {
         if ($day instanceof DateTimeInterface) {
             $day = (int) $day->format('j');
@@ -253,7 +254,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $day
      */
-    public static function dayOfMonthAfter(string $fragment, $day) : self
+    public static function dayOfMonthAfter(string $fragment, $day): self
     {
         if ($day instanceof DateTimeInterface) {
             $day = (int) $day->format('j');
@@ -265,7 +266,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $day
      */
-    public static function dayOfWeek(string $fragment, $day) : self
+    public static function dayOfWeek(string $fragment, $day): self
     {
         if ($day instanceof DateTimeInterface) {
             $day = (int) $day->format('N');
@@ -277,7 +278,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $day
      */
-    public static function dayOfWeekBefore(string $fragment, $day) : self
+    public static function dayOfWeekBefore(string $fragment, $day): self
     {
         if ($day instanceof DateTimeInterface) {
             $day = (int) $day->format('N');
@@ -289,7 +290,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $day
      */
-    public static function dayOfWeekAfter(string $fragment, $day) : self
+    public static function dayOfWeekAfter(string $fragment, $day): self
     {
         if ($day instanceof DateTimeInterface) {
             $day = (int) $day->format('N');
@@ -301,7 +302,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $month
      */
-    public static function month(string $fragment, $month) : self
+    public static function month(string $fragment, $month): self
     {
         if ($month instanceof DateTimeInterface) {
             $month = (int) $month->format('n');
@@ -313,7 +314,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $month
      */
-    public static function monthBefore(string $fragment, $month) : self
+    public static function monthBefore(string $fragment, $month): self
     {
         if ($month instanceof DateTimeInterface) {
             $month = (int) $month->format('n');
@@ -325,7 +326,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $month
      */
-    public static function monthAfter(string $fragment, $month) : self
+    public static function monthAfter(string $fragment, $month): self
     {
         if ($month instanceof DateTimeInterface) {
             $month = (int) $month->format('n');
@@ -337,7 +338,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $year
      */
-    public static function year(string $fragment, $year) : self
+    public static function year(string $fragment, $year): self
     {
         if ($year instanceof DateTimeInterface) {
             $year = (int) $year->format('Y');
@@ -349,7 +350,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $hour
      */
-    public static function hour(string $fragment, $hour) : self
+    public static function hour(string $fragment, $hour): self
     {
         if ($hour instanceof DateTimeInterface) {
             $hour = (int) $hour->format('H');
@@ -361,7 +362,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $hour
      */
-    public static function hourBefore(string $fragment, $hour) : self
+    public static function hourBefore(string $fragment, $hour): self
     {
         if ($hour instanceof DateTimeInterface) {
             $hour = (int) $hour->format('H');
@@ -373,7 +374,7 @@ final class Predicate implements Stringable
     /**
      * @param DateTimeInterface|int|string $hour
      */
-    public static function hourAfter(string $fragment, $hour) : self
+    public static function hourAfter(string $fragment, $hour): self
     {
         if ($hour instanceof DateTimeInterface) {
             $hour = (int) $hour->format('H');
@@ -385,7 +386,7 @@ final class Predicate implements Stringable
     /**
      * @param float $radius In Kilometers
      */
-    public static function near(string $fragment, float $latitude, float $longitude, float $radius) : self
+    public static function near(string $fragment, float $latitude, float $longitude, float $radius): self
     {
         return new static('geopoint.near', $fragment, [$latitude, $longitude, $radius]);
     }

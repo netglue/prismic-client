@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -21,27 +22,27 @@ final class WebLink implements Fragment, UrlLink
         $this->target = $target;
     }
 
-    public static function new(string $url, ?string $target) : self
+    public static function new(string $url, ?string $target): self
     {
         return new static($url, $target);
     }
 
-    public function url() : string
+    public function url(): string
     {
         return $this->url;
     }
 
-    public function target() :? string
+    public function target(): ?string
     {
         return $this->target;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->url;
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return false;
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Exception;
@@ -12,7 +13,7 @@ class JsonError extends JsonException implements PrismicError
     /** @var string|null */
     private $payload;
 
-    public static function unserializeFailed(JsonException $exception, string $payload) : self
+    public static function unserializeFailed(JsonException $exception, string $payload): self
     {
         $error = new static(
             sprintf(
@@ -28,7 +29,7 @@ class JsonError extends JsonException implements PrismicError
         return $error;
     }
 
-    public static function serializeFailed(JsonException $exception) : self
+    public static function serializeFailed(JsonException $exception): self
     {
         return new static(
             sprintf(
@@ -40,7 +41,7 @@ class JsonError extends JsonException implements PrismicError
         );
     }
 
-    public static function cannotUnserializeToObject(string $payload) : self
+    public static function cannotUnserializeToObject(string $payload): self
     {
         return new static(sprintf(
             'The given payload cannot be unserialized as an object: %s',
@@ -48,7 +49,7 @@ class JsonError extends JsonException implements PrismicError
         ));
     }
 
-    public function payload() :? string
+    public function payload(): ?string
     {
         return $this->payload;
     }

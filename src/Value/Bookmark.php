@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Value;
@@ -16,17 +17,17 @@ final class Bookmark
         $this->id = $id;
     }
 
-    public static function new(string $name, string $id) : self
+    public static function new(string $name, string $id): self
     {
         return new static($name, $id);
     }
 
-    public function name() : string
+    public function name(): string
     {
         return $this->name;
     }
 
-    public function documentId() : string
+    public function documentId(): string
     {
         return $this->id;
     }

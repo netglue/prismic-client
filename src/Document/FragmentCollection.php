@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document;
@@ -21,26 +22,26 @@ interface FragmentCollection extends Fragment, IteratorAggregate, Countable
      *
      * @param int|string $name
      */
-    public function has($name) : bool;
+    public function has($name): bool;
 
     /**
      * Return the fragment at the given offset, or an empty fragment
      *
      * @param int|string $name
      */
-    public function get($name) : Fragment;
+    public function get($name): Fragment;
 
     /**
      * Return the first fragment found in the collection
      *
      * If the collection is empty, this method will return an @link EmptyFragment
      */
-    public function first() : Fragment;
+    public function first(): Fragment;
 
     /**
      * Return the last fragment found in the collection
      *
      * If the collection is empty, this method will return an @link EmptyFragment
      */
-    public function last() : Fragment;
+    public function last(): Fragment;
 }

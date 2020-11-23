@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Exception;
@@ -12,7 +13,7 @@ use const PHP_EOL;
 
 class AuthenticationError extends RequestFailure
 {
-    public static function with(RequestInterface $request, ResponseInterface $response) : self
+    public static function with(RequestInterface $request, ResponseInterface $response): self
     {
         $url = sprintf('%s?%s', $request->getUri()->getPath(), $request->getUri()->getQuery());
         $error = new static(sprintf(

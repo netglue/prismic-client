@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest;
@@ -13,7 +14,7 @@ use const STDOUT;
 class JsonTest extends TestCase
 {
     /** @return mixed[] */
-    public function notObjects() : iterable
+    public function notObjects(): iterable
     {
         return [
             'Array' => ['[{"foo":"bar"},{"foo":"bar"}]'],
@@ -23,7 +24,7 @@ class JsonTest extends TestCase
     }
 
     /** @dataProvider notObjects */
-    public function testObjectUnserializeFailure(string $payload) : void
+    public function testObjectUnserializeFailure(string $payload): void
     {
         $this->expectException(JsonError::class);
         $this->expectExceptionMessage('The given payload cannot be unserialized as an object');
@@ -31,7 +32,7 @@ class JsonTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function invalidJson() : iterable
+    public function invalidJson(): iterable
     {
         return [
             'Trailing Comma' => ['[{"foo":"bar"},]'],
@@ -41,7 +42,7 @@ class JsonTest extends TestCase
     }
 
     /** @dataProvider invalidJson */
-    public function testInvalidJsonInDecodeObject(string $payload) : void
+    public function testInvalidJsonInDecodeObject(string $payload): void
     {
         $this->expectException(JsonError::class);
         $this->expectExceptionMessage('Failed to decode JSON payload');
@@ -49,21 +50,21 @@ class JsonTest extends TestCase
     }
 
     /** @dataProvider invalidJson */
-    public function testInvalidJsonInDecode(string $payload) : void
+    public function testInvalidJsonInDecode(string $payload): void
     {
         $this->expectException(JsonError::class);
         $this->expectExceptionMessage('Failed to decode JSON payload');
         Json::decode($payload, true);
     }
 
-    public function testUnEncodableData() : void
+    public function testUnEncodableData(): void
     {
         $this->expectException(JsonError::class);
         $this->expectExceptionMessage('Failed to encode the given data to a JSON string');
         Json::encode(STDOUT);
     }
 
-    public function testThatThePayloadIsPreservedByTheException() : void
+    public function testThatThePayloadIsPreservedByTheException(): void
     {
         $payload = '{"foo",}';
         try {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
@@ -9,7 +10,7 @@ use TypeError;
 
 class DocumentLinkTest extends TestCase
 {
-    public function testItIsATypeErrorForATagToBeANonString() : void
+    public function testItIsATypeErrorForATagToBeANonString(): void
     {
         $this->expectException(TypeError::class);
         DocumentLink::new(
@@ -22,7 +23,7 @@ class DocumentLinkTest extends TestCase
         );
     }
 
-    public function testConstructor() : DocumentLink
+    public function testConstructor(): DocumentLink
     {
         $link = DocumentLink::new(
             'id',
@@ -38,43 +39,43 @@ class DocumentLinkTest extends TestCase
     }
 
     /** @depends testConstructor */
-    public function testThatIdIsExpectedValue(DocumentLink $link) : void
+    public function testThatIdIsExpectedValue(DocumentLink $link): void
     {
         $this->assertSame('id', $link->id());
     }
 
     /** @depends testConstructor */
-    public function testThatUidIsExpectedValue(DocumentLink $link) : void
+    public function testThatUidIsExpectedValue(DocumentLink $link): void
     {
         $this->assertSame('uid', $link->uid());
     }
 
     /** @depends testConstructor */
-    public function testThatTypeIsExpectedValue(DocumentLink $link) : void
+    public function testThatTypeIsExpectedValue(DocumentLink $link): void
     {
         $this->assertSame('type', $link->type());
     }
 
     /** @depends testConstructor */
-    public function testThatLanguageIsExpectedValue(DocumentLink $link) : void
+    public function testThatLanguageIsExpectedValue(DocumentLink $link): void
     {
         $this->assertSame('en-gb', $link->language());
     }
 
     /** @depends testConstructor */
-    public function testThatIsBrokenIsExpectedValue(DocumentLink $link) : void
+    public function testThatIsBrokenIsExpectedValue(DocumentLink $link): void
     {
         $this->assertFalse($link->isBroken());
     }
 
     /** @depends testConstructor */
-    public function testThatALinkIsNotConsideredEmpty(DocumentLink $link) : void
+    public function testThatALinkIsNotConsideredEmpty(DocumentLink $link): void
     {
         $this->assertFalse($link->isEmpty());
     }
 
     /** @depends testConstructor */
-    public function testThatTagsHaveExpectedMembers(DocumentLink $link) : void
+    public function testThatTagsHaveExpectedMembers(DocumentLink $link): void
     {
         $this->assertContainsEquals('a', $link->tags());
         $this->assertContainsEquals('b', $link->tags());

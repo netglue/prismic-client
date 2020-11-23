@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Serializer;
@@ -23,13 +24,13 @@ class HtmlSerializerTest extends TestCase
     /** @var HtmlSerializer */
     private $serializer;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->serializer = new HtmlSerializer(new TestLinkResolver());
     }
 
-    private function richTextSpansFixture() : RichText
+    private function richTextSpansFixture(): RichText
     {
         $body = Factory::factory(Json::decodeObject($this->jsonFixtureByFileName('rich-text-spans.json')));
         assert($body instanceof FragmentCollection);
@@ -39,7 +40,7 @@ class HtmlSerializerTest extends TestCase
         return $richText;
     }
 
-    private function richTextBlockElementsFixture() : RichText
+    private function richTextBlockElementsFixture(): RichText
     {
         $body = Factory::factory(Json::decodeObject($this->jsonFixtureByFileName('block-elements.json')));
         assert($body instanceof FragmentCollection);
@@ -49,7 +50,7 @@ class HtmlSerializerTest extends TestCase
         return $richText;
     }
 
-    private function listItemsFixture() : RichText
+    private function listItemsFixture(): RichText
     {
         $body = Factory::factory(Json::decodeObject($this->jsonFixtureByFileName('list-items.json')));
         assert($body instanceof FragmentCollection);
@@ -59,7 +60,7 @@ class HtmlSerializerTest extends TestCase
         return $richText;
     }
 
-    public function testDocumentBodyIsSerializedWithoutError() : void
+    public function testDocumentBodyIsSerializedWithoutError(): void
     {
         $document = DocumentData::factory(
             Json::decodeObject(
@@ -71,10 +72,10 @@ class HtmlSerializerTest extends TestCase
         $this->addToAssertionCount(1);
     }
 
-    public function testListSerialisation() : void
+    public function testListSerialisation(): void
     {
         $richText = $this->listItemsFixture();
-        $list = $richText->filter(static function (Fragment $fragment) : bool {
+        $list = $richText->filter(static function (Fragment $fragment): bool {
             return $fragment instanceof UnorderedList;
         })->first();
         assert($list instanceof UnorderedList);
@@ -82,10 +83,10 @@ class HtmlSerializerTest extends TestCase
         $this->assertEquals('<ul><li>Unordered 1</li><li>Unordered 2</li></ul>', $markup);
     }
 
-    public function testListSerialisationWithLargeList() : void
+    public function testListSerialisationWithLargeList(): void
     {
         $richText = $this->listItemsFixture();
-        $lists = $richText->filter(static function (Fragment $fragment) : bool {
+        $lists = $richText->filter(static function (Fragment $fragment): bool {
             return $fragment instanceof UnorderedList;
         });
         $this->assertTrue($lists->has(2), 'There should be a list at index 2');
@@ -96,14 +97,14 @@ class HtmlSerializerTest extends TestCase
         $this->assertEquals('<ul><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ul>', $markup);
     }
 
-    public function testAnEmptyListWillYieldAnEmptyString() : void
+    public function testAnEmptyListWillYieldAnEmptyString(): void
     {
         $list = OrderedList::new([]);
         $this->assertSame('', ($this->serializer)($list));
     }
 
     /** @return mixed[] */
-    public function richTextSpanMarkupData() : iterable
+    public function richTextSpanMarkupData(): iterable
     {
         return [
             'Bold & Italic' => [
@@ -146,7 +147,7 @@ class HtmlSerializerTest extends TestCase
     }
 
     /** @dataProvider richTextSpanMarkupData */
-    public function testSpansCorrectlyWrapText(int $fragmentIndex, string $expectedMarkup) : void
+    public function testSpansCorrectlyWrapText(int $fragmentIndex, string $expectedMarkup): void
     {
         $richText = $this->richTextSpansFixture();
         $this->assertEquals(
@@ -156,7 +157,7 @@ class HtmlSerializerTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function richTextBlockElementsData() : iterable
+    public function richTextBlockElementsData(): iterable
     {
         return [
             'H1' => [
@@ -199,7 +200,7 @@ class HtmlSerializerTest extends TestCase
     }
 
     /** @dataProvider richTextBlockElementsData */
-    public function testBlockElementsMarkup(int $fragmentIndex, string $expectedMarkup) : void
+    public function testBlockElementsMarkup(int $fragmentIndex, string $expectedMarkup): void
     {
         $richText = $this->richTextBlockElementsFixture();
         $this->assertEquals(
@@ -208,10 +209,10 @@ class HtmlSerializerTest extends TestCase
         );
     }
 
-    public function testExceptionThrownWhenAnUnknownFragmentTypeIsEncountered() : void
+    public function testExceptionThrownWhenAnUnknownFragmentTypeIsEncountered(): void
     {
         $fragment = new class implements Fragment {
-            public function isEmpty() : bool
+            public function isEmpty(): bool
             {
                 return false;
             }

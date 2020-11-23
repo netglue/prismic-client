@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Serializer;
@@ -78,7 +79,7 @@ class HtmlSerializer
         $this->escaper = new Escaper();
     }
 
-    public function __invoke(Fragment $fragment) : string
+    public function __invoke(Fragment $fragment): string
     {
         if ($fragment instanceof ListItems) {
             return $this->listItems($fragment);
@@ -96,7 +97,7 @@ class HtmlSerializer
         return $this->serializeFragment($fragment);
     }
 
-    private function serializeFragment(Fragment $fragment) : string
+    private function serializeFragment(Fragment $fragment): string
     {
         switch (get_class($fragment)) {
             case BooleanFragment::class:
@@ -107,8 +108,6 @@ class HtmlSerializer
                     $fragment() ? 'true' : 'false'
                 );
 
-                break;
-
             case Number::class:
                 assert($fragment instanceof Number);
 
@@ -117,19 +116,13 @@ class HtmlSerializer
                     (string) $fragment
                 );
 
-                break;
-
             case EmptyFragment::class:
                 return '';
-
-                break;
 
             case DateFragment::class:
                 assert($fragment instanceof DateFragment);
 
                 return $this->date($fragment);
-
-                break;
 
             case StringFragment::class:
                 assert($fragment instanceof StringFragment);
@@ -138,8 +131,6 @@ class HtmlSerializer
                     '<kbd>%s</kbd>',
                     $this->escaper->escapeHtml((string) $fragment)
                 );
-
-                break;
 
             case GeoPoint::class:
                 assert($fragment instanceof GeoPoint);
@@ -150,8 +141,6 @@ class HtmlSerializer
                     $fragment->latitude()
                 );
 
-                break;
-
             case Color::class:
                 assert($fragment instanceof Color);
 
@@ -161,14 +150,10 @@ class HtmlSerializer
                     (string) $fragment->invert()
                 );
 
-                break;
-
             case Image::class:
                 assert($fragment instanceof Image);
 
                 return $this->image($fragment);
-
-                break;
 
             case WebLink::class:
             case DocumentLink::class:
@@ -178,28 +163,20 @@ class HtmlSerializer
 
                 return $this->link($fragment);
 
-                break;
-
             case Slice::class:
                 assert($fragment instanceof Slice);
 
                 return $this->slice($fragment);
-
-                break;
 
             case TextElement::class:
                 assert($fragment instanceof TextElement);
 
                 return $this->textElement($fragment);
 
-                break;
-
             case Embed::class:
                 assert($fragment instanceof Embed);
 
                 return $this->embed($fragment);
-
-                break;
         }
 
         throw new UnexpectedValue(sprintf(
@@ -208,7 +185,7 @@ class HtmlSerializer
         ));
     }
 
-    private function date(DateFragment $fragment) : string
+    private function date(DateFragment $fragment): string
     {
         $date = ! $fragment->isDay() ? $fragment->setTimezone($this->timezone) : $fragment;
 
@@ -219,7 +196,7 @@ class HtmlSerializer
         );
     }
 
-    private function listItems(ListItems $htmlList) : string
+    private function listItems(ListItems $htmlList): string
     {
         if (! count($htmlList)) {
             return '';
@@ -238,16 +215,16 @@ class HtmlSerializer
     }
 
     /** @param mixed[] $attributes */
-    private function htmlAttributes(array $attributes) : string
+    private function htmlAttributes(array $attributes): string
     {
-        $atrs = implode(' ', array_map(function (string $atr, $value) : string {
+        $atrs = implode(' ', array_map(function (string $atr, $value): string {
             return sprintf('%s="%s"', $atr, $this->escaper->escapeHtml($value));
         }, array_keys($attributes), $attributes));
 
         return empty($atrs) ? '' : ' ' . $atrs;
     }
 
-    private function linkOpenTag(Link $link) :? string
+    private function linkOpenTag(Link $link): ?string
     {
         $url = $this->resolver->resolve($link);
         if (! $url) {
@@ -262,7 +239,7 @@ class HtmlSerializer
         return sprintf('<a%s>', $this->htmlAttributes($attributes));
     }
 
-    private function link(Link $link, ?string $wraps = null) : string
+    private function link(Link $link, ?string $wraps = null): string
     {
         $openTag = $this->linkOpenTag($link);
         if (! $openTag) {
@@ -276,7 +253,7 @@ class HtmlSerializer
         );
     }
 
-    private function image(Image $fragment) : string
+    private function image(Image $fragment): string
     {
         $attributes = array_filter([
             'src' => $fragment->url(),
@@ -292,7 +269,7 @@ class HtmlSerializer
             : $img;
     }
 
-    private function slice(Slice $fragment) : string
+    private function slice(Slice $fragment): string
     {
         $primary = $this($fragment->primary());
         $items   = $this($fragment->items());
@@ -313,7 +290,7 @@ class HtmlSerializer
         );
     }
 
-    private function textElement(TextElement $fragment) : string
+    private function textElement(TextElement $fragment): string
     {
         if (empty($fragment->text())) {
             return '';
@@ -332,13 +309,13 @@ class HtmlSerializer
     }
 
     /** @param Span[] $spans */
-    private function insertSpans(TextElement $fragment, string $text, array $spans) : string
+    private function insertSpans(TextElement $fragment, string $text, array $spans): string
     {
         $wrapper = $fragment->type() === 'preformatted'
-            ? static function (string $str) : string {
+            ? static function (string $str): string {
                 return $str;
             }
-        : static function (string $str) : string {
+        : static function (string $str): string {
             return nl2br($str);
         };
 
@@ -352,7 +329,7 @@ class HtmlSerializer
             return '';
         }
 
-        array_walk($nodes, function (&$character) : void {
+        array_walk($nodes, function (&$character): void {
             $character = $this->escaper->escapeHtml($character);
         });
 
@@ -394,7 +371,7 @@ class HtmlSerializer
         return $wrapper(implode('', $nodes));
     }
 
-    private function embed(Embed $embed) : string
+    private function embed(Embed $embed): string
     {
         $attributes = $this->htmlAttributes(array_filter([
             'data-oembed-provider' => $embed->provider(),

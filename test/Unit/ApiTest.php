@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest;
@@ -60,7 +61,7 @@ class ApiTest extends TestCase
         }
         JSON;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->httpClient = new MockClient();
@@ -69,33 +70,33 @@ class ApiTest extends TestCase
         $this->response = $response->withBody($responseBody);
     }
 
-    public function testThatAnUnreachableDomainNameWillCauseARequestFailure() : void
+    public function testThatAnUnreachableDomainNameWillCauseARequestFailure(): void
     {
         $unreachable = sprintf('https://%s.example.com/not-found', uniqid('', false));
         $client = new Client(null, null, [CURLOPT_TIMEOUT_MS => 500]);
         $api = Api::get($unreachable, null, $client);
         try {
             $api->data();
-            $this->fail('Exception not thrown');
+            self::fail('Exception not thrown');
         } catch (RequestFailure $error) {
-            $this->assertInstanceOf(ClientExceptionInterface::class, $error->getPrevious());
+            self::assertInstanceOf(ClientExceptionInterface::class, $error->getPrevious());
         }
     }
 
-    public function testThatANetworkTimeOutWillCauseARequestFailure() : void
+    public function testThatANetworkTimeOutWillCauseARequestFailure(): void
     {
         $reachable = 'https://www.google.com';
         $client = new Client(null, null, [CURLOPT_TIMEOUT_MS => 1]);
         $api = Api::get($reachable, null, $client);
         try {
             $api->data();
-            $this->fail('Exception not thrown');
+            self::fail('Exception not thrown');
         } catch (RequestFailure $error) {
-            $this->assertInstanceOf(ClientExceptionInterface::class, $error->getPrevious());
+            self::assertInstanceOf(ClientExceptionInterface::class, $error->getPrevious());
         }
     }
 
-    public function testThtARedirectIsExceptional() : void
+    public function testThtARedirectIsExceptional(): void
     {
         $this->httpClient->setDefaultResponse(new RedirectResponse('http://other.example.com'));
         $api = Api::get('http://example.com', null, $this->httpClient);
@@ -105,18 +106,21 @@ class ApiTest extends TestCase
         $api->data();
     }
 
-    public function testThatA400ClassErrorIsExceptional() : void
+    public function testThatA400ClassErrorIsExceptional(): void
     {
         $this->httpClient->setDefaultResponse(new TextResponse('Nice Body', 400));
         $api = Api::get('http://example.com', null, $this->httpClient);
         $this->expectException(RequestFailure::class);
-        $this->expectExceptionMessage('Error 400. The request to the URL "http://example.com" was rejected by the api. The error response body was "Nice Body"');
+        $this->expectExceptionMessage(
+            'Error 400. The request to the URL "http://example.com" was rejected '
+            . 'by the api. The error response body was "Nice Body"'
+        );
         $this->expectExceptionCode(400);
         $api->data();
     }
 
     /** @return int[][] */
-    public function authErrorStatusCodes() : iterable
+    public function authErrorStatusCodes(): iterable
     {
         yield 401 => [401];
 
@@ -124,7 +128,7 @@ class ApiTest extends TestCase
     }
 
     /** @dataProvider authErrorStatusCodes */
-    public function testThatA401WillCauseAnAuthenticationException(int $code) : void
+    public function testThatA401WillCauseAnAuthenticationException(int $code): void
     {
         $this->httpClient->setDefaultResponse(new TextResponse('Bad Auth', $code));
         $api = Api::get('http://example.com', null, $this->httpClient);
@@ -134,72 +138,75 @@ class ApiTest extends TestCase
         $api->data();
     }
 
-    public function testThatAServerErrorWillCauseAnException() : void
+    public function testThatAServerErrorWillCauseAnException(): void
     {
         $this->httpClient->setDefaultResponse(new TextResponse('Whoops', 500));
         $api = Api::get('http://example.com', null, $this->httpClient);
         $this->expectException(RequestFailure::class);
-        $this->expectExceptionMessage('The request to the URL "http://example.com" resulted in a server error. The error response body was "Whoops"');
+        $this->expectExceptionMessage(
+            'The request to the URL "http://example.com" resulted in a server error. '
+            . 'The error response body was "Whoops"'
+        );
         $this->expectExceptionCode(500);
         $api->data();
     }
 
-    public function testThatTheHostnameOfTheRepoCanBeRetrieved() : void
+    public function testThatTheHostnameOfTheRepoCanBeRetrieved(): void
     {
         $api = Api::get('https://foo.example.com/api/v2');
-        $this->assertSame('foo.example.com', $api->host());
+        self::assertSame('foo.example.com', $api->host());
     }
 
-    public function testThatASuccessfulResponseWillYieldExpectedApiData() : void
+    public function testThatASuccessfulResponseWillYieldExpectedApiData(): void
     {
         $this->httpClient->setDefaultResponse($this->response);
         $api = Api::get('https://example.com', null, $this->httpClient);
         $data = $api->data();
-        $this->assertContainsEquals('goats', $data->tags());
+        self::assertContainsEquals('goats', $data->tags());
     }
 
-    public function testRepeatedCallsToRetrieveApiDataReturnTheSameInstance() : void
+    public function testRepeatedCallsToRetrieveApiDataReturnTheSameInstance(): void
     {
         $this->httpClient->setDefaultResponse($this->response);
         $api = Api::get('https://example.com', null, $this->httpClient);
         $data = $api->data();
-        $this->assertSame($data, $api->data());
+        self::assertSame($data, $api->data());
     }
 
-    public function testThatAccessTokenIsOmittedFromRequestWhenNull() : void
+    public function testThatAccessTokenIsOmittedFromRequestWhenNull(): void
     {
         $this->httpClient->setDefaultResponse($this->response);
         $api = Api::get('https://example.com', null, $this->httpClient);
         $api->data();
         $request = $this->httpClient->getLastRequest();
-        $this->assertStringNotContainsString('access_token', $request->getUri()->getQuery());
+        self::assertStringNotContainsString('access_token', $request->getUri()->getQuery());
     }
 
-    public function testThatAccessTokenIsIncludedInRequestWhenNotNull() : void
+    public function testThatAccessTokenIsIncludedInRequestWhenNotNull(): void
     {
         $this->httpClient->setDefaultResponse($this->response);
         $api = Api::get('https://example.com', 'foo', $this->httpClient);
         $api->data();
         $request = $this->httpClient->getLastRequest();
-        $this->assertStringContainsString('access_token=foo', $request->getUri()->getQuery());
+        self::assertStringContainsString('access_token=foo', $request->getUri()->getQuery());
     }
 
-    public function testThatTheMasterRefIsReturnedByDefault() : void
+    public function testThatTheMasterRefIsReturnedByDefault(): void
     {
         $this->httpClient->setDefaultResponse($this->response);
         $api = Api::get('https://example.com', null, $this->httpClient);
-        $this->assertSame('master-ref', (string) $api->ref());
+        self::assertSame('master-ref', (string) $api->ref());
     }
 
-    public function testThatPreviewIsNotActiveByDefault() : void
+    public function testThatPreviewIsNotActiveByDefault(): void
     {
         $this->httpClient->setDefaultResponse($this->response);
         $api = Api::get('https://example.com', null, $this->httpClient);
-        $this->assertFalse($api->inPreview());
+        self::assertFalse($api->inPreview());
     }
 
     /** @return mixed[] */
-    public function cookiePayloads() : iterable
+    public function cookiePayloads(): iterable
     {
         return [
             'io.prismic.preview' => [
@@ -218,13 +225,15 @@ class ApiTest extends TestCase
      *
      * @dataProvider cookiePayloads
      */
-    public function testThatAPreviewRefIsReturnedWhenRequestCookiesArePresent(array $cookiePayload, string $expectedRef) : void
-    {
+    public function testThatAPreviewRefIsReturnedWhenRequestCookiesArePresent(
+        array $cookiePayload,
+        string $expectedRef
+    ): void {
         $this->httpClient->setDefaultResponse($this->response);
         $api = Api::get('https://example.com', null, $this->httpClient);
         $api->setRequestCookies($cookiePayload);
-        $this->assertSame($expectedRef, (string) $api->ref());
-        $this->assertTrue($api->inPreview());
+        self::assertSame($expectedRef, (string) $api->ref());
+        self::assertTrue($api->inPreview());
     }
 
     /**
@@ -232,13 +241,13 @@ class ApiTest extends TestCase
      *
      * @dataProvider cookiePayloads
      */
-    public function testThatCookieSuperGlobalsAreNotConsideredAfterConstruction(array $cookiePayload) : void
+    public function testThatCookieSuperGlobalsAreNotConsideredAfterConstruction(array $cookiePayload): void
     {
         $backup = $_COOKIE;
         $this->httpClient->setDefaultResponse($this->response);
         $api = Api::get('https://example.com', null, $this->httpClient);
         $_COOKIE = $cookiePayload;
-        $this->assertFalse($api->inPreview());
+        self::assertFalse($api->inPreview());
         $_COOKIE = $backup;
     }
 
@@ -247,26 +256,26 @@ class ApiTest extends TestCase
      *
      * @dataProvider cookiePayloads
      */
-    public function testThatCookieSuperGlobalsAreConsultedDuringConstruction(array $cookiePayload) : void
+    public function testThatCookieSuperGlobalsAreConsultedDuringConstruction(array $cookiePayload): void
     {
         $backup = $_COOKIE;
         $_COOKIE = $cookiePayload;
         $this->httpClient->setDefaultResponse($this->response);
         $api = Api::get('https://example.com', null, $this->httpClient);
-        $this->assertTrue($api->inPreview());
+        self::assertTrue($api->inPreview());
         $_COOKIE = $backup;
     }
 
-    public function testThatPreviewSessionWillReturnNullWhenNoDocumentIsGiven() : void
+    public function testThatPreviewSessionWillReturnNullWhenNoDocumentIsGiven(): void
     {
         $api = Api::get('https://example.com', null, $this->httpClient);
         $this->httpClient->setDefaultResponse(new JsonResponse(Json::decodeObject(self::NO_DOCUMENT_PREVIEW_PAYLOAD)));
-        $this->assertNull(
+        self::assertNull(
             $api->previewSession('https://example.com/previews/stuff:morestuff')
         );
     }
 
-    public function testThatADocumentLinkWillBeReturnedWhenAPreviewResponsePointsToAKnownDocument() : void
+    public function testThatADocumentLinkWillBeReturnedWhenAPreviewResponsePointsToAKnownDocument(): void
     {
         $api = Api::get('https://example.com/api/v2', null, $this->httpClient);
 
@@ -281,31 +290,37 @@ class ApiTest extends TestCase
         // Second response should be a search result for a single document
         $documentResponse = new JsonResponse(Json::decodeObject($this->jsonFixtureByFileName('response.json')));
         $matcher = new RequestMatcher('/api/v2/documents/search');
-        $this->httpClient->on($matcher, function (RequestInterface $request) use ($documentResponse) : ResponseInterface {
-            $url = $request->getUri();
-            $this->assertStringContainsString('target-document-id', $url->getQuery());
+        $this->httpClient->on(
+            $matcher,
+            static function (RequestInterface $request) use ($documentResponse): ResponseInterface {
+                $url = $request->getUri();
+                self::assertStringContainsString('target-document-id', $url->getQuery());
 
-            return $documentResponse;
-        });
+                return $documentResponse;
+            }
+        );
 
         $link = $api->previewSession('https://example.com/get-preview');
 
-        $this->assertNotNull($link);
-        $this->assertSame('DOC_ID', $link->id());
-        $this->assertSame('DOC_UID', $link->uid());
-        $this->assertSame('doc', $link->type());
-        $this->assertSame('en-gb', $link->language());
+        self::assertNotNull($link);
+        self::assertSame('DOC_ID', $link->id());
+        self::assertSame('DOC_UID', $link->uid());
+        self::assertSame('doc', $link->type());
+        self::assertSame('en-gb', $link->language());
     }
 
-    public function testThatAnExceptionIsThrownWhenThePreviewTokenDoesNotMatchTheRepositoryHostname() : void
+    public function testThatAnExceptionIsThrownWhenThePreviewTokenDoesNotMatchTheRepositoryHostname(): void
     {
         $api = Api::get('https://example.com/api/v2', null, $this->httpClient);
         $this->expectException(InvalidPreviewToken::class);
-        $this->expectExceptionMessage('The preview url has been rejected because its host name "foobar.com" does not match the api host "example.com"');
+        $this->expectExceptionMessage(
+            'The preview url has been rejected because its host name '
+            . '"foobar.com" does not match the api host "example.com"'
+        );
         $api->previewSession('https://foobar.com/something-nefarious');
     }
 
-    public function testThatAnExceptionIsThrownWhenThePreviewTokenIsAnInvalidUrl() : void
+    public function testThatAnExceptionIsThrownWhenThePreviewTokenIsAnInvalidUrl(): void
     {
         $api = Api::get('https://example.com/api/v2', null, $this->httpClient);
         $this->expectException(InvalidPreviewToken::class);
@@ -314,7 +329,7 @@ class ApiTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function previewHostVariations() : iterable
+    public function previewHostVariations(): iterable
     {
         return [
             'CDN Configured, Not in Preview' => [
@@ -337,35 +352,40 @@ class ApiTest extends TestCase
     }
 
     /** @dataProvider previewHostVariations */
-    public function testThatAnExceptionIsNotThrownWithCdnVariationsOfApiHostNames(string $configuredHost, string $tokenHost) : void
-    {
+    public function testThatAnExceptionIsNotThrownWithCdnVariationsOfApiHostNames(
+        string $configuredHost,
+        string $tokenHost
+    ): void {
         $api = Api::get(sprintf('https://%s', $configuredHost), null, $this->httpClient);
         $previewResponse = new JsonResponse(Json::decodeObject(self::NO_DOCUMENT_PREVIEW_PAYLOAD));
         $matcher = new RequestMatcher('/get-preview');
         $sentRequest = null;
-        $this->httpClient->on($matcher, static function (RequestInterface $request) use ($previewResponse, &$sentRequest) {
-            $sentRequest = $request;
+        $this->httpClient->on(
+            $matcher,
+            static function (RequestInterface $request) use ($previewResponse, &$sentRequest) {
+                $sentRequest = $request;
 
-            return $previewResponse;
-        });
-        $this->assertNull(
+                return $previewResponse;
+            }
+        );
+        self::assertNull(
             $api->previewSession(urlencode(
                 sprintf('https://%s/get-preview', $tokenHost)
             ))
         );
-        $this->assertInstanceOf(RequestInterface::class, $sentRequest);
+        self::assertInstanceOf(RequestInterface::class, $sentRequest);
     }
 
-    public function testThatAnExceptionIsThrownWhenAnHttpClientCannotBeDiscovered() : void
+    public function testThatAnExceptionIsThrownWhenAnHttpClientCannotBeDiscovered(): void
     {
         $strategies = Psr18ClientDiscovery::getStrategies();
         Psr18ClientDiscovery::setStrategies([]);
         try {
             Api::get('foo');
-            $this->fail('An exception was not thrown');
+            self::fail('An exception was not thrown');
         } catch (PrismicError $error) {
-            $this->assertStringContainsString('An HTTP client cannot be determined', $error->getMessage());
-            $this->assertInstanceOf(NotFoundException::class, $error->getPrevious());
+            self::assertStringContainsString('An HTTP client cannot be determined', $error->getMessage());
+            self::assertInstanceOf(NotFoundException::class, $error->getPrevious());
 
             return;
         } finally {
@@ -373,16 +393,16 @@ class ApiTest extends TestCase
         }
     }
 
-    public function testThatAnExceptionIsThrownWhenARequestFactoryCannotBeDiscovered() : void
+    public function testThatAnExceptionIsThrownWhenARequestFactoryCannotBeDiscovered(): void
     {
         $strategies = Psr17FactoryDiscovery::getStrategies();
         Psr17FactoryDiscovery::setStrategies([]);
         try {
             Api::get('foo', null, $this->createMock(ClientInterface::class));
-            $this->fail('An exception was not thrown');
+            self::fail('An exception was not thrown');
         } catch (PrismicError $error) {
-            $this->assertStringContainsString('A request factory cannot be determined', $error->getMessage());
-            $this->assertInstanceOf(NotFoundException::class, $error->getPrevious());
+            self::assertStringContainsString('A request factory cannot be determined', $error->getMessage());
+            self::assertInstanceOf(NotFoundException::class, $error->getPrevious());
 
             return;
         } finally {
@@ -390,7 +410,7 @@ class ApiTest extends TestCase
         }
     }
 
-    public function testThatAnExceptionIsThrownWhenAnUriFactoryCannotBeDiscovered() : void
+    public function testThatAnExceptionIsThrownWhenAnUriFactoryCannotBeDiscovered(): void
     {
         $strategies = Psr17FactoryDiscovery::getStrategies();
         Psr17FactoryDiscovery::setStrategies([]);
@@ -401,10 +421,10 @@ class ApiTest extends TestCase
                 $this->createMock(ClientInterface::class),
                 $this->createMock(RequestFactoryInterface::class),
             );
-            $this->fail('An exception was not thrown');
+            self::fail('An exception was not thrown');
         } catch (PrismicError $error) {
-            $this->assertStringContainsString('A URI factory cannot be determined', $error->getMessage());
-            $this->assertInstanceOf(NotFoundException::class, $error->getPrevious());
+            self::assertStringContainsString('A URI factory cannot be determined', $error->getMessage());
+            self::assertInstanceOf(NotFoundException::class, $error->getPrevious());
 
             return;
         } finally {
@@ -412,7 +432,7 @@ class ApiTest extends TestCase
         }
     }
 
-    public function testThatExceptionsThrownDueToInvalidCacheKeysAreWrapped() : void
+    public function testThatExceptionsThrownDueToInvalidCacheKeysAreWrapped(): void
     {
         $cacheException = new CacheKeyInvalid();
         $cache = $this->createMock(CacheItemPoolInterface::class);

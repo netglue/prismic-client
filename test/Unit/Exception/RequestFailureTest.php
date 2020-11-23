@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Exception;
@@ -11,7 +12,7 @@ use Psr\Http\Message\RequestInterface;
 
 class RequestFailureTest extends TestCase
 {
-    public function testWithClientErrorReturnsPreviewTokenExpiredInstanceWhenResponseBodyMatchesExpectedValue() : void
+    public function testWithClientErrorReturnsPreviewTokenExpiredInstanceWhenResponseBodyMatchesExpectedValue(): void
     {
         $response = new JsonResponse([
             'error' => PreviewTokenExpired::EXPECTED_ERROR_MESSAGE,

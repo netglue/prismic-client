@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -19,22 +20,22 @@ final class GeoPoint implements Fragment
         $this->longitude = $lng;
     }
 
-    public static function new(float $lat, float $lng) : self
+    public static function new(float $lat, float $lng): self
     {
         return new static($lat, $lng);
     }
 
-    public function latitude() : float
+    public function latitude(): float
     {
         return $this->latitude;
     }
 
-    public function longitude() : float
+    public function longitude(): float
     {
         return $this->longitude;
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return false;
     }

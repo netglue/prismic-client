@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicSmokeTest;
@@ -24,7 +25,7 @@ class TestCase extends PHPUnitTestCase
     /** @var ClientInterface|null */
     private $httpClient;
 
-    protected function psrCachePool() : CacheItemPoolInterface
+    protected function psrCachePool(): CacheItemPoolInterface
     {
         if (! $this->cache) {
             $this->cache = new ApcuAdapter('PrismicTests', 0);
@@ -33,7 +34,7 @@ class TestCase extends PHPUnitTestCase
         return $this->cache;
     }
 
-    protected function httpClient() : ClientInterface
+    protected function httpClient(): ClientInterface
     {
         if (! $this->httpClient) {
             $this->httpClient = new PluginClient(
@@ -46,7 +47,7 @@ class TestCase extends PHPUnitTestCase
     }
 
     /** @return string[] */
-    protected function compileEndPoints() : array
+    protected function compileEndPoints(): array
     {
         $endpoints = [];
         $repo = getenv('PRISMIC_REPO') ?: null;
@@ -75,7 +76,7 @@ class TestCase extends PHPUnitTestCase
     }
 
     /** @return Api[][] */
-    public function apiDataProvider() : iterable
+    public function apiDataProvider(): iterable
     {
         foreach ($this->apiInstances() as $url => $api) {
             yield $url => [$api];
@@ -83,7 +84,7 @@ class TestCase extends PHPUnitTestCase
     }
 
     /** @return Api[] */
-    protected function apiInstances() : iterable
+    protected function apiInstances(): iterable
     {
         foreach ($this->compileEndPoints() as $url => $token) {
             $api = Api::get($url, $token, $this->httpClient());

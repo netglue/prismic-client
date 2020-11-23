@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\ResultSet;
@@ -14,13 +15,13 @@ class StandardResultTest extends TestCase
     /** @var StandardResultSet */
     private $resultSet;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->resultSet = StandardResultSet::factory(Json::decodeObject($this->jsonFixtureByFileName('response.json')));
     }
 
-    public function testBasicAccessors() : void
+    public function testBasicAccessors(): void
     {
         $this->assertSame(1, $this->resultSet->resultsPerPage());
         $this->assertSame(1, $this->resultSet->currentPageNumber());
@@ -33,12 +34,12 @@ class StandardResultTest extends TestCase
         $this->assertContainsOnlyInstancesOf(DocumentData::class, $this->resultSet->results());
     }
 
-    public function testThatResultSetsAreCountable() : void
+    public function testThatResultSetsAreCountable(): void
     {
         $this->assertCount(2, $this->resultSet);
     }
 
-    public function testResultSetIsIterable() : void
+    public function testResultSetIsIterable(): void
     {
         $c = 0;
         foreach ($this->resultSet as $item) {

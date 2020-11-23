@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic;
@@ -30,10 +31,10 @@ interface ApiClient
     public const EXPERIMENTS_COOKIE = 'io.prismic.experiment';
 
     /** Return the host name of the api endpoint */
-    public function host() : string;
+    public function host(): string;
 
     /** Returns a value object containing current information about the content repository */
-    public function data() : ApiData;
+    public function data(): ApiData;
 
     /**
      * Return the current ref in use
@@ -41,54 +42,54 @@ interface ApiClient
      * By default, this is the master ref. Super-global cookies are consulted to detect whether a preview
      * session is active and if so, the preview ref will be preferred.
      */
-    public function ref() : Ref;
+    public function ref(): Ref;
 
     /**
      * Create a new query on the current ref
      *
      * Use the query to build your conditions then dispatch it to @link query() to retrieve the results.
      */
-    public function createQuery(string $form = self::DEFAULT_FORM) : Query;
+    public function createQuery(string $form = self::DEFAULT_FORM): Query;
 
     /**
      * Submit the given query to the API
      */
-    public function query(Query $query) : ResultSet;
+    public function query(Query $query): ResultSet;
 
     /**
      * Convenience method to return the first document for the given query
      */
-    public function queryFirst(Query $query) :? Document;
+    public function queryFirst(Query $query): ?Document;
 
     /**
      * Locate a single document by its unique identifier
      */
-    public function findById(string $id) :? Document;
+    public function findById(string $id): ?Document;
 
     /**
      * Locate a single document by its type and user unique id
      */
-    public function findByUid(string $type, string $uid, string $lang = '*') :? Document;
+    public function findByUid(string $type, string $uid, string $lang = '*'): ?Document;
 
     /**
      * Locate the document referenced by the given bookmark
      */
-    public function findByBookmark(string $bookmark) :? Document;
+    public function findByBookmark(string $bookmark): ?Document;
 
     /**
      * Return a result set containing all, un-paginated results for the given query
      */
-    public function findAll(Query $query) : ResultSet;
+    public function findAll(Query $query): ResultSet;
 
     /**
      * Given a paginated result, return the next page of the results, if any
      */
-    public function next(ResultSet $resultSet) :? ResultSet;
+    public function next(ResultSet $resultSet): ?ResultSet;
 
     /**
      * Given a paginated result, return the previous page of the results, if any
      */
-    public function previous(ResultSet $resultSet) :? ResultSet;
+    public function previous(ResultSet $resultSet): ?ResultSet;
 
     /**
      * Set cookie values found in the request
@@ -98,12 +99,12 @@ interface ApiClient
      *
      * @param string[] $cookies
      */
-    public function setRequestCookies(array $cookies) : void;
+    public function setRequestCookies(array $cookies): void;
 
     /**
      * Whether the current ref in use is a preview, i.e. the user is in preview mode
      */
-    public function inPreview() : bool;
+    public function inPreview(): bool;
 
     /**
      * Start a preview session
@@ -116,5 +117,5 @@ interface ApiClient
      * @throws PreviewTokenExpired if the the token provided has expired.
      * @throws RequestFailure if an error occurs communicating with the API.
      */
-    public function previewSession(string $token) :? DocumentLink;
+    public function previewSession(string $token): ?DocumentLink;
 }

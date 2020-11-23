@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -26,7 +27,7 @@ final class Color implements Fragment, Stringable
         $this->value = $value;
     }
 
-    public static function new(string $value) : self
+    public static function new(string $value): self
     {
         if (! self::isColor($value)) {
             throw InvalidArgument::invalidColor($value);
@@ -36,7 +37,7 @@ final class Color implements Fragment, Stringable
     }
 
     /** @return int[] */
-    public function asRgb() :? array
+    public function asRgb(): ?array
     {
         [$r, $g, $b] = sscanf($this->value, '#%02x%02x%02x');
 
@@ -47,7 +48,7 @@ final class Color implements Fragment, Stringable
         ];
     }
 
-    public function asRgbString(?float $alpha = null) :? string
+    public function asRgbString(?float $alpha = null): ?string
     {
         ['r' => $r, 'g' => $g, 'b' => $b] = $this->asRgb();
         if ($alpha) {
@@ -57,31 +58,31 @@ final class Color implements Fragment, Stringable
         return sprintf('rgb(%d, %d, %d)', $r, $g, $b);
     }
 
-    private static function isColor(string $value) : bool
+    private static function isColor(string $value): bool
     {
         return (bool) preg_match('/^#[0-9A-F]{6,8}$/i', $value);
     }
 
-    public function asInteger() :? int
+    public function asInteger(): ?int
     {
         return (int) hexdec(substr($this->value, 1));
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->value;
     }
 
-    public function invert() : self
+    public function invert(): self
     {
-        $parts = array_map(static function (int $channel) : string {
+        $parts = array_map(static function (int $channel): string {
             return sprintf('%02s', dechex(255 - $channel));
         }, $this->asRgb());
 
         return self::new(sprintf('#%s', implode('', $parts)));
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return false;
     }

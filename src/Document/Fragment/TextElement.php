@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -50,7 +51,7 @@ final class TextElement implements Fragment
         ?string $text,
         iterable $spans,
         ?string $label
-    ) : self {
+    ): self {
         return new static(
             $type,
             $text ?? '',
@@ -60,47 +61,47 @@ final class TextElement implements Fragment
     }
 
     /** @return Span[] */
-    public function spans() : iterable
+    public function spans(): iterable
     {
         return $this->spans;
     }
 
-    public function hasLabel() : bool
+    public function hasLabel(): bool
     {
         return $this->label !== null;
     }
 
-    public function label() :? string
+    public function label(): ?string
     {
         return $this->label;
     }
 
-    public function type() : string
+    public function type(): string
     {
         return $this->type;
     }
 
-    public function text() :? string
+    public function text(): ?string
     {
         return $this->text;
     }
 
-    public function isListItem() : bool
+    public function isListItem(): bool
     {
         return $this->isOrderedListItem() || $this->isUnorderedListItem();
     }
 
-    public function isOrderedListItem() : bool
+    public function isOrderedListItem(): bool
     {
         return $this->type === self::TYPE_ORDERED_LIST_ITEM;
     }
 
-    public function isUnorderedListItem() : bool
+    public function isUnorderedListItem(): bool
     {
         return $this->type === self::TYPE_UNORDERED_LIST_ITEM;
     }
 
-    public function isHeading() : bool
+    public function isHeading(): bool
     {
         return in_array($this->type, [
             self::TYPE_HEADING1,
@@ -112,17 +113,17 @@ final class TextElement implements Fragment
         ], true);
     }
 
-    public function isParagraph() : bool
+    public function isParagraph(): bool
     {
         return $this->type === self::TYPE_PARAGRAPH;
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return $this->text === '';
     }
 
-    private function addSpan(Span $span) : void
+    private function addSpan(Span $span): void
     {
         $this->spans[] = $span;
     }

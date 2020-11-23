@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Value;
@@ -8,7 +9,7 @@ use PrismicTest\Framework\TestCase;
 
 class LanguageTest extends TestCase
 {
-    public function testExpectedBehaviour() : void
+    public function testExpectedBehaviour(): void
     {
         $lang = Language::new('foo', 'bar');
         $this->assertSame('foo', $lang->id());

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -29,31 +30,31 @@ final class MediaLink implements Fragment, UrlLink
         string $url,
         string $fileName,
         int $fileSize
-    ) : self {
+    ): self {
         return new static($url, $fileName, $fileSize);
     }
 
-    public function url() : string
+    public function url(): string
     {
         return $this->url;
     }
 
-    public function filename() : string
+    public function filename(): string
     {
         return $this->fileName;
     }
 
-    public function filesize() : int
+    public function filesize(): int
     {
         return $this->fileSize;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->fileName;
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return false;
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
@@ -17,7 +18,7 @@ use function assert;
 
 class RichTextTest extends TestCase
 {
-    private function listItemsFixture() : RichText
+    private function listItemsFixture(): RichText
     {
         $collection = Factory::factory(Json::decodeObject($this->jsonFixtureByFileName('list-items.json')));
         assert($collection instanceof Collection);
@@ -27,7 +28,7 @@ class RichTextTest extends TestCase
         return $richText;
     }
 
-    public function testThatListItemsAreCollectedAsExpected() : void
+    public function testThatListItemsAreCollectedAsExpected(): void
     {
         $richText = $this->listItemsFixture();
         $this->assertInstanceOf(TextElement::class, $richText->get(0));
@@ -43,11 +44,11 @@ class RichTextTest extends TestCase
         $this->assertCount(1, $richText->get(6));
     }
 
-    public function testThatListItemOrderIsRetained() : void
+    public function testThatListItemOrderIsRetained(): void
     {
         $richText = $this->listItemsFixture();
 
-        $list = $richText->filter(static function (Fragment $fragment) : bool {
+        $list = $richText->filter(static function (Fragment $fragment): bool {
             return $fragment instanceof OrderedList;
         })->first();
 

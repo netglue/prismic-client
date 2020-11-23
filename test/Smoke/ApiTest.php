@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicSmokeTest;
@@ -14,7 +15,7 @@ use function sprintf;
 class ApiTest extends TestCase
 {
     /** @return mixed[] */
-    public function documentIdDataProvider() : iterable
+    public function documentIdDataProvider(): iterable
     {
         foreach ($this->apiInstances() as $api) {
             $response = $api->query(
@@ -28,7 +29,7 @@ class ApiTest extends TestCase
     }
 
     /** @dataProvider documentIdDataProvider */
-    public function testThatFindByIdReturnsTheExpectedDocument(Api $api, string $id) : void
+    public function testThatFindByIdReturnsTheExpectedDocument(Api $api, string $id): void
     {
         $document = $api->findById($id);
         $this->assertNotNull($document);
@@ -36,7 +37,7 @@ class ApiTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function documentUidDataProvider() : iterable
+    public function documentUidDataProvider(): iterable
     {
         foreach ($this->apiInstances() as $api) {
             foreach ($api->data()->types() as $type) {
@@ -58,7 +59,7 @@ class ApiTest extends TestCase
     }
 
     /** @dataProvider documentUidDataProvider */
-    public function testThatFindByUidReturnsTheExpectedDocument(Api $api, string $type, string $uid) : void
+    public function testThatFindByUidReturnsTheExpectedDocument(Api $api, string $type, string $uid): void
     {
         $document = $api->findByUid($type, $uid);
         $this->assertNotNull($document);
@@ -67,7 +68,7 @@ class ApiTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function bookmarkDataProvider() : iterable
+    public function bookmarkDataProvider(): iterable
     {
         foreach ($this->apiInstances() as $api) {
             foreach ($api->data()->bookmarks() as $bookmark) {
@@ -77,7 +78,7 @@ class ApiTest extends TestCase
     }
 
     /** @dataProvider bookmarkDataProvider */
-    public function testThatAllKnownBookmarksCanBeRetrieved(Api $api, string $bookmark) : void
+    public function testThatAllKnownBookmarksCanBeRetrieved(Api $api, string $bookmark): void
     {
         /**
          * There's not much to test here. The ID referenced by a bookmark may not resolve to a document, if
@@ -88,7 +89,7 @@ class ApiTest extends TestCase
     }
 
     /** @dataProvider apiDataProvider */
-    public function testThatNextAndPreviousReturnTheExpectedResults(Api $api) : void
+    public function testThatNextAndPreviousReturnTheExpectedResults(Api $api): void
     {
         $query = $api->createQuery()
             ->resultsPerPage(1);
@@ -112,7 +113,7 @@ class ApiTest extends TestCase
     }
 
     /** @dataProvider apiDataProvider */
-    public function testThatSettingAnUnknownRefWillCauseAnException(Api $api) : void
+    public function testThatSettingAnUnknownRefWillCauseAnException(Api $api): void
     {
         $query = $api->createQuery()
             ->resultsPerPage(1)

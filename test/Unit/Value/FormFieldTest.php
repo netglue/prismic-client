@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Value;
@@ -12,7 +13,7 @@ use stdClass;
 
 class FormFieldTest extends TestCase
 {
-    public function testBasicBehaviour() : void
+    public function testBasicBehaviour(): void
     {
         $field = FormField::new('foo', 'bar', true, 'baz');
         $this->assertEquals('foo', $field->name());
@@ -21,20 +22,20 @@ class FormFieldTest extends TestCase
         $this->assertEquals('baz', $field->defaultValue());
     }
 
-    public function testDefaultValueCanBeNull() : void
+    public function testDefaultValueCanBeNull(): void
     {
         $field = FormField::new('foo', 'bar', true, null);
         $this->assertNull($field->defaultValue());
     }
 
-    public function testFactoryExceptionForMissingType() : void
+    public function testFactoryExceptionForMissingType(): void
     {
         $this->expectException(UnexpectedValue::class);
         $this->expectExceptionMessage('Expected an object to contain the property "type"');
         FormField::factory('foo', new stdClass());
     }
 
-    public function testFactoryExceptionForNonStringType() : void
+    public function testFactoryExceptionForNonStringType(): void
     {
         $this->expectException(UnexpectedValue::class);
         $object = new stdClass();
@@ -43,7 +44,7 @@ class FormFieldTest extends TestCase
         FormField::factory('foo', $object);
     }
 
-    public function testNonBooleanForMultipleIsExceptional() : void
+    public function testNonBooleanForMultipleIsExceptional(): void
     {
         $object = Json::decodeObject('{
             "type":"t",
@@ -55,7 +56,7 @@ class FormFieldTest extends TestCase
         FormField::factory('foo', $object);
     }
 
-    public function testDefaultValueMustBeString() : void
+    public function testDefaultValueMustBeString(): void
     {
         $object = Json::decodeObject('{
             "type":"t",
@@ -67,7 +68,7 @@ class FormFieldTest extends TestCase
         FormField::factory('foo', $object);
     }
 
-    public function testTypeExpectations() : void
+    public function testTypeExpectations(): void
     {
         $field = FormField::factory('foo', Json::decodeObject('{
             "type":"t",
@@ -97,7 +98,7 @@ class FormFieldTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function invalidNumbers() : iterable
+    public function invalidNumbers(): iterable
     {
         return [
             ['foo'],
@@ -110,7 +111,7 @@ class FormFieldTest extends TestCase
      *
      * @dataProvider invalidNumbers
      */
-    public function testInvalidIntegerValues($value) : void
+    public function testInvalidIntegerValues($value): void
     {
         $field = FormField::factory('foo', Json::decodeObject('{
             "type":"Integer",
@@ -124,7 +125,7 @@ class FormFieldTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function invalidStrings() : iterable
+    public function invalidStrings(): iterable
     {
         return [
             [true],
@@ -139,7 +140,7 @@ class FormFieldTest extends TestCase
      *
      * @dataProvider invalidStrings
      */
-    public function testInvalidStringValues($value) : void
+    public function testInvalidStringValues($value): void
     {
         $field = FormField::factory('foo', Json::decodeObject('{
             "type":"String",

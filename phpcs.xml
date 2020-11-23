@@ -7,7 +7,7 @@
     <arg name="colors"/>
 
     <!-- Ignore warnings, show progress of the run and show sniff names -->
-    <arg value="nps"/>
+    <arg value="ps"/>
 
     <!-- Paths to check -->
     <file>src</file>
@@ -15,10 +15,7 @@
     <exclude-pattern>test/config/config.php</exclude-pattern>
 
     <!-- Inherit rules from Doctrine Coding Standard -->
-    <rule ref="Doctrine">
-        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing.WhitespaceAfterNullabilitySymbol" />
-        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing.NoSpaceBetweenColonAndNullabilitySymbol" />
-    </rule>
+    <rule ref="Doctrine" />
 
     <!-- Disable native type hint whilst this lib is compatible with 7.3 -->
     <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
@@ -27,40 +24,11 @@
         </properties>
     </rule>
 
-    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes">
-        <properties>
-            <property name="newlinesCountBetweenOpenTagAndDeclare" value="1" />
-        </properties>
-    </rule>
-
-    <!-- I like return types to look like this: ") :? Type" or ") : Type" -->
-    <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing">
-        <properties>
-            <property name="spacesCountBeforeColon" value="1" />
-        </properties>
-    </rule>
-
-    <rule ref="SlevomatCodingStandard.Namespaces.UseSpacing">
-        <properties>
-            <property name="linesCountBetweenUseTypes" value="1" />
-        </properties>
-    </rule>
-
-    <rule ref="SlevomatCodingStandard.ControlStructures.JumpStatementsSpacing">
-        <properties>
-            <property name="linesCountBeforeWhenFirstInCaseOrDefault" value="0"/>
-            <property name="linesCountAfterWhenLastInCaseOrDefault" value="1"/>
-            <property name="linesCountAfterWhenLastInLastCaseOrDefault" value="0"/>
-            <property name="tokensToCheck" type="array">
-                <element value="T_RETURN" />
-                <element value="T_THROW" />
-                <element value="T_YIELD" />
-                <element value="T_YIELD_FROM" />
-            </property>
-        </properties>
-    </rule>
-
     <rule ref="Generic.Formatting.MultipleStatementAlignment.NotSame">
         <severity>0</severity>
+    </rule>
+
+    <rule ref="Generic.Files.LineLength.TooLong">
+        <exclude-pattern>/test/</exclude-pattern>
     </rule>
 </ruleset>

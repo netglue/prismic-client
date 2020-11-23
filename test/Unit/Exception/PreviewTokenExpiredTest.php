@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Exception;
@@ -10,14 +11,14 @@ use Psr\Http\Message\RequestInterface;
 
 class PreviewTokenExpiredTest extends TestCase
 {
-    public function testIsPreviewTokenExpiryIsFalseWhenErrorMessageDoesNotMatchExpectedValue() : void
+    public function testIsPreviewTokenExpiryIsFalseWhenErrorMessageDoesNotMatchExpectedValue(): void
     {
         $response = new JsonResponse(['error' => 'Not expected message']);
 
         $this->assertFalse(PreviewTokenExpired::isPreviewTokenExpiry($response));
     }
 
-    public function testIsPreviewTokenExpiryIsTrueWhenErrorMessageMatchesExpectedValue() : void
+    public function testIsPreviewTokenExpiryIsTrueWhenErrorMessageMatchesExpectedValue(): void
     {
         $response = new JsonResponse([
             'error' => PreviewTokenExpired::EXPECTED_ERROR_MESSAGE,
@@ -26,7 +27,7 @@ class PreviewTokenExpiredTest extends TestCase
         $this->assertTrue(PreviewTokenExpired::isPreviewTokenExpiry($response));
     }
 
-    public function testThatSimulatedTokenExpiryResponseYieldsExpectedExceptionProperties() : void
+    public function testThatSimulatedTokenExpiryResponseYieldsExpectedExceptionProperties(): void
     {
         $response = new JsonResponse([
             'error' => PreviewTokenExpired::EXPECTED_ERROR_MESSAGE,

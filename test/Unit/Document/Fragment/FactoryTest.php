@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
@@ -22,7 +23,7 @@ use function assert;
 
 class FactoryTest extends TestCase
 {
-    private function imageFixture() : FragmentCollection
+    private function imageFixture(): FragmentCollection
     {
         $collection = Factory::factory(Json::decodeObject($this->jsonFixtureByFileName('images.json')));
         assert($collection instanceof FragmentCollection);
@@ -31,7 +32,7 @@ class FactoryTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function scalarTypes() : iterable
+    public function scalarTypes(): iterable
     {
         return [
             'integer' => [1, Number::class],
@@ -50,13 +51,13 @@ class FactoryTest extends TestCase
      *
      * @dataProvider scalarTypes
      */
-    public function testScalarValues($value, string $expectedType) : void
+    public function testScalarValues($value, string $expectedType): void
     {
         $fragment = Factory::factory($value);
         $this->assertInstanceOf($expectedType, $fragment);
     }
 
-    public function testThatALinkWithOnlyALinkTypeSpecifiedIsTreatedAsAnEmptyFragment() : void
+    public function testThatALinkWithOnlyALinkTypeSpecifiedIsTreatedAsAnEmptyFragment(): void
     {
         $link = Json::decodeObject('{
             "link_type": "Document"
@@ -66,7 +67,7 @@ class FactoryTest extends TestCase
         $this->assertInstanceOf(EmptyFragment::class, $fragment);
     }
 
-    public function testUnknownLinkTypeIsExceptional() : void
+    public function testUnknownLinkTypeIsExceptional(): void
     {
         $link = Json::decodeObject('{
             "link_type": "Not Right",
@@ -79,7 +80,7 @@ class FactoryTest extends TestCase
     }
 
     /** @return mixed[] */
-    public function exceptionalImageSpecs() : iterable
+    public function exceptionalImageSpecs(): iterable
     {
         return [
             'Dimensions not object' => [
@@ -114,20 +115,20 @@ class FactoryTest extends TestCase
     }
 
     /** @dataProvider exceptionalImageSpecs */
-    public function testInvalidImageSpecsAreExceptional(string $json, string $expectedMessage) : void
+    public function testInvalidImageSpecsAreExceptional(string $json, string $expectedMessage): void
     {
         $this->expectException(UnexpectedValue::class);
         $this->expectExceptionMessage($expectedMessage);
         Factory::factory(Json::decodeObject($json));
     }
 
-    public function testImageFactoryCanCreateRegularImage() : void
+    public function testImageFactoryCanCreateRegularImage(): void
     {
         $collection = $this->imageFixture();
         $this->assertInstanceOf(Image::class, $collection->get('single_image'));
     }
 
-    public function testImageFactoryCanCreateImageWithMultipleViews() : void
+    public function testImageFactoryCanCreateImageWithMultipleViews(): void
     {
         $collection = $this->imageFixture();
         $image = $collection->get('image_with_views');
@@ -137,24 +138,24 @@ class FactoryTest extends TestCase
         $this->assertInstanceOf(Image::class, $image->getView('view-two'));
     }
 
-    public function testImageInRichTextIsImageFragment() : void
+    public function testImageInRichTextIsImageFragment(): void
     {
         $collection = $this->imageFixture();
         $richText = $collection->get('rich_text');
         assert($richText instanceof FragmentCollection);
-        $image = $richText->filter(static function (Fragment $fragment) : bool {
+        $image = $richText->filter(static function (Fragment $fragment): bool {
             return $fragment instanceof Image;
         })->first();
         assert($image instanceof Image);
         $this->assertSame('https://example.com/image-in-rich-text.gif', $image->url());
     }
 
-    public function testLinkedImageInRichTextIsImageFragment() : void
+    public function testLinkedImageInRichTextIsImageFragment(): void
     {
         $collection = $this->imageFixture();
         $richText = $collection->get('rich_text');
         assert($richText instanceof FragmentCollection);
-        $images = $richText->filter(static function (Fragment $fragment) : bool {
+        $images = $richText->filter(static function (Fragment $fragment): bool {
             return $fragment instanceof Image;
         });
         $this->assertTrue($images->has(1));

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Value;
@@ -65,14 +66,14 @@ final class DocumentData implements Document
         $this->body = $body;
     }
 
-    public static function factory(object $data) : self
+    public static function factory(object $data): self
     {
         $documentBody = self::assertObjectPropertyIsObject($data, 'data');
-        $body = Collection::new(array_map(static function ($value) : Fragment {
+        $body = Collection::new(array_map(static function ($value): Fragment {
             return Factory::factory($value);
         }, get_object_vars($documentBody)));
 
-        $translations = array_map(static function (object $value) : Translation {
+        $translations = array_map(static function (object $value): Translation {
             return Translation::factory($value);
         }, self::assertObjectPropertyIsArray($data, 'alternate_languages'));
 
@@ -101,69 +102,69 @@ final class DocumentData implements Document
         );
     }
 
-    public function id() : string
+    public function id(): string
     {
         return $this->id;
     }
 
-    public function uid() :? string
+    public function uid(): ?string
     {
         return $this->uid;
     }
 
-    public function type() : string
+    public function type(): string
     {
         return $this->type;
     }
 
     /** @inheritDoc */
-    public function tags() : iterable
+    public function tags(): iterable
     {
         return $this->tags;
     }
 
-    public function lang() : string
+    public function lang(): string
     {
         return $this->lang;
     }
 
-    public function firstPublished() : DateTimeInterface
+    public function firstPublished(): DateTimeInterface
     {
         return $this->firstPublished;
     }
 
-    public function lastPublished() : DateTimeInterface
+    public function lastPublished(): DateTimeInterface
     {
         return $this->lastPublished;
     }
 
-    private function setTags(string ...$tags) : void
+    private function setTags(string ...$tags): void
     {
         $this->tags = $tags;
     }
 
-    public function content() : FragmentCollection
+    public function content(): FragmentCollection
     {
         return $this->body;
     }
 
-    private function setTranslations(Translation ...$translations) : void
+    private function setTranslations(Translation ...$translations): void
     {
         $this->translations = $translations;
     }
 
     /** @return Translation[] */
-    public function translations() : iterable
+    public function translations(): iterable
     {
         return $this->translations;
     }
 
-    public function asLink() : DocumentLink
+    public function asLink(): DocumentLink
     {
         return DocumentLink::withDocument($this);
     }
 
-    public function data() : DocumentData
+    public function data(): DocumentData
     {
         return $this;
     }

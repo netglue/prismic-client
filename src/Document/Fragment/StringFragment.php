@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
@@ -16,17 +17,17 @@ final class StringFragment implements Fragment, Stringable
         $this->value = $value;
     }
 
-    public static function new(string $value) : self
+    public static function new(string $value): self
     {
         return new static($value);
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->value;
     }
 
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return $this->value === '';
     }
