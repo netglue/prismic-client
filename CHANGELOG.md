@@ -25,7 +25,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#16](https://github.com/netglue/prismic-client/issues/16) is fixed via [#17](https://github.com/netglue/prismic-client/pull/17) - Ignores preview cookie payloads that contain only tracking information.
 
 ## 0.4.2 - 2020-07-01
 
