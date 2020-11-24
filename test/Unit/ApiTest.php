@@ -217,6 +217,10 @@ class ApiTest extends TestCase
                 ['io_prismic_preview' => 'b'],
                 'b',
             ],
+            'Json Payload looking like an actual preview cookie payload' => [
+                ['io.prismic.preview' => '{"_tracker":"SomeRandomUUID","repo.prismic.io":{"preview":"https://repo.prismic.io/previews/SomeID:SomeID?websitePreviewId=SomeID"}}'],
+                '{"_tracker":"SomeRandomUUID","repo.prismic.io":{"preview":"https://repo.prismic.io/previews/SomeID:SomeID?websitePreviewId=SomeID"}}',
+            ],
         ];
     }
 
@@ -234,6 +238,17 @@ class ApiTest extends TestCase
         $api->setRequestCookies($cookiePayload);
         self::assertSame($expectedRef, (string) $api->ref());
         self::assertTrue($api->inPreview());
+    }
+
+    public function testThatTheApiIsNotConsideredInPreviewModeWhenThePreviewCookieContainsOnlyATrackerId(): void
+    {
+        $cookiePayload = [Api::PREVIEW_COOKIE => '{"_tracker":"SomeRandomUUID"}'];
+        $this->httpClient->setDefaultResponse($this->response);
+        $api = Api::get('https://example.com', null, $this->httpClient);
+        $api->setRequestCookies($cookiePayload);
+        $master = $api->data()->master();
+        self::assertEquals($master, $api->ref());
+        self::assertFalse($api->inPreview());
     }
 
     /**

@@ -9,6 +9,7 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Prismic\Document\Fragment\DocumentLink;
 use Prismic\Exception\InvalidPreviewToken;
+use Prismic\Exception\JsonError;
 use Prismic\Exception\PrismicError;
 use Prismic\Exception\RequestFailure;
 use Prismic\Exception\RuntimeError;
@@ -27,6 +28,8 @@ use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
 use Throwable;
 
+use function array_key_exists;
+use function count;
 use function http_build_query;
 use function parse_str;
 use function sha1;
@@ -326,9 +329,22 @@ final class Api implements ApiClient
                 continue;
             }
 
+            $cookiePayload = $this->requestCookies[$cookieName];
+            // Fuck this. If you have the toolbar installed on your website. Prismic set the preview cookie for
+            // *every single request*. This means that if you rely on determining whether a preview is active or not
+            // by inspecting cookies in order to disable caching for example, this fucks things. It does not matter
+            // whether you are logged into the dashboard or not. The tracking cookie is set regardless.
+            try {
+                $decodedPayload = Json::decode($cookiePayload, true);
+                if (array_key_exists('_tracker', $decodedPayload) && count($decodedPayload) === 1) {
+                    continue;
+                }
+            } catch (JsonError $error) {
+            }
+
             return Ref::new(
                 'preview',
-                $this->requestCookies[$cookieName],
+                $cookiePayload,
                 'Preview',
                 false
             );
