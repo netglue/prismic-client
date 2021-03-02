@@ -32,7 +32,11 @@ abstract class BaseCollection implements FragmentCollection
         }
     }
 
-    /** @param Fragment[] $fragments */
+    /**
+     * @param Fragment[] $fragments
+     *
+     * @return static
+     */
     public static function new(iterable $fragments): self
     {
         return new static($fragments);
@@ -95,7 +99,7 @@ abstract class BaseCollection implements FragmentCollection
     }
 
     /** @return static */
-    public function filter(Closure $p)
+    public function filter(Closure $p): self
     {
         $result = array_filter($this->fragments, $p, ARRAY_FILTER_USE_BOTH);
 
@@ -104,8 +108,7 @@ abstract class BaseCollection implements FragmentCollection
         );
     }
 
-    /** @param mixed[] $value */
-    private function isHash(iterable $value): bool
+    private function isHash(array $value): bool
     {
         return count(array_filter(array_keys($value), '\is_string')) > 0;
     }
