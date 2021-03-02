@@ -29,7 +29,7 @@ final class Number implements Fragment, Stringable
             throw InvalidArgument::numberExpected($number);
         }
 
-        return new static($number);
+        return new self($number);
     }
 
     public function isFloat(): bool

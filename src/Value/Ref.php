@@ -31,7 +31,7 @@ final class Ref implements Stringable
 
     public static function new(string $id, string $ref, string $label, bool $isMasterRef): self
     {
-        return new static($id, $ref, $label, $isMasterRef);
+        return new self($id, $ref, $label, $isMasterRef);
     }
 
     public static function factory(object $object): self

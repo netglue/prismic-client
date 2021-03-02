@@ -35,12 +35,12 @@ final class FormField
 
     public static function new(string $name, string $type, bool $multiple, ?string $default): self
     {
-        return new static($name, $type, $multiple, $default);
+        return new self($name, $type, $multiple, $default);
     }
 
     public static function factory(string $name, object $value): self
     {
-        return new static(
+        return new self(
             $name,
             self::assertObjectPropertyIsString($value, 'type'),
             self::assertObjectPropertyIsBoolean($value, 'multiple'),

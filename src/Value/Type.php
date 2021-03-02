@@ -21,7 +21,7 @@ final class Type implements JsonSerializable
 
     public static function new(string $id, string $name): self
     {
-        return new static($id, $name);
+        return new self($id, $name);
     }
 
     public function id(): string

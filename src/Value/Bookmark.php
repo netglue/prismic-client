@@ -19,7 +19,7 @@ final class Bookmark
 
     public static function new(string $name, string $id): self
     {
-        return new static($name, $id);
+        return new self($name, $id);
     }
 
     public function name(): string

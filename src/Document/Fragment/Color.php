@@ -33,7 +33,7 @@ final class Color implements Fragment, Stringable
             throw InvalidArgument::invalidColor($value);
         }
 
-        return new static($value);
+        return new self($value);
     }
 
     /** @return int[] */

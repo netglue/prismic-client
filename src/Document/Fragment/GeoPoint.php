@@ -22,7 +22,7 @@ final class GeoPoint implements Fragment
 
     public static function new(float $lat, float $lng): self
     {
-        return new static($lat, $lng);
+        return new self($lat, $lng);
     }
 
     public function latitude(): float

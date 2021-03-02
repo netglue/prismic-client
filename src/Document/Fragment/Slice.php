@@ -36,7 +36,7 @@ final class Slice implements Fragment
         FragmentCollection $primary,
         FragmentCollection $items
     ): self {
-        return new static($type, $label, $primary, $items);
+        return new self($type, $label, $primary, $items);
     }
 
     public function type(): string

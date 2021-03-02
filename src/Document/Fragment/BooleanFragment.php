@@ -18,7 +18,7 @@ final class BooleanFragment implements Fragment
 
     public static function new(bool $value): self
     {
-        return new static($value);
+        return new self($value);
     }
 
     public function __invoke(): bool

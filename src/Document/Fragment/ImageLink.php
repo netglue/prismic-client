@@ -41,7 +41,7 @@ final class ImageLink implements Fragment, UrlLink
         int $width,
         int $height
     ): self {
-        return new static($url, $fileName, $fileSize, $width, $height);
+        return new self($url, $fileName, $fileSize, $width, $height);
     }
 
     public function url(): string

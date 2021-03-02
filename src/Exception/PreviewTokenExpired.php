@@ -30,7 +30,7 @@ final class PreviewTokenExpired extends RequestFailure
 
     public static function with(RequestInterface $request, ResponseInterface $response): self
     {
-        $error = new static(sprintf(
+        $error = new self(sprintf(
             'Error %d. The preview token provided has expired',
             $response->getStatusCode()
         ), $response->getStatusCode());

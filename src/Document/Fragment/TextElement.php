@@ -52,7 +52,7 @@ final class TextElement implements Fragment
         iterable $spans,
         ?string $label
     ): self {
-        return new static(
+        return new self(
             $type,
             $text ?? '',
             $spans,

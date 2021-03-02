@@ -24,7 +24,7 @@ final class WebLink implements Fragment, UrlLink
 
     public static function new(string $url, ?string $target): self
     {
-        return new static($url, $target);
+        return new self($url, $target);
     }
 
     public function url(): string

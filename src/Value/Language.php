@@ -23,7 +23,7 @@ final class Language
 
     public static function new(string $id, string $name): self
     {
-        return new static($id, $name);
+        return new self($id, $name);
     }
 
     public static function factory(object $object): self
