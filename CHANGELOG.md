@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.4.4 - 2021-03-02
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- [#18](https://github.com/netglue/prismic-client/issues/18) makes some inconsequential changes to CS and migrates CI to use the [ridiculously good Laminas CI matrix action](https://github.com/laminas/laminas-ci-matrix-action).
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.4.3 - 2020-11-24
 
 ### Added
