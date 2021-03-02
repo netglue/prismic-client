@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Serializer;
 
-use DateTime;
+use DateTimeInterface;
 use DateTimeZone;
 use Laminas\Escaper\Escaper;
 use Prismic\Document\Fragment;
@@ -191,7 +191,7 @@ class HtmlSerializer
 
         return sprintf(
             '<time datetime="%s">%s</time>',
-            $date->format($fragment->isDay() ? 'Y-m-d' : DateTime::ATOM),
+            $date->format($fragment->isDay() ? 'Y-m-d' : DateTimeInterface::ATOM),
             $date->format($fragment->isDay() ? $this->dateFormat : $this->dateTimeFormat)
         );
     }
