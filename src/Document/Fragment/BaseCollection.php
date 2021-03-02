@@ -108,6 +108,7 @@ abstract class BaseCollection implements FragmentCollection
         );
     }
 
+    /** @param array<array-key, mixed> $value */
     private function isHash(array $value): bool
     {
         return count(array_filter(array_keys($value), '\is_string')) > 0;
