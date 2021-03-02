@@ -25,6 +25,22 @@ class CacheTest extends TestCase
     }
 
     /** @dataProvider cachingApiClientProvider */
+    public function testThatAGetRequestWillResultInAnExpectedKeyBeingPresentInTheCache(ApiClient $api): void
+    {
+        $cache = $this->psrCachePool();
+
+        $query = $api->createQuery()
+            ->resultsPerPage(1)
+            ->query(Predicate::fulltext('document', uniqid('', false)));
+
+        $expectedKey = sha1(sprintf('GET %s', $query->toUrl()));
+
+        self::assertFalse($cache->hasItem($expectedKey));
+        $api->query($query);
+        self::assertTrue($cache->hasItem($expectedKey));
+    }
+
+    /** @dataProvider cachingApiClientProvider */
     public function testThatRepeatedQueriesHitTheCache(ApiClient $api): void
     {
         $cache = $this->psrCachePool();

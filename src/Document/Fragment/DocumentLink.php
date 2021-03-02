@@ -57,12 +57,12 @@ final class DocumentLink implements Fragment, Link
         bool $isBroken = false,
         iterable $tags = []
     ): self {
-        return new static($id, $uid, $type, $lang, $isBroken, $tags);
+        return new self($id, $uid, $type, $lang, $isBroken, $tags);
     }
 
     public static function withDocument(Document $document): self
     {
-        return new static(
+        return new self(
             $document->id(),
             $document->uid(),
             $document->type(),

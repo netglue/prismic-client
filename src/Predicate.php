@@ -38,7 +38,7 @@ final class Predicate implements Stringable
     /** @param mixed[] $data */
     public static function __set_state(array $data): self
     {
-        return new static(
+        return new self(
             $data['name'],
             $data['fragment'],
             $data['args']
@@ -85,12 +85,12 @@ final class Predicate implements Stringable
      */
     public static function at(string $fragment, $value): self
     {
-        return new static('at', $fragment, [$value]);
+        return new self('at', $fragment, [$value]);
     }
 
     public static function hasTag(string $tag): self
     {
-        return static::at('document.tags', [$tag]);
+        return self::at('document.tags', [$tag]);
     }
 
     /**
@@ -98,7 +98,7 @@ final class Predicate implements Stringable
      */
     public static function not(string $fragment, $value): self
     {
-        return new static('not', $fragment, [$value]);
+        return new self('not', $fragment, [$value]);
     }
 
     /**
@@ -106,7 +106,7 @@ final class Predicate implements Stringable
      */
     public static function any(string $fragment, array $values): self
     {
-        return new static('any', $fragment, [$values]);
+        return new self('any', $fragment, [$values]);
     }
 
     /**
@@ -114,22 +114,22 @@ final class Predicate implements Stringable
      */
     public static function in(string $fragment, array $values): self
     {
-        return new static('in', $fragment, [$values]);
+        return new self('in', $fragment, [$values]);
     }
 
     public static function has(string $fragment): self
     {
-        return new static('has', $fragment);
+        return new self('has', $fragment);
     }
 
     public static function missing(string $fragment): self
     {
-        return new static('missing', $fragment);
+        return new self('missing', $fragment);
     }
 
     public static function fulltext(string $fragment, string $value): self
     {
-        return new static('fulltext', $fragment, [$value]);
+        return new self('fulltext', $fragment, [$value]);
     }
 
     /**
@@ -140,7 +140,7 @@ final class Predicate implements Stringable
      */
     public static function similar(string $documentId, int $documentOccurrenceThreshold): self
     {
-        return new static('similar', $documentId, [$documentOccurrenceThreshold]);
+        return new self('similar', $documentId, [$documentOccurrenceThreshold]);
     }
 
     /**
@@ -154,7 +154,7 @@ final class Predicate implements Stringable
             );
         }
 
-        return new static('number.lt', $fragment, [$lowerBound]);
+        return new self('number.lt', $fragment, [$lowerBound]);
     }
 
     /**
@@ -168,7 +168,7 @@ final class Predicate implements Stringable
             );
         }
 
-        return new static('number.gt', $fragment, [$upperBound]);
+        return new self('number.gt', $fragment, [$upperBound]);
     }
 
     /**
@@ -183,7 +183,7 @@ final class Predicate implements Stringable
             );
         }
 
-        return new static('number.inRange', $fragment, [$lowerBound, $upperBound]);
+        return new self('number.inRange', $fragment, [$lowerBound, $upperBound]);
     }
 
     /**
@@ -195,7 +195,7 @@ final class Predicate implements Stringable
             $before = $before->getTimestamp() * 1000;
         }
 
-        return new static('date.before', $fragment, [$before]);
+        return new self('date.before', $fragment, [$before]);
     }
 
     /**
@@ -207,7 +207,7 @@ final class Predicate implements Stringable
             $after = $after->getTimestamp() * 1000;
         }
 
-        return new static('date.after', $fragment, [$after]);
+        return new self('date.after', $fragment, [$after]);
     }
 
     /**
@@ -224,7 +224,7 @@ final class Predicate implements Stringable
             $after = $after->getTimestamp() * 1000;
         }
 
-        return new static('date.between', $fragment, [$before, $after]);
+        return new self('date.between', $fragment, [$before, $after]);
     }
 
     /**
@@ -236,7 +236,7 @@ final class Predicate implements Stringable
             $day = (int) $day->format('j');
         }
 
-        return new static('date.day-of-month', $fragment, [$day]);
+        return new self('date.day-of-month', $fragment, [$day]);
     }
 
     /**
@@ -248,7 +248,7 @@ final class Predicate implements Stringable
             $day = (int) $day->format('j');
         }
 
-        return new static('date.day-of-month-before', $fragment, [$day]);
+        return new self('date.day-of-month-before', $fragment, [$day]);
     }
 
     /**
@@ -260,7 +260,7 @@ final class Predicate implements Stringable
             $day = (int) $day->format('j');
         }
 
-        return new static('date.day-of-month-after', $fragment, [$day]);
+        return new self('date.day-of-month-after', $fragment, [$day]);
     }
 
     /**
@@ -272,7 +272,7 @@ final class Predicate implements Stringable
             $day = (int) $day->format('N');
         }
 
-        return new static('date.day-of-week', $fragment, [$day]);
+        return new self('date.day-of-week', $fragment, [$day]);
     }
 
     /**
@@ -284,7 +284,7 @@ final class Predicate implements Stringable
             $day = (int) $day->format('N');
         }
 
-        return new static('date.day-of-week-before', $fragment, [$day]);
+        return new self('date.day-of-week-before', $fragment, [$day]);
     }
 
     /**
@@ -296,7 +296,7 @@ final class Predicate implements Stringable
             $day = (int) $day->format('N');
         }
 
-        return new static('date.day-of-week-after', $fragment, [$day]);
+        return new self('date.day-of-week-after', $fragment, [$day]);
     }
 
     /**
@@ -308,7 +308,7 @@ final class Predicate implements Stringable
             $month = (int) $month->format('n');
         }
 
-        return new static('date.month', $fragment, [$month]);
+        return new self('date.month', $fragment, [$month]);
     }
 
     /**
@@ -320,7 +320,7 @@ final class Predicate implements Stringable
             $month = (int) $month->format('n');
         }
 
-        return new static('date.month-before', $fragment, [$month]);
+        return new self('date.month-before', $fragment, [$month]);
     }
 
     /**
@@ -332,7 +332,7 @@ final class Predicate implements Stringable
             $month = (int) $month->format('n');
         }
 
-        return new static('date.month-after', $fragment, [$month]);
+        return new self('date.month-after', $fragment, [$month]);
     }
 
     /**
@@ -344,7 +344,7 @@ final class Predicate implements Stringable
             $year = (int) $year->format('Y');
         }
 
-        return new static('date.year', $fragment, [$year]);
+        return new self('date.year', $fragment, [$year]);
     }
 
     /**
@@ -356,7 +356,7 @@ final class Predicate implements Stringable
             $hour = (int) $hour->format('H');
         }
 
-        return new static('date.hour', $fragment, [$hour]);
+        return new self('date.hour', $fragment, [$hour]);
     }
 
     /**
@@ -368,7 +368,7 @@ final class Predicate implements Stringable
             $hour = (int) $hour->format('H');
         }
 
-        return new static('date.hour-before', $fragment, [$hour]);
+        return new self('date.hour-before', $fragment, [$hour]);
     }
 
     /**
@@ -380,7 +380,7 @@ final class Predicate implements Stringable
             $hour = (int) $hour->format('H');
         }
 
-        return new static('date.hour-after', $fragment, [$hour]);
+        return new self('date.hour-after', $fragment, [$hour]);
     }
 
     /**
@@ -388,6 +388,6 @@ final class Predicate implements Stringable
      */
     public static function near(string $fragment, float $latitude, float $longitude, float $radius): self
     {
-        return new static('geopoint.near', $fragment, [$latitude, $longitude, $radius]);
+        return new self('geopoint.near', $fragment, [$latitude, $longitude, $radius]);
     }
 }

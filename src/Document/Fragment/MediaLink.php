@@ -31,7 +31,7 @@ final class MediaLink implements Fragment, UrlLink
         string $fileName,
         int $fileSize
     ): self {
-        return new static($url, $fileName, $fileSize);
+        return new self($url, $fileName, $fileSize);
     }
 
     public function url(): string

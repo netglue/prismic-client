@@ -53,7 +53,7 @@ final class FormSpec implements IteratorAggregate
     {
         $fields = get_object_vars(self::assertObjectPropertyIsObject($object, 'fields'));
 
-        return new static(
+        return new self(
             $id,
             self::optionalStringProperty($object, 'name'),
             self::assertObjectPropertyIsString($object, 'method'),

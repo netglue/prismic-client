@@ -73,7 +73,7 @@ final class StandardResultSet implements ResultSet
             return DocumentData::factory($document);
         }, self::assertObjectPropertyIsArray($data, 'results'));
 
-        return new static(
+        return new self(
             self::assertObjectPropertyIsInteger($data, 'page'),
             self::assertObjectPropertyIsInteger($data, 'results_per_page'),
             self::assertObjectPropertyIsInteger($data, 'total_results_size'),
@@ -105,7 +105,7 @@ final class StandardResultSet implements ResultSet
     {
         $results = array_merge($this->results, $with->results());
 
-        return new static(
+        return new self(
             1,
             count($results),
             $this->totalResults,

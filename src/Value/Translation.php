@@ -27,7 +27,7 @@ final class Translation
 
     public static function new(string $id, ?string $uid, string $type, string $lang): self
     {
-        return new static($id, $uid, $type, $lang);
+        return new self($id, $uid, $type, $lang);
     }
 
     public static function factory(object $object): self

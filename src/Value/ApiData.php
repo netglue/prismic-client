@@ -35,7 +35,7 @@ final class ApiData
 
     public static function factory(object $payload): ApiData
     {
-        $data = new static();
+        $data = new self();
         $data->refs = array_map(static function (object $ref): Ref {
             return Ref::factory($ref);
         }, self::assertObjectPropertyIsArray($payload, 'refs'));

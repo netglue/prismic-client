@@ -89,7 +89,7 @@ final class DocumentData implements Document
             $data->{$prop} = $now->format(DateTimeImmutable::ATOM);
         }
 
-        return new static(
+        return new self(
             self::assertObjectPropertyIsString($data, 'id'),
             self::optionalStringProperty($data, 'uid'),
             self::assertObjectPropertyIsString($data, 'type'),

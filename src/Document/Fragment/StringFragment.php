@@ -19,7 +19,7 @@ final class StringFragment implements Fragment, Stringable
 
     public static function new(string $value): self
     {
-        return new static($value);
+        return new self($value);
     }
 
     public function __toString(): string
