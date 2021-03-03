@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.5.0 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- [#19](https://github.com/netglue/prismic-client/pull/19) Deprecates `ApiData::tags()`.
+  The list of tags returned by the remote has been deprecated and will start returning an empty set "soon" and later on, the property will be completely removed. This pull updates code for forward compatibility but that doesn't help you to get a list of used tags in your repository 🤷‍♂️
+  
+    There's a [blog post about it here](https://prismic.io/blog/a-change-to-how-the-prismic-api-handles-tags).
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.4.4 - 2021-03-02
 
 ### Added
@@ -10,7 +35,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- [#18](https://github.com/netglue/prismic-client/issues/18) makes some inconsequential changes to CS and migrates CI to use the [ridiculously good Laminas CI matrix action](https://github.com/laminas/laminas-ci-matrix-action).
+- [#18](https://github.com/netglue/prismic-client/pull/18) makes some inconsequential changes to CS and migrates CI to use the [ridiculously good Laminas CI matrix action](https://github.com/laminas/laminas-ci-matrix-action).
 
 ### Deprecated
 
