@@ -25,15 +25,15 @@ class ApiDataTest extends TestCase
 
     public function testTagsHaveExpectedValue(): void
     {
-        $this->assertContainsEquals('goats', $this->apiData->tags());
-        $this->assertContainsEquals('cheese', $this->apiData->tags());
-        $this->assertContainsEquals('muppets', $this->apiData->tags());
+        self::assertContainsEquals('goats', $this->apiData->tags());
+        self::assertContainsEquals('cheese', $this->apiData->tags());
+        self::assertContainsEquals('muppets', $this->apiData->tags());
     }
 
     public function testThatTheExpectedFormsArePresent(): void
     {
-        $this->assertTrue($this->apiData->hasForm('everything'));
-        $this->assertFalse($this->apiData->hasForm('not-found'));
+        self::assertTrue($this->apiData->hasForm('everything'));
+        self::assertFalse($this->apiData->hasForm('not-found'));
     }
 
     public function testThatAFormIsReturnedForAKnownKey(): void
@@ -63,19 +63,31 @@ class ApiDataTest extends TestCase
 
     public function testIsBookmarked(): void
     {
-        $this->assertFalse($this->apiData->isBookmarked('unknown-document'));
-        $this->assertTrue($this->apiData->isBookmarked('bookmarked-document-id'));
+        self::assertFalse($this->apiData->isBookmarked('unknown-document'));
+        self::assertTrue($this->apiData->isBookmarked('bookmarked-document-id'));
     }
 
     public function testBookmarkWillReturnExpectedValue(): void
     {
         $bookmark = $this->apiData->bookmark('other-bookmark');
-        $this->assertSame('other-bookmark', $bookmark->name());
+        self::assertSame('other-bookmark', $bookmark->name());
     }
 
     public function testExceptionThrownRetrievingUnknownBookmark(): void
     {
         $this->expectException(UnknownBookmark::class);
         $this->apiData->bookmark('not-found');
+    }
+
+    public function testThatAnEmptyTagsArrayIsAcceptable(): void
+    {
+        $data = ApiData::factory(Json::decodeObject($this->jsonFixtureByFileName('api-data-with-empty-tags.json')));
+        self::assertEmpty($data->tags());
+    }
+
+    public function testThatAMissingTagsPropertyInTheDataPayloadIsAcceptable(): void
+    {
+        $data = ApiData::factory(Json::decodeObject($this->jsonFixtureByFileName('api-data-missing-tags.json')));
+        self::assertEmpty($data->tags());
     }
 }
