@@ -9,7 +9,12 @@ use Prismic\Exception\UnknownBookmark;
 use Prismic\Exception\UnknownForm;
 use Prismic\Json;
 use Prismic\Value\ApiData;
+use Prismic\Value\Bookmark;
+use Prismic\Value\Language;
+use Prismic\Value\Type;
 use PrismicTest\Framework\TestCase;
+
+use function sprintf;
 
 class ApiDataTest extends TestCase
 {
@@ -89,5 +94,36 @@ class ApiDataTest extends TestCase
     {
         $data = ApiData::factory(Json::decodeObject($this->jsonFixtureByFileName('api-data-missing-tags.json')));
         self::assertEmpty($data->tags());
+    }
+
+    public function testThatTypesAreTheExpectedValue(): void
+    {
+        self::assertContainsOnlyInstancesOf(Type::class, $this->apiData->types());
+        self::assertCount(1, $this->apiData->types());
+    }
+
+    public function testThatBookmarksAreTheExpectedValue(): void
+    {
+        self::assertContainsOnlyInstancesOf(Bookmark::class, $this->apiData->bookmarks());
+        self::assertCount(2, $this->apiData->bookmarks());
+    }
+
+    public function testThatLanguagesAreTheExpectedValue(): void
+    {
+        self::assertContainsOnlyInstancesOf(Language::class, $this->apiData->languages());
+        self::assertCount(2, $this->apiData->languages());
+    }
+
+    /** @depends testThatLanguagesAreTheExpectedValue */
+    public function testThatLanguagesContainsTheExpectedInstances(): void
+    {
+        $expect = ['en-gb', 'en-au'];
+        foreach ($this->apiData->languages() as $language) {
+            self::assertContains(
+                $language->id(),
+                $expect,
+                sprintf('Language "%s" is not present in the expected list of values', $language->id())
+            );
+        }
     }
 }
