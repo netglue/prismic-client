@@ -115,6 +115,16 @@ trait DataAssertionBehaviour
         return $value;
     }
 
+    /** @return mixed[]|null */
+    private static function optionalArrayProperty(object $object, string $property): ?array
+    {
+        if (! property_exists($object, $property) || ! $object->{$property}) {
+            return null;
+        }
+
+        return self::assertObjectPropertyIsArray($object, $property);
+    }
+
     private static function optionalIntegerPropertyOrNull(object $object, string $property): ?int
     {
         if (! property_exists($object, $property) || $object->{$property} === null) {

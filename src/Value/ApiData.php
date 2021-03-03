@@ -54,7 +54,8 @@ final class ApiData
             return Language::factory($lang);
         }, self::assertObjectPropertyIsArray($payload, 'languages'));
 
-        $data->setTags(...self::assertObjectPropertyIsArray($payload, 'tags'));
+        $tags = self::optionalArrayProperty($payload, 'tags') ?: [];
+        $data->setTags(...$tags);
 
         $forms = get_object_vars(self::assertObjectPropertyIsObject($payload, 'forms'));
         $data->forms = array_map(static function (string $id, object $form): FormSpec {
@@ -111,7 +112,11 @@ final class ApiData
         throw UnexpectedValue::missingMasterRef();
     }
 
-    /** @return string[] */
+    /**
+     * @deprecated
+     *
+     * @return string[]
+     */
     public function tags(): iterable
     {
         return $this->tags;
