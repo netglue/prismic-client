@@ -28,6 +28,8 @@ jobs:
       matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
     steps:
       - name: ${{ matrix.name }}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         uses: laminas/laminas-continuous-integration-action@v1
         with:
           job: ${{ matrix.job }}
