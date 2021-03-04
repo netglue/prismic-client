@@ -36,7 +36,7 @@ jobs:
   coverage:
     name: Upload Coverage
     needs: [qa]
-    runs-on: ${{ matrix.operatingSystem }}
+    runs-on: ubuntu-latest
     steps:
       - name: CodeCov
         uses: codecov/codecov-action@v1
