@@ -28,14 +28,14 @@ jobs:
       matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
     steps:
       - name: ${{ matrix.name }}
-        id: ${{ matrix.name }}
+        #id: ${{ matrix.name }}
         uses: laminas/laminas-continuous-integration-action@v1
         with:
           job: ${{ matrix.job }}
 
   coverage:
     name: Upload Coverage
-    needs: [Coverage]
+    needs: [qa]
     runs-on: ${{ matrix.operatingSystem }}
     steps:
       - name: CodeCov
