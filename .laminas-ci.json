@@ -5,5 +5,20 @@
     "ini": [
         "apc.enabled=1",
         "apc.enable_cli=1"
+    ],
+    "additional_checks": [
+        {
+            "name": "Coverage",
+            "job": {
+                "command": "composer test-coverage",
+                "extensions": [
+                    "apcu"
+                ],
+                "ini": [
+                    "apc.enabled=1",
+                    "apc.enable_cli=1"
+                ]
+            }
+        }
     ]
 }

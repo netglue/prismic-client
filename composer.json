@@ -58,7 +58,7 @@
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "test": "phpunit --colors=always --testsuite=\"Unit Tests\"",
-        "test-coverage": "phpunit --colors=always --testsuite=\"Unit Tests\" --coverage-html build/report",
+        "test-coverage": "phpunit --coverage-clover coverage.xml",
         "serve": "php -S 0.0.0.0:8080 -t samples samples/document-explorer.php"
     }
 }

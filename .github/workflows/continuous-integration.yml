@@ -31,3 +31,13 @@ jobs:
         uses: laminas/laminas-continuous-integration-action@v1
         with:
           job: ${{ matrix.job }}
+
+  coverage:
+    name: Upload Coverage
+    needs: [Coverage]
+    runs-on: ${{ matrix.operatingSystem }}
+    uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./coverage.xml
+        fail_ci_if_error: false
