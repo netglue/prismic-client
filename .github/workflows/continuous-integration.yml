@@ -37,8 +37,10 @@ jobs:
     name: Upload Coverage
     needs: [Coverage]
     runs-on: ${{ matrix.operatingSystem }}
-    uses: codecov/codecov-action@v1
-    with:
-      token: ${{ secrets.CODECOV_TOKEN }}
-      file: ./coverage.xml
-      fail_ci_if_error: false
+    steps:
+      - name: CodeCov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          fail_ci_if_error: false
