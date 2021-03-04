@@ -12,7 +12,8 @@
             "job": {
                 "command": "composer test-coverage",
                 "extensions": [
-                    "apcu"
+                    "apcu",
+                    "pcov"
                 ],
                 "ini": [
                     "apc.enabled=1",
