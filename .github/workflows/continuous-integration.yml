@@ -38,7 +38,7 @@ jobs:
     needs: [Coverage]
     runs-on: ${{ matrix.operatingSystem }}
     uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./coverage.xml
-        fail_ci_if_error: false
+    with:
+      token: ${{ secrets.CODECOV_TOKEN }}
+      file: ./coverage.xml
+      fail_ci_if_error: false
