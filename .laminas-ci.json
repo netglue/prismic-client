@@ -10,7 +10,7 @@
         {
             "name": "Coverage",
             "job": {
-                "command": "composer test-coverage && bash <(curl -s https://codecov.io/bash)",
+                "command": "phpunit --coverage-clover coverage.xml",
                 "extensions": [
                     "apcu",
                     "pcov"
