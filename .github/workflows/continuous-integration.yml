@@ -30,7 +30,7 @@ jobs:
       - name: ${{ matrix.name }}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-          PRISMIC_REPO: ${{secrets.PRISMIC_REPO}}
+          PRISMIC_REPO: ${{ secrets.PRISMIC_REPO }}
         uses: laminas/laminas-continuous-integration-action@v1
         with:
           job: ${{ matrix.job }}
