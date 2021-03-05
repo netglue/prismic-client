@@ -27,17 +27,10 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
       - name: ${{ matrix.name }}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          PRISMIC_REPO: ${{secrets.PRISMIC_REPO}}
         uses: laminas/laminas-continuous-integration-action@v1
         with:
           job: ${{ matrix.job }}
-      - name: Upload Coverage to CodeCov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
-          fail_ci_if_error: false
-
