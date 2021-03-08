@@ -1,8 +1,6 @@
 name: "Continuous Integration"
 
 on:
-  schedule:
-    - cron: '0 9 * * 1'
   pull_request:
   push:
     branches:
