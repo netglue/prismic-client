@@ -5,6 +5,9 @@
 # $3 = WorkDir
 # $4 = The JOB Json String
 
-cat /etc/php/"${PHP}"/cli/conf.d/99-settings.ini
+JOB=$4
+PHP_VERSION=$(echo "${JOB}" | jq -r '.php')
+
+cat /etc/php/"$PHP_VERSION"/cli/conf.d/99-settings.ini
 
 bash <(curl -s https://codecov.io/bash)
