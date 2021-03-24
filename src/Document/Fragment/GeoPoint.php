@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Prismic\Document\Fragment;
 
 use Prismic\Document\Fragment;
+use Stringable;
 
-final class GeoPoint implements Fragment
+use function sprintf;
+
+final class GeoPoint implements Fragment, Stringable
 {
     /** @var float */
     private $latitude;
@@ -38,5 +41,10 @@ final class GeoPoint implements Fragment
     public function isEmpty(): bool
     {
         return false;
+    }
+
+    public function __toString(): string
+    {
+        return sprintf('%0.6f,%0.6f', $this->latitude, $this->longitude);
     }
 }
