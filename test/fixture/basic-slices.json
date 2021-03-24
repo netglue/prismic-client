@@ -1,0 +1,51 @@
+{
+    "id": "document-id",
+    "uid": "document-uid",
+    "type": "custom-type",
+    "href": "https://repo.cdn.prismic.io/api/v2/documents/search?ref=master-ref&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22document-id%22%29+%5D%5D",
+    "tags": [],
+    "first_publication_date": "2020-01-01T01:23:45+0000",
+    "last_publication_date": "2020-01-01T01:23:45+0000",
+    "slugs": [],
+    "linked_documents": [],
+    "lang": "en-gb",
+    "alternate_languages": [],
+    "data": {
+        "slice-zone": [
+            {
+                "slice_type": "custom",
+                "slice_label": "custom-label",
+                "items": [
+                    {
+                        "number": 42,
+                        "plain": "Some Text"
+                    },
+                    {
+                        "number": 43,
+                        "plain": "More Text"
+                    }
+                ],
+                "primary": {
+                    "content": [
+                        {
+                            "type": "heading1",
+                            "text": "Heading 1",
+                            "spans": []
+                        },
+                        {
+                            "type": "heading2",
+                            "text": "Heading 2",
+                            "spans": []
+                        }
+                    ]
+                }
+            },
+            {
+                "slice_type": "empty",
+                "slice_label": null,
+                "items": [],
+                "primary": {}
+            }
+        ]
+    }
+}

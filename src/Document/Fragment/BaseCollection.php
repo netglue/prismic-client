@@ -9,16 +9,20 @@ use Closure;
 use Prismic\Document\Fragment;
 use Prismic\Document\FragmentCollection;
 
+use Stringable;
+
 use function array_filter;
 use function array_keys;
 use function array_values;
 use function count;
 use function end;
+use function implode;
 use function reset;
 
 use const ARRAY_FILTER_USE_BOTH;
+use const PHP_EOL;
 
-abstract class BaseCollection implements FragmentCollection
+abstract class BaseCollection implements FragmentCollection, Stringable
 {
     /** @var Fragment[] */
     protected $fragments;
@@ -135,5 +139,20 @@ abstract class BaseCollection implements FragmentCollection
         return $this->filter(static function (Fragment $fragment): bool {
             return ! $fragment->isEmpty();
         });
+    }
+
+    public function __toString(): string
+    {
+        $buffer = [];
+
+        foreach ($this as $fragment) {
+            if (! $fragment instanceof Stringable) {
+                continue;
+            }
+
+            $buffer[] = (string) $fragment;
+        }
+
+        return implode(PHP_EOL, $buffer);
     }
 }
