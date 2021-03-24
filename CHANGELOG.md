@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.6.0 - 2021-03-24
+
+### Added
+
+- Pull [#24](https://github.com/netglue/prismic-client/pull/24): The `Stringable` interface has been added to a number of Types.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.5.0 - 2021-03-03
 
 ### Added
