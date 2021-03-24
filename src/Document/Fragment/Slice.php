@@ -6,8 +6,14 @@ namespace Prismic\Document\Fragment;
 
 use Prismic\Document\Fragment;
 use Prismic\Document\FragmentCollection;
+use Stringable;
 
-final class Slice implements Fragment
+use function array_filter;
+use function implode;
+
+use const PHP_EOL;
+
+final class Slice implements Fragment, Stringable
 {
     /** @var string */
     private $type;
@@ -62,5 +68,15 @@ final class Slice implements Fragment
     public function isEmpty(): bool
     {
         return $this->primary->isEmpty() && $this->items->isEmpty();
+    }
+
+    public function __toString(): string
+    {
+        $buffer = array_filter([
+            $this->primary->isEmpty() ? null : (string) $this->primary,
+            $this->items->isEmpty() ? null : (string) $this->items,
+        ]);
+
+        return implode(PHP_EOL, $buffer);
     }
 }

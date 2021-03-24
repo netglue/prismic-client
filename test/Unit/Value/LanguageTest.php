@@ -12,7 +12,13 @@ class LanguageTest extends TestCase
     public function testExpectedBehaviour(): void
     {
         $lang = Language::new('foo', 'bar');
-        $this->assertSame('foo', $lang->id());
-        $this->assertSame('bar', $lang->name());
+        self::assertSame('foo', $lang->id());
+        self::assertSame('bar', $lang->name());
+    }
+
+    public function testThatCastingToStringYieldsTheLanguageCode(): void
+    {
+        $language = Language::new('en-gb', 'The Queens English');
+        self::assertEquals('en-gb', (string) $language);
     }
 }

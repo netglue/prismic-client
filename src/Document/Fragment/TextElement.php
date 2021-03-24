@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Prismic\Document\Fragment;
 
 use Prismic\Document\Fragment;
+use Stringable;
 
 use function in_array;
 
-final class TextElement implements Fragment
+final class TextElement implements Fragment, Stringable
 {
     public const TYPE_ORDERED_LIST_ITEM = 'o-list-item';
     public const TYPE_UNORDERED_LIST_ITEM = 'list-item';
@@ -126,5 +127,10 @@ final class TextElement implements Fragment
     private function addSpan(Span $span): void
     {
         $this->spans[] = $span;
+    }
+
+    public function __toString(): string
+    {
+        return $this->text;
     }
 }
