@@ -8,7 +8,6 @@ use ArrayIterator;
 use Closure;
 use Prismic\Document\Fragment;
 use Prismic\Document\FragmentCollection;
-
 use Stringable;
 
 use function array_filter;

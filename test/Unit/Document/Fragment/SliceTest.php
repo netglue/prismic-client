@@ -4,17 +4,11 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
-use Prismic\Document;
-use Prismic\Document\Fragment\Collection;
-use Prismic\Document\Fragment\Factory;
-use Prismic\Document\Fragment\RichText;
 use Prismic\Document\Fragment\Slice;
 use Prismic\Document\FragmentCollection;
+use Prismic\Json;
 use Prismic\Value\DocumentData;
 use PrismicTest\Framework\TestCase;
-use Prismic\Json;
-
-use function assert;
 
 class SliceTest extends TestCase
 {

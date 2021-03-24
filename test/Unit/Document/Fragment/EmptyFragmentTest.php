@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
-use Prismic\Document\Fragment\EmptyFragment;
 use PHPUnit\Framework\TestCase;
+use Prismic\Document\Fragment\EmptyFragment;
 
 class EmptyFragmentTest extends TestCase
 {
