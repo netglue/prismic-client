@@ -16,15 +16,21 @@ class TypeTest extends TestCase
     public function testNewInstance(): void
     {
         $type = Type::new('foo', 'bar');
-        $this->assertEquals('foo', $type->id());
-        $this->assertEquals('bar', $type->name());
+        self::assertEquals('foo', $type->id());
+        self::assertEquals('bar', $type->name());
     }
 
     public function testJsonEncode(): void
     {
-        $this->assertEquals(
+        self::assertEquals(
             '{"foo":"bar"}',
             json_encode(Type::new('foo', 'bar'), JSON_THROW_ON_ERROR)
         );
+    }
+
+    public function testThatTheStringValueIsTheTypeIdentifier(): void
+    {
+        $type = Type::new('foo', 'bar');
+        self::assertEquals('foo', (string) $type);
     }
 }

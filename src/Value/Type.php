@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Prismic\Value;
 
 use JsonSerializable;
+use Stringable;
 
-final class Type implements JsonSerializable
+final class Type implements JsonSerializable, Stringable
 {
     /** @var string */
     private $id;
@@ -40,5 +41,10 @@ final class Type implements JsonSerializable
         return [
             $this->id => $this->name,
         ];
+    }
+
+    public function __toString() : string
+    {
+        return $this->id;
     }
 }

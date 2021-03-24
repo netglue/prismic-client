@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Prismic\Value;
 
+use Stringable;
+
 use function assert;
 use function is_string;
 
-final class Language
+final class Language implements Stringable
 {
     /** @var string */
     private $id;
@@ -44,5 +46,10 @@ final class Language
     public function name(): string
     {
         return $this->name;
+    }
+
+    public function __toString() : string
+    {
+        return $this->id;
     }
 }
