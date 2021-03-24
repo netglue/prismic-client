@@ -145,4 +145,10 @@ class TextElementTest extends TestCase
         self::assertSame($ordered, $item->isOrderedListItem());
         self::assertSame($unordered, $item->isUnorderedListItem());
     }
+
+    public function testThatTextElementsCanBeCastToAString(): void
+    {
+        $item = TextElement::new(TextElement::TYPE_HEADING1, 'Heading', [], null);
+        self::assertEquals('Heading', (string) $item);
+    }
 }
