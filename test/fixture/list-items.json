@@ -74,6 +74,11 @@
             "type": "list-item",
             "text": "5",
             "spans": []
+        },
+        {
+            "type": "paragraph",
+            "text": "Final Paragraph",
+            "spans": []
         }
     ]
 }

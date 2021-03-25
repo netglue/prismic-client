@@ -31,17 +31,17 @@ class RichTextTest extends TestCase
     public function testThatListItemsAreCollectedAsExpected(): void
     {
         $richText = $this->listItemsFixture();
-        $this->assertInstanceOf(TextElement::class, $richText->get(0));
-        $this->assertInstanceOf(UnorderedList::class, $richText->get(1));
-        $this->assertCount(2, $richText->get(1));
-        $this->assertInstanceOf(TextElement::class, $richText->get(2));
-        $this->assertInstanceOf(OrderedList::class, $richText->get(3));
-        $this->assertCount(2, $richText->get(3));
-        $this->assertInstanceOf(TextElement::class, $richText->get(4));
-        $this->assertInstanceOf(UnorderedList::class, $richText->get(5));
-        $this->assertCount(1, $richText->get(5));
-        $this->assertInstanceOf(OrderedList::class, $richText->get(6));
-        $this->assertCount(1, $richText->get(6));
+        self::assertInstanceOf(TextElement::class, $richText->get(0));
+        self::assertInstanceOf(UnorderedList::class, $richText->get(1));
+        self::assertCount(2, $richText->get(1));
+        self::assertInstanceOf(TextElement::class, $richText->get(2));
+        self::assertInstanceOf(OrderedList::class, $richText->get(3));
+        self::assertCount(2, $richText->get(3));
+        self::assertInstanceOf(TextElement::class, $richText->get(4));
+        self::assertInstanceOf(UnorderedList::class, $richText->get(5));
+        self::assertCount(1, $richText->get(5));
+        self::assertInstanceOf(OrderedList::class, $richText->get(6));
+        self::assertCount(1, $richText->get(6));
     }
 
     public function testThatListItemOrderIsRetained(): void
@@ -54,7 +54,28 @@ class RichTextTest extends TestCase
 
         assert($list instanceof OrderedList);
 
-        $this->assertSame('Ordered 1', $list->first()->text());
-        $this->assertSame('Ordered 2', $list->last()->text());
+        self::assertSame('Ordered 1', $list->first()->text());
+        self::assertSame('Ordered 2', $list->last()->text());
+    }
+
+    public function testThatRichTextFragmentsCanBeCastToAString(): void
+    {
+        $richText = $this->listItemsFixture();
+        self::assertStringStartsWith('Initial Paragraph', (string) $richText);
+        self::assertStringEndsWith('Final Paragraph', (string) $richText);
+    }
+
+    public function testThatOrderedListsCanBeCastToAString(): void
+    {
+        $richText = $this->listItemsFixture();
+        $list = $richText->get(3);
+        assert($list instanceof OrderedList);
+
+        $expect = <<<TEXT
+            Ordered 1
+            Ordered 2
+            TEXT;
+
+        self::assertEquals($expect, (string) $list);
     }
 }
