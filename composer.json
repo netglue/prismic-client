@@ -40,7 +40,7 @@
     "require-dev": {
         "ext-curl": "*",
         "ext-apcu": "*",
-        "doctrine/coding-standard": "^7.0 || ^8.0",
+        "doctrine/coding-standard": "^7.0 || ^8.0 || ^9.0",
         "laminas/laminas-diactoros": "^2.3",
         "php-http/cache-plugin": "^1.7",
         "php-http/curl-client": "^2.1",
