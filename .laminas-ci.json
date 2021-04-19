@@ -1,6 +1,7 @@
 {
     "extensions": [
-        "apcu"
+        "apcu",
+        "pcov"
     ],
     "ini": [
         "apc.enabled=1",
@@ -10,15 +11,7 @@
         {
             "name": "Coverage",
             "job": {
-                "command": "composer test-coverage",
-                "extensions": [
-                    "apcu",
-                    "pcov"
-                ],
-                "ini": [
-                    "apc.enabled=1",
-                    "apc.enable_cli=1"
-                ]
+                "command": "vendor/bin/phpunit --coverage-clover coverage.xml"
             }
         }
     ]
