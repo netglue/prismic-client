@@ -94,8 +94,8 @@ final class Factory
 
         if (property_exists($data, 'latitude')) {
             return GeoPoint::new(
-                self::assertObjectPropertyIsFloat($data, 'latitude'),
-                self::assertObjectPropertyIsFloat($data, 'longitude')
+                self::assertObjectPropertyIsFloaty($data, 'latitude'),
+                self::assertObjectPropertyIsFloaty($data, 'longitude')
             );
         }
 

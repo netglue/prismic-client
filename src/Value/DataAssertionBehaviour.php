@@ -56,14 +56,14 @@ trait DataAssertionBehaviour
         return (int) $object->{$property};
     }
 
-    private static function assertObjectPropertyIsFloat(object $object, string $property): float
+    private static function assertObjectPropertyIsFloaty(object $object, string $property): float
     {
         self::assertPropertyExists($object, $property);
-        if (! is_float($object->{$property})) {
+        if (! is_numeric($object->{$property})) {
             throw UnexpectedValue::withInvalidPropertyType($object, $property, 'float');
         }
 
-        return $object->{$property};
+        return (float) $object->{$property};
     }
 
     private static function assertObjectPropertyIsBoolean(object $object, string $property): bool
