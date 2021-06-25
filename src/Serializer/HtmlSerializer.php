@@ -218,7 +218,7 @@ class HtmlSerializer
     private function htmlAttributes(array $attributes): string
     {
         $atrs = implode(' ', array_map(function (string $atr, $value): string {
-            return sprintf('%s="%s"', $atr, $this->escaper->escapeHtml($value));
+            return sprintf('%s="%s"', $atr, $this->escaper->escapeHtml((string) $value));
         }, array_keys($attributes), $attributes));
 
         return empty($atrs) ? '' : ' ' . $atrs;
