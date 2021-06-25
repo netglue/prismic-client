@@ -10,7 +10,6 @@ use Prismic\Exception\UnexpectedValue;
 
 use function is_array;
 use function is_bool;
-use function is_float;
 use function is_int;
 use function is_numeric;
 use function is_object;
@@ -56,14 +55,14 @@ trait DataAssertionBehaviour
         return (int) $object->{$property};
     }
 
-    private static function assertObjectPropertyIsFloat(object $object, string $property): float
+    private static function assertObjectPropertyIsFloaty(object $object, string $property): float
     {
         self::assertPropertyExists($object, $property);
-        if (! is_float($object->{$property})) {
+        if (! is_numeric($object->{$property})) {
             throw UnexpectedValue::withInvalidPropertyType($object, $property, 'float');
         }
 
-        return $object->{$property};
+        return (float) $object->{$property};
     }
 
     private static function assertObjectPropertyIsBoolean(object $object, string $property): bool

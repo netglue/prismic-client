@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.6.1 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Pull [#37](https://github.com/netglue/prismic-client/pull/37) fixes an issue where GeoPoint coordinates would get decoded as integers and cause a type error.
+- [#37](https://github.com/netglue/prismic-client/pull/37) also fixes passing non-strings to `htmlspecialchars` via Laminas Escaper
+
+
 ## 0.6.0 - 2021-03-24
 
 ### Added

@@ -10,6 +10,7 @@ use Prismic\Document\Fragment\Color;
 use Prismic\Document\Fragment\DateFragment;
 use Prismic\Document\Fragment\EmptyFragment;
 use Prismic\Document\Fragment\Factory;
+use Prismic\Document\Fragment\GeoPoint;
 use Prismic\Document\Fragment\Image;
 use Prismic\Document\Fragment\Number;
 use Prismic\Document\Fragment\StringFragment;
@@ -162,5 +163,48 @@ class FactoryTest extends TestCase
         $image = $images->get(1);
         assert($image instanceof Image);
         $this->assertNotNull($image->linkTo());
+    }
+
+    public function testThatAGeoPointCanBeDecoded(): void
+    {
+        $fragment = Factory::factory(Json::decodeObject(<<<JSON
+            {
+                "latitude": 0.12345,
+                "longitude": -1.23456
+            }
+            JSON));
+
+        self::assertInstanceOf(GeoPoint::class, $fragment);
+        assert($fragment instanceof GeoPoint);
+
+        self::assertEquals(0.12345, $fragment->latitude());
+        self::assertEquals(-1.23456, $fragment->longitude());
+    }
+
+    public function testThatAGeoPointCanBeDecodedIfThePayloadContainsIntegers(): void
+    {
+        $fragment = Factory::factory(Json::decodeObject(<<<JSON
+            {
+                "latitude": 0,
+                "longitude": 1
+            }
+            JSON));
+
+        self::assertInstanceOf(GeoPoint::class, $fragment);
+        assert($fragment instanceof GeoPoint);
+
+        self::assertEquals(0.0, $fragment->latitude());
+        self::assertEquals(1.0, $fragment->longitude());
+    }
+
+    public function testThatAGeoPointIsNotDecodedIfTheValuesAreNotNumeric(): void
+    {
+        $this->expectException(UnexpectedValue::class);
+        Factory::factory(Json::decodeObject(<<<JSON
+            {
+                "latitude": "goat",
+                "longitude": "brains"
+            }
+            JSON));
     }
 }
