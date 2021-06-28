@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "laminas/laminas-escaper",
-            "version": "2.7.1",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-escaper.git",
-                "reference": "67dac07c6b4857fbf2bd7a5257a4e1ca8a1c00d0"
+                "reference": "2d6dce99668b413610e9544183fa10392437f542"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/67dac07c6b4857fbf2bd7a5257a4e1ca8a1c00d0",
-                "reference": "67dac07c6b4857fbf2bd7a5257a4e1ca8a1c00d0",
+                "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/2d6dce99668b413610e9544183fa10392437f542",
+                "reference": "2d6dce99668b413610e9544183fa10392437f542",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-06-24T16:45:38+00:00"
+            "time": "2021-06-26T14:26:08+00:00"
         },
         {
             "name": "laminas/laminas-zendframework-bridge",
@@ -4592,5 +4592,5 @@
         "ext-curl": "*",
         "ext-apcu": "*"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
