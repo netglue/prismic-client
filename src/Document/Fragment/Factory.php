@@ -208,7 +208,7 @@ final class Factory
             $isBroken = self::assertObjectPropertyIsBoolean($data, 'isBroken');
             $lang = self::optionalStringProperty($data, 'lang');
             // The language for broken document links is null in some situations
-            $lang = $isBroken && ! $lang ? '*' : $lang;
+            $lang = ! $lang ? '*' : $lang;
 
             return DocumentLink::new(
                 self::assertObjectPropertyIsString($data, 'id'),
@@ -216,7 +216,7 @@ final class Factory
                 self::assertObjectPropertyIsString($data, 'type'),
                 $lang,
                 $isBroken,
-                self::assertObjectPropertyIsArray($data, 'tags')
+                self::assertObjectPropertyAllString($data, 'tags')
             );
         }
 

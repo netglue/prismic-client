@@ -8,6 +8,7 @@ use Prismic\Document\Fragment;
 use Prismic\Document\Fragment\BooleanFragment;
 use Prismic\Document\Fragment\Color;
 use Prismic\Document\Fragment\DateFragment;
+use Prismic\Document\Fragment\DocumentLink;
 use Prismic\Document\Fragment\EmptyFragment;
 use Prismic\Document\Fragment\Factory;
 use Prismic\Document\Fragment\GeoPoint;
@@ -175,6 +176,7 @@ class FactoryTest extends TestCase
             JSON));
 
         self::assertInstanceOf(GeoPoint::class, $fragment);
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
         assert($fragment instanceof GeoPoint);
 
         self::assertEquals(0.12345, $fragment->latitude());
@@ -191,6 +193,7 @@ class FactoryTest extends TestCase
             JSON));
 
         self::assertInstanceOf(GeoPoint::class, $fragment);
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
         assert($fragment instanceof GeoPoint);
 
         self::assertEquals(0.0, $fragment->latitude());
@@ -206,5 +209,88 @@ class FactoryTest extends TestCase
                 "longitude": "brains"
             }
             JSON));
+    }
+
+    public function testThatABrokenDocumentLinkWithoutALanguageWillHaveAWildCardLanguageSet(): void
+    {
+        $data = Json::decodeObject('{
+            "link_type": "Document",
+            "id": "foo",
+            "uid": "bar",
+            "type": "bing",
+            "isBroken": true,
+            "tags": []
+        }');
+
+        $link = Factory::factory($data);
+        assert($link instanceof DocumentLink);
+
+        self::assertEquals('*', $link->language());
+    }
+
+    public function testThatADocumentLinkWithoutALanguageWillHaveAWildCardLanguageSet(): void
+    {
+        $data = Json::decodeObject('{
+            "link_type": "Document",
+            "id": "foo",
+            "uid": "bar",
+            "type": "bing",
+            "isBroken": false,
+            "tags": []
+        }');
+
+        $link = Factory::factory($data);
+        assert($link instanceof DocumentLink);
+
+        self::assertEquals('*', $link->language());
+    }
+
+    public function testThatADocumentLinkWithNonStringTagsWillCauseAnException(): void
+    {
+        $data = Json::decodeObject('{
+            "link_type": "Document",
+            "id": "foo",
+            "uid": "bar",
+            "type": "bing",
+            "isBroken": false,
+            "tags": [1, 2, 3]
+        }');
+
+        $this->expectException(UnexpectedValue::class);
+        $this->expectExceptionMessage('"tags"');
+
+        Factory::factory($data);
+    }
+
+    public function testThatADocumentLinkWithNonArrayTagsWillCauseAnException(): void
+    {
+        $data = Json::decodeObject('{
+            "link_type": "Document",
+            "id": "foo",
+            "uid": "bar",
+            "type": "bing",
+            "isBroken": false,
+            "tags": "String"
+        }');
+
+        $this->expectException(UnexpectedValue::class);
+        $this->expectExceptionMessage('"tags"');
+
+        Factory::factory($data);
+    }
+
+    public function testAMediaLinkWithNonNumericSizeIsExceptional(): void
+    {
+        $data = Json::decodeObject('{
+            "link_type": "Media",
+            "url": "foo",
+            "name": "bar",
+            "size": "bing"
+        }');
+
+        $this->expectException(UnexpectedValue::class);
+        $this->expectExceptionMessage('"size"');
+
+        Factory::factory($data);
     }
 }
