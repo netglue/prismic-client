@@ -6,9 +6,7 @@ namespace Prismic;
 
 use JsonException;
 use Prismic\Exception\JsonError;
-use TypeError;
 
-use function assert;
 use function is_object;
 use function json_decode;
 use function json_encode;
@@ -24,14 +22,15 @@ final class Json
     {
         try {
             $object = json_decode($jsonString, false, 512, JSON_THROW_ON_ERROR);
-            assert(is_object($object));
-
-            return $object;
         } catch (JsonException $exception) {
             throw JsonError::unserializeFailed($exception, $jsonString);
-        } catch (TypeError $error) {
+        }
+
+        if (! is_object($object)) {
             throw JsonError::cannotUnserializeToObject($jsonString);
         }
+
+        return $object;
     }
 
     /**
