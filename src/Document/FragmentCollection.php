@@ -7,8 +7,9 @@ namespace Prismic\Document;
 use Closure;
 use Countable;
 use IteratorAggregate;
+use Stringable;
 
-interface FragmentCollection extends Fragment, IteratorAggregate, Countable
+interface FragmentCollection extends Fragment, IteratorAggregate, Countable, Stringable
 {
     /**
      * Return a new collection by filtering with the given closure
