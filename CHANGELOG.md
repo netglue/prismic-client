@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 1.0.0 - 2020-07-02
+
+### Added
+
+- Added Psalm static analysis to the code base.
+
+### Changed
+
+- BC Break: Changed the return type of `\Prismic\ResultSet::getIterator()` from `iterable` to `Traversable`. This is unlikely to cause any problems if you are using the shipped `TypicalResultSetBehaviour` trait.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.6.1 - 2021-06-25
 
 ### Added

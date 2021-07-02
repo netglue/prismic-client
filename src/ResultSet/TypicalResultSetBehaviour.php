@@ -6,6 +6,7 @@ namespace Prismic\ResultSet;
 
 use ArrayIterator;
 use Prismic\Document;
+use Traversable;
 
 use function count;
 use function reset;
@@ -69,8 +70,12 @@ trait TypicalResultSetBehaviour
         return $this->results;
     }
 
-    /** @return Document[] */
-    public function getIterator(): iterable
+    /**
+     * @return Traversable<Document>
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
+     */
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->results);
     }
