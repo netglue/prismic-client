@@ -21,16 +21,16 @@ class RequestFailure extends RuntimeException implements PrismicError
 
     public static function withClientException(ClientExceptionInterface $exception): self
     {
-        return new static(
+        return new self(
             $exception->getMessage(),
-            $exception->getCode(),
+            (int) $exception->getCode(),
             $exception
         );
     }
 
     public static function withRedirectResponse(RequestInterface $request, ResponseInterface $response): self
     {
-        $error = new static(sprintf(
+        $error = new self(sprintf(
             'The request to the URL "%s" resulted in a %d redirect. I don’t know what to do with that.',
             (string) $request->getUri(),
             $response->getStatusCode()
@@ -52,7 +52,7 @@ class RequestFailure extends RuntimeException implements PrismicError
             return PreviewTokenExpired::with($request, $response);
         }
 
-        $error = new static(sprintf(
+        $error = new self(sprintf(
             'Error %d. The request to the URL "%s" was rejected by the api. The error response body was "%s"',
             $status,
             (string) $request->getUri(),
@@ -66,7 +66,7 @@ class RequestFailure extends RuntimeException implements PrismicError
 
     public static function withServerError(RequestInterface $request, ResponseInterface $response): self
     {
-        $error = new static(sprintf(
+        $error = new self(sprintf(
             'The request to the URL "%s" resulted in a server error. The error response body was "%s"',
             (string) $request->getUri(),
             (string) $response->getBody()

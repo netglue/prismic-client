@@ -9,11 +9,11 @@ use Throwable;
 
 use function sprintf;
 
-class InvalidPreviewToken extends InvalidArgument
+final class InvalidPreviewToken extends InvalidArgument
 {
     public static function mismatchedPreviewHost(UriInterface $apiUri, UriInterface $previewUri): self
     {
-        return new static(sprintf(
+        return new self(sprintf(
             'The preview url has been rejected because its host name "%s" does not match the api host "%s"',
             $previewUri->getHost(),
             $apiUri->getHost()
@@ -22,6 +22,6 @@ class InvalidPreviewToken extends InvalidArgument
 
     public static function withInvalidUrl(Throwable $error): self
     {
-        return new static('The given preview token is not a valid url', 400, $error);
+        return new self('The given preview token is not a valid url', 400, $error);
     }
 }

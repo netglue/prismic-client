@@ -33,7 +33,7 @@ class DocumentLinkTest extends TestCase
             false,
             ['a', 'b'],
         );
-        $this->addToAssertionCount(1);
+        $this->expectNotToPerformAssertions();
 
         return $link;
     }

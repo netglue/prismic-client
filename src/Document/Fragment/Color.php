@@ -9,9 +9,11 @@ use Prismic\Exception\InvalidArgument;
 use Stringable;
 
 use function array_map;
+use function assert;
 use function dechex;
 use function hexdec;
 use function implode;
+use function is_array;
 use function preg_match;
 use function sprintf;
 use function sscanf;
@@ -36,15 +38,17 @@ final class Color implements Fragment, Stringable
         return new self($value);
     }
 
-    /** @return int[] */
-    public function asRgb(): ?array
+    /** @return array{r: int, g: int, b: int} */
+    public function asRgb(): array
     {
-        [$r, $g, $b] = sscanf($this->value, '#%02x%02x%02x');
+        $parts = sscanf($this->value, '#%02x%02x%02x');
+        assert(is_array($parts));
+        [$r, $g, $b] = $parts;
 
         return [
-            'r' => $r,
-            'g' => $g,
-            'b' => $b,
+            'r' => (int) $r,
+            'g' => (int) $g,
+            'b' => (int) $b,
         ];
     }
 

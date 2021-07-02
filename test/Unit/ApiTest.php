@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest;
 
+use Generator;
 use Http\Client\Curl\Client;
 use Http\Discovery\Exception\NotFoundException;
 use Http\Discovery\Psr17FactoryDiscovery;
@@ -119,8 +120,8 @@ class ApiTest extends TestCase
         $api->data();
     }
 
-    /** @return int[][] */
-    public function authErrorStatusCodes(): iterable
+    /** @return Generator<int, int[]> */
+    public function authErrorStatusCodes(): Generator
     {
         yield 401 => [401];
 

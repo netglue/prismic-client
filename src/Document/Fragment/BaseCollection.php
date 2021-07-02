@@ -21,7 +21,7 @@ use function reset;
 use const ARRAY_FILTER_USE_BOTH;
 use const PHP_EOL;
 
-abstract class BaseCollection implements FragmentCollection, Stringable
+abstract class BaseCollection implements FragmentCollection
 {
     /** @var Fragment[] */
     protected $fragments;
@@ -57,7 +57,10 @@ abstract class BaseCollection implements FragmentCollection, Stringable
         $this->fragments[] = $fragment;
     }
 
-    /** @return Fragment[] */
+    /**
+     * @return Fragment[]
+     * @psalm-return ArrayIterator<array-key, Fragment>
+     */
     public function getIterator(): iterable
     {
         return new ArrayIterator($this->fragments);

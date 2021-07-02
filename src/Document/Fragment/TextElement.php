@@ -25,7 +25,7 @@ final class TextElement implements Fragment, Stringable
     /** @var string */
     private $type;
 
-    /** @var string|null */
+    /** @var string */
     private $text;
 
     /** @var Span[] */

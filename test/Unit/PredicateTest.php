@@ -16,7 +16,7 @@ use function var_export;
 
 class PredicateTest extends TestCase
 {
-    /** @return mixed[] */
+    /** @return array<array-key, array{0: string, 1: mixed, 2:string}> */
     public function atProvider(): array
     {
         return [

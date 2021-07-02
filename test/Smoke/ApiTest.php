@@ -4,20 +4,27 @@ declare(strict_types=1);
 
 namespace PrismicSmokeTest;
 
+use Generator;
 use Prismic\Api;
 use Prismic\Exception\RequestFailure;
 use Prismic\Predicate;
 use Prismic\Value\Ref;
 
+use function assert;
 use function count;
 use function sprintf;
 
 class ApiTest extends TestCase
 {
-    /** @return mixed[] */
-    public function documentIdDataProvider(): iterable
+    /**
+     * @return Generator<string, array{0: Api, 1: string}>
+     *
+     * @psalm-suppress RedundantConditionGivenDocblockType
+     */
+    public function documentIdDataProvider(): Generator
     {
         foreach ($this->apiInstances() as $api) {
+            assert($api instanceof Api);
             $response = $api->query(
                 $api->createQuery()
                     ->resultsPerPage(10)
@@ -36,10 +43,15 @@ class ApiTest extends TestCase
         $this->assertSame($id, $document->id());
     }
 
-    /** @return mixed[] */
-    public function documentUidDataProvider(): iterable
+    /**
+     * @return Generator<string, array{0: Api, 1: string, 2: string}>
+     *
+     * @psalm-suppress RedundantConditionGivenDocblockType
+     */
+    public function documentUidDataProvider(): Generator
     {
         foreach ($this->apiInstances() as $api) {
+            assert($api instanceof Api);
             foreach ($api->data()->types() as $type) {
                 $response = $api->query(
                     $api->createQuery()
@@ -48,10 +60,13 @@ class ApiTest extends TestCase
                 );
 
                 foreach ($response as $document) {
+                    $uid = $document->uid();
+                    assert($uid !== null);
+
                     yield sprintf('%s: %s(%s)', $api->host(), $document->type(), $document->id()) => [
                         $api,
                         $document->type(),
-                        $document->uid(),
+                        $uid,
                     ];
                 }
             }
@@ -67,10 +82,15 @@ class ApiTest extends TestCase
         $this->assertSame($type, $document->type());
     }
 
-    /** @return mixed[] */
-    public function bookmarkDataProvider(): iterable
+    /**
+     * @return Generator<string, array{0: Api, 1: string}>
+     *
+     * @psalm-suppress RedundantConditionGivenDocblockType
+     */
+    public function bookmarkDataProvider(): Generator
     {
         foreach ($this->apiInstances() as $api) {
+            assert($api instanceof Api);
             foreach ($api->data()->bookmarks() as $bookmark) {
                 yield sprintf('%s: %s', $api->host(), $bookmark->name()) => [$api, $bookmark->name()];
             }
@@ -84,8 +104,7 @@ class ApiTest extends TestCase
          * There's not much to test here. The ID referenced by a bookmark may not resolve to a document, if
          * that document has since been deleted, or the linked document is unpublished.
          */
-        $api->findByBookmark($bookmark);
-        $this->addToAssertionCount(1);
+        self::assertNotNull($api->findByBookmark($bookmark));
     }
 
     /** @dataProvider apiDataProvider */

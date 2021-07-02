@@ -6,11 +6,11 @@ namespace Prismic\Exception;
 
 use function sprintf;
 
-class UnknownForm extends InvalidArgument
+final class UnknownForm extends InvalidArgument
 {
     public static function withName(string $name): self
     {
-        return new static(sprintf(
+        return new self(sprintf(
             'There is no form available with the name %s',
             $name
         ));

@@ -19,7 +19,7 @@ class NumberTest extends TestCase
     public function testConstructor(): Number
     {
         $number = Number::new(1);
-        $this->addToAssertionCount(1);
+        $this->expectNotToPerformAssertions();
 
         return $number;
     }

@@ -19,7 +19,7 @@ class ImageLinkTest extends TestCase
             30
         );
 
-        $this->addToAssertionCount(1);
+        $this->expectNotToPerformAssertions();
 
         return $link;
     }

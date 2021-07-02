@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Prismic\Value;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use Prismic\Exception\UnexpectedValue;
 
+use function array_map;
+use function assert;
 use function is_array;
 use function is_bool;
 use function is_int;
@@ -86,6 +89,24 @@ trait DataAssertionBehaviour
         return $object->{$property};
     }
 
+    /** @param mixed $mixed */
+    private static function assertString($mixed): string
+    {
+        if (! is_string($mixed)) {
+            throw new UnexpectedValue('Expected a string');
+        }
+
+        return $mixed;
+    }
+
+    /** @return array<array-key, string> */
+    private static function assertObjectPropertyAllString(object $object, string $property): array
+    {
+        return array_map(static function ($value): string {
+            return self::assertString($value);
+        }, self::assertObjectPropertyIsArray($object, $property));
+    }
+
     private static function assertObjectPropertyIsObject(object $object, string $property): object
     {
         self::assertPropertyExists($object, $property);
@@ -140,10 +161,13 @@ trait DataAssertionBehaviour
 
     private static function assertObjectPropertyIsUtcDateTime(object $object, string $property): DateTimeImmutable
     {
-        return DateTimeImmutable::createFromFormat(
-            DateTimeImmutable::ATOM,
+        $date = DateTimeImmutable::createFromFormat(
+            DateTimeInterface::ATOM,
             self::assertObjectPropertyIsString($object, $property),
             new DateTimeZone('UTC')
         );
+        assert($date instanceof DateTimeImmutable);
+
+        return $date;
     }
 }

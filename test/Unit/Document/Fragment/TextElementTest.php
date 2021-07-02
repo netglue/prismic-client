@@ -18,7 +18,7 @@ class TextElementTest extends TestCase
             [],
             'groovy'
         );
-        $this->addToAssertionCount(1);
+        $this->expectNotToPerformAssertions();
 
         return $text;
     }

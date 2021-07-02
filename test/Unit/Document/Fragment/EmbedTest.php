@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use Generator;
 use Prismic\Document\Fragment\Collection;
 use Prismic\Document\Fragment\Embed;
 use Prismic\Document\Fragment\Factory;
@@ -20,6 +21,7 @@ class EmbedTest extends TestCase
         $data = Json::decodeObject($this->jsonFixtureByFileName('embed-types.json'));
         $collection = Factory::factory($data);
         assert($collection instanceof Collection);
+        self::assertContainsOnlyInstancesOf(Embed::class, $collection);
 
         return $collection;
     }
@@ -32,10 +34,14 @@ class EmbedTest extends TestCase
         return $tweet;
     }
 
-    /** @return mixed[] */
-    public function embedProvider(): iterable
+    /**
+     * @return Generator<array-key, array<Embed>>
+     */
+    public function embedProvider(): Generator
     {
         foreach ($this->embedCollection() as $key => $embed) {
+            assert($embed instanceof Embed);
+
             yield $key => [$embed];
         }
     }
@@ -67,10 +73,13 @@ class EmbedTest extends TestCase
     public function testThatAttributesArrayCanBeRetrieved(Embed $embed): void
     {
         $attributes = $embed->attributes();
-        $this->assertIsIterable($attributes);
+        $this->assertIsArray($attributes);
         $this->assertArrayHasKey('provider_name', $attributes);
     }
 
+    /**
+     * @psalm-suppress InvalidArgument
+     */
     public function testAnExceptionIsThrownSettingAnAttributeToANonScalarValue(): void
     {
         $this->expectException(InvalidArgument::class);
@@ -78,5 +87,25 @@ class EmbedTest extends TestCase
         Embed::new('mytype', 'someurl', 'foo', 'foo', 1, 1, [
             'atr' => ['not scalar'],
         ]);
+    }
+
+    public function testEmbedHasTheExpectedValues(): void
+    {
+        $embed = Embed::new(
+            'foo',
+            'some-url',
+            'some-one',
+            '<html>',
+            10,
+            20,
+            []
+        );
+
+        self::assertEquals('foo', $embed->type());
+        self::assertEquals('some-url', $embed->url());
+        self::assertEquals('some-one', $embed->provider());
+        self::assertEquals('<html>', $embed->html());
+        self::assertEquals(10, $embed->width());
+        self::assertEquals(20, $embed->height());
     }
 }

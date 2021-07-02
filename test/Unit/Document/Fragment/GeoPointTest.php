@@ -12,7 +12,7 @@ class GeoPointTest extends TestCase
     public function testConstructor(): GeoPoint
     {
         $point = GeoPoint::new(1.234, 5.678);
-        $this->addToAssertionCount(1);
+        $this->expectNotToPerformAssertions();
 
         return $point;
     }

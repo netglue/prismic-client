@@ -206,7 +206,7 @@ final class Factory
             $isBroken = self::assertObjectPropertyIsBoolean($data, 'isBroken');
             $lang = self::optionalStringProperty($data, 'lang');
             // The language for broken document links is null in some situations
-            $lang = $isBroken && ! $lang ? '*' : $lang;
+            $lang = ! $lang ? '*' : $lang;
 
             return DocumentLink::new(
                 self::assertObjectPropertyIsString($data, 'id'),
@@ -214,7 +214,7 @@ final class Factory
                 self::assertObjectPropertyIsString($data, 'type'),
                 $lang,
                 $isBroken,
-                self::assertObjectPropertyIsArray($data, 'tags')
+                self::assertObjectPropertyAllString($data, 'tags')
             );
         }
 
@@ -223,6 +223,13 @@ final class Factory
 
     private static function embedFactory(object $data): Fragment
     {
+        $scalars = [];
+        foreach (get_object_vars($data) as $name => $attribute) {
+            assert(is_scalar($attribute) || $attribute === null);
+
+            $scalars[$name] = $attribute;
+        }
+
         return Embed::new(
             self::assertObjectPropertyIsString($data, 'type'),
             self::assertObjectPropertyIsString($data, 'embed_url'),
@@ -230,7 +237,7 @@ final class Factory
             self::optionalStringProperty($data, 'html'),
             self::optionalIntegerPropertyOrNull($data, 'width'),
             self::optionalIntegerPropertyOrNull($data, 'height'),
-            get_object_vars($data)
+            $scalars
         );
     }
 

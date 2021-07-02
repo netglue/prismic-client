@@ -140,10 +140,9 @@ class DocumentDataTest extends TestCase
     public function testThatTheSliceZoneIsACollection(): void
     {
         $slices = $this->document->content()->get('slice-zone');
-        assert($slices instanceof Collection);
+        self::assertInstanceOf(Collection::class, $slices);
         $slice = $slices->slicesOfType('quote')->first();
-        assert($slice instanceof Slice);
-        $this->addToAssertionCount(2);
+        self::assertInstanceOf(Slice::class, $slice);
     }
 
     public function testThatTranslationsContainsTheExpectedValue(): void

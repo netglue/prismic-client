@@ -23,12 +23,9 @@ class HtmlSerializerTest extends TestCase
     /** @dataProvider apiDataProvider */
     public function testThatAllDocumentsCanBeRenderedWithOutError(Api $api): void
     {
-        $documentCount = 0;
+        $this->expectNotToPerformAssertions();
         foreach ($api->findAll($api->createQuery()) as $document) {
-            ($this->serializer)($document->content());
-            $documentCount++;
+            ($this->serializer)($document->data()->content());
         }
-
-        $this->addToAssertionCount($documentCount);
     }
 }

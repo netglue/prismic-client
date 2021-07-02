@@ -17,7 +17,7 @@ class MediaLinkTest extends TestCase
             10
         );
 
-        $this->addToAssertionCount(1);
+        $this->expectNotToPerformAssertions();
 
         return $link;
     }

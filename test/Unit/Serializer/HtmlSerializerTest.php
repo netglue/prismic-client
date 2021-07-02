@@ -69,7 +69,7 @@ class HtmlSerializerTest extends TestCase
         );
 
         ($this->serializer)($document->content());
-        $this->addToAssertionCount(1);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testListSerialisation(): void
@@ -103,7 +103,7 @@ class HtmlSerializerTest extends TestCase
         $this->assertSame('', ($this->serializer)($list));
     }
 
-    /** @return mixed[] */
+    /** @return array<string, array{0: int, 1: string}> */
     public function richTextSpanMarkupData(): iterable
     {
         return [
@@ -156,8 +156,10 @@ class HtmlSerializerTest extends TestCase
         );
     }
 
-    /** @return mixed[] */
-    public function richTextBlockElementsData(): iterable
+    /**
+     * @return array<string, array{0: int, 1: string}>
+     */
+    public function richTextBlockElementsData(): array
     {
         return [
             'H1' => [

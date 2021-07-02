@@ -6,6 +6,7 @@ namespace Prismic;
 
 use Countable;
 use IteratorAggregate;
+use Traversable;
 
 interface ResultSet extends IteratorAggregate, Countable
 {
@@ -50,8 +51,9 @@ interface ResultSet extends IteratorAggregate, Countable
      * Retrieve an iterator for iterating over results
      *
      * @return Document[]
+     * @psalm-return Traversable<Document>
      */
-    public function getIterator(): iterable;
+    public function getIterator(): Traversable;
 
     /**
      * Return the first document in the result set or null if the result set is empty

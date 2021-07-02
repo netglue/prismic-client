@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.7.0 - 2020-07-02
+
+### Added
+
+- Added Psalm static analysis to the code base.
+
+### Changed
+
+- BC Break: Changed the return type of `\Prismic\ResultSet::getIterator()` from `iterable` to `Traversable`. This is unlikely to cause any problems if you are using the shipped `TypicalResultSetBehaviour` trait.
+- BC Break: `\Prismic\Document\Fragment\Embed` is now final
+- BC Break: `\Prismic\Document\Fragment\Span` is now final
+- BC Break: Changed return type of `\Prismic\Value\FormSpec::getIterator()` to `Traversable`
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 0.6.1 - 2021-06-25
 
 ### Added

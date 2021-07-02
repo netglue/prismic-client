@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicSmokeTest;
 
+use Generator;
 use Prismic\Api;
 use Prismic\ApiClient;
 use Prismic\Predicate;
@@ -14,8 +15,8 @@ use function uniqid;
 
 class CacheTest extends TestCase
 {
-    /** @return Api[][] */
-    public function cachingApiClientProvider(): iterable
+    /** @return Generator<string, array{0:Api}> */
+    public function cachingApiClientProvider(): Generator
     {
         foreach ($this->compileEndPoints() as $uri => $token) {
             $api = Api::get($uri, $token, null, null, null, null, $this->psrCachePool());

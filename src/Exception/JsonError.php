@@ -8,19 +8,19 @@ use JsonException;
 
 use function sprintf;
 
-class JsonError extends JsonException implements PrismicError
+final class JsonError extends JsonException implements PrismicError
 {
     /** @var string|null */
     private $payload;
 
     public static function unserializeFailed(JsonException $exception, string $payload): self
     {
-        $error = new static(
+        $error = new self(
             sprintf(
                 'Failed to decode JSON payload: %s',
                 $exception->getMessage()
             ),
-            $exception->getCode(),
+            (int) $exception->getCode(),
             $exception
         );
 
@@ -31,19 +31,19 @@ class JsonError extends JsonException implements PrismicError
 
     public static function serializeFailed(JsonException $exception): self
     {
-        return new static(
+        return new self(
             sprintf(
                 'Failed to encode the given data to a JSON string: %s',
                 $exception->getMessage()
             ),
-            $exception->getCode(),
+            (int) $exception->getCode(),
             $exception
         );
     }
 
     public static function cannotUnserializeToObject(string $payload): self
     {
-        return new static(sprintf(
+        return new self(sprintf(
             'The given payload cannot be unserialized as an object: %s',
             $payload
         ));
