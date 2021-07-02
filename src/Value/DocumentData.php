@@ -86,7 +86,7 @@ final class DocumentData implements Document
             }
 
             $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
-            $data->{$prop} = $now->format(DateTimeImmutable::ATOM);
+            $data->{$prop} = $now->format(DateTimeInterface::ATOM);
         }
 
         return new self(
@@ -96,7 +96,7 @@ final class DocumentData implements Document
             self::assertObjectPropertyIsString($data, 'lang'),
             self::assertObjectPropertyIsUtcDateTime($data, 'first_publication_date'),
             self::assertObjectPropertyIsUtcDateTime($data, 'last_publication_date'),
-            self::assertObjectPropertyIsArray($data, 'tags'),
+            self::assertObjectPropertyAllString($data, 'tags'),
             $translations,
             $body
         );
