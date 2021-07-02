@@ -88,4 +88,24 @@ class EmbedTest extends TestCase
             'atr' => ['not scalar'],
         ]);
     }
+
+    public function testEmbedHasTheExpectedValues(): void
+    {
+        $embed = Embed::new(
+            'foo',
+            'some-url',
+            'some-one',
+            '<html>',
+            10,
+            20,
+            []
+        );
+
+        self::assertEquals('foo', $embed->type());
+        self::assertEquals('some-url', $embed->url());
+        self::assertEquals('some-one', $embed->provider());
+        self::assertEquals('<html>', $embed->html());
+        self::assertEquals(10, $embed->width());
+        self::assertEquals(20, $embed->height());
+    }
 }
