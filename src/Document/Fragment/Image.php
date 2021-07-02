@@ -28,7 +28,7 @@ final class Image implements Fragment, IteratorAggregate, Countable
     private $alt;
     /** @var string|null */
     private $copyright;
-    /** @var self[] */
+    /** @var array<string, self> */
     private $views;
     /** @var Link|null */
     private $link;
@@ -50,12 +50,16 @@ final class Image implements Fragment, IteratorAggregate, Countable
         $this->height = $height;
         $this->alt = $alt;
         $this->copyright = $copyright;
+        $this->link = $linkTo;
+        $this->views = [];
+        $this->addView($this);
+        if (! $views) {
+            return;
+        }
+
         foreach ($views as $image) {
             $this->addView($image);
         }
-
-        $this->addView($this);
-        $this->link = $linkTo;
     }
 
     /** @param self[] $views */
@@ -127,7 +131,10 @@ final class Image implements Fragment, IteratorAggregate, Countable
         return $this->link;
     }
 
-    /** @return self[] */
+    /**
+     * @return self[]
+     * @psalm-return ArrayIterator<string, self>
+     */
     public function getIterator(): iterable
     {
         return new ArrayIterator($this->views);
