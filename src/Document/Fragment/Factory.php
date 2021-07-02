@@ -26,8 +26,6 @@ use function preg_match;
 use function property_exists;
 use function strpos;
 
-use const ARRAY_FILTER_USE_BOTH;
-
 final class Factory
 {
     use DataAssertionBehaviour;
