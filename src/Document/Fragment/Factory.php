@@ -26,6 +26,8 @@ use function preg_match;
 use function property_exists;
 use function strpos;
 
+use const ARRAY_FILTER_USE_BOTH;
+
 final class Factory
 {
     use DataAssertionBehaviour;
@@ -223,6 +225,15 @@ final class Factory
 
     private static function embedFactory(object $data): Fragment
     {
+        $scalars = [];
+        foreach (get_object_vars($data) as $name => $attribute) {
+            if (! is_scalar($attribute) && $attribute !== null) {
+                continue;
+            }
+
+            $scalars[$name] = $attribute;
+        }
+
         return Embed::new(
             self::assertObjectPropertyIsString($data, 'type'),
             self::assertObjectPropertyIsString($data, 'embed_url'),
@@ -230,7 +241,7 @@ final class Factory
             self::optionalStringProperty($data, 'html'),
             self::optionalIntegerPropertyOrNull($data, 'width'),
             self::optionalIntegerPropertyOrNull($data, 'height'),
-            get_object_vars($data)
+            $scalars
         );
     }
 
