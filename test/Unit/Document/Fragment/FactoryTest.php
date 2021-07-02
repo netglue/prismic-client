@@ -257,7 +257,6 @@ class FactoryTest extends TestCase
         }');
 
         $this->expectException(UnexpectedValue::class);
-        $this->expectExceptionMessage('"tags"');
 
         Factory::factory($data);
     }

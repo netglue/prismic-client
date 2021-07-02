@@ -9,8 +9,8 @@ use DateTimeInterface;
 use DateTimeZone;
 use Prismic\Exception\UnexpectedValue;
 
+use function array_map;
 use function assert;
-use function gettype;
 use function is_array;
 use function is_bool;
 use function is_int;
@@ -18,7 +18,6 @@ use function is_numeric;
 use function is_object;
 use function is_string;
 use function property_exists;
-use function sprintf;
 
 trait DataAssertionBehaviour
 {
@@ -90,24 +89,22 @@ trait DataAssertionBehaviour
         return $object->{$property};
     }
 
+    /** @param mixed $mixed */
+    private static function assertString($mixed): string
+    {
+        if (! is_string($mixed)) {
+            throw new UnexpectedValue('Expected a string');
+        }
+
+        return $mixed;
+    }
+
     /** @return array<array-key, string> */
     private static function assertObjectPropertyAllString(object $object, string $property): array
     {
-        $strings = self::assertObjectPropertyIsArray($object, $property);
-
-        foreach ($strings as $string) {
-            if (is_string($string)) {
-                continue;
-            }
-
-            throw new UnexpectedValue(sprintf(
-                'Expected the array in the property "%s" to contain only strings, but found an element of type "%s"',
-                $property,
-                gettype($string)
-            ));
-        }
-
-        return $strings;
+        return array_map(static function ($value): string {
+            return self::assertString($value);
+        }, self::assertObjectPropertyIsArray($object, $property));
     }
 
     private static function assertObjectPropertyIsObject(object $object, string $property): object
