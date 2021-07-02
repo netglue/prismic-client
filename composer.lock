@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6e285cbaa768a2d08f84cfd612cb50c",
+    "content-hash": "20795f2309c049d0d6889f96290e70b9",
     "packages": [
         {
             "name": "laminas/laminas-escaper",
-            "version": "2.7.1",
+            "version": "2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-escaper.git",
-                "reference": "67dac07c6b4857fbf2bd7a5257a4e1ca8a1c00d0"
+                "reference": "2d6dce99668b413610e9544183fa10392437f542"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/67dac07c6b4857fbf2bd7a5257a4e1ca8a1c00d0",
-                "reference": "67dac07c6b4857fbf2bd7a5257a4e1ca8a1c00d0",
+                "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/2d6dce99668b413610e9544183fa10392437f542",
+                "reference": "2d6dce99668b413610e9544183fa10392437f542",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-06-24T16:45:38+00:00"
+            "time": "2021-06-26T14:26:08+00:00"
         },
         {
             "name": "laminas/laminas-zendframework-bridge",
@@ -2397,12 +2397,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "ac0d045cdd1a9f1c87a0225a1dcda2bfb71be924"
+                "reference": "7498cba51fb164f181c497edd1cc3e7837df2943"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/ac0d045cdd1a9f1c87a0225a1dcda2bfb71be924",
-                "reference": "ac0d045cdd1a9f1c87a0225a1dcda2bfb71be924",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/7498cba51fb164f181c497edd1cc3e7837df2943",
+                "reference": "7498cba51fb164f181c497edd1cc3e7837df2943",
                 "shasum": ""
             },
             "conflict": {
@@ -2596,8 +2596,8 @@
                 "scheb/two-factor-bundle": ">=0,<3.26|>=4,<4.11",
                 "sensiolabs/connect": "<4.2.3",
                 "serluck/phpwhois": "<=4.2.6",
-                "shopware/core": "<=6.3.5.2",
-                "shopware/platform": "<=6.3.5.2",
+                "shopware/core": "<=6.4.1",
+                "shopware/platform": "<=6.4.1",
                 "shopware/production": "<=6.3.5.2",
                 "shopware/shopware": "<=5.6.9",
                 "silverstripe/admin": ">=1.0.3,<1.0.4|>=1.1,<1.1.1",
@@ -2632,7 +2632,7 @@
                 "sylius/grid": ">=1,<1.1.19|>=1.2,<1.2.18|>=1.3,<1.3.13|>=1.4,<1.4.5|>=1.5,<1.5.1",
                 "sylius/grid-bundle": ">=1,<1.1.19|>=1.2,<1.2.18|>=1.3,<1.3.13|>=1.4,<1.4.5|>=1.5,<1.5.1",
                 "sylius/resource-bundle": "<1.3.14|>=1.4,<1.4.7|>=1.5,<1.5.2|>=1.6,<1.6.4",
-                "sylius/sylius": "<1.6.9|>=1.7,<1.7.9|>=1.8,<1.8.3",
+                "sylius/sylius": "<1.6.9|>=1.7,<1.7.9|>=1.8,<1.8.3|>=1.9,<1.9.5",
                 "symbiote/silverstripe-multivaluefield": ">=3,<3.0.99",
                 "symbiote/silverstripe-queuedjobs": ">=3,<3.0.2|>=3.1,<3.1.4|>=4,<4.0.7|>=4.1,<4.1.2|>=4.2,<4.2.4|>=4.3,<4.3.3|>=4.4,<4.4.3|>=4.5,<4.5.1|>=4.6,<4.6.4",
                 "symbiote/silverstripe-versionedfiles": "<=2.0.3",
@@ -2764,7 +2764,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-24T09:02:34+00:00"
+            "time": "2021-06-29T04:03:09+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -3849,16 +3849,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v5.3.0",
+            "version": "v5.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "44fd0f97d1fb198d344f22379dfc56af2221e608"
+                "reference": "82962a497f090e95e3b357c21bf6f54991c9b1a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/44fd0f97d1fb198d344f22379dfc56af2221e608",
-                "reference": "44fd0f97d1fb198d344f22379dfc56af2221e608",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/82962a497f090e95e3b357c21bf6f54991c9b1a5",
+                "reference": "82962a497f090e95e3b357c21bf6f54991c9b1a5",
                 "shasum": ""
             },
             "require": {
@@ -3925,7 +3925,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v5.3.0"
+                "source": "https://github.com/symfony/cache/tree/v5.3.3"
             },
             "funding": [
                 {
@@ -3941,7 +3941,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-26T17:43:10+00:00"
+            "time": "2021-06-24T08:13:00+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -4397,16 +4397,16 @@
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v5.3.2",
+            "version": "v5.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "df663fb63bdcd7298373cbd431165ab031706cb2"
+                "reference": "903c2c0babd6267de5bcb2995e8fc1efb5f01f1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/df663fb63bdcd7298373cbd431165ab031706cb2",
-                "reference": "df663fb63bdcd7298373cbd431165ab031706cb2",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/903c2c0babd6267de5bcb2995e8fc1efb5f01f1f",
+                "reference": "903c2c0babd6267de5bcb2995e8fc1efb5f01f1f",
                 "shasum": ""
             },
             "require": {
@@ -4450,7 +4450,7 @@
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v5.3.2"
+                "source": "https://github.com/symfony/var-exporter/tree/v5.3.3"
             },
             "funding": [
                 {
@@ -4466,7 +4466,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-06-09T10:57:10+00:00"
+            "time": "2021-06-27T09:16:08+00:00"
         },
         {
             "name": "theseer/tokenizer",
