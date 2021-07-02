@@ -9,11 +9,11 @@ use Prismic\Document\Fragment\Image;
 use function implode;
 use function sprintf;
 
-class ImageViewNotFound extends InvalidArgument
+final class ImageViewNotFound extends InvalidArgument
 {
     public static function withNameAndImage(string $name, Image $image): self
     {
-        return new static(sprintf(
+        return new self(sprintf(
             'The image view "%s" does not exist. Known view names are: %s',
             $name,
             implode($image->knownViews())

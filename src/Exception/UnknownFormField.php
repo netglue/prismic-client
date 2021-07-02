@@ -8,7 +8,7 @@ use Prismic\Value\FormSpec;
 
 use function sprintf;
 
-class UnknownFormField extends InvalidArgument
+final class UnknownFormField extends InvalidArgument
 {
     public static function withOffendingKey(FormSpec $form, string $key): self
     {
