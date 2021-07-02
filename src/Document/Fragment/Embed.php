@@ -9,13 +9,13 @@ use Prismic\Exception\InvalidArgument;
 
 use function is_scalar;
 
-class Embed implements Fragment
+final class Embed implements Fragment
 {
     /** @var string */
     private $type;
     /** @var string */
     private $url;
-    /** @var mixed[] */
+    /** @var array<string, int|float|bool|string|null> */
     private $attributes;
     /** @var string|null */
     private $provider;
@@ -26,7 +26,7 @@ class Embed implements Fragment
     /** @var int|null */
     private $height;
 
-    /** @param mixed[] $attributes */
+    /** @param iterable<string, int|float|bool|string|null> $attributes */
     private function __construct(
         string $type,
         string $url,
@@ -46,7 +46,7 @@ class Embed implements Fragment
         $this->setAttributes($attributes);
     }
 
-    /** @param mixed[] $attributes */
+    /** @param iterable<string, int|float|bool|string|null> $attributes */
     public static function new(
         string $type,
         string $url,
@@ -56,10 +56,10 @@ class Embed implements Fragment
         ?int $height,
         iterable $attributes
     ): self {
-        return new static($type, $url, $provider, $html, $width, $height, $attributes);
+        return new self($type, $url, $provider, $html, $width, $height, $attributes);
     }
 
-    /** @param mixed[] $attributes */
+    /** @param iterable<string, int|string|float|bool|null> $attributes */
     private function setAttributes(iterable $attributes): void
     {
         foreach ($attributes as $name => $value) {
@@ -67,9 +67,14 @@ class Embed implements Fragment
         }
     }
 
-    /** @param string|int|float|bool $value */
+    /**
+     * @param string|int|float|bool|null $value
+     */
     private function setAttribute(string $name, $value): void
     {
+        /**
+         * @psalm-suppress RedundantConditionGivenDocblockType
+         */
         if ($value !== null && ! is_scalar($value)) {
             throw InvalidArgument::scalarExpected($value);
         }
@@ -107,7 +112,7 @@ class Embed implements Fragment
         return $this->height;
     }
 
-    /** @return string[]|int[]|float[]|bool[]|null[] */
+    /** @return iterable<string, int|float|bool|string|null> */
     public function attributes(): iterable
     {
         return $this->attributes;
