@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicSmokeTest;
 
+use Generator;
 use Http\Client\Common\Plugin\CachePlugin;
 use Http\Client\Common\PluginClient;
 use Http\Discovery\HttpClientDiscovery;
@@ -14,8 +15,11 @@ use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\Cache\Adapter\ApcuAdapter;
 
+use function assert;
 use function file_exists;
 use function getenv;
+use function is_array;
+use function is_string;
 
 class TestCase extends PHPUnitTestCase
 {
@@ -46,7 +50,7 @@ class TestCase extends PHPUnitTestCase
         return $this->httpClient;
     }
 
-    /** @return string[] */
+    /** @return array<string, string|null> */
     protected function compileEndPoints(): array
     {
         $endpoints = [];
@@ -62,29 +66,39 @@ class TestCase extends PHPUnitTestCase
             return $endpoints;
         }
 
-        $configured = require $configPath;
-        $configured = $configured['endpoints'] ?? [];
+        $content = require $configPath;
+        if (! is_array($content)) {
+            return $endpoints;
+        }
+
+        $configured = $content['endpoints'] ?? [];
+        assert(is_array($configured));
+
         foreach ($configured as $spec) {
-            if (! isset($spec['url'])) {
+            assert(is_array($spec));
+            $url = isset($spec['url']) && is_string($spec['url']) ? $spec['url'] : null;
+            $token = isset($spec['token']) && is_string($spec['token']) ? $spec['token'] : null;
+
+            if (! $url) {
                 continue;
             }
 
-            $endpoints[$spec['url']] = $spec['token'] ?? null;
+            $endpoints[$url] = $token;
         }
 
         return $endpoints;
     }
 
-    /** @return Api[][] */
-    public function apiDataProvider(): iterable
+    /** @return Generator<string, array{0: Api}> */
+    public function apiDataProvider(): Generator
     {
         foreach ($this->apiInstances() as $url => $api) {
             yield $url => [$api];
         }
     }
 
-    /** @return Api[] */
-    protected function apiInstances(): iterable
+    /** @return Generator<string, Api> */
+    protected function apiInstances(): Generator
     {
         foreach ($this->compileEndPoints() as $url => $token) {
             $api = Api::get($url, $token, $this->httpClient());

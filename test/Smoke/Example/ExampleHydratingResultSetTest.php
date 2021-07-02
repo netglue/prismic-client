@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicSmokeTest\Example;
 
+use Generator;
 use Prismic\Api;
 use Prismic\Example\CustomHydratingResultSet\CustomDocumentType;
 use Prismic\Example\CustomHydratingResultSet\MyResultSet;
@@ -12,8 +13,8 @@ use PrismicSmokeTest\TestCase;
 
 class ExampleHydratingResultSetTest extends TestCase
 {
-    /** @return Api[][] */
-    public function hydratingApiProvider(): iterable
+    /** @return Generator<string, array{0:Api}> */
+    public function hydratingApiProvider(): Generator
     {
         foreach ($this->compileEndPoints() as $url => $token) {
             $api = Api::get($url, $token, $this->httpClient());

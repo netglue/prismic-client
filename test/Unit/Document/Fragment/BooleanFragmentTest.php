@@ -9,22 +9,13 @@ use PrismicTest\Framework\TestCase;
 
 class BooleanFragmentTest extends TestCase
 {
-    /** @return bool[] */
-    public function booleans(): iterable
+    /** @return array<string, bool[]> */
+    public function booleans(): array
     {
         return [
             'true' => [true],
             'false' => [false],
         ];
-    }
-
-    /** @dataProvider booleans */
-    public function testConstructor(bool $value): BooleanFragment
-    {
-        $frag = BooleanFragment::new($value);
-        $this->addToAssertionCount(1);
-
-        return $frag;
     }
 
     /** @dataProvider booleans */

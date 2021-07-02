@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use Generator;
+use Prismic\Document\Fragment;
 use Prismic\Document\Fragment\Collection;
 use Prismic\Document\Fragment\Embed;
 use Prismic\Document\Fragment\Factory;
@@ -32,8 +34,10 @@ class EmbedTest extends TestCase
         return $tweet;
     }
 
-    /** @return mixed[] */
-    public function embedProvider(): iterable
+    /**
+     * @return Generator<array-key, array<Fragment>>
+     */
+    public function embedProvider(): Generator
     {
         foreach ($this->embedCollection() as $key => $embed) {
             yield $key => [$embed];
