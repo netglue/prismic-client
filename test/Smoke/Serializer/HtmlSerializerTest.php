@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace PrismicSmokeTest\Serializer;
 
 use Prismic\Api;
-use Prismic\Document;
 use Prismic\Serializer\HtmlSerializer;
 use PrismicSmokeTest\TestCase;
 use PrismicTest\TestLinkResolver;
-
-use function assert;
 
 class HtmlSerializerTest extends TestCase
 {
