@@ -2,11 +2,9 @@
 
 [![Build Status](https://github.com/netglue/prismic-client/workflows/Continuous%20Integration/badge.svg)](https://github.com/netglue/prismic-client/actions?query=workflow%3A"Continuous+Integration") [![codecov](https://codecov.io/gh/netglue/prismic-client/branch/main/graph/badge.svg)](https://codecov.io/gh/netglue/prismic-client)
 
-This is an unofficial PHP client for the [Prismic.io](https://prismic.io) headless CMS. In order to keep things simple, this library only supports version 2 of the api so you'll have to make sure to specify your repository url in the format `https://my-repo.prismic.io/api/v2`
+This is an unofficial PHP client for the [Prismic.io](https://prismic.io) headless CMS. In order to keep things simple, this library only supports version 2 of the api, so you'll have to make sure to specify your repository url in the format `https://my-repo.prismic.io/api/v2`
 
 There is practically zero backwards compatibility with other prismic clients so this is in no way a drop-in replacement. That said, you should find that much of it remains _similar_.
-
-This client is still a work in progress and has not been well tested in real projects yet. There are likely to be BC breaks until it reaches a 1.0 release.
 
 ## Features
 
@@ -15,9 +13,9 @@ This client is still a work in progress and has not been well tested in real pro
 * Helpful methods in the primary interface to retrieve next/previous paginated result sets or merge all paginated results to a single result set.
 * Predictable and consistent exceptions to help you recover gracefully from error conditions.
 * Iterable and filterable collections to represent Slices, groups and RichText making it trivial to locate particular types of content.
-* Completely separate and replaceable HTML serialisation. In fact, the content objects do not have `atHtml()` or `asText()` methods at all. There is a shipped HTML serialiser which is invokable but you might not want to use it all, instead preferring to work with your documents in your view layer directly.
-* Easily implement your own result set and your own document types, replacing the default shipped implementations. Got a 'Case Study' type? Hydrate your documents to `YourModel\CaseStudy` objects so you can build a robust content model to use in your views and elsewhere.
-* Much less nullability… All collections guarantee a return type of `Prismic\Fragment` which you can more easily test for a specific type or for its _emptiness_
+* Completely separate and replaceable HTML serialisation. In fact, the content objects do not have `atHtml()` or `asText()` methods at all. There is a shipped HTML serializer which is invokable, but you might not want to use it all, instead preferring to work with your documents in your view layer directly.
+* Easily implement your own result set and your own document types, replacing the default shipped implementations. Got a 'Case Study' type? Hydrate your documents to `YourModel\CaseStudy` objects so that you can build a robust content model to use in your views and elsewhere.
+* Much less nullability… All collections guarantee a return type of `Prismic\Fragment` which you can more easily test for a specific type or for its _emptiness_.
 
 ## Limitations
 
@@ -32,7 +30,7 @@ Install with composer: `composer require netglue/prismic-client`
 You will also require a PSR-18 HTTP client implementation, of which there are many, for example:
 
 * [HTTPlug Clients](http://docs.php-http.org/en/latest/clients.html)
-* [PSR-18 on Packagist](https://packagist.org/?query=psr-18%20http%20client)
+* [PSR-18 on Packagist](https://packagist.org/providers/psr/http-client-implementation)
 
 To use the curl adapter from `php-http`, issue a `composer require php-http/curl-client`
 
@@ -62,5 +60,4 @@ vendor/bin/phpunit
 
 The official kit can be found at [prismicio/php-kit](https://github.com/prismicio/php-kit).
 
-Another, soon to be abandoned fork of the official kit can be found at [netglue/prismic-php-kit](https://github.com/netglue/prismic-php-kit). The reason for abandoning the fork there was the desire to start from a clean slate and make use of the recent PSRs for HTTP factories and clients, completely separate the HTML serialisation process from the content model and provide more flexible ways of hydrating your content model to objects in your domain _(Or not as the case may be!)_.
-
+Another, abandoned fork of the official kit can be found at [netglue/prismic-php-kit](https://github.com/netglue/prismic-php-kit). The reason for abandoning the fork there was the desire to start from a clean slate and make use of the recent PSRs for HTTP factories and clients, completely separate the HTML serialisation process from the content model and provide more flexible ways of hydrating your content model to objects in your domain _(Or not as the case may be!)_.
