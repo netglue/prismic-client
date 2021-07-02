@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace PrismicSmokeTest\Serializer;
 
 use Prismic\Api;
+use Prismic\Document;
 use Prismic\Serializer\HtmlSerializer;
 use PrismicSmokeTest\TestCase;
 use PrismicTest\TestLinkResolver;
+
+use function assert;
 
 class HtmlSerializerTest extends TestCase
 {
@@ -23,12 +26,9 @@ class HtmlSerializerTest extends TestCase
     /** @dataProvider apiDataProvider */
     public function testThatAllDocumentsCanBeRenderedWithOutError(Api $api): void
     {
-        $documentCount = 0;
+        $this->expectNotToPerformAssertions();
         foreach ($api->findAll($api->createQuery()) as $document) {
-            ($this->serializer)($document->content());
-            $documentCount++;
+            ($this->serializer)($document->data()->content());
         }
-
-        $this->addToAssertionCount($documentCount);
     }
 }

@@ -104,8 +104,7 @@ class ApiTest extends TestCase
          * There's not much to test here. The ID referenced by a bookmark may not resolve to a document, if
          * that document has since been deleted, or the linked document is unpublished.
          */
-        $api->findByBookmark($bookmark);
-        $this->addToAssertionCount(1);
+        self::assertNotNull($api->findByBookmark($bookmark));
     }
 
     /** @dataProvider apiDataProvider */

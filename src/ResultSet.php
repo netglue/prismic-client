@@ -50,7 +50,8 @@ interface ResultSet extends IteratorAggregate, Countable
     /**
      * Retrieve an iterator for iterating over results
      *
-     * @return Traversable<Document>
+     * @return Document[]
+     * @psalm-return Traversable<Document>
      */
     public function getIterator(): Traversable;
 

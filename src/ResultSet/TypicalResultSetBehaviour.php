@@ -71,7 +71,8 @@ trait TypicalResultSetBehaviour
     }
 
     /**
-     * @return Traversable<Document>
+     * @return Document[]
+     * @psalm-return Traversable<Document>
      *
      * @psalm-suppress ImplementedReturnTypeMismatch
      */

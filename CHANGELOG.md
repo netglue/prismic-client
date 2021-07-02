@@ -11,6 +11,9 @@ All notable changes to this project will be documented in this file, in reverse 
 ### Changed
 
 - BC Break: Changed the return type of `\Prismic\ResultSet::getIterator()` from `iterable` to `Traversable`. This is unlikely to cause any problems if you are using the shipped `TypicalResultSetBehaviour` trait.
+- BC Break: `\Prismic\Document\Fragment\Embed` is now final
+- BC Break: `\Prismic\Document\Fragment\Span` is now final
+- BC Break: Changed return type of `\Prismic\Value\FormSpec::getIterator()` to `Traversable`
 
 ### Deprecated
 

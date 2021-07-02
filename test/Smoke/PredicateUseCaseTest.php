@@ -34,13 +34,13 @@ class PredicateUseCaseTest extends TestCase
     /** @dataProvider searchTermProvider */
     public function testThatFullTextSearchIsPossibleWithAVarietyOfTerms(string $term): void
     {
-        foreach ($this->apiInstances() as $host => $api) {
+        foreach ($this->apiInstances() as $api) {
             $query = $api->createQuery()
                 ->query(Predicate::fulltext('document', $term))
                 ->resultsPerPage(1);
             try {
                 $api->query($query);
-                $this->addToAssertionCount(1);
+                $this->expectNotToPerformAssertions();
             } catch (RequestFailure $error) {
                 $this->fail(sprintf(
                     'The full text search for "%s" failed with the error message: %s',

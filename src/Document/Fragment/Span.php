@@ -6,7 +6,7 @@ namespace Prismic\Document\Fragment;
 
 use Prismic\Link;
 
-class Span
+final class Span
 {
     /** @var string */
     private $type;
@@ -30,7 +30,7 @@ class Span
 
     public static function new(string $type, int $start, int $end, ?string $label, ?Link $link): self
     {
-        return new static($type, $start, $end, $label, $link);
+        return new self($type, $start, $end, $label, $link);
     }
 
     public function type(): string
