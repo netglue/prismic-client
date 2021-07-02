@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PrismicTest\Document\Fragment;
 
 use Generator;
-use Prismic\Document\Fragment;
 use Prismic\Document\Fragment\Collection;
 use Prismic\Document\Fragment\Embed;
 use Prismic\Document\Fragment\Factory;
@@ -74,10 +73,13 @@ class EmbedTest extends TestCase
     public function testThatAttributesArrayCanBeRetrieved(Embed $embed): void
     {
         $attributes = $embed->attributes();
-        $this->assertIsIterable($attributes);
+        $this->assertIsArray($attributes);
         $this->assertArrayHasKey('provider_name', $attributes);
     }
 
+    /**
+     * @psalm-suppress InvalidArgument
+     */
     public function testAnExceptionIsThrownSettingAnAttributeToANonScalarValue(): void
     {
         $this->expectException(InvalidArgument::class);

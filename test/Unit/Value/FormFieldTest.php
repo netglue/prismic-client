@@ -97,8 +97,8 @@ class FormFieldTest extends TestCase
         $this->assertFalse($field->expectsString());
     }
 
-    /** @return mixed[] */
-    public function invalidNumbers(): iterable
+    /** @return array<int, array<array-key, mixed>> */
+    public function invalidNumbers(): array
     {
         return [
             ['foo'],
@@ -124,8 +124,8 @@ class FormFieldTest extends TestCase
         $field->validateValue($value);
     }
 
-    /** @return mixed[] */
-    public function invalidStrings(): iterable
+    /** @return array<int, array<array-key, mixed>> */
+    public function invalidStrings(): array
     {
         return [
             [true],

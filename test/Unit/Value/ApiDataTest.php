@@ -28,6 +28,9 @@ class ApiDataTest extends TestCase
         $this->apiData = ApiData::factory(Json::decodeObject($payload));
     }
 
+    /**
+     * @psalm-suppress DeprecatedMethod
+     */
     public function testTagsHaveExpectedValue(): void
     {
         self::assertContainsEquals('goats', $this->apiData->tags());
@@ -44,7 +47,7 @@ class ApiDataTest extends TestCase
     public function testThatAFormIsReturnedForAKnownKey(): void
     {
         $this->apiData->form('everything');
-        $this->addToAssertionCount(1);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testThatAnExceptionIsThrownRetrievingAnUnknownForm(): void
@@ -56,7 +59,7 @@ class ApiDataTest extends TestCase
     public function testThatTheMasterRefCanBeRetrieved(): void
     {
         $this->apiData->master();
-        $this->addToAssertionCount(1);
+        $this->expectNotToPerformAssertions();
     }
 
     public function testThatMissingMasterRefIsExceptional(): void
@@ -84,12 +87,18 @@ class ApiDataTest extends TestCase
         $this->apiData->bookmark('not-found');
     }
 
+    /**
+     * @psalm-suppress DeprecatedMethod
+     */
     public function testThatAnEmptyTagsArrayIsAcceptable(): void
     {
         $data = ApiData::factory(Json::decodeObject($this->jsonFixtureByFileName('api-data-with-empty-tags.json')));
         self::assertEmpty($data->tags());
     }
 
+    /**
+     * @psalm-suppress DeprecatedMethod
+     */
     public function testThatAMissingTagsPropertyInTheDataPayloadIsAcceptable(): void
     {
         $data = ApiData::factory(Json::decodeObject($this->jsonFixtureByFileName('api-data-missing-tags.json')));

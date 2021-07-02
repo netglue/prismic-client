@@ -17,9 +17,15 @@ use function urlencode;
 
 class QueryTest extends TestCase
 {
-    /** @var object */
+    /** @var object|null */
     private $formData;
 
+    /**
+     * @return object{everything: object, withQuery: object, collection: object}
+     *
+     * @psalm-suppress LessSpecificReturnStatement
+     * @psalm-suppress MoreSpecificReturnType
+     */
     private function formData(): object
     {
         if (! $this->formData) {
@@ -29,8 +35,8 @@ class QueryTest extends TestCase
         return $this->formData;
     }
 
-    /** @return mixed[] */
-    public function queryWithoutDefaultQueryProvider(): iterable
+    /** @return array<string, array{0: Query}> */
+    public function queryWithoutDefaultQueryProvider(): array
     {
         return [
             'Standard Form' => [
@@ -42,8 +48,8 @@ class QueryTest extends TestCase
         ];
     }
 
-    /** @return mixed[] */
-    public function queryWithDefaultQueryProvider(): iterable
+    /** @return array<string, array{0: Query}> */
+    public function queryWithDefaultQueryProvider(): array
     {
         return [
             'Collection' => [
@@ -52,8 +58,8 @@ class QueryTest extends TestCase
         ];
     }
 
-    /** @return mixed[] */
-    public function queryProvider(): iterable
+    /** @return array<string, array{0: Query}> */
+    public function queryProvider(): array
     {
         return array_merge(
             $this->queryWithoutDefaultQueryProvider(),
@@ -61,8 +67,13 @@ class QueryTest extends TestCase
         );
     }
 
-    /** @return mixed[] */
-    public function defaultUrlProvider(): iterable
+    /**
+     * @return array<string, array{0: Query, 1: string}>
+     *
+     * @psalm-suppress LessSpecificReturnStatement
+     * @psalm-suppress MoreSpecificReturnType
+     */
+    public function defaultUrlProvider(): array
     {
         $queries = $this->queryProvider();
         $queries['Standard Form'][1] = 'https://example.com/api/v2?page=1&pageSize=20';
@@ -80,8 +91,13 @@ class QueryTest extends TestCase
         $this->assertSame($expectedUrl, $query->toUrl());
     }
 
-    /** @return mixed[] */
-    public function queryUrlProvider(): iterable
+    /**
+     * @return array<string, array{0: Query, 1: string}>
+     *
+     * @psalm-suppress LessSpecificReturnStatement
+     * @psalm-suppress MoreSpecificReturnType
+     */
+    public function queryUrlProvider(): array
     {
         $queries = $this->queryProvider();
         $queries['Standard Form'][1] = 'https://example.com/api/v2?page=1&pageSize=20&q=foo';
