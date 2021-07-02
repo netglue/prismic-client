@@ -225,9 +225,7 @@ final class Factory
     {
         $scalars = [];
         foreach (get_object_vars($data) as $name => $attribute) {
-            if (! is_scalar($attribute) && $attribute !== null) {
-                continue;
-            }
+            assert(is_scalar($attribute) || $attribute === null);
 
             $scalars[$name] = $attribute;
         }
