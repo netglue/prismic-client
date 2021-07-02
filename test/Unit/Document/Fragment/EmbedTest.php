@@ -22,6 +22,7 @@ class EmbedTest extends TestCase
         $data = Json::decodeObject($this->jsonFixtureByFileName('embed-types.json'));
         $collection = Factory::factory($data);
         assert($collection instanceof Collection);
+        self::assertContainsOnlyInstancesOf(Embed::class, $collection);
 
         return $collection;
     }
@@ -35,11 +36,13 @@ class EmbedTest extends TestCase
     }
 
     /**
-     * @return Generator<array-key, array<Fragment>>
+     * @return Generator<array-key, array<Embed>>
      */
     public function embedProvider(): Generator
     {
         foreach ($this->embedCollection() as $key => $embed) {
+            assert($embed instanceof Embed);
+
             yield $key => [$embed];
         }
     }

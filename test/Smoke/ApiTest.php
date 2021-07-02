@@ -16,7 +16,11 @@ use function sprintf;
 
 class ApiTest extends TestCase
 {
-    /** @return Generator<string, array{0: Api, 1: string}> */
+    /**
+     * @return Generator<string, array{0: Api, 1: string}>
+     *
+     * @psalm-suppress RedundantConditionGivenDocblockType
+     */
     public function documentIdDataProvider(): Generator
     {
         foreach ($this->apiInstances() as $api) {
@@ -39,7 +43,11 @@ class ApiTest extends TestCase
         $this->assertSame($id, $document->id());
     }
 
-    /** @return Generator<string, array{0: Api, 1: string, 2: string}> */
+    /**
+     * @return Generator<string, array{0: Api, 1: string, 2: string}>
+     *
+     * @psalm-suppress RedundantConditionGivenDocblockType
+     */
     public function documentUidDataProvider(): Generator
     {
         foreach ($this->apiInstances() as $api) {
@@ -74,7 +82,11 @@ class ApiTest extends TestCase
         $this->assertSame($type, $document->type());
     }
 
-    /** @return Generator<string, array{0: Api, 1: string}> */
+    /**
+     * @return Generator<string, array{0: Api, 1: string}>
+     *
+     * @psalm-suppress RedundantConditionGivenDocblockType
+     */
     public function bookmarkDataProvider(): Generator
     {
         foreach ($this->apiInstances() as $api) {
