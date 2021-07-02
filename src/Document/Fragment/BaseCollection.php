@@ -57,7 +57,10 @@ abstract class BaseCollection implements FragmentCollection, Stringable
         $this->fragments[] = $fragment;
     }
 
-    /** @return Fragment[] */
+    /**
+     * @return Fragment[]
+     * @psalm-return ArrayIterator<array-key, Fragment>
+     */
     public function getIterator(): iterable
     {
         return new ArrayIterator($this->fragments);
