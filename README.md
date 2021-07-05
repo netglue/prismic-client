@@ -1,6 +1,9 @@
 # PHP Api Client for Prismic.io
 
-[![Build Status](https://github.com/netglue/prismic-client/workflows/Continuous%20Integration/badge.svg)](https://github.com/netglue/prismic-client/actions?query=workflow%3A"Continuous+Integration") [![codecov](https://codecov.io/gh/netglue/prismic-client/branch/main/graph/badge.svg)](https://codecov.io/gh/netglue/prismic-client)
+[![Build Status](https://github.com/netglue/prismic-client/workflows/Continuous%20Integration/badge.svg)](https://github.com/netglue/prismic-client/actions?query=workflow%3A"Continuous+Integration") 
+[![codecov](https://codecov.io/gh/netglue/prismic-client/branch/main/graph/badge.svg)](https://codecov.io/gh/netglue/prismic-client)
+[![Psalm Type Coverage](https://shepherd.dev/github/netglue/prismic-client/coverage.svg)](https://shepherd.dev/github/netglue/prismic-client)
+
 
 This is an unofficial PHP client for the [Prismic.io](https://prismic.io) headless CMS. In order to keep things simple, this library only supports version 2 of the api, so you'll have to make sure to specify your repository url in the format `https://my-repo.prismic.io/api/v2`
 
