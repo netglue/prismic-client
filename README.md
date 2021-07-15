@@ -3,7 +3,8 @@
 [![Build Status](https://github.com/netglue/prismic-client/workflows/Continuous%20Integration/badge.svg)](https://github.com/netglue/prismic-client/actions?query=workflow%3A"Continuous+Integration") 
 [![codecov](https://codecov.io/gh/netglue/prismic-client/branch/main/graph/badge.svg)](https://codecov.io/gh/netglue/prismic-client)
 [![Psalm Type Coverage](https://shepherd.dev/github/netglue/prismic-client/coverage.svg)](https://shepherd.dev/github/netglue/prismic-client)
-
+[![Latest Stable Version](https://poser.pugx.org/netglue/prismic-client/v/stable)](https://packagist.org/packages/netglue/primo)
+[![Total Downloads](https://poser.pugx.org/netglue/prismic-client/downloads)](https://packagist.org/packages/netglue/primo)
 
 This is an unofficial PHP client for the [Prismic.io](https://prismic.io) headless CMS. In order to keep things simple, this library only supports version 2 of the api, so you'll have to make sure to specify your repository url in the format `https://my-repo.prismic.io/api/v2`
 
@@ -64,3 +65,7 @@ vendor/bin/phpunit
 The official kit can be found at [prismicio/php-kit](https://github.com/prismicio/php-kit).
 
 Another, abandoned fork of the official kit can be found at [netglue/prismic-php-kit](https://github.com/netglue/prismic-php-kit). The reason for abandoning the fork there was the desire to start from a clean slate and make use of the recent PSRs for HTTP factories and clients, completely separate the HTML serialisation process from the content model and provide more flexible ways of hydrating your content model to objects in your domain _(Or not as the case may be!)_.
+
+## License
+
+[MIT Licensed](./LICENSE.md).
