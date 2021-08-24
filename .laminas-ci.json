@@ -1,7 +1,6 @@
 {
     "extensions": [
-        "apcu",
-        "php7.3-pcov"
+        "apcu"
     ],
     "ini": [
         "apc.enabled=1",
