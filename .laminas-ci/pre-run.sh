@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # disable Xdebug and enable pcov:
 
 phpdismod -v ALL -s ALL xdebug
