@@ -1,7 +1,6 @@
 {
     "extensions": [
-        "apcu",
-        "pcov"
+        "apcu"
     ],
     "ini": [
         "apc.enabled=1",
