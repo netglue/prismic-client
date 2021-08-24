@@ -7,7 +7,7 @@
 
 JOB=$3
 PHP_VERSION=$(echo "${JOB}" | jq -r '.php')
-pecl install php"$PHP_VERSION"-pcov
+apt install -y php"$PHP_VERSION"-pcov
 
 phpdismod -v ALL -s ALL xdebug
 phpenmod -v ALL -s ALL pcov
