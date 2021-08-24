@@ -40,6 +40,7 @@ use function count;
 use function date_default_timezone_get;
 use function get_class;
 use function implode;
+use function is_string;
 use function nl2br;
 use function preg_split;
 use function sprintf;
@@ -323,13 +324,13 @@ class HtmlSerializer
             return $wrapper($this->escaper->escapeHtml($text));
         }
 
-        /** @var string[] $nodes */
+        /** @var array<array-key, string> $nodes */
         $nodes = preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY);
         if (! $nodes) {
             return '';
         }
 
-        array_walk($nodes, function (&$character): void {
+        array_walk($nodes, function (string &$character): void {
             $character = $this->escaper->escapeHtml($character);
         });
 
@@ -364,10 +365,14 @@ class HtmlSerializer
                 continue;
             }
 
+            assert(is_string($nodes[$start]));
+            assert(is_string($nodes[$end]));
+
             $nodes[$start] = sprintf('%s%s', $openTag, $nodes[$start]);
             $nodes[$end] = sprintf('%s%s', $nodes[$end], $closeTag);
         }
 
+        /** @psalm-var array<array-key, string> $nodes */
         return $wrapper(implode('', $nodes));
     }
 

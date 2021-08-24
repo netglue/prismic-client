@@ -81,7 +81,7 @@ final class Predicate implements Stringable
     }
 
     /**
-     * @param string|string[] $value
+     * @param string|bool|string[] $value
      */
     public static function at(string $fragment, $value): self
     {

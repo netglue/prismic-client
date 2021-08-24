@@ -43,41 +43,9 @@
     </TypeDoesNotContainNull>
   </file>
   <file src="src/Document/Fragment/BaseCollection.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>Fragment[]</code>
-    </ImplementedReturnTypeMismatch>
-    <InvalidReturnStatement occurrences="1">
-      <code>new ArrayIterator($this-&gt;fragments)</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>Fragment[]</code>
-    </InvalidReturnType>
     <UnsafeInstantiation occurrences="2">
       <code>new static($fragments)</code>
     </UnsafeInstantiation>
-  </file>
-  <file src="src/Document/Fragment/Color.php">
-    <InvalidReturnStatement occurrences="1"/>
-    <InvalidReturnType occurrences="1">
-      <code>int[]</code>
-    </InvalidReturnType>
-    <PossiblyNullArgument occurrences="7">
-      <code>$b</code>
-      <code>$b</code>
-      <code>$g</code>
-      <code>$g</code>
-      <code>$r</code>
-      <code>$r</code>
-      <code>$this-&gt;asRgb()</code>
-    </PossiblyNullArgument>
-    <PossiblyNullArrayAccess occurrences="6">
-      <code>$b</code>
-      <code>$b</code>
-      <code>$g</code>
-      <code>$g</code>
-      <code>$r</code>
-      <code>$r</code>
-    </PossiblyNullArrayAccess>
   </file>
   <file src="src/Document/Fragment/DateFragment.php">
     <MissingImmutableAnnotation occurrences="1">
@@ -88,42 +56,11 @@
     <DocblockTypeContradiction occurrences="1">
       <code>$value !== null &amp;&amp; ! is_scalar($value)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="1">
-      <code>$value</code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$name</code>
-    </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="1">
-      <code>$value</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>string|int|float|bool|null</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$this-&gt;attributes[$name] ?? null</code>
-    </MixedReturnStatement>
-    <MixedReturnTypeCoercion occurrences="2">
-      <code>$this-&gt;attributes</code>
-      <code>string[]|int[]|float[]|bool[]|null[]</code>
-    </MixedReturnTypeCoercion>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>$value !== null</code>
-    </RedundantConditionGivenDocblockType>
-    <UnsafeInstantiation occurrences="1">
-      <code>new static($type, $url, $provider, $html, $width, $height, $attributes)</code>
-    </UnsafeInstantiation>
   </file>
   <file src="src/Document/Fragment/Factory.php">
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>self::assertObjectPropertyIsArray($data, 'tags')</code>
-    </MixedArgumentTypeCoercion>
     <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
-    <PossiblyNullArgument occurrences="1">
-      <code>$lang</code>
-    </PossiblyNullArgument>
     <RedundantCondition occurrences="2">
       <code>assert(is_string($data))</code>
       <code>is_string($data)</code>
@@ -131,30 +68,6 @@
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>'\is_string'</code>
     </RedundantConditionGivenDocblockType>
-  </file>
-  <file src="src/Document/Fragment/Image.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>self[]</code>
-    </ImplementedReturnTypeMismatch>
-    <InvalidReturnStatement occurrences="1">
-      <code>new ArrayIterator($this-&gt;views)</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>self[]</code>
-    </InvalidReturnType>
-    <MixedReturnTypeCoercion occurrences="2">
-      <code>array_keys($this-&gt;views)</code>
-      <code>string[]</code>
-    </MixedReturnTypeCoercion>
-    <PossiblyNullIterator occurrences="1">
-      <code>$views</code>
-    </PossiblyNullIterator>
-    <PropertyNotSetInConstructor occurrences="1">
-      <code>$views</code>
-    </PropertyNotSetInConstructor>
-    <UnusedParam occurrences="1">
-      <code>$linkTo</code>
-    </UnusedParam>
   </file>
   <file src="src/Document/Fragment/Number.php">
     <DocblockTypeContradiction occurrences="1">
@@ -166,75 +79,10 @@
       <code>$fragment</code>
     </MixedArgument>
   </file>
-  <file src="src/Document/Fragment/Slice.php">
-    <InvalidCast occurrences="2">
-      <code>$this-&gt;items</code>
-      <code>$this-&gt;primary</code>
-    </InvalidCast>
-  </file>
-  <file src="src/Document/Fragment/Span.php">
-    <UnsafeInstantiation occurrences="1">
-      <code>new static($type, $start, $end, $label, $link)</code>
-    </UnsafeInstantiation>
-  </file>
-  <file src="src/Document/Fragment/TextElement.php">
-    <InvalidToString occurrences="1">
-      <code>string</code>
-    </InvalidToString>
-    <NullableReturnStatement occurrences="1">
-      <code>$this-&gt;text</code>
-    </NullableReturnStatement>
-  </file>
-  <file src="src/Exception/AuthenticationError.php">
-    <UnsafeInstantiation occurrences="1"/>
-  </file>
-  <file src="src/Exception/ImageViewNotFound.php">
-    <UnsafeInstantiation occurrences="1"/>
-  </file>
-  <file src="src/Exception/InvalidArgument.php">
-    <UnsafeInstantiation occurrences="7"/>
-  </file>
-  <file src="src/Exception/InvalidPreviewToken.php">
-    <UnsafeInstantiation occurrences="2">
-      <code>new static('The given preview token is not a valid url', 400, $error)</code>
-    </UnsafeInstantiation>
-  </file>
-  <file src="src/Exception/JsonError.php">
-    <InvalidScalarArgument occurrences="2">
-      <code>$exception-&gt;getCode()</code>
-      <code>$exception-&gt;getCode()</code>
-    </InvalidScalarArgument>
-    <UnsafeInstantiation occurrences="3"/>
-  </file>
   <file src="src/Exception/PreviewTokenExpired.php">
     <MixedAssignment occurrences="1">
       <code>$error</code>
     </MixedAssignment>
-  </file>
-  <file src="src/Exception/RequestFailure.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>$exception-&gt;getCode()</code>
-    </InvalidScalarArgument>
-    <UnsafeInstantiation occurrences="4"/>
-  </file>
-  <file src="src/Exception/UnexpectedValue.php">
-    <UnsafeInstantiation occurrences="2">
-      <code>new static($message)</code>
-    </UnsafeInstantiation>
-  </file>
-  <file src="src/Exception/UnknownBookmark.php">
-    <UnsafeInstantiation occurrences="1"/>
-  </file>
-  <file src="src/Exception/UnknownForm.php">
-    <UnsafeInstantiation occurrences="1"/>
-  </file>
-  <file src="src/Json.php">
-    <MixedInferredReturnType occurrences="1">
-      <code>object</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>json_decode($jsonString, false, 512, JSON_THROW_ON_ERROR)</code>
-    </MixedReturnStatement>
   </file>
   <file src="src/Predicate.php">
     <MixedArgument occurrences="3">
@@ -285,24 +133,11 @@
       <code>new static($this-&gt;form)</code>
     </UnsafeInstantiation>
   </file>
-  <file src="src/ResultSet.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>Document[]</code>
-    </ImplementedReturnTypeMismatch>
-  </file>
   <file src="src/ResultSet/StandardResultSet.php">
     <ArgumentTypeCoercion occurrences="1">
       <code>$results</code>
     </ArgumentTypeCoercion>
     <PossiblyFalsePropertyAssignmentValue occurrences="1"/>
-  </file>
-  <file src="src/ResultSet/TypicalResultSetBehaviour.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>Document[]</code>
-    </ImplementedReturnTypeMismatch>
-    <InvalidReturnType occurrences="1">
-      <code>Document[]</code>
-    </InvalidReturnType>
   </file>
   <file src="src/Serializer/HtmlSerializer.php">
     <MissingClosureParamType occurrences="1">
@@ -318,9 +153,8 @@
     <MixedAssignment occurrences="1">
       <code>$item</code>
     </MixedAssignment>
-    <PossiblyNullArgument occurrences="2">
+    <PossiblyNullArgument occurrences="1">
       <code>$embed-&gt;html()</code>
-      <code>$span-&gt;link()</code>
     </PossiblyNullArgument>
     <RedundantCondition occurrences="10">
       <code>assert($fragment instanceof BooleanFragment)</code>
@@ -349,9 +183,6 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Value/DataAssertionBehaviour.php">
-    <InvalidFalsableReturnType occurrences="1">
-      <code>DateTimeImmutable</code>
-    </InvalidFalsableReturnType>
     <MixedInferredReturnType occurrences="5">
       <code>bool</code>
       <code>int</code>
@@ -360,111 +191,15 @@
       <code>string</code>
     </MixedInferredReturnType>
   </file>
-  <file src="src/Value/DocumentData.php">
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>self::assertObjectPropertyIsArray($data, 'tags')</code>
-    </MixedArgumentTypeCoercion>
-  </file>
-  <file src="src/Value/FormSpec.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>FormField[]</code>
-    </ImplementedReturnTypeMismatch>
-    <InvalidReturnStatement occurrences="1">
-      <code>new ArrayIterator($this-&gt;fields)</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>FormField[]</code>
-    </InvalidReturnType>
-  </file>
   <file src="test/Smoke/ApiTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
-    </InternalMethod>
-    <InvalidReturnType occurrences="3">
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-    </InvalidReturnType>
-    <MixedInferredReturnType occurrences="3">
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-    </MixedInferredReturnType>
     <PossiblyNullReference occurrences="1">
       <code>previousPage</code>
     </PossiblyNullReference>
-  </file>
-  <file src="test/Smoke/CacheTest.php">
-    <InvalidReturnType occurrences="1">
-      <code>Api[][]</code>
-    </InvalidReturnType>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$uri</code>
-    </MixedArgumentTypeCoercion>
-  </file>
-  <file src="test/Smoke/Example/ExampleHydratingResultSetTest.php">
-    <InvalidReturnType occurrences="1">
-      <code>Api[][]</code>
-    </InvalidReturnType>
-    <MixedArgumentTypeCoercion occurrences="2">
-      <code>$url</code>
-      <code>$url</code>
-    </MixedArgumentTypeCoercion>
-  </file>
-  <file src="test/Smoke/PredicateUseCaseTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
-    </InternalMethod>
-    <UnusedVariable occurrences="1">
-      <code>$host</code>
-    </UnusedVariable>
-  </file>
-  <file src="test/Smoke/Serializer/HtmlSerializerTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
-    </InternalMethod>
-    <MixedArgument occurrences="1">
-      <code>$document-&gt;content()</code>
-    </MixedArgument>
-    <UndefinedInterfaceMethod occurrences="1">
-      <code>content</code>
-    </UndefinedInterfaceMethod>
-  </file>
-  <file src="test/Smoke/TestCase.php">
-    <InvalidReturnStatement occurrences="2">
-      <code>$endpoints</code>
-      <code>$endpoints</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="3">
-      <code>Api[]</code>
-      <code>Api[][]</code>
-      <code>string[]</code>
-    </InvalidReturnType>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$url</code>
-    </MixedArgumentTypeCoercion>
-    <MixedArrayAccess occurrences="3">
-      <code>$configured['endpoints']</code>
-      <code>$spec['token']</code>
-      <code>$spec['url']</code>
-    </MixedArrayAccess>
-    <MixedArrayOffset occurrences="1">
-      <code>$endpoints[$spec['url']]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="4">
-      <code>$configured</code>
-      <code>$configured</code>
-      <code>$endpoints[$spec['url']]</code>
-      <code>$spec</code>
-    </MixedAssignment>
   </file>
   <file src="test/Unit/ApiTest.php">
     <DeprecatedMethod occurrences="1">
       <code>tags</code>
     </DeprecatedMethod>
-    <InvalidReturnType occurrences="1">
-      <code>int[][]</code>
-    </InvalidReturnType>
     <MixedArgument occurrences="2">
       <code>$request-&gt;getUri()-&gt;getQuery()</code>
       <code>$request-&gt;getUri()-&gt;getQuery()</code>
@@ -484,38 +219,15 @@
       <code>getUri</code>
     </MixedMethodCall>
   </file>
-  <file src="test/Unit/Document/Fragment/BooleanFragmentTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
-    </InternalMethod>
-    <InvalidReturnStatement occurrences="1"/>
-    <InvalidReturnType occurrences="1">
-      <code>bool[]</code>
-    </InvalidReturnType>
-  </file>
   <file src="test/Unit/Document/Fragment/ColorTest.php">
     <MixedInferredReturnType occurrences="1">
       <code>mixed[]</code>
     </MixedInferredReturnType>
   </file>
   <file src="test/Unit/Document/Fragment/DocumentLinkTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
-    </InternalMethod>
     <InvalidScalarArgument occurrences="1">
       <code>[1, 2]</code>
     </InvalidScalarArgument>
-  </file>
-  <file src="test/Unit/Document/Fragment/EmbedTest.php">
-    <InvalidReturnType occurrences="1">
-      <code>mixed[]</code>
-    </InvalidReturnType>
-    <MixedInferredReturnType occurrences="1">
-      <code>mixed[]</code>
-    </MixedInferredReturnType>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>assertIsIterable</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="test/Unit/Document/Fragment/FactoryTest.php">
     <ArgumentTypeCoercion occurrences="1">
@@ -525,35 +237,13 @@
       <code>mixed[]</code>
       <code>mixed[]</code>
     </MixedInferredReturnType>
-    <RedundantConditionGivenDocblockType occurrences="2">
-      <code>assert($fragment instanceof GeoPoint)</code>
-      <code>assert($fragment instanceof GeoPoint)</code>
-    </RedundantConditionGivenDocblockType>
-  </file>
-  <file src="test/Unit/Document/Fragment/GeoPointTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
-    </InternalMethod>
-  </file>
-  <file src="test/Unit/Document/Fragment/ImageLinkTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
-    </InternalMethod>
   </file>
   <file src="test/Unit/Document/Fragment/ImageTest.php">
     <PropertyTypeCoercion occurrences="1">
       <code>Factory::factory(Json::decodeObject($this-&gt;jsonFixtureByFileName('images.json')))</code>
     </PropertyTypeCoercion>
   </file>
-  <file src="test/Unit/Document/Fragment/MediaLinkTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
-    </InternalMethod>
-  </file>
   <file src="test/Unit/Document/Fragment/NumberTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
-    </InternalMethod>
     <InvalidScalarArgument occurrences="1">
       <code>'foo'</code>
     </InvalidScalarArgument>
@@ -579,9 +269,6 @@
     </PropertyTypeCoercion>
   </file>
   <file src="test/Unit/Document/Fragment/TextElementTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
-    </InternalMethod>
     <InvalidArgument occurrences="1">
       <code>['dingdong']</code>
     </InvalidArgument>
@@ -613,7 +300,7 @@
       <code>$value</code>
       <code>$value</code>
     </MixedArgument>
-    <MixedInferredReturnType occurrences="7">
+    <MixedInferredReturnType occurrences="6">
       <code>mixed[]</code>
       <code>mixed[]</code>
       <code>mixed[]</code>
@@ -631,66 +318,5 @@
     <UnusedFunctionCall occurrences="1">
       <code>var_export</code>
     </UnusedFunctionCall>
-  </file>
-  <file src="test/Unit/QueryTest.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>$this-&gt;formData</code>
-    </DocblockTypeContradiction>
-    <MissingConstructor occurrences="1">
-      <code>$formData</code>
-    </MissingConstructor>
-    <MixedArgument occurrences="3">
-      <code>$this-&gt;formData()-&gt;collection</code>
-      <code>$this-&gt;formData()-&gt;everything</code>
-      <code>$this-&gt;formData()-&gt;withQuery</code>
-    </MixedArgument>
-    <MixedArrayAssignment occurrences="6">
-      <code>$queries['Collection'][1]</code>
-      <code>$queries['Collection'][1]</code>
-      <code>$queries['Standard Form'][1]</code>
-      <code>$queries['Standard Form'][1]</code>
-      <code>$queries['With Query'][1]</code>
-      <code>$queries['With Query'][1]</code>
-    </MixedArrayAssignment>
-    <MixedInferredReturnType occurrences="5">
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-    </MixedInferredReturnType>
-  </file>
-  <file src="test/Unit/Serializer/HtmlSerializerTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
-    </InternalMethod>
-    <MixedInferredReturnType occurrences="2">
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-    </MixedInferredReturnType>
-  </file>
-  <file src="test/Unit/Value/ApiDataTest.php">
-    <DeprecatedMethod occurrences="5">
-      <code>tags</code>
-      <code>tags</code>
-      <code>tags</code>
-      <code>tags</code>
-      <code>tags</code>
-    </DeprecatedMethod>
-    <InternalMethod occurrences="2">
-      <code>addToAssertionCount</code>
-      <code>addToAssertionCount</code>
-    </InternalMethod>
-  </file>
-  <file src="test/Unit/Value/DocumentDataTest.php">
-    <InternalMethod occurrences="1">
-      <code>addToAssertionCount</code>
-    </InternalMethod>
-  </file>
-  <file src="test/Unit/Value/FormFieldTest.php">
-    <MixedInferredReturnType occurrences="2">
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-    </MixedInferredReturnType>
   </file>
 </files>
