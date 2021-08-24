@@ -4,7 +4,8 @@
     ],
     "ini": [
         "apc.enabled=1",
-        "apc.enable_cli=1"
+        "apc.enable_cli=1",
+        "pcov.enabled=1"
     ],
     "additional_checks": [
         {
