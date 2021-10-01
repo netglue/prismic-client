@@ -14,10 +14,7 @@ class RequestFailureTest extends TestCase
 {
     public function testWithClientErrorReturnsPreviewTokenExpiredInstanceWhenResponseBodyMatchesExpectedValue(): void
     {
-        $response = new JsonResponse([
-            'error' => PreviewTokenExpired::EXPECTED_ERROR_MESSAGE,
-        ], 400);
-
+        $response = new JsonResponse(['error' => 'Preview token has expired'], 400);
         $request = $this->createMock(RequestInterface::class);
 
         $error = RequestFailure::withClientError($request, $response);

@@ -8,12 +8,28 @@ use Prismic\Json;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
+use function array_intersect;
+use function array_map;
+use function count;
+use function explode;
+use function is_string;
+use function property_exists;
 use function sprintf;
 use function strpos;
 
 final class PreviewTokenExpired extends RequestFailure
 {
+    /**
+     * @deprecated This constant is no longer in use internally. It will be removed in a 1.0 release.
+     */
     public const EXPECTED_ERROR_MESSAGE = 'Preview token expired';
+
+    /** @var string[] */
+    private static $magicWords = [
+        'preview',
+        'token',
+        'expired',
+    ];
 
     public static function isPreviewTokenExpiry(ResponseInterface $response): bool
     {
@@ -23,9 +39,13 @@ final class PreviewTokenExpired extends RequestFailure
         }
 
         $payload = Json::decodeObject((string) $response->getBody());
-        $error = $payload->error ?? null;
+        $error = self::extractErrorMessage($payload);
 
-        return $error === self::EXPECTED_ERROR_MESSAGE;
+        if (! $error) {
+            return false;
+        }
+
+        return self::errorStringHasMagicWords($error);
     }
 
     public static function with(RequestInterface $request, ResponseInterface $response): self
@@ -38,5 +58,31 @@ final class PreviewTokenExpired extends RequestFailure
         $error->response = $response;
 
         return $error;
+    }
+
+    private static function extractErrorMessage(object $payload): ?string
+    {
+        foreach (['error', 'message'] as $key) {
+            if (! property_exists($payload, $key)) {
+                continue;
+            }
+
+            /** @psalm-suppress MixedAssignment */
+            $value = $payload->{$key};
+            if (! is_string($value)) {
+                continue;
+            }
+
+            return $value;
+        }
+
+        return null;
+    }
+
+    private static function errorStringHasMagicWords(string $error): bool
+    {
+        $words = array_map('strtolower', explode(' ', $error));
+
+        return count(array_intersect($words, self::$magicWords)) === count(self::$magicWords);
     }
 }
