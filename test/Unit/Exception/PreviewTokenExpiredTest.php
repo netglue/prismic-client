@@ -11,7 +11,7 @@ use Psr\Http\Message\RequestInterface;
 
 class PreviewTokenExpiredTest extends TestCase
 {
-    /** @return array<string, array{0: string[], 1:int}> */
+    /** @return array<string, array{0: array<string, string>, 1:int}> */
     public function possibleResponseBodiesThatShouldRepresentExpiredPreviews(): array
     {
         return [
@@ -31,34 +31,42 @@ class PreviewTokenExpiredTest extends TestCase
         ];
     }
 
-    public function testIsPreviewTokenExpiryIsFalseWhenErrorMessageDoesNotMatchExpectedValue(): void
+    /** @return array<string, array{0: array<string, string>, 1:int}> */
+    public function responseBodiesThatShouldNotRepresentExpiredTokens(): array
     {
-        $response = new JsonResponse(['error' => 'Not expected message']);
+        return [
+            'No message or error key' => [
+                ['nuts' => 'I’m a fucking teapot.'],
+                418,
+            ],
+        ];
+    }
+
+    /**
+     * @param array<string, string> $bodyPayload
+     *
+     * @dataProvider responseBodiesThatShouldNotRepresentExpiredTokens
+     */
+    public function testIsPreviewTokenExpiryIsFalseWhenErrorMessageDoesNotMatchExpectedValue(array $bodyPayload, int $responseCode): void
+    {
+        $response = new JsonResponse($bodyPayload, $responseCode);
 
         $this->assertFalse(PreviewTokenExpired::isPreviewTokenExpiry($response));
     }
 
-    public function testIsPreviewTokenExpiryIsTrueWhenErrorMessageMatchesExpectedValue(): void
+    /**
+     * @param array<string, string> $bodyPayload
+     *
+     * @dataProvider possibleResponseBodiesThatShouldRepresentExpiredPreviews
+     */
+    public function testThatSimulatedTokenExpiryResponseYieldsExpectedExceptionProperties(array $bodyPayload, int $responseCode): void
     {
-        $response = new JsonResponse([
-            'error' => PreviewTokenExpired::EXPECTED_ERROR_MESSAGE,
-        ]);
-
-        $this->assertTrue(PreviewTokenExpired::isPreviewTokenExpiry($response));
-    }
-
-    public function testThatSimulatedTokenExpiryResponseYieldsExpectedExceptionProperties(): void
-    {
-        $response = new JsonResponse([
-            'error' => PreviewTokenExpired::EXPECTED_ERROR_MESSAGE,
-        ], 400);
-
+        $response = new JsonResponse($bodyPayload, $responseCode);
         $request = $this->createMock(RequestInterface::class);
-
         $error = PreviewTokenExpired::with($request, $response);
 
         $this->assertStringContainsString('The preview token provided has expired', $error->getMessage());
-        $this->assertSame(400, $error->getCode());
+        $this->assertSame($responseCode, $error->getCode());
         $this->assertSame($request, $error->getRequest());
         $this->assertSame($response, $error->getResponse());
     }
