@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 0.8.0 - 2021-10-01
+
+### Added
+
+- [#49](https://github.com/netglue/prismic-client/pull/49) ensures PHP 8.1 support by bumping the minimum versions of several, _(mostly dev)_ dependencies
+
+### Changed
+
+- Continued improvements with type annotations.
+
+### Deprecated
+
+- [#57](https://github.com/netglue/prismic-client/pull/57) deprecates the constant `PreviewTokenExpired::EXPECTED_ERROR_MESSAGE` 
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- [#57](https://github.com/netglue/prismic-client/pull/57) fixes detection of expired preview tokens that was broken by an API change by @prismicio - The error message has completely changed in this scenario without any warning… FFS.
+
 ## 0.7.0 - 2020-07-05
 
 ### Added
