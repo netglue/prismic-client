@@ -16,7 +16,7 @@ use function var_export;
 
 class PredicateTest extends TestCase
 {
-    /** @return array<array-key, array{0: string, 1: mixed, 2:string}> */
+    /** @return array<array-key, array{0: string, 1: string|bool|string[], 2:string}> */
     public function atProvider(): array
     {
         return [
@@ -28,7 +28,7 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param mixed $value
+     * @param string|string[]|bool $value
      *
      * @dataProvider atProvider
      */
@@ -38,7 +38,7 @@ class PredicateTest extends TestCase
         $this->assertEquals($expect, $predicate->q());
     }
 
-    /** @return mixed[] */
+    /** @return array<array-key, array{0:string, 1:int|string|string[]|bool, 2:string}> */
     public function notProvider(): array
     {
         return [
@@ -51,7 +51,7 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param mixed $value
+     * @param int|string|string[]|bool $value
      *
      * @dataProvider notProvider
      */
@@ -61,7 +61,7 @@ class PredicateTest extends TestCase
         $this->assertEquals($expect, $predicate->q());
     }
 
-    /** @return mixed[] */
+    /** @return array<array-key, array{0: string, 1: string[], 2:string}> */
     public function anyProvider(): array
     {
         return [
@@ -72,17 +72,17 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param mixed $value
+     * @param string[] $value
      *
      * @dataProvider anyProvider
      */
-    public function testAnyPredicate(string $fragment, $value, string $expect): void
+    public function testAnyPredicate(string $fragment, array $value, string $expect): void
     {
         $predicate = Predicate::any($fragment, $value);
         $this->assertEquals($expect, $predicate->q());
     }
 
-    /** @return mixed[] */
+    /** @return array<array-key, array{0: string, 1: string[], 2:string}> */
     public function inProvider(): array
     {
         return [
@@ -92,11 +92,11 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param mixed $value
+     * @param string[] $value
      *
      * @dataProvider inProvider
      */
-    public function testInPredicate(string $fragment, $value, string $expect): void
+    public function testInPredicate(string $fragment, array $value, string $expect): void
     {
         $predicate = Predicate::in($fragment, $value);
         $this->assertEquals($expect, $predicate->q());
@@ -126,7 +126,7 @@ class PredicateTest extends TestCase
         $this->assertEquals('[:d = similar("someId", 5)]', $predicate->q());
     }
 
-    /** @return mixed[] */
+    /** @return array<array-key, array{0: string, 1:numeric, 2:string}> */
     public function ltProvider(): array
     {
         return [
@@ -137,7 +137,7 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param mixed $value
+     * @param numeric $value
      *
      * @dataProvider ltProvider
      */
@@ -153,7 +153,7 @@ class PredicateTest extends TestCase
         Predicate::lt('my.product.price', 'foo');
     }
 
-    /** @return mixed[] */
+    /** @return array<array-key, array{0: string, 1:numeric, 2:string}> */
     public function gtProvider(): array
     {
         return [
@@ -164,7 +164,7 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param mixed $value
+     * @param numeric $value
      *
      * @dataProvider gtProvider
      */
@@ -180,7 +180,7 @@ class PredicateTest extends TestCase
         Predicate::gt('my.product.price', 'foo');
     }
 
-    /** @return mixed[] */
+    /** @return array<array-key, array{0: string, 1:numeric, 2:numeric, 3:string}> */
     public function rangeProvider(): array
     {
         return [
@@ -191,8 +191,8 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param mixed $low
-     * @param mixed $high
+     * @param numeric $low
+     * @param numeric $high
      *
      * @dataProvider rangeProvider
      */
@@ -338,7 +338,7 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param mixed $value
+     * @param string|string[]|bool $value
      *
      * @dataProvider atProvider
      */
@@ -352,7 +352,7 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param mixed $value
+     * @param string|string[]|bool $value
      *
      * @dataProvider atProvider
      */

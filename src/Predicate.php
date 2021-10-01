@@ -94,7 +94,7 @@ final class Predicate implements Stringable
     }
 
     /**
-     * @param string|string[] $value
+     * @param int|string|string[]|bool $value
      */
     public static function not(string $fragment, $value): self
     {
