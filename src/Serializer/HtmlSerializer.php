@@ -40,6 +40,7 @@ use function count;
 use function date_default_timezone_get;
 use function get_class;
 use function implode;
+use function is_array;
 use function is_string;
 use function nl2br;
 use function preg_split;
@@ -324,9 +325,8 @@ class HtmlSerializer
             return $wrapper($this->escaper->escapeHtml($text));
         }
 
-        /** @var array<array-key, string> $nodes */
         $nodes = preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY);
-        if (! $nodes) {
+        if (! is_array($nodes)) {
             return '';
         }
 
@@ -365,6 +365,7 @@ class HtmlSerializer
                 continue;
             }
 
+            assert(is_array($nodes));
             assert(is_string($nodes[$start]));
             assert(is_string($nodes[$end]));
 
