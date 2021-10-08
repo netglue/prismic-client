@@ -19,11 +19,6 @@ use function strpos;
 
 final class PreviewTokenExpired extends RequestFailure
 {
-    /**
-     * @deprecated This constant is no longer in use internally. It will be removed in a 1.0 release.
-     */
-    public const EXPECTED_ERROR_MESSAGE = 'Preview token expired';
-
     /** @var string[] */
     private static $magicWords = [
         'preview',

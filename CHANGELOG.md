@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 1.0.0 - 2021-10-08
+
+### Added
+
+- Nothing. First stable is pretty much the same at `0.8.0`
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Removes the constant `PreviewTokenExpired::EXPECTED_ERROR_MESSAGE`.
+
+### Fixed
+
+- Nothing.
+
 ## 0.8.0 - 2021-10-01
 
 ### Added
