@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+- Changes the PHP constraint so that it is not automatically assumed this will run on 8.2
 
 ### Deprecated
 
