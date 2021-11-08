@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0bc10733710d00a497fad728ac69320e",
+    "content-hash": "41eeeb378ec76858fa34308765f2cbdd",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -2247,16 +2247,16 @@
         },
         {
             "name": "php-http/cache-plugin",
-            "version": "1.7.2",
+            "version": "1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-http/cache-plugin.git",
-                "reference": "922409f10541b0d581b8ffe5cd810f4efc9e9e32"
+                "reference": "6a55c651585756f282760b7d374599ed5dabea81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-http/cache-plugin/zipball/922409f10541b0d581b8ffe5cd810f4efc9e9e32",
-                "reference": "922409f10541b0d581b8ffe5cd810f4efc9e9e32",
+                "url": "https://api.github.com/repos/php-http/cache-plugin/zipball/6a55c651585756f282760b7d374599ed5dabea81",
+                "reference": "6a55c651585756f282760b7d374599ed5dabea81",
                 "shasum": ""
             },
             "require": {
@@ -2300,9 +2300,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-http/cache-plugin/issues",
-                "source": "https://github.com/php-http/cache-plugin/tree/1.7.2"
+                "source": "https://github.com/php-http/cache-plugin/tree/1.7.3"
             },
-            "time": "2021-04-14T06:06:08+00:00"
+            "time": "2021-11-03T07:26:41+00:00"
         },
         {
             "name": "php-http/curl-client",
@@ -5820,7 +5820,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.3||^8.0",
+        "php": "^7.3 || ~8.0 || ~8.1",
         "ext-json": "*"
     },
     "platform-dev": {
