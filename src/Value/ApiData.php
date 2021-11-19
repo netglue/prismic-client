@@ -12,6 +12,9 @@ use function array_keys;
 use function array_map;
 use function get_object_vars;
 
+/**
+ * @psalm-suppress DeprecatedClass, DeprecatedMethod
+ */
 final class ApiData
 {
     use DataAssertionBehaviour;
@@ -29,45 +32,56 @@ final class ApiData
     /** @var FormSpec[] */
     private $forms;
 
-    private function __construct()
-    {
+    /**
+     * @param array<array-key, Ref>      $refs
+     * @param array<array-key, Type>     $types
+     * @param array<array-key, Language> $languages
+     * @param array<array-key, FormSpec> $forms
+     * @param array<array-key, string>   $tags
+     * @param array<array-key, Bookmark> $bookmarks
+     */
+    private function __construct(
+        array $refs,
+        array $types,
+        array $languages,
+        array $forms,
+        array $tags,
+        array $bookmarks
+    ) {
+        $this->refs = $refs;
+        $this->types = $types;
+        $this->languages = $languages;
+        $this->forms = $forms;
+        $this->tags = $tags;
+        $this->bookmarks = $bookmarks;
     }
 
     public static function factory(object $payload): ApiData
     {
-        $data = new self();
-        $data->refs = array_map(static function (object $ref): Ref {
-            return Ref::factory($ref);
-        }, self::assertObjectPropertyIsArray($payload, 'refs'));
-
         $bookmarks = get_object_vars(self::assertObjectPropertyIsObject($payload, 'bookmarks'));
-        $data->bookmarks = array_map(static function (string $name, string $id): Bookmark {
-            return Bookmark::new($name, $id);
-        }, array_keys($bookmarks), $bookmarks);
-
         $types = get_object_vars(self::assertObjectPropertyIsObject($payload, 'types'));
-        $data->types = array_map(static function (string $id, string $name): Type {
-            return Type::new($id, $name);
-        }, array_keys($types), $types);
-
-        $data->languages = array_map(static function (object $lang): Language {
-            return Language::factory($lang);
-        }, self::assertObjectPropertyIsArray($payload, 'languages'));
-
+        /** @var string[] $tags */
         $tags = self::optionalArrayProperty($payload, 'tags') ?: [];
-        $data->setTags(...$tags);
-
         $forms = get_object_vars(self::assertObjectPropertyIsObject($payload, 'forms'));
-        $data->forms = array_map(static function (string $id, object $form): FormSpec {
-            return FormSpec::factory($id, $form);
-        }, array_keys($forms), $forms);
 
-        return $data;
-    }
-
-    private function setTags(string ...$tags): void
-    {
-        $this->tags = $tags;
+        return new self(
+            array_map(static function (object $ref): Ref {
+                return Ref::factory($ref);
+            }, self::assertObjectPropertyIsArray($payload, 'refs')),
+            array_map(static function (string $id, string $name): Type {
+                return Type::new($id, $name);
+            }, array_keys($types), $types),
+            array_map(static function (object $lang): Language {
+                return Language::factory($lang);
+            }, self::assertObjectPropertyIsArray($payload, 'languages')),
+            array_map(static function (string $id, object $form): FormSpec {
+                return FormSpec::factory($id, $form);
+            }, array_keys($forms), $forms),
+            $tags,
+            array_map(static function (string $name, string $id): Bookmark {
+                return Bookmark::new($name, $id);
+            }, array_keys($bookmarks), $bookmarks)
+        );
     }
 
     private function getForm(string $name): ?FormSpec
@@ -122,11 +136,17 @@ final class ApiData
         return $this->tags;
     }
 
+    /**
+     * @deprecated Bookmarks are deprecated - Removal in v2.0.
+     */
     public function isBookmarked(string $id): bool
     {
         return $this->bookmarkFromDocumentId($id) instanceof Bookmark;
     }
 
+    /**
+     * @deprecated Bookmarks are deprecated - Removal in v2.0.
+     */
     public function bookmarkFromDocumentId(string $id): ?Bookmark
     {
         foreach ($this->bookmarks as $bookmark) {
@@ -139,6 +159,8 @@ final class ApiData
     }
 
     /**
+     * @deprecated Bookmarks are deprecated - Removal in v2.0.
+     *
      * @throws UnknownBookmark if $name does not correspond to a known bookmark.
      */
     public function bookmark(string $name): Bookmark
@@ -160,7 +182,11 @@ final class ApiData
         return $this->types;
     }
 
-    /** @return Bookmark[] */
+    /**
+     * @deprecated Bookmarks are deprecated - Removal in v2.0.
+     *
+     * @return Bookmark[]
+     */
     public function bookmarks(): iterable
     {
         return $this->bookmarks;

@@ -16,6 +16,9 @@ use PrismicTest\Framework\TestCase;
 
 use function sprintf;
 
+/**
+ * @psalm-suppress DeprecatedClass, DeprecatedMethod
+ */
 class ApiDataTest extends TestCase
 {
     /** @var ApiData */

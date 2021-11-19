@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Value;
 
+/** @deprecated Bookmarks are deprecated - Removal in v2.0. */
 final class Bookmark
 {
     /** @var string */

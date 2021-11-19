@@ -7,6 +7,9 @@ namespace PrismicTest\Value;
 use Prismic\Value\Bookmark;
 use PrismicTest\Framework\TestCase;
 
+/**
+ * @psalm-suppress DeprecatedClass
+ */
 class BookmarkTest extends TestCase
 {
     public function testNewInstance(): void

@@ -14,6 +14,9 @@ use function assert;
 use function count;
 use function sprintf;
 
+/**
+ * @psalm-suppress DeprecatedMethod
+ */
 class ApiTest extends TestCase
 {
     /**

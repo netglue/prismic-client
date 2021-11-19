@@ -31,6 +31,13 @@ class JsonTest extends TestCase
         Json::decodeObject($payload);
     }
 
+    public function testArrayUnserializeFailure(): void
+    {
+        $this->expectException(JsonError::class);
+        $this->expectExceptionMessage('The given payload cannot be unserialized as an array');
+        Json::decodeArray('false');
+    }
+
     /** @return mixed[] */
     public function invalidJson(): iterable
     {
@@ -47,6 +54,14 @@ class JsonTest extends TestCase
         $this->expectException(JsonError::class);
         $this->expectExceptionMessage('Failed to decode JSON payload');
         Json::decodeObject($payload);
+    }
+
+    /** @dataProvider invalidJson */
+    public function testInvalidJsonInDecodeArray(string $payload): void
+    {
+        $this->expectException(JsonError::class);
+        $this->expectExceptionMessage('Failed to decode JSON payload');
+        Json::decodeArray($payload);
     }
 
     /** @dataProvider invalidJson */
