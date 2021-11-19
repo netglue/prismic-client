@@ -73,6 +73,8 @@ interface ApiClient
 
     /**
      * Locate the document referenced by the given bookmark
+     *
+     * @deprecated Will be removed in v2.0
      */
     public function findByBookmark(string $bookmark): ?Document;
 
