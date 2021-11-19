@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Prismic\Api;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Client\ClientInterface;
-use Symfony\Component\Cache\Adapter\ApcuAdapter;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 use function assert;
 use function file_exists;
@@ -32,7 +32,7 @@ class TestCase extends PHPUnitTestCase
     protected function psrCachePool(): CacheItemPoolInterface
     {
         if (! $this->cache) {
-            $this->cache = new ApcuAdapter('PrismicTests', 0);
+            $this->cache = new ArrayAdapter(0, false);
         }
 
         return $this->cache;

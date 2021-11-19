@@ -1,11 +1,9 @@
 {
     "extensions": [
-        "apcu",
         "pcov"
     ],
     "ini": [
-        "apc.enabled=1",
-        "apc.enable_cli=1"
+        "pcov.enabled=1"
     ],
     "additional_checks": [
         {
