@@ -389,7 +389,7 @@ class HtmlSerializer
         return sprintf(
             '<div%1$s>%2$s</div>',
             $attributes,
-            $embed->html()
+            (string) $embed->html()
         );
     }
 }
