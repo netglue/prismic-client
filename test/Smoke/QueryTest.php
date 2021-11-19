@@ -17,8 +17,6 @@ class QueryTest extends TestCase
         $unordered = $api->query($query);
         if ($unordered->totalResults() <= 5) {
             $this->markTestSkipped('There are not enough documents in this repository to effectively test date based ordering');
-
-            return;
         }
 
         $ordered = $api->query($query->order('document.first_publication_date'));
