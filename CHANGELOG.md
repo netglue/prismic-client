@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 1.1.0 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- [#66](https://github.com/netglue/prismic-client/pull/66) - Removes dev requirement for `ext-apcu` by using an in-memory cache adapter
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 1.0.0 - 2021-10-08
 
 ### Added
