@@ -224,4 +224,24 @@ class HtmlSerializerTest extends TestCase
         $this->expectExceptionMessage('I don’t know how to serialize');
         ($this->serializer)($fragment);
     }
+
+    public function testEmbedCanBeSerialized(): void
+    {
+        $embed = Fragment\Embed::new('something', 'https://example.com', 'goats', '<div>Mushrooms</div>', 100, 100, []);
+        $markup = ($this->serializer)($embed);
+
+        $expect = '<div data-oembed-provider="goats" data-oembed-type="something" '
+            . 'data-oembed-url="https://example.com" data-oembed-width="100"'
+            . ' data-oembed-height="100"><div>Mushrooms</div></div>';
+
+        self::assertEquals($expect, $markup);
+    }
+
+    public function testThatNullMarkupForAnEmbedDoesNotCauseATypeError(): void
+    {
+        $embed = Fragment\Embed::new('something', 'https://example.com', null, null, null, null, []);
+        $expect = '<div data-oembed-type="something" data-oembed-url="https://example.com"></div>';
+
+        self::assertEquals($expect, ($this->serializer)($embed));
+    }
 }

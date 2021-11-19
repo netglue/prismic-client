@@ -39,7 +39,6 @@
         "symfony/polyfill-php80": "^1.17"
     },
     "require-dev": {
-        "ext-apcu": "*",
         "ext-curl": "*",
         "doctrine/coding-standard": "^9.0",
         "laminas/laminas-diactoros": "^2.8",
@@ -61,6 +60,7 @@
         ],
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
+        "psalm": "psalm",
         "test": "phpunit --colors=always --testsuite=\"Unit Tests\"",
         "serve": "php -S 0.0.0.0:8080 -t samples samples/document-explorer.php"
     }

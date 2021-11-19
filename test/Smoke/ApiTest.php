@@ -119,8 +119,6 @@ class ApiTest extends TestCase
 
         if (! count($first->results()) || $first->totalResults() < 2) {
             $this->markTestSkipped('Not enough documents in this repository to test.');
-
-            return;
         }
 
         $second = $api->next($first);

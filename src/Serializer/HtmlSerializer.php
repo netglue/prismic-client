@@ -365,7 +365,6 @@ class HtmlSerializer
                 continue;
             }
 
-            assert(is_array($nodes));
             assert(is_string($nodes[$start]));
             assert(is_string($nodes[$end]));
 
@@ -390,7 +389,7 @@ class HtmlSerializer
         return sprintf(
             '<div%1$s>%2$s</div>',
             $attributes,
-            $embed->html()
+            (string) $embed->html()
         );
     }
 }
