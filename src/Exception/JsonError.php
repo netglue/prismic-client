@@ -49,6 +49,14 @@ final class JsonError extends JsonException implements PrismicError
         ));
     }
 
+    public static function cannotUnserializeToArray(string $payload): self
+    {
+        return new self(sprintf(
+            'The given payload cannot be unserialized as an array: %s',
+            $payload
+        ));
+    }
+
     public function payload(): ?string
     {
         return $this->payload;

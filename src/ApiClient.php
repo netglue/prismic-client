@@ -114,7 +114,7 @@ interface ApiClient
      *
      * @throws InvalidPreviewToken if the token is invalid.
      * @throws InvalidPreviewToken if the token is is not an url.
-     * @throws PreviewTokenExpired if the the token provided has expired.
+     * @throws PreviewTokenExpired if the token provided has expired.
      * @throws RequestFailure if an error occurs communicating with the API.
      */
     public function previewSession(string $token): ?DocumentLink;

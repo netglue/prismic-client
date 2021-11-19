@@ -37,6 +37,9 @@ use function sprintf;
 use function str_replace;
 use function urldecode;
 
+/**
+ * @psalm-suppress DeprecatedMethod
+ */
 final class Api implements ApiClient
 {
     /** @var ClientInterface */
@@ -62,7 +65,7 @@ final class Api implements ApiClient
      *
      * By default, this array is populated with the $_COOKIE super global but can be overridden with setRequestCookies()
      *
-     * @var string[]
+     * @var array<array-key, mixed>
      */
     private $requestCookies;
 
@@ -85,7 +88,7 @@ final class Api implements ApiClient
         ResultSetFactory $resultSetFactory,
         ?CacheItemPoolInterface $cache
     ) {
-        $this->requestCookies = $_COOKIE ?? [];
+        $this->requestCookies = $_COOKIE;
         $this->uriFactory = $uriFactory;
         $this->baseUri = $uriFactory->createUri($apiBaseUri);
         $this->httpClient = $httpClient;
@@ -329,13 +332,13 @@ final class Api implements ApiClient
                 continue;
             }
 
-            $cookiePayload = $this->requestCookies[$cookieName];
+            $cookiePayload = (string) $this->requestCookies[$cookieName];
             // Fuck this. If you have the toolbar installed on your website. Prismic set the preview cookie for
             // *every single request*. This means that if you rely on determining whether a preview is active or not
             // by inspecting cookies in order to disable caching for example, this fucks things. It does not matter
             // whether you are logged into the dashboard or not. The tracking cookie is set regardless.
             try {
-                $decodedPayload = Json::decode($cookiePayload, true);
+                $decodedPayload = Json::decodeArray($cookiePayload);
                 if (array_key_exists('_tracker', $decodedPayload) && count($decodedPayload) === 1) {
                     continue;
                 }

@@ -7,6 +7,7 @@ namespace Prismic;
 use JsonException;
 use Prismic\Exception\JsonError;
 
+use function is_array;
 use function is_object;
 use function json_decode;
 use function json_encode;
@@ -31,6 +32,22 @@ final class Json
         }
 
         return $object;
+    }
+
+    /** @return array<array-key, mixed> */
+    public static function decodeArray(string $jsonString): array
+    {
+        try {
+            $array = json_decode($jsonString, true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $exception) {
+            throw JsonError::unserializeFailed($exception, $jsonString);
+        }
+
+        if (! is_array($array)) {
+            throw JsonError::cannotUnserializeToArray($jsonString);
+        }
+
+        return $array;
     }
 
     /**
