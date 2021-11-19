@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Deprecated
 
-- Nothing.
+- [#67](https://github.com/netglue/prismic-client/pull/67) deprecates `ApiClient::findByBookmark()`, bookmark related methods in `Value\ApiData` and the `Value\Bookmark` class because the feature is being deprecated by Prismic as noted in [issue #60](https://github.com/netglue/prismic-client/issues/60)
 
 ### Removed
 
