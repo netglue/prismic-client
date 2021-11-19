@@ -365,7 +365,6 @@ class HtmlSerializer
                 continue;
             }
 
-            assert(is_array($nodes));
             assert(is_string($nodes[$start]));
             assert(is_string($nodes[$end]));
 
