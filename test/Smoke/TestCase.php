@@ -24,18 +24,18 @@ use function is_string;
 class TestCase extends PHPUnitTestCase
 {
     /** @var CacheItemPoolInterface|null */
-    private $cache;
+    private static $cache;
 
     /** @var ClientInterface|null */
     private $httpClient;
 
     protected function psrCachePool(): CacheItemPoolInterface
     {
-        if (! $this->cache) {
-            $this->cache = new ArrayAdapter(0, false);
+        if (! self::$cache) {
+            self::$cache = new ArrayAdapter(600, false);
         }
 
-        return $this->cache;
+        return self::$cache;
     }
 
     protected function httpClient(): ClientInterface
