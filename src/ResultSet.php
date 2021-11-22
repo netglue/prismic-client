@@ -8,6 +8,9 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
+/**
+ * @template-implements IteratorAggregate<array-key, Document>
+ */
 interface ResultSet extends IteratorAggregate, Countable
 {
     /**
@@ -50,8 +53,7 @@ interface ResultSet extends IteratorAggregate, Countable
     /**
      * Retrieve an iterator for iterating over results
      *
-     * @return Document[]
-     * @psalm-return Traversable<Document>
+     * @return Traversable<array-key, Document>
      */
     public function getIterator(): Traversable;
 

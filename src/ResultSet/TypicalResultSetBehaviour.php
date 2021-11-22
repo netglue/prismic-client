@@ -1,19 +1,24 @@
 <?php
+/** @noinspection PhpUnusedAliasInspection */
 
 declare(strict_types=1);
 
 namespace Prismic\ResultSet;
 
 use ArrayIterator;
+use IteratorAggregate;
 use Prismic\Document;
 use Traversable;
 
 use function count;
 use function reset;
 
+/**
+ * @template T of IteratorAggregate<array-key, Document>
+ */
 trait TypicalResultSetBehaviour
 {
-    /** @var Document[] */
+    /** @var array<array-key, Document> */
     private $results;
 
     /** @var int */
@@ -70,12 +75,7 @@ trait TypicalResultSetBehaviour
         return $this->results;
     }
 
-    /**
-     * @return Document[]
-     * @psalm-return Traversable<Document>
-     *
-     * @psalm-suppress ImplementedReturnTypeMismatch
-     */
+    /** @return Traversable<array-key, Document> */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->results);

@@ -9,6 +9,7 @@ use Closure;
 use Prismic\Document\Fragment;
 use Prismic\Document\FragmentCollection;
 use Stringable;
+use Traversable;
 
 use function array_filter;
 use function array_keys;
@@ -58,10 +59,10 @@ abstract class BaseCollection implements FragmentCollection
     }
 
     /**
-     * @return Fragment[]
+     * @return Traversable<Fragment>
      * @psalm-return ArrayIterator<array-key, Fragment>
      */
-    public function getIterator(): iterable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->fragments);
     }
