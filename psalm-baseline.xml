@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.8.1@f73f2299dbc59a3e6c4d66cff4605176e728ee69">
+<files psalm-version="4.12.0@e42bc4a23f67acba28a23bb09c348e2ff38a1d87">
   <file src="src/Api.php">
     <InvalidCatch occurrences="2"/>
     <InvalidScalarArgument occurrences="1">
@@ -11,22 +11,17 @@
     <MissingClosureReturnType occurrences="1">
       <code>static function ($given, callable $locator, string $message) {</code>
     </MissingClosureReturnType>
-    <MixedArgument occurrences="6">
+    <MixedArgument occurrences="5">
       <code>$data['body'] ?? null</code>
-      <code>$decodedPayload</code>
       <code>$responseBody-&gt;mainDocument</code>
     </MixedArgument>
     <MixedArrayAccess occurrences="1">
       <code>$data['body']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="3">
+    <MixedAssignment occurrences="2">
       <code>$data</code>
-      <code>$decodedPayload</code>
       <code>$params[$parameter]</code>
     </MixedAssignment>
-    <MixedPropertyTypeCoercion occurrences="1">
-      <code>$_COOKIE ?? []</code>
-    </MixedPropertyTypeCoercion>
     <PossiblyNullArgument occurrences="3">
       <code>$data['body'] ?? null</code>
       <code>$resultSet-&gt;nextPage()</code>
@@ -35,12 +30,6 @@
     <PossiblyNullReference occurrences="1">
       <code>save</code>
     </PossiblyNullReference>
-    <RedundantCondition occurrences="1">
-      <code>$_COOKIE</code>
-    </RedundantCondition>
-    <TypeDoesNotContainNull occurrences="1">
-      <code>[]</code>
-    </TypeDoesNotContainNull>
   </file>
   <file src="src/Document/Fragment/BaseCollection.php">
     <UnsafeInstantiation occurrences="2">
@@ -78,11 +67,6 @@
     <MixedArgument occurrences="1">
       <code>$fragment</code>
     </MixedArgument>
-  </file>
-  <file src="src/Exception/PreviewTokenExpired.php">
-    <MixedAssignment occurrences="1">
-      <code>$error</code>
-    </MixedAssignment>
   </file>
   <file src="src/Predicate.php">
     <MixedArgument occurrences="3">
@@ -140,22 +124,13 @@
     <PossiblyFalsePropertyAssignmentValue occurrences="1"/>
   </file>
   <file src="src/Serializer/HtmlSerializer.php">
-    <MissingClosureParamType occurrences="1">
-      <code>$character</code>
-    </MissingClosureParamType>
-    <MixedArgument occurrences="4">
-      <code>$character</code>
+    <MixedArgument occurrences="1">
       <code>$item</code>
-      <code>$nodes[$end]</code>
-      <code>$nodes[$start]</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion occurrences="1"/>
     <MixedAssignment occurrences="1">
       <code>$item</code>
     </MixedAssignment>
-    <PossiblyNullArgument occurrences="1">
-      <code>$embed-&gt;html()</code>
-    </PossiblyNullArgument>
     <RedundantCondition occurrences="10">
       <code>assert($fragment instanceof BooleanFragment)</code>
       <code>assert($fragment instanceof Color)</code>
@@ -168,19 +143,6 @@
       <code>assert($fragment instanceof StringFragment)</code>
       <code>assert($fragment instanceof TextElement)</code>
     </RedundantCondition>
-  </file>
-  <file src="src/Value/ApiData.php">
-    <MixedArgument occurrences="1">
-      <code>$tags</code>
-    </MixedArgument>
-    <PropertyNotSetInConstructor occurrences="6">
-      <code>$bookmarks</code>
-      <code>$forms</code>
-      <code>$languages</code>
-      <code>$refs</code>
-      <code>$tags</code>
-      <code>$types</code>
-    </PropertyNotSetInConstructor>
   </file>
   <file src="src/Value/DataAssertionBehaviour.php">
     <MixedInferredReturnType occurrences="5">
@@ -284,12 +246,7 @@
     </MixedInferredReturnType>
   </file>
   <file src="test/Unit/PredicateTest.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>true</code>
-    </InvalidScalarArgument>
-    <MixedArgument occurrences="11">
-      <code>$high</code>
-      <code>$low</code>
+    <MixedArgument occurrences="1">
       <code>$value</code>
       <code>$value</code>
       <code>$value</code>
@@ -300,18 +257,6 @@
       <code>$value</code>
       <code>$value</code>
     </MixedArgument>
-    <MixedInferredReturnType occurrences="6">
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-    </MixedInferredReturnType>
-    <PossiblyFalseArgument occurrences="1">
-      <code>false</code>
-    </PossiblyFalseArgument>
     <TypeDoesNotContainType occurrences="1">
       <code>assert($rehydrated instanceof Predicate)</code>
     </TypeDoesNotContainType>
