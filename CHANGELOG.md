@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#68](https://github.com/netglue/prismic-client/pull/68) adds the `Prismic\RetryingClient`. This proxy client decorates an existing client and retries queries that fail against a preview ref or a release ref against the master ref and stores the previous exception for inspection. The main use-case for this feature is so that you can more easily catch `PreviewTokenExpired` exceptions when it is not possible to catch them in an HTTP request/response cycle. For example, when you are querying the repo in order to set up routes before a request has been dispatched. An example middleware might inspect the client for its `lastRequestFailure()` and destroy the preview request cookie when the exception is of the type `PreviewTokenExpired`.
 
 ### Changed
 
