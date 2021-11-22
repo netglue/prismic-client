@@ -117,6 +117,7 @@ class RetryingClientTest extends TestCase
             });
 
         self::assertSame($results, $this->client->query($query));
+        self::assertSame($exception, $this->client->lastRequestFailure());
     }
 
     public function testThatHostMethodProxiesToWrappedClient(): void
