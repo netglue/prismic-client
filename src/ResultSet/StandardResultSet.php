@@ -8,6 +8,7 @@ use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use Prismic\Document;
 use Prismic\Json;
 use Prismic\ResultSet;
 use Prismic\Value\DataAssertionBehaviour;
@@ -33,7 +34,7 @@ final class StandardResultSet implements ResultSet
     /** @var int|null */
     private $maxAge;
 
-    /** @param DocumentData[] $results */
+    /** @param array<array-key, Document> $results */
     private function __construct(
         int $page,
         int $perPage,
@@ -41,7 +42,7 @@ final class StandardResultSet implements ResultSet
         int $pageCount,
         ?string $nextPage,
         ?string $prevPage,
-        iterable $results
+        array $results
     ) {
         $this->page = $page;
         $this->perPage = $perPage;
@@ -69,7 +70,7 @@ final class StandardResultSet implements ResultSet
 
     public static function factory(object $data): self
     {
-        $results = array_map(static function (object $document): DocumentData {
+        $results = array_map(static function (object $document): Document {
             return DocumentData::factory($document);
         }, self::assertObjectPropertyIsArray($data, 'results'));
 

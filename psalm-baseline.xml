@@ -118,9 +118,6 @@
     </UnsafeInstantiation>
   </file>
   <file src="src/ResultSet/StandardResultSet.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>$results</code>
-    </ArgumentTypeCoercion>
     <PossiblyFalsePropertyAssignmentValue occurrences="1"/>
   </file>
   <file src="src/Serializer/HtmlSerializer.php">

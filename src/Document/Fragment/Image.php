@@ -10,6 +10,7 @@ use IteratorAggregate;
 use Prismic\Document\Fragment;
 use Prismic\Exception\ImageViewNotFound;
 use Prismic\Link;
+use Traversable;
 
 use function array_keys;
 use function count;
@@ -132,10 +133,10 @@ final class Image implements Fragment, IteratorAggregate, Countable
     }
 
     /**
-     * @return self[]
+     * @return Traversable<self>
      * @psalm-return ArrayIterator<string, self>
      */
-    public function getIterator(): iterable
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->views);
     }
