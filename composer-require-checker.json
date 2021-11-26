@@ -12,8 +12,5 @@
         "Reflection",
         "SPL",
         "standard"
-    ],
-    "scan-files" : [
-        "samples/*.php"
     ]
 }
