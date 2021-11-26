@@ -42,6 +42,7 @@
         "ext-curl": "*",
         "doctrine/coding-standard": "^9.0",
         "laminas/laminas-diactoros": "^2.8",
+        "maglnet/composer-require-checker": "^2.1",
         "php-http/cache-plugin": "^1.7",
         "php-http/curl-client": "^2.2",
         "php-http/mock-client": "^1.5",
