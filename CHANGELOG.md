@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 1.1.0-RC2 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- [#84](https://github.com/netglue/prismic-client/pull/84) Improves type coverage with Psalm
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 1.1.0-RC1 - 2021-11-22
 
 ### Added
