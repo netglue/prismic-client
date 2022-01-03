@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="4.17.0@6f4707aa41c9174353a6434bba3fc8840f981d9c">
   <file src="src/Api.php">
-    <MissingClosureParamType occurrences="1">
-      <code>$given</code>
-    </MissingClosureParamType>
-    <MissingClosureReturnType occurrences="1">
-      <code>static function ($given, callable $locator, string $message) {</code>
-    </MissingClosureReturnType>
-    <MixedArgument occurrences="3"/>
+    <MixedInferredReturnType occurrences="1">
+      <code>object</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$locator()</code>
+    </MixedReturnStatement>
   </file>
 </files>

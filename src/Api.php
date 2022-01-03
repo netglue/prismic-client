@@ -121,7 +121,10 @@ final class Api implements ApiClient
         ?ResultSetFactory $resultSetFactory = null,
         ?CacheItemPoolInterface $cache = null
     ): self {
-        $factory = static function ($given, callable $locator, string $message) {
+        /**
+         * @return ClientInterface|RequestFactoryInterface|UriFactoryInterface
+         */
+        $factory = static function (?object $given, callable $locator, string $message): object {
             if ($given) {
                 return $given;
             }
@@ -138,6 +141,7 @@ final class Api implements ApiClient
             }
         };
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         return new self(
             $apiBaseUri,
             $factory($httpClient, static function (): ClientInterface {
