@@ -25,6 +25,7 @@ final class Number implements Fragment, Stringable
     /** @param int|float $number */
     public static function new($number): self
     {
+        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_int($number) && ! is_float($number)) {
             throw InvalidArgument::numberExpected($number);
         }

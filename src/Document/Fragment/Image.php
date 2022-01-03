@@ -15,6 +15,9 @@ use Traversable;
 use function array_keys;
 use function count;
 
+/**
+ * @template-implements IteratorAggregate<string, Image>
+ */
 final class Image implements Fragment, IteratorAggregate, Countable
 {
     /** @var string */
@@ -133,8 +136,7 @@ final class Image implements Fragment, IteratorAggregate, Countable
     }
 
     /**
-     * @return Traversable<self>
-     * @psalm-return ArrayIterator<string, self>
+     * @return Traversable<string, self>
      */
     public function getIterator(): Traversable
     {

@@ -19,6 +19,7 @@ use function array_map;
 use function array_merge;
 use function count;
 use function current;
+use function is_string;
 use function max;
 use function preg_match;
 use function sprintf;
@@ -57,9 +58,10 @@ final class StandardResultSet implements ResultSet
     {
         $instance = self::factory(Json::decodeObject((string) $response->getBody()));
         $dateHeader = current($response->getHeader('Date'));
-        $instance->cacheDate = $dateHeader
+        $date = is_string($dateHeader)
             ? DateTimeImmutable::createFromFormat(DateTimeInterface::RFC7231, $dateHeader, new DateTimeZone('UTC'))
             : null;
+        $instance->cacheDate = $date instanceof DateTimeImmutable ? $date : null;
         $cacheControl = current($response->getHeader('Cache-Control'));
         if (preg_match('/^max-age\s*=\s*(\d+)$/', (string) $cacheControl, $groups) === 1) {
             $instance->maxAge = (int) $groups[1];

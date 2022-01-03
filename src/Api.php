@@ -29,8 +29,10 @@ use Psr\Http\Message\UriInterface;
 use Throwable;
 
 use function array_key_exists;
+use function assert;
 use function count;
 use function http_build_query;
+use function is_string;
 use function parse_str;
 use function sha1;
 use function sprintf;
@@ -39,6 +41,13 @@ use function urldecode;
 
 /**
  * @psalm-suppress DeprecatedMethod
+ * @psalm-type CacheItemShape = array{
+ *      uri: non-empty-string,
+ *      method: non-empty-string,
+ *      body: non-empty-string,
+ *      status: int,
+ *      headers: array<string, string>
+ * }
  */
 final class Api implements ApiClient
 {
@@ -112,22 +121,27 @@ final class Api implements ApiClient
         ?ResultSetFactory $resultSetFactory = null,
         ?CacheItemPoolInterface $cache = null
     ): self {
-        $factory = static function ($given, callable $locator, string $message) {
+        /**
+         * @return ClientInterface|RequestFactoryInterface|UriFactoryInterface
+         */
+        $factory = static function (?object $given, callable $locator, string $message): object {
             if ($given) {
                 return $given;
             }
 
+            /** @psalm-suppress InvalidCatch */
             try {
                 return $locator();
             } catch (DiscoveryError $error) {
                 throw new RuntimeError(
                     $message,
-                    $error->getCode(),
+                    (int) $error->getCode(),
                     $error
                 );
             }
         };
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         return new self(
             $apiBaseUri,
             $factory($httpClient, static function (): ClientInterface {
@@ -173,6 +187,12 @@ final class Api implements ApiClient
 
         // Keys must be hashed to prevent cache exceptions due to invalid characters
         $cacheKey = sha1($method . ' ' . $uri);
+        /**
+         * psr-cache v1 exceptions do not implement throwable. When 7.3 and 7.4 are dropped, cache can be upgraded
+         * and the suppression can be dropped
+         *
+         * @psalm-suppress InvalidCatch
+         */
         try {
             $item = $this->cache->getItem($cacheKey);
         } catch (InvalidPsrCacheKey $e) {
@@ -200,9 +220,10 @@ final class Api implements ApiClient
 
     private function retrieveCachedResponseBody(CacheItemInterface $item): object
     {
+        /** @psalm-var CacheItemShape $data */
         $data = $item->get();
 
-        return Json::decodeObject($data['body'] ?? null);
+        return Json::decodeObject($data['body'] ?? '{}');
     }
 
     private function cacheResponse(
@@ -211,6 +232,7 @@ final class Api implements ApiClient
         ResponseInterface $response,
         CacheItemInterface $item
     ): void {
+        assert($this->cache !== null);
         $data = [
             'uri' => (string) $uri,
             'method' => $method,
@@ -302,7 +324,7 @@ final class Api implements ApiClient
         return $this->findById($this->data()->bookmark($bookmark)->documentId());
     }
 
-    /** @param mixed $value */
+    /** @param scalar $value */
     private function uriWithQueryValue(UriInterface $uri, string $parameter, $value): UriInterface
     {
         $params = [];
@@ -401,8 +423,10 @@ final class Api implements ApiClient
     {
         $uri = $this->validatePreviewToken($token);
         $responseBody = $this->decodeResponse($this->sendRequest($uri));
-        if (isset($responseBody->mainDocument)) {
-            $document = $this->findById($responseBody->mainDocument);
+        /** @psalm-var string|null $mainDocument */
+        $mainDocument = $responseBody->mainDocument ?? null;
+        if (is_string($mainDocument)) {
+            $document = $this->findById($mainDocument);
             if ($document) {
                 return $document->asLink();
             }
@@ -413,26 +437,28 @@ final class Api implements ApiClient
 
     public function next(ResultSet $resultSet): ?ResultSet
     {
-        if (! $resultSet->nextPage()) {
+        $nextPage = $resultSet->nextPage();
+        if (! $nextPage) {
             return null;
         }
 
         return $this->resultSetFactory->withJsonObject(
             $this->jsonResponse(
-                $this->uriFactory->createUri($resultSet->nextPage())
+                $this->uriFactory->createUri($nextPage)
             )
         );
     }
 
     public function previous(ResultSet $resultSet): ?ResultSet
     {
-        if (! $resultSet->previousPage()) {
+        $previousPage = $resultSet->previousPage();
+        if (! $previousPage) {
             return null;
         }
 
         return $this->resultSetFactory->withJsonObject(
             $this->jsonResponse(
-                $this->uriFactory->createUri($resultSet->previousPage())
+                $this->uriFactory->createUri($previousPage)
             )
         );
     }

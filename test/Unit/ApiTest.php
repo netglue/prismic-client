@@ -99,10 +99,10 @@ class ApiTest extends TestCase
 
     public function testThtARedirectIsExceptional(): void
     {
-        $this->httpClient->setDefaultResponse(new RedirectResponse('http://other.example.com'));
-        $api = Api::get('http://example.com', null, $this->httpClient);
+        $this->httpClient->setDefaultResponse(new RedirectResponse('https://other.example.com'));
+        $api = Api::get('https://example.com', null, $this->httpClient);
         $this->expectException(RequestFailure::class);
-        $this->expectExceptionMessage('The request to the URL "http://example.com" resulted in a 302 redirect');
+        $this->expectExceptionMessage('The request to the URL "https://example.com" resulted in a 302 redirect');
         $this->expectExceptionCode(302);
         $api->data();
     }
@@ -110,10 +110,10 @@ class ApiTest extends TestCase
     public function testThatA400ClassErrorIsExceptional(): void
     {
         $this->httpClient->setDefaultResponse(new TextResponse('Nice Body', 400));
-        $api = Api::get('http://example.com', null, $this->httpClient);
+        $api = Api::get('https://example.com', null, $this->httpClient);
         $this->expectException(RequestFailure::class);
         $this->expectExceptionMessage(
-            'Error 400. The request to the URL "http://example.com" was rejected '
+            'Error 400. The request to the URL "https://example.com" was rejected '
             . 'by the api. The error response body was "Nice Body"'
         );
         $this->expectExceptionCode(400);
@@ -132,7 +132,7 @@ class ApiTest extends TestCase
     public function testThatA401WillCauseAnAuthenticationException(int $code): void
     {
         $this->httpClient->setDefaultResponse(new TextResponse('Bad Auth', $code));
-        $api = Api::get('http://example.com', null, $this->httpClient);
+        $api = Api::get('https://example.com', null, $this->httpClient);
         $this->expectException(AuthenticationError::class);
         $this->expectExceptionMessage('Authentication failed for the api host "example.com"');
         $this->expectExceptionCode($code);
@@ -142,10 +142,10 @@ class ApiTest extends TestCase
     public function testThatAServerErrorWillCauseAnException(): void
     {
         $this->httpClient->setDefaultResponse(new TextResponse('Whoops', 500));
-        $api = Api::get('http://example.com', null, $this->httpClient);
+        $api = Api::get('https://example.com', null, $this->httpClient);
         $this->expectException(RequestFailure::class);
         $this->expectExceptionMessage(
-            'The request to the URL "http://example.com" resulted in a server error. '
+            'The request to the URL "https://example.com" resulted in a server error. '
             . 'The error response body was "Whoops"'
         );
         $this->expectExceptionCode(500);
@@ -163,6 +163,7 @@ class ApiTest extends TestCase
         $this->httpClient->setDefaultResponse($this->response);
         $api = Api::get('https://example.com', null, $this->httpClient);
         $data = $api->data();
+        /** @psalm-suppress DeprecatedMethod */
         self::assertContainsEquals('goats', $data->tags());
     }
 
@@ -180,6 +181,7 @@ class ApiTest extends TestCase
         $api = Api::get('https://example.com', null, $this->httpClient);
         $api->data();
         $request = $this->httpClient->getLastRequest();
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertStringNotContainsString('access_token', $request->getUri()->getQuery());
     }
 
@@ -189,6 +191,7 @@ class ApiTest extends TestCase
         $api = Api::get('https://example.com', 'foo', $this->httpClient);
         $api->data();
         $request = $this->httpClient->getLastRequest();
+        self::assertInstanceOf(RequestInterface::class, $request);
         self::assertStringContainsString('access_token=foo', $request->getUri()->getQuery());
     }
 
@@ -206,8 +209,8 @@ class ApiTest extends TestCase
         self::assertFalse($api->inPreview());
     }
 
-    /** @return mixed[] */
-    public function cookiePayloads(): iterable
+    /** @return array<string, array{0: string[], 1: string}> */
+    public function cookiePayloads(): array
     {
         return [
             'io.prismic.preview' => [
@@ -344,8 +347,8 @@ class ApiTest extends TestCase
         $api->previewSession('whatsup:// this is not a url');
     }
 
-    /** @return mixed[] */
-    public function previewHostVariations(): iterable
+    /** @return array<string, array{0: string, 1: string}> */
+    public function previewHostVariations(): array
     {
         return [
             'CDN Configured, Not in Preview' => [

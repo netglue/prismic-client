@@ -9,6 +9,10 @@ use Countable;
 use IteratorAggregate;
 use Stringable;
 
+/**
+ * @template-covariant T of Fragment
+ * @template-extends IteratorAggregate<array-key, T>
+ */
 interface FragmentCollection extends Fragment, IteratorAggregate, Countable, Stringable
 {
     /**
@@ -36,6 +40,8 @@ interface FragmentCollection extends Fragment, IteratorAggregate, Countable, Str
      * Return the first fragment found in the collection
      *
      * If the collection is empty, this method will return an @link EmptyFragment
+     *
+     * @psalm-return T
      */
     public function first(): Fragment;
 
@@ -43,6 +49,8 @@ interface FragmentCollection extends Fragment, IteratorAggregate, Countable, Str
      * Return the last fragment found in the collection
      *
      * If the collection is empty, this method will return an @link EmptyFragment
+     *
+     * @psalm-return T
      */
     public function last(): Fragment;
 }

@@ -76,11 +76,12 @@ class TextElementTest extends TestCase
     public function testThatItIsATypeErrorForSpanToContainNonSpan(): void
     {
         $this->expectException(TypeError::class);
+        /** @psalm-suppress InvalidArgument */
         TextElement::new('foo', null, ['dingdong'], null);
     }
 
-    /** @return mixed[] */
-    public function headingTypeProvider(): iterable
+    /** @return array<string, array{0: string}> */
+    public function headingTypeProvider(): array
     {
         return [
             TextElement::TYPE_HEADING1 => [TextElement::TYPE_HEADING1],
@@ -117,8 +118,8 @@ class TextElementTest extends TestCase
         self::assertTrue($p->isParagraph());
     }
 
-    /** @return mixed[] */
-    public function typeCheckProvider(): iterable
+    /** @return array<string, array{0: string, 1: bool, 2: bool, 3: bool, 4: bool, 5: bool, 6: bool}> */
+    public function typeCheckProvider(): array
     {
         return [
             TextElement::TYPE_HEADING1            => [TextElement::TYPE_HEADING1,            false, true,  false, false, false, false],

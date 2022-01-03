@@ -125,6 +125,7 @@ class ApiTest extends TestCase
         }
 
         $second = $api->next($first);
+        self::assertNotNull($second);
         $this->assertNotNull($second->previousPage());
         $firstAgain = $api->previous($second);
         $this->assertNotNull($firstAgain);

@@ -103,16 +103,12 @@ class HtmlSerializer
     {
         switch (get_class($fragment)) {
             case BooleanFragment::class:
-                assert($fragment instanceof BooleanFragment);
-
                 return sprintf(
                     '<kbd class="boolean">%s</kbd>',
                     $fragment() ? 'true' : 'false'
                 );
 
             case Number::class:
-                assert($fragment instanceof Number);
-
                 return sprintf(
                     '<kbd class="number">%d</kbd>',
                     (string) $fragment
@@ -122,21 +118,15 @@ class HtmlSerializer
                 return '';
 
             case DateFragment::class:
-                assert($fragment instanceof DateFragment);
-
                 return $this->date($fragment);
 
             case StringFragment::class:
-                assert($fragment instanceof StringFragment);
-
                 return sprintf(
                     '<kbd>%s</kbd>',
                     $this->escaper->escapeHtml((string) $fragment)
                 );
 
             case GeoPoint::class:
-                assert($fragment instanceof GeoPoint);
-
                 return sprintf(
                     '<span class="geopoint" data-latitude="%1$s" data-longitude="%2$s">%1$s, %2$s</span>',
                     $fragment->latitude(),
@@ -144,8 +134,6 @@ class HtmlSerializer
                 );
 
             case Color::class:
-                assert($fragment instanceof Color);
-
                 return sprintf(
                     '<kbd class="color" style="background-color: %1$s; color: %2$s">%1$s</kbd>',
                     (string) $fragment,
@@ -153,31 +141,21 @@ class HtmlSerializer
                 );
 
             case Image::class:
-                assert($fragment instanceof Image);
-
                 return $this->image($fragment);
 
             case WebLink::class:
             case DocumentLink::class:
             case ImageLink::class:
             case MediaLink::class:
-                assert($fragment instanceof Link);
-
                 return $this->link($fragment);
 
             case Slice::class:
-                assert($fragment instanceof Slice);
-
                 return $this->slice($fragment);
 
             case TextElement::class:
-                assert($fragment instanceof TextElement);
-
                 return $this->textElement($fragment);
 
             case Embed::class:
-                assert($fragment instanceof Embed);
-
                 return $this->embed($fragment);
         }
 
@@ -216,7 +194,7 @@ class HtmlSerializer
         );
     }
 
-    /** @param mixed[] $attributes */
+    /** @param array<string, scalar|null> $attributes */
     private function htmlAttributes(array $attributes): string
     {
         $atrs = implode(' ', array_map(function (string $atr, $value): string {

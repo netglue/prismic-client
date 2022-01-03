@@ -59,7 +59,7 @@ final class Embed implements Fragment
         return new self($type, $url, $provider, $html, $width, $height, $attributes);
     }
 
-    /** @param iterable<string, int|string|float|bool|null> $attributes */
+    /** @param iterable<string, scalar|null> $attributes */
     private function setAttributes(iterable $attributes): void
     {
         foreach ($attributes as $name => $value) {
@@ -68,12 +68,13 @@ final class Embed implements Fragment
     }
 
     /**
-     * @param string|int|float|bool|null $value
+     * @param scalar|null $value
      */
     private function setAttribute(string $name, $value): void
     {
         /**
          * @psalm-suppress RedundantConditionGivenDocblockType
+         * @psalm-suppress DocblockTypeContradiction
          */
         if ($value !== null && ! is_scalar($value)) {
             throw InvalidArgument::scalarExpected($value);

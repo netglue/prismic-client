@@ -21,7 +21,6 @@ use function is_float;
 use function is_int;
 use function is_object;
 use function is_scalar;
-use function is_string;
 use function preg_match;
 use function property_exists;
 use function strpos;
@@ -68,8 +67,6 @@ final class Factory
         if (is_int($data) || is_float($data)) {
             return Number::new($data);
         }
-
-        assert(is_string($data));
 
         if (strpos($data, '#') === 0) {
             return Color::new($data);
@@ -132,6 +129,7 @@ final class Factory
 
     private static function isHash(object $object): bool
     {
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
         return count(array_filter(array_keys(get_object_vars($object)), '\is_string')) > 0;
     }
 
@@ -297,6 +295,7 @@ final class Factory
     {
         $fragments = [];
         $richText = false;
+        /** @psalm-suppress MixedAssignment */
         foreach ($data as $key => $value) {
             $fragment = self::factory($value);
             if ($fragment instanceof TextElement) {

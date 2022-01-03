@@ -13,8 +13,8 @@ use const STDOUT;
 
 class JsonTest extends TestCase
 {
-    /** @return mixed[] */
-    public function notObjects(): iterable
+    /** @return array<string, array{0: string}> */
+    public function notObjects(): array
     {
         return [
             'Array' => ['[{"foo":"bar"},{"foo":"bar"}]'],
@@ -38,8 +38,8 @@ class JsonTest extends TestCase
         Json::decodeArray('false');
     }
 
-    /** @return mixed[] */
-    public function invalidJson(): iterable
+    /** @return array<string, array{0:string}> */
+    public function invalidJson(): array
     {
         return [
             'Trailing Comma' => ['[{"foo":"bar"},]'],

@@ -31,21 +31,23 @@ trait DataAssertionBehaviour
     private static function assertObjectPropertyIsString(object $object, string $property): string
     {
         self::assertPropertyExists($object, $property);
-        if (! is_string($object->{$property})) {
+        $value = $object->{$property};
+        if (! is_string($value)) {
             throw UnexpectedValue::withInvalidPropertyType($object, $property, 'string');
         }
 
-        return $object->{$property};
+        return $value;
     }
 
     private static function assertObjectPropertyIsInteger(object $object, string $property): int
     {
         self::assertPropertyExists($object, $property);
-        if (! is_int($object->{$property})) {
+        $value = $object->{$property};
+        if (! is_int($value)) {
             throw UnexpectedValue::withInvalidPropertyType($object, $property, 'integer');
         }
 
-        return $object->{$property};
+        return $value;
     }
 
     private static function assertObjectPropertyIsIntegerish(object $object, string $property): int
@@ -71,22 +73,24 @@ trait DataAssertionBehaviour
     private static function assertObjectPropertyIsBoolean(object $object, string $property): bool
     {
         self::assertPropertyExists($object, $property);
-        if (! is_bool($object->{$property})) {
+        $value = $object->{$property};
+        if (! is_bool($value)) {
             throw UnexpectedValue::withInvalidPropertyType($object, $property, 'boolean');
         }
 
-        return $object->{$property};
+        return $value;
     }
 
     /** @return mixed[] */
     private static function assertObjectPropertyIsArray(object $object, string $property): array
     {
         self::assertPropertyExists($object, $property);
-        if (! is_array($object->{$property})) {
+        $value = $object->{$property};
+        if (! is_array($value)) {
             throw UnexpectedValue::withInvalidPropertyType($object, $property, 'array');
         }
 
-        return $object->{$property};
+        return $value;
     }
 
     /** @param mixed $mixed */
@@ -110,11 +114,12 @@ trait DataAssertionBehaviour
     private static function assertObjectPropertyIsObject(object $object, string $property): object
     {
         self::assertPropertyExists($object, $property);
-        if (! is_object($object->{$property})) {
+        $value = $object->{$property};
+        if (! is_object($value)) {
             throw UnexpectedValue::withInvalidPropertyType($object, $property, 'object');
         }
 
-        return $object->{$property};
+        return $value;
     }
 
     private static function optionalStringProperty(object $object, string $property): ?string

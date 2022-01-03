@@ -205,9 +205,10 @@ class HtmlSerializerTest extends TestCase
     public function testBlockElementsMarkup(int $fragmentIndex, string $expectedMarkup): void
     {
         $richText = $this->richTextBlockElementsFixture();
-        $this->assertEquals(
+        $fragment = $richText->get($fragmentIndex);
+        self::assertEquals(
             $expectedMarkup,
-            ($this->serializer)($richText->get($fragmentIndex))
+            ($this->serializer)($fragment)
         );
     }
 

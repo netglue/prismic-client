@@ -9,9 +9,15 @@ use DateTimeZone;
 use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
 
+/**
+ * @psalm-immutable
+ */
 final class DateFragment extends DateTimeImmutable implements Fragment
 {
-    /** @var bool */
+    /**
+     * @var bool
+     * @psalm-readonly-allow-private-mutation
+     */
     private $isDay = false;
 
     public function isDay(): bool

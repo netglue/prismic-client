@@ -14,9 +14,12 @@ use function serialize;
 use function unserialize;
 use function var_export;
 
+/**
+ * @psalm-import-type ArgType from Predicate
+ */
 class PredicateTest extends TestCase
 {
-    /** @return array<array-key, array{0: string, 1: string|bool|string[], 2:string}> */
+    /** @return array<array-key, array{0: string, 1: scalar|list<scalar>, 2:string}> */
     public function atProvider(): array
     {
         return [
@@ -28,7 +31,7 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param string|string[]|bool $value
+     * @param scalar|list<scalar> $value
      *
      * @dataProvider atProvider
      */
@@ -38,7 +41,7 @@ class PredicateTest extends TestCase
         $this->assertEquals($expect, $predicate->q());
     }
 
-    /** @return array<array-key, array{0:string, 1:int|string|string[]|bool, 2:string}> */
+    /** @return array<array-key, array{0:string, 1:scalar|list<scalar>, 2:string}> */
     public function notProvider(): array
     {
         return [
@@ -51,7 +54,7 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param int|string|string[]|bool $value
+     * @param scalar|list<scalar> $value
      *
      * @dataProvider notProvider
      */
@@ -61,7 +64,7 @@ class PredicateTest extends TestCase
         $this->assertEquals($expect, $predicate->q());
     }
 
-    /** @return array<array-key, array{0: string, 1: string[], 2:string}> */
+    /** @return array<array-key, array{0: string, 1: list<string>, 2:string}> */
     public function anyProvider(): array
     {
         return [
@@ -72,7 +75,7 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param string[] $value
+     * @param list<string> $value
      *
      * @dataProvider anyProvider
      */
@@ -82,7 +85,7 @@ class PredicateTest extends TestCase
         $this->assertEquals($expect, $predicate->q());
     }
 
-    /** @return array<array-key, array{0: string, 1: string[], 2:string}> */
+    /** @return array<array-key, array{0: string, 1: list<string>, 2:string}> */
     public function inProvider(): array
     {
         return [
@@ -92,7 +95,7 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param string[] $value
+     * @param list<string> $value
      *
      * @dataProvider inProvider
      */
@@ -327,7 +330,7 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param mixed $value
+     * @param scalar|list<scalar> $value
      *
      * @dataProvider atProvider
      */
@@ -338,21 +341,22 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param string|string[]|bool $value
+     * @param scalar|list<scalar> $value
      *
      * @dataProvider atProvider
      */
     public function testSetState(string $fragment, $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
-        $rehydrated = null;
-        eval('$rehydrated = ' . var_export($predicate, true) . ';');
+        $phpCode = '$rehydrated = ' . var_export($predicate, true) . ';';
+        eval($phpCode);
+        assert(isset($rehydrated));
         assert($rehydrated instanceof Predicate);
         $this->assertSame($expect, $rehydrated->q());
     }
 
     /**
-     * @param string|string[]|bool $value
+     * @param scalar|list<scalar> $value
      *
      * @dataProvider atProvider
      */

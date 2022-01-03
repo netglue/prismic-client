@@ -4,14 +4,20 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Prismic\Document\Fragment;
+use Prismic\Document\FragmentCollection;
 use Traversable;
 
 use function assert;
 use function iterator_to_array;
 
-final class RichText extends BaseCollection
+/**
+ * @template T of TextElement|ListItems
+ * @template-implements FragmentCollection<T>
+ */
+final class RichText extends BaseCollection implements FragmentCollection
 {
-    /** @inheritDoc */
+    /** @param iterable<array-key, Fragment> $fragments */
     protected function __construct(iterable $fragments)
     {
         parent::__construct([]);

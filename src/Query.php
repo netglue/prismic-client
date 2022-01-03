@@ -11,17 +11,24 @@ use function array_filter;
 use function array_map;
 use function array_merge;
 use function implode;
+use function is_array;
 use function is_scalar;
 use function sprintf;
 use function strpos;
 use function urlencode;
 
+/**
+ * @psalm-type QueryParams = array<string, string|int|list<string>|null>
+ */
 class Query
 {
     /** @var FormSpec */
     private $form;
 
-    /** @var string[][]|int[][] */
+    /**
+     * @var array<string, mixed>
+     * @psalm-var QueryParams
+     */
     private $parameters;
 
     public function __construct(FormSpec $form)
@@ -39,7 +46,7 @@ class Query
         return $uri . $this->buildQuery();
     }
 
-    /** @return mixed[] */
+    /** @psalm-return QueryParams */
     private function mergeWithDefaults(): array
     {
         $parameters = $this->defaultParameters();
@@ -49,9 +56,11 @@ class Query
                 continue;
             }
 
-            $parameters[$name] = isset($parameters[$name])
-                ? array_merge($parameters[$name], $value)
+            $merged = isset($parameters[$name]) && is_array($parameters[$name])
+                ? array_merge($parameters[$name], (array) $value)
                 : $value;
+
+            $parameters[$name] = $merged;
         }
 
         return $parameters;
@@ -59,8 +68,10 @@ class Query
 
     private function buildQuery(): string
     {
+        /** @psalm-suppress MissingClosureParamType */
         $flatten = static function (string $name, $params): string {
             $query = [];
+            /** @psalm-var scalar[] $params */
             $params = is_scalar($params) ? [$params] : $params;
             foreach ($params as $param) {
                 $query[] = sprintf('%s=%s', $name, urlencode((string) $param));
@@ -83,30 +94,30 @@ class Query
         $field = $this->form->field($key);
         $field->validateValue($value);
         $parameters = $this->parameters;
-        if (! isset($parameters[$key])) {
-            $parameters[$key] = $field->isMultiple() ? [] : null;
-        }
 
         if ($field->isMultiple()) {
+            $parameters[$key] = isset($parameters[$key]) && is_array($parameters[$key]) ? $parameters[$key] : [];
             $parameters[$key][] = $value;
         } else {
             $parameters[$key] = $value;
         }
 
+        /** @psalm-var QueryParams $parameters */
+
         return $this->withParameters($parameters);
     }
 
-    /** @param int[]|string[] $parameters */
+    /** @psalm-param QueryParams $parameters */
     private function withParameters(array $parameters): self
     {
-        $clone = new static($this->form);
+        $clone = new self($this->form);
         $clone->parameters = $parameters;
 
         return $clone;
     }
 
-    /** @return string[]|int[] */
-    private function defaultParameters(): iterable
+    /** @psalm-return QueryParams */
+    private function defaultParameters(): array
     {
         $parameters = [];
         foreach ($this->form as $field) {
