@@ -33,23 +33,24 @@ class FactoryTest extends TestCase
         return $collection;
     }
 
-    /** @return mixed[] */
+    /** @return array<string, array{0: scalar|null, 1: class-string}> */
     public function scalarTypes(): iterable
     {
         return [
-            'integer' => [1, Number::class],
-            'float' => [0.123, Number::class],
-            'bool' => [true, BooleanFragment::class],
-            'string' => ['whatever', StringFragment::class],
-            'null' => [null, EmptyFragment::class],
+            'integer'    => [1, Number::class],
+            'float'      => [0.123, Number::class],
+            'bool'       => [true, BooleanFragment::class],
+            'string'     => ['whatever', StringFragment::class],
+            'null'       => [null, EmptyFragment::class],
             'hex colour' => ['#000000', Color::class],
-            'Y-m-d' => ['2020-01-01', DateFragment::class],
-            'Date Time' => ['2020-01-01T10:00:00+00:00', DateFragment::class],
+            'Y-m-d'      => ['2020-01-01', DateFragment::class],
+            'Date Time'  => ['2020-01-01T10:00:00+00:00', DateFragment::class],
         ];
     }
 
     /**
-     * @param mixed $value
+     * @param scalar|null  $value
+     * @param class-string $expectedType
      *
      * @dataProvider scalarTypes
      */
@@ -81,8 +82,8 @@ class FactoryTest extends TestCase
         Factory::factory($link);
     }
 
-    /** @return mixed[] */
-    public function exceptionalImageSpecs(): iterable
+    /** @return array<string, array{0: string, 1: string}> */
+    public function exceptionalImageSpecs(): array
     {
         return [
             'Dimensions not object' => [

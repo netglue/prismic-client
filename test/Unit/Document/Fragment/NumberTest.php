@@ -13,6 +13,7 @@ class NumberTest extends TestCase
     public function testNonNumbersAreExceptional(): void
     {
         $this->expectException(InvalidArgument::class);
+        /** @psalm-suppress InvalidScalarArgument */
         Number::new('foo');
     }
 
@@ -42,16 +43,16 @@ class NumberTest extends TestCase
         $this->assertSame(1.0, $number->toFloat());
     }
 
-    /** @return mixed[] */
+    /** @return array<string, array{0: Number}> */
     public function numberProvider(): iterable
     {
         return [
-            '1' => [Number::new(1)],
-            '1.0' => [Number::new(1.0)],
-            '0' => [Number::new(0)],
-            '0.0' => [Number::new(0.0)],
-            '-10' => [Number::new(-10)],
-            '-10.1' => [Number::new(-10.1)],
+            'Value: 1'     => [Number::new(1)],
+            'Value: 1.0'   => [Number::new(1.0)],
+            'Value: 0'     => [Number::new(0)],
+            'Value: 0.0'   => [Number::new(0.0)],
+            'Value: -10'   => [Number::new(-10)],
+            'Value: -10.1' => [Number::new(-10.1)],
         ];
     }
 

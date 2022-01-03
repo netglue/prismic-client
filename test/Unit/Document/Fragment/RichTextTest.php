@@ -32,16 +32,20 @@ class RichTextTest extends TestCase
     {
         $richText = $this->listItemsFixture();
         self::assertInstanceOf(TextElement::class, $richText->get(0));
-        self::assertInstanceOf(UnorderedList::class, $richText->get(1));
-        self::assertCount(2, $richText->get(1));
+        $firstUl = $richText->get(1);
+        self::assertInstanceOf(UnorderedList::class, $firstUl);
+        self::assertCount(2, $firstUl);
         self::assertInstanceOf(TextElement::class, $richText->get(2));
-        self::assertInstanceOf(OrderedList::class, $richText->get(3));
-        self::assertCount(2, $richText->get(3));
+        $firstOl = $richText->get(3);
+        self::assertInstanceOf(OrderedList::class, $firstOl);
+        self::assertCount(2, $firstOl);
         self::assertInstanceOf(TextElement::class, $richText->get(4));
-        self::assertInstanceOf(UnorderedList::class, $richText->get(5));
-        self::assertCount(1, $richText->get(5));
-        self::assertInstanceOf(OrderedList::class, $richText->get(6));
-        self::assertCount(1, $richText->get(6));
+        $secondUl = $richText->get(5);
+        self::assertInstanceOf(UnorderedList::class, $secondUl);
+        self::assertCount(1, $secondUl);
+        $secondOl = $richText->get(6);
+        self::assertInstanceOf(OrderedList::class, $secondOl);
+        self::assertCount(1, $secondOl);
     }
 
     public function testThatListItemOrderIsRetained(): void

@@ -21,7 +21,9 @@ class ImageTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->collection = Factory::factory(Json::decodeObject($this->jsonFixtureByFileName('images.json')));
+        $collection = Factory::factory(Json::decodeObject($this->jsonFixtureByFileName('images.json')));
+        self::assertInstanceOf(FragmentCollection::class, $collection);
+        $this->collection = $collection;
         assert($this->collection instanceof FragmentCollection);
     }
 

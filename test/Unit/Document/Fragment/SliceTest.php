@@ -19,7 +19,10 @@ class SliceTest extends TestCase
     {
         parent::setUp();
         $document = DocumentData::factory(Json::decodeObject($this->jsonFixtureByFileName('basic-slices.json')));
-        $this->slices = $document->content()->get('slice-zone');
+        $slice = $document->content()->get('slice-zone');
+        self::assertInstanceOf(FragmentCollection::class, $slice);
+
+        $this->slices = $slice;
     }
 
     public function testThatASliceCanBeFound(): Slice

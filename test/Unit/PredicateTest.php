@@ -327,7 +327,7 @@ class PredicateTest extends TestCase
     }
 
     /**
-     * @param mixed $value
+     * @param string|bool|string[] $value
      *
      * @dataProvider atProvider
      */
@@ -345,8 +345,9 @@ class PredicateTest extends TestCase
     public function testSetState(string $fragment, $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
-        $rehydrated = null;
-        eval('$rehydrated = ' . var_export($predicate, true) . ';');
+        $phpCode = '$rehydrated = ' . var_export($predicate, true) . ';';
+        eval($phpCode);
+        assert(isset($rehydrated));
         assert($rehydrated instanceof Predicate);
         $this->assertSame($expect, $rehydrated->q());
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Prismic\Document\Fragment;
 use Traversable;
 
 use function assert;
@@ -11,7 +12,7 @@ use function iterator_to_array;
 
 final class RichText extends BaseCollection
 {
-    /** @inheritDoc */
+    /** @param iterable<array-key, Fragment> $fragments */
     protected function __construct(iterable $fragments)
     {
         parent::__construct([]);
