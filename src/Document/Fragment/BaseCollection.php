@@ -22,12 +22,16 @@ use function reset;
 use const ARRAY_FILTER_USE_BOTH;
 use const PHP_EOL;
 
+/**
+ * @template-implements FragmentCollection<Fragment>
+ * @psalm-consistent-constructor
+ */
 abstract class BaseCollection implements FragmentCollection
 {
-    /** @var Fragment[] */
+    /** @var array<array-key, Fragment> */
     protected $fragments;
 
-    /** @param Fragment[] $fragments */
+    /** @param iterable<array-key, Fragment> $fragments */
     protected function __construct(iterable $fragments)
     {
         $this->fragments = [];
@@ -37,7 +41,7 @@ abstract class BaseCollection implements FragmentCollection
     }
 
     /**
-     * @param Fragment[] $fragments
+     * @param iterable<array-key, Fragment> $fragments
      *
      * @return static
      */
@@ -46,10 +50,10 @@ abstract class BaseCollection implements FragmentCollection
         return new static($fragments);
     }
 
-    /** @param int|string|null $key */
+    /** @param array-key|null $key */
     final protected function addFragment(Fragment $fragment, $key = null): void
     {
-        if (! empty($key)) {
+        if ($key !== null) {
             $this->fragments[$key] = $fragment;
 
             return;
@@ -58,10 +62,7 @@ abstract class BaseCollection implements FragmentCollection
         $this->fragments[] = $fragment;
     }
 
-    /**
-     * @return Traversable<Fragment>
-     * @psalm-return ArrayIterator<array-key, Fragment>
-     */
+    /** @return Traversable<array-key, Fragment> */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->fragments);
@@ -115,7 +116,7 @@ abstract class BaseCollection implements FragmentCollection
         );
     }
 
-    /** @param array<array-key, mixed> $value */
+    /** @param array<array-key, Fragment> $value */
     private function isHash(array $value): bool
     {
         return count(array_filter(array_keys($value), '\is_string')) > 0;

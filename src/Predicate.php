@@ -14,6 +14,9 @@ use function is_numeric;
 
 use const JSON_UNESCAPED_SLASHES;
 
+/**
+ * @psalm-type ArgType = list<scalar|list<scalar>>
+ */
 final class Predicate implements Stringable
 {
     /** @var string  */
@@ -22,11 +25,12 @@ final class Predicate implements Stringable
     /** @var string  */
     private $fragment;
 
-    /** @var mixed[] */
+    /** @var ArgType */
     private $args;
 
     /**
-     * @param mixed[] $args
+     * @param list<int|string> $args
+     * @psalm-param ArgType $args
      */
     private function __construct(string $name, string $fragment, array $args = [])
     {
@@ -35,7 +39,7 @@ final class Predicate implements Stringable
         $this->args     = $args;
     }
 
-    /** @param mixed[] $data */
+    /** @param array{name: string, fragment: string, args: list<int|string>} $data */
     public static function __set_state(array $data): self
     {
         return new self(
@@ -81,7 +85,7 @@ final class Predicate implements Stringable
     }
 
     /**
-     * @param string|bool|string[] $value
+     * @param scalar|list<scalar> $value
      */
     public static function at(string $fragment, $value): self
     {
@@ -94,7 +98,7 @@ final class Predicate implements Stringable
     }
 
     /**
-     * @param int|string|string[]|bool $value
+     * @param scalar|list<scalar> $value
      */
     public static function not(string $fragment, $value): self
     {
@@ -102,7 +106,7 @@ final class Predicate implements Stringable
     }
 
     /**
-     * @param mixed[] $values
+     * @param list<scalar> $values
      */
     public static function any(string $fragment, array $values): self
     {
@@ -110,7 +114,7 @@ final class Predicate implements Stringable
     }
 
     /**
-     * @param mixed[] $values
+     * @param list<scalar> $values
      */
     public static function in(string $fragment, array $values): self
     {
