@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.12.0@e42bc4a23f67acba28a23bb09c348e2ff38a1d87">
+<files psalm-version="4.16.1@aa7e400908833b10c0333861f86cd48c510b60eb">
   <file src="src/Api.php">
     <InvalidCatch occurrences="2"/>
     <InvalidScalarArgument occurrences="1">
@@ -63,11 +63,6 @@
       <code>! is_int($number) &amp;&amp; ! is_float($number)</code>
     </DocblockTypeContradiction>
   </file>
-  <file src="src/Document/Fragment/RichText.php">
-    <MixedArgument occurrences="1">
-      <code>$fragment</code>
-    </MixedArgument>
-  </file>
   <file src="src/Predicate.php">
     <MixedArgument occurrences="3">
       <code>$data['args']</code>
@@ -124,141 +119,14 @@
     <MixedArgument occurrences="1">
       <code>$item</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1"/>
     <MixedAssignment occurrences="1">
       <code>$item</code>
     </MixedAssignment>
-    <RedundantCondition occurrences="10">
-      <code>assert($fragment instanceof BooleanFragment)</code>
-      <code>assert($fragment instanceof Color)</code>
-      <code>assert($fragment instanceof DateFragment)</code>
-      <code>assert($fragment instanceof Embed)</code>
-      <code>assert($fragment instanceof GeoPoint)</code>
-      <code>assert($fragment instanceof Image)</code>
-      <code>assert($fragment instanceof Number)</code>
-      <code>assert($fragment instanceof Slice)</code>
-      <code>assert($fragment instanceof StringFragment)</code>
-      <code>assert($fragment instanceof TextElement)</code>
-    </RedundantCondition>
-  </file>
-  <file src="src/Value/DataAssertionBehaviour.php">
-    <MixedInferredReturnType occurrences="5">
-      <code>bool</code>
-      <code>int</code>
-      <code>mixed[]</code>
-      <code>object</code>
-      <code>string</code>
-    </MixedInferredReturnType>
-  </file>
-  <file src="test/Smoke/ApiTest.php">
-    <PossiblyNullReference occurrences="1">
-      <code>previousPage</code>
-    </PossiblyNullReference>
-  </file>
-  <file src="test/Unit/ApiTest.php">
-    <DeprecatedMethod occurrences="1">
-      <code>tags</code>
-    </DeprecatedMethod>
-    <MixedArgument occurrences="2">
-      <code>$request-&gt;getUri()-&gt;getQuery()</code>
-      <code>$request-&gt;getUri()-&gt;getQuery()</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$request</code>
-      <code>$request</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="2">
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-    </MixedInferredReturnType>
-    <MixedMethodCall occurrences="4">
-      <code>getQuery</code>
-      <code>getQuery</code>
-      <code>getUri</code>
-      <code>getUri</code>
-    </MixedMethodCall>
-  </file>
-  <file src="test/Unit/Document/Fragment/ColorTest.php">
-    <MixedInferredReturnType occurrences="1">
-      <code>mixed[]</code>
-    </MixedInferredReturnType>
-  </file>
-  <file src="test/Unit/Document/Fragment/DocumentLinkTest.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>[1, 2]</code>
-    </InvalidScalarArgument>
-  </file>
-  <file src="test/Unit/Document/Fragment/FactoryTest.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>$expectedType</code>
-    </ArgumentTypeCoercion>
-    <MixedInferredReturnType occurrences="2">
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-    </MixedInferredReturnType>
-  </file>
-  <file src="test/Unit/Document/Fragment/ImageTest.php">
-    <PropertyTypeCoercion occurrences="1">
-      <code>Factory::factory(Json::decodeObject($this-&gt;jsonFixtureByFileName('images.json')))</code>
-    </PropertyTypeCoercion>
-  </file>
-  <file src="test/Unit/Document/Fragment/NumberTest.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>'foo'</code>
-    </InvalidScalarArgument>
-    <MixedInferredReturnType occurrences="1">
-      <code>mixed[]</code>
-    </MixedInferredReturnType>
   </file>
   <file src="test/Unit/Document/Fragment/RichTextTest.php">
-    <InvalidArgument occurrences="4">
-      <code>$richText-&gt;get(1)</code>
-      <code>$richText-&gt;get(3)</code>
-      <code>$richText-&gt;get(5)</code>
-      <code>$richText-&gt;get(6)</code>
-    </InvalidArgument>
     <UndefinedInterfaceMethod occurrences="2">
       <code>text</code>
       <code>text</code>
     </UndefinedInterfaceMethod>
-  </file>
-  <file src="test/Unit/Document/Fragment/SliceTest.php">
-    <PropertyTypeCoercion occurrences="1">
-      <code>$document-&gt;content()-&gt;get('slice-zone')</code>
-    </PropertyTypeCoercion>
-  </file>
-  <file src="test/Unit/Document/Fragment/TextElementTest.php">
-    <InvalidArgument occurrences="1">
-      <code>['dingdong']</code>
-    </InvalidArgument>
-    <MixedInferredReturnType occurrences="2">
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-    </MixedInferredReturnType>
-  </file>
-  <file src="test/Unit/JsonTest.php">
-    <MixedInferredReturnType occurrences="2">
-      <code>mixed[]</code>
-      <code>mixed[]</code>
-    </MixedInferredReturnType>
-  </file>
-  <file src="test/Unit/PredicateTest.php">
-    <MixedArgument occurrences="1">
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-    </MixedArgument>
-    <TypeDoesNotContainType occurrences="1">
-      <code>assert($rehydrated instanceof Predicate)</code>
-    </TypeDoesNotContainType>
-    <UnusedFunctionCall occurrences="1">
-      <code>var_export</code>
-    </UnusedFunctionCall>
   </file>
 </files>
