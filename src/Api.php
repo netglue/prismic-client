@@ -126,6 +126,7 @@ final class Api implements ApiClient
                 return $given;
             }
 
+            /** @psalm-suppress InvalidCatch */
             try {
                 return $locator();
             } catch (DiscoveryError $error) {
@@ -185,6 +186,8 @@ final class Api implements ApiClient
         /**
          * psr-cache v1 exceptions do not implement throwable. When 7.3 and 7.4 are dropped, cache can be upgraded
          * and the suppression can be dropped
+         *
+         * @psalm-suppress InvalidCatch
          */
         try {
             $item = $this->cache->getItem($cacheKey);
