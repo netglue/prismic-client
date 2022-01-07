@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 1.1.0-RC2 - TBD
+## 1.1.0 - 2022-01-07
 
 ### Added
 
@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file, in reverse 
 ### Changed
 
 - [#84](https://github.com/netglue/prismic-client/pull/84) Improves type coverage with Psalm
+- [#90](https://github.com/netglue/prismic-client/pull/90) Allows `psr/cache` version `^2` 
 
 ### Deprecated
 
