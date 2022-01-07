@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#89](https://github.com/netglue/prismic-client/pull/89) Removes the `Prismic\RetryingClient` introduced in `RC1`
 
 ### Fixed
 
