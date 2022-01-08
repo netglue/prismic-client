@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest;
 
+use Prismic\Exception\UnknownFormField;
 use Prismic\Json;
 use Prismic\Predicate;
 use Prismic\Query;
@@ -304,5 +305,13 @@ class QueryTest extends TestCase
         $query = (new Query($form))->routes([$newRoutes]);
 
         self::assertStringContainsString(urlencode((string) $newRoutes), $query->toUrl());
+    }
+
+    public function testSettingRoutesWillCauseAnExceptionWhenApiIsNotInitialisedWithRoutes(): void
+    {
+        $form = FormSpec::factory('everything', $this->formData()->everything);
+        $newRoutes = new RouteResolverSpec('mine', '/blah', ['hey' => 'there']);
+        $this->expectException(UnknownFormField::class);
+        (new Query($form))->routes([$newRoutes]);
     }
 }
