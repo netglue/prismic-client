@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file, in reverse 
 ### Added
 
 - [#91](https://github.com/netglue/prismic-client/pull/91) Adds `\Prismic\Document::url(): ?string` method to the interface so this will break any existing implementors, however, if you had been using `Prismic\Document\DocumentDataConsumer` trait to fulfill most of the methods in `Document` you shouldn't need to do anything unless the method name or signature conflicts with your own implementation. The `Prismic\Document\Fragment\DocumentLink::url(): ?string` method has been added as document links might have a pre-made url available now.  
+- [#91](https://github.com/netglue/prismic-client/pull/91) Changes the behaviour of the abstract `Prismic\DefaultLinkResolver` so that document links with an url provided by the remote api will not be passed the custom resolver method, effectively preferring the url received in the payload.
 
 ### Changed
 
