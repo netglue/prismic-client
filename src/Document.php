@@ -48,4 +48,9 @@ interface Document
      * Return the value object containing all of the document content fragments
      */
     public function data(): DocumentData;
+
+    /**
+     * If the api has been configured with a route for this type of document, the url might be a string
+     */
+    public function url(): ?string;
 }

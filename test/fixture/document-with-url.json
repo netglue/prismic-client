@@ -1,0 +1,18 @@
+{
+    "id": "document-id",
+    "uid": "document-uid",
+    "type": "custom-type",
+    "href": "https://repo.cdn.prismic.io/api/v2/documents/search?ref=master-ref&q=%5B%5B%3Ad+%3D+at%28document.id%2C+%22document-id%22%29+%5D%5D",
+    "url": "/example/url",
+    "tags": [
+        "tag-1",
+        "tag-2"
+    ],
+    "first_publication_date": "2020-01-01T01:23:45+0000",
+    "last_publication_date": "2020-01-02T01:23:45+0000",
+    "slugs": [],
+    "linked_documents": [],
+    "lang": "en-gb",
+    "alternate_languages": [],
+    "data": {}
+}

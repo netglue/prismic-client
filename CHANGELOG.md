@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 2.0.0 - TBD
+
+### Added
+
+- [#91](https://github.com/netglue/prismic-client/pull/91) Adds `\Prismic\Document::url(): ?string` method to the interface so this will break any existing implementors, however, if you had been using `Prismic\Document\DocumentDataConsumer` trait to fulfill most of the methods in `Document` you shouldn't need to do anything unless the method name or signature conflicts with your own implementation. The `Prismic\Document\Fragment\DocumentLink::url(): ?string` method has been added as document links might have a pre-made url available now.  
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 1.1.0 - 2022-01-07
 
 ### Added
