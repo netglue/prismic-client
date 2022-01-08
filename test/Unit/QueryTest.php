@@ -8,6 +8,7 @@ use Prismic\Json;
 use Prismic\Predicate;
 use Prismic\Query;
 use Prismic\Value\FormSpec;
+use Prismic\Value\RouteResolverSpec;
 use PrismicTest\Framework\TestCase;
 
 use function array_merge;
@@ -21,7 +22,7 @@ class QueryTest extends TestCase
     private $formData;
 
     /**
-     * @return object{everything: object, withQuery: object, collection: object}
+     * @return object{everything: object, withQuery: object, collection: object, withRoutes: object}
      *
      * @psalm-suppress LessSpecificReturnStatement
      * @psalm-suppress MoreSpecificReturnType
@@ -283,5 +284,25 @@ class QueryTest extends TestCase
             $expect,
             $query->order('a', 'b', 'c')->order()->toUrl()
         );
+    }
+
+    public function testThatTheUrlWillContainTheRoutesParameterWhenPresent(): void
+    {
+        $form = FormSpec::factory('withRoutes', $this->formData()->withRoutes);
+        $default = $form->field('routes')->defaultValue();
+        $query = new Query($form);
+
+        $expect = 'routes=' . urlencode((string) $default);
+
+        self::assertStringContainsString($expect, $query->toUrl());
+    }
+
+    public function testThatTheRoutesParameterCanBeReplaced(): void
+    {
+        $form = FormSpec::factory('withRoutes', $this->formData()->withRoutes);
+        $newRoutes = new RouteResolverSpec('mine', '/blah', ['hey' => 'there']);
+        $query = (new Query($form))->routes([$newRoutes]);
+
+        self::assertStringContainsString(urlencode((string) $newRoutes), $query->toUrl());
     }
 }
