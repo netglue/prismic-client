@@ -307,11 +307,12 @@ class QueryTest extends TestCase
         self::assertStringContainsString(urlencode((string) $newRoutes), $query->toUrl());
     }
 
-    public function testSettingRoutesWillCauseAnExceptionWhenApiIsNotInitialisedWithRoutes(): void
+    public function testSettingRoutesWillNotCauseAnExceptionWhenApiIsNotInitialisedWithRoutes(): void
     {
         $form = FormSpec::factory('everything', $this->formData()->everything);
         $newRoutes = new RouteResolverSpec('mine', '/blah', ['hey' => 'there']);
-        $this->expectException(UnknownFormField::class);
-        (new Query($form))->routes([$newRoutes]);
+
+        $query = (new Query($form))->routes([$newRoutes]);
+        self::assertStringContainsString(urlencode((string) $newRoutes), $query->toUrl());
     }
 }
