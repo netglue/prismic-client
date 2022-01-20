@@ -45,6 +45,7 @@ class DocumentDataConsumerTest extends TestCase
         $this->assertSame($this->document->type(), $this->subject->type());
         $this->assertSame($this->document->tags(), $this->subject->tags());
         $this->assertSame($this->document->lang(), $this->subject->lang());
+        $this->assertSame($this->document->url(), $this->subject->url());
         $this->assertSame($this->document->firstPublished(), $this->subject->firstPublished());
         $this->assertSame($this->document->lastPublished(), $this->subject->lastPublished());
         $this->assertSame($this->document->translations(), $this->subject->translations());
