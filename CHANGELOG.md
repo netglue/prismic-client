@@ -6,12 +6,14 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#91](https://github.com/netglue/prismic-client/pull/91) Adds `\Prismic\Document::url(): ?string` method to the interface so this will break any existing implementors, however, if you had been using `Prismic\Document\DocumentDataConsumer` trait to fulfill most of the methods in `Document` you shouldn't need to do anything unless the method name or signature conflicts with your own implementation. The `Prismic\Document\Fragment\DocumentLink::url(): ?string` method has been added as document links might have a pre-made url available now.  
-- [#91](https://github.com/netglue/prismic-client/pull/91) Changes the behaviour of the abstract `Prismic\DefaultLinkResolver` so that document links with an url provided by the remote api will not be passed the custom resolver method, effectively preferring the url received in the payload.
+- [#91](https://github.com/netglue/prismic-client/pull/91) Adds `\Prismic\Document::url(): ?string` method to the interface so this will break any existing implementors, however, if you had been using `Prismic\Document\DocumentDataConsumer` trait to fulfill most of the methods in `Document` you shouldn't need to do anything unless the method name or signature conflicts with your own implementation. The `Prismic\Document\Fragment\DocumentLink::url(): ?string` method has been added as document links might have a pre-made url available now.
+- [#91](https://github.com/netglue/prismic-client/pull/91) Adds `\Prismic\Value\RouteResolverSpec` - a value object that defines the shape of a single route as required by the remote API
+- [#91](https://github.com/netglue/prismic-client/pull/91) Adds the method `\Prismic\Query::routes()` that accepts a list of `\Prismic\Value\RouteResolverSpec` instances. Routes are populated automatically when the API client is initialised with an appropriate Json encoded string _(Query parameter)_.
 
 ### Changed
 
-- Nothing.
+- [#91](https://github.com/netglue/prismic-client/pull/91) Changes the behaviour of the abstract `Prismic\DefaultLinkResolver` so that document links with an url provided by the remote api will not be passed the custom resolver method, effectively preferring the url received in the payload.
+- [#91](https://github.com/netglue/prismic-client/pull/91) Changes the behaviour of the defined "form" specifications ensuring that it is always possible to submit a 'routes' parameter with a query enabling you to define server side resolved routes as part of the query parameters regardless of whether those routes have been defined up-front during api-client initialisation.
 
 ### Deprecated
 
