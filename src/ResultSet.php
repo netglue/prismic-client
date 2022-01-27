@@ -9,7 +9,8 @@ use IteratorAggregate;
 use Traversable;
 
 /**
- * @template-implements IteratorAggregate<array-key, Document>
+ * @template T of Document
+ * @template-implements IteratorAggregate<T>
  */
 interface ResultSet extends IteratorAggregate, Countable
 {
@@ -46,19 +47,21 @@ interface ResultSet extends IteratorAggregate, Countable
     /**
      * Return the document results as an array
      *
-     * @return Document[]
+     * @return list<T>
      */
     public function results(): array;
 
     /**
      * Retrieve an iterator for iterating over results
      *
-     * @return Traversable<array-key, Document>
+     * @return Traversable<array-key, T>
      */
     public function getIterator(): Traversable;
 
     /**
      * Return the first document in the result set or null if the result set is empty
+     *
+     * @psalm-return T|null
      */
     public function first(): ?Document;
 
@@ -68,6 +71,10 @@ interface ResultSet extends IteratorAggregate, Countable
      * The primary purpose of this method is to collect paginated results into a single response and should not be used
      * to merge unrelated result sets in {@link Api::findAll()}. If you need to combine results yourself, just use
      * $combined = array_merge($response1->results(), $response2->results());
+     *
+     * @param self<T> $with
+     *
+     * @return self<T>
      */
     public function merge(self $with): self;
 }
