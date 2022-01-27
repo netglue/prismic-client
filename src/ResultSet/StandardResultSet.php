@@ -24,9 +24,14 @@ use function max;
 use function preg_match;
 use function sprintf;
 
+/**
+ * @template T of Document
+ * @template-implements ResultSet<T>
+ */
 final class StandardResultSet implements ResultSet
 {
     use DataAssertionBehaviour;
+    /** @use TypicalResultSetBehaviour<T> */
     use TypicalResultSetBehaviour;
 
     /** @var DateTimeImmutable|null */
@@ -35,7 +40,7 @@ final class StandardResultSet implements ResultSet
     /** @var int|null */
     private $maxAge;
 
-    /** @param array<array-key, Document> $results */
+    /** @param list<T> $results */
     private function __construct(
         int $page,
         int $perPage,
@@ -72,6 +77,7 @@ final class StandardResultSet implements ResultSet
 
     public static function factory(object $data): self
     {
+        /** @psalm-var list<DocumentData> $results */
         $results = array_map(static function (object $document): Document {
             return DocumentData::factory($document);
         }, self::assertObjectPropertyIsArray($data, 'results'));
