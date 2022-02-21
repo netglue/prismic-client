@@ -212,7 +212,8 @@ final class Factory
                 self::assertObjectPropertyIsString($data, 'type'),
                 $lang,
                 $isBroken,
-                self::assertObjectPropertyAllString($data, 'tags')
+                self::assertObjectPropertyAllString($data, 'tags'),
+                self::optionalStringProperty($data, 'url')
             );
         }
 

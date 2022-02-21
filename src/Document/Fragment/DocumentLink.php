@@ -22,6 +22,8 @@ final class DocumentLink implements Fragment, Link
     private $lang;
     /** @var bool */
     private $isBroken;
+    /** @var string|null */
+    private $url;
 
     /** @param string[] $tags */
     private function __construct(
@@ -30,13 +32,15 @@ final class DocumentLink implements Fragment, Link
         string $type,
         string $lang,
         bool $isBroken,
-        iterable $tags
+        iterable $tags,
+        ?string $url
     ) {
         $this->id = $id;
         $this->uid = $uid;
         $this->type = $type;
         $this->lang = $lang;
         $this->isBroken = $isBroken;
+        $this->url = $url;
         $this->tags = [];
         foreach ($tags as $tag) {
             $this->addTag($tag);
@@ -55,9 +59,10 @@ final class DocumentLink implements Fragment, Link
         string $type,
         string $lang,
         bool $isBroken = false,
-        iterable $tags = []
+        iterable $tags = [],
+        ?string $url = null
     ): self {
-        return new self($id, $uid, $type, $lang, $isBroken, $tags);
+        return new self($id, $uid, $type, $lang, $isBroken, $tags, $url);
     }
 
     public static function withDocument(Document $document): self
@@ -68,7 +73,8 @@ final class DocumentLink implements Fragment, Link
             $document->type(),
             $document->lang(),
             false,
-            $document->tags()
+            $document->tags(),
+            $document->url()
         );
     }
 
@@ -111,5 +117,10 @@ final class DocumentLink implements Fragment, Link
     public function isEmpty(): bool
     {
         return false;
+    }
+
+    public function url(): ?string
+    {
+        return $this->url;
     }
 }
