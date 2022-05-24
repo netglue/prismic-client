@@ -328,7 +328,7 @@ final class Api implements ApiClient
     private function uriWithQueryValue(UriInterface $uri, string $parameter, $value): UriInterface
     {
         $params = [];
-        parse_str((string) $uri, $params);
+        parse_str($uri->getQuery(), $params);
         $params[$parameter] = $value;
 
         return $uri->withQuery(http_build_query($params));
@@ -442,10 +442,13 @@ final class Api implements ApiClient
             return null;
         }
 
+        $uri = $this->uriFactory->createUri(urldecode($nextPage));
+        if ($this->accessToken !== null) {
+            $uri = $this->uriWithQueryValue($uri, 'access_token', $this->accessToken);
+        }
+
         return $this->resultSetFactory->withJsonObject(
-            $this->jsonResponse(
-                $this->uriFactory->createUri($nextPage)
-            )
+            $this->jsonResponse($uri)
         );
     }
 
@@ -456,10 +459,13 @@ final class Api implements ApiClient
             return null;
         }
 
+        $uri = $this->uriFactory->createUri(urldecode($previousPage));
+        if ($this->accessToken !== null) {
+            $uri = $this->uriWithQueryValue($uri, 'access_token', $this->accessToken);
+        }
+
         return $this->resultSetFactory->withJsonObject(
-            $this->jsonResponse(
-                $this->uriFactory->createUri($previousPage)
-            )
+            $this->jsonResponse($uri)
         );
     }
 
