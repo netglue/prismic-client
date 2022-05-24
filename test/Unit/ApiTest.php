@@ -11,16 +11,19 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Http\Message\RequestMatcher\RequestMatcher;
 use Http\Mock\Client as MockClient;
+use Laminas\Diactoros\RequestFactory;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Diactoros\StreamFactory;
+use Laminas\Diactoros\UriFactory;
 use Prismic\Api;
 use Prismic\Exception\AuthenticationError;
 use Prismic\Exception\InvalidPreviewToken;
 use Prismic\Exception\PrismicError;
 use Prismic\Exception\RequestFailure;
 use Prismic\Json;
+use Prismic\ResultSet\StandardResultSetFactory;
 use PrismicTest\Framework\CacheKeyInvalid;
 use PrismicTest\Framework\TestCase;
 use Psr\Cache\CacheItemPoolInterface;
@@ -29,7 +32,9 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 
+use function parse_str;
 use function sprintf;
 use function uniqid;
 use function urlencode;
@@ -466,5 +471,79 @@ class ApiTest extends TestCase
         } catch (PrismicError $error) {
             static::assertSame($cacheException, $error->getPrevious());
         }
+    }
+
+    public function testThatTheNextUrlInAPagedResultContainsTheExpectedParameters(): void
+    {
+        $httpClient = new MockClient();
+        $response = new JsonResponse([]);
+        $responseBody = (new StreamFactory())->createStream($this->jsonFixtureByFileName('empty-result-set.json'));
+        $response = $response->withBody($responseBody);
+        $httpClient->setDefaultResponse($response);
+
+        $rsFactory = new StandardResultSetFactory();
+        $initialResultSet = $rsFactory->withJsonObject(Json::decodeObject($this->jsonFixtureByFileName('paginated-result-set.json')));
+
+        $client = Api::get(
+            'https://example.com',
+            'some-token',
+            $httpClient,
+            new RequestFactory(),
+            new UriFactory(),
+            $rsFactory,
+            null
+        );
+
+        $client->next($initialResultSet);
+
+        $request = $httpClient->getLastRequest();
+        self::assertInstanceOf(RequestInterface::class, $request);
+        $uri = $request->getUri();
+        self::assertInstanceOf(UriInterface::class, $uri);
+
+        parse_str($uri->getQuery(), $sentParameters);
+        self::assertArrayHasKey('ref', $sentParameters);
+        self::assertEquals('expect-ref', $sentParameters['ref']);
+        self::assertArrayHasKey('page', $sentParameters);
+        self::assertEquals(3, $sentParameters['page']);
+        self::assertArrayHasKey('access_token', $sentParameters);
+        self::assertEquals('some-token', $sentParameters['access_token']);
+    }
+
+    public function testThatThePreviousUrlInAPagedResultContainsTheExpectedParameters(): void
+    {
+        $httpClient = new MockClient();
+        $response = new JsonResponse([]);
+        $responseBody = (new StreamFactory())->createStream($this->jsonFixtureByFileName('empty-result-set.json'));
+        $response = $response->withBody($responseBody);
+        $httpClient->setDefaultResponse($response);
+
+        $rsFactory = new StandardResultSetFactory();
+        $initialResultSet = $rsFactory->withJsonObject(Json::decodeObject($this->jsonFixtureByFileName('paginated-result-set.json')));
+
+        $client = Api::get(
+            'https://example.com',
+            'some-token',
+            $httpClient,
+            new RequestFactory(),
+            new UriFactory(),
+            $rsFactory,
+            null
+        );
+
+        $client->previous($initialResultSet);
+
+        $request = $httpClient->getLastRequest();
+        self::assertInstanceOf(RequestInterface::class, $request);
+        $uri = $request->getUri();
+        self::assertInstanceOf(UriInterface::class, $uri);
+
+        parse_str($uri->getQuery(), $sentParameters);
+        self::assertArrayHasKey('ref', $sentParameters);
+        self::assertEquals('expect-ref', $sentParameters['ref']);
+        self::assertArrayHasKey('page', $sentParameters);
+        self::assertEquals(1, $sentParameters['page']);
+        self::assertArrayHasKey('access_token', $sentParameters);
+        self::assertEquals('some-token', $sentParameters['access_token']);
     }
 }
