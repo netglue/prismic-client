@@ -1,0 +1,25 @@
+{
+    "page": 2,
+    "results_per_page": 1,
+    "results_size": 1,
+    "total_results_size": 5,
+    "total_pages": 5,
+    "next_page": "https://example.com/api/v2/documents/search?ref=expect-ref&q=%5B%5Bat%28document.type%2C+%22page%22%29%5D%5D&page=3&pageSize=1",
+    "prev_page": "https://example.com/api/v2/documents/search?ref=expect-ref&q=%5B%5Bat%28document.type%2C+%22page%22%29%5D%5D&page=1&pageSize=1",
+    "results": [
+        {
+            "id": "foo",
+            "uid": "example",
+            "type": "page",
+            "href": "https://example.com",
+            "tags": [],
+            "first_publication_date": "2017-12-13T22:57:54+0000",
+            "last_publication_date": "2022-05-24T07:31:02+0000",
+            "slugs": [],
+            "linked_documents": [],
+            "lang": "en-gb",
+            "alternate_languages": [],
+            "data": {}
+        }
+    ]
+}
