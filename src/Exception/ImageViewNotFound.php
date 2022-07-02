@@ -16,7 +16,7 @@ final class ImageViewNotFound extends InvalidArgument
         return new self(sprintf(
             'The image view "%s" does not exist. Known view names are: %s',
             $name,
-            implode($image->knownViews())
+            implode(', ', $image->knownViews())
         ));
     }
 }
