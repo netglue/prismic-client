@@ -114,7 +114,9 @@ final class Predicate implements Stringable
     }
 
     /**
-     * @param list<scalar> $values
+     * The `in` predicate accepts a list of document IDs or document UIDs
+     *
+     * @param list<string> $values
      */
     public static function in(string $fragment, array $values): self
     {
