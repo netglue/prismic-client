@@ -35,6 +35,14 @@ class ImageTest extends TestCase
         return $image;
     }
 
+    private function imageWithViews(): Image
+    {
+        $image = $this->collection->get('image_with_views');
+        assert($image instanceof Image);
+
+        return $image;
+    }
+
     public function testBasicAccessors(): void
     {
         $image = $this->singleImage();
@@ -77,5 +85,18 @@ class ImageTest extends TestCase
     {
         $image = $this->singleImage();
         $this->assertFalse($image->isEmpty());
+    }
+
+    public function testThatKnownImageViewsAreListedWhenAViewDoesNotExist(): void
+    {
+        try {
+            $this->imageWithViews()->getView('not-there');
+            $this->fail('An exception should have been thrown');
+        } catch (ImageViewNotFound $e) {
+            self::assertStringContainsString(
+                'main, view-one, view-two',
+                $e->getMessage()
+            );
+        }
     }
 }
