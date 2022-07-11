@@ -30,6 +30,11 @@ interface ApiClient
      */
     public const EXPERIMENTS_COOKIE = 'io.prismic.experiment';
 
+    /**
+     * The maximum page size of result sets returned by the API
+     */
+    public const MAX_PAGE_SIZE = 100;
+
     /** Return the host name of the api endpoint */
     public function host(): string;
 
