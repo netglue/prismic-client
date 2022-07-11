@@ -1,11 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.17.0@6f4707aa41c9174353a6434bba3fc8840f981d9c">
-  <file src="src/Api.php">
-    <MixedInferredReturnType occurrences="1">
-      <code>object</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$locator()</code>
-    </MixedReturnStatement>
-  </file>
-</files>
+<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f"/>

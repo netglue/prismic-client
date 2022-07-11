@@ -8,6 +8,7 @@ use Http\Discovery\Exception as DiscoveryError;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Prismic\Document\Fragment\DocumentLink;
+use Prismic\Exception\InvalidArgument;
 use Prismic\Exception\InvalidPreviewToken;
 use Prismic\Exception\JsonError;
 use Prismic\Exception\PrismicError;
@@ -121,42 +122,62 @@ final class Api implements ApiClient
         ?ResultSetFactory $resultSetFactory = null,
         ?CacheItemPoolInterface $cache = null
     ): self {
-        /**
-         * @return ClientInterface|RequestFactoryInterface|UriFactoryInterface
-         */
-        $factory = static function (?object $given, callable $locator, string $message): object {
-            if ($given) {
-                return $given;
-            }
-
-            /** @psalm-suppress InvalidCatch */
-            try {
-                return $locator();
-            } catch (DiscoveryError $error) {
-                throw new RuntimeError(
-                    $message,
-                    (int) $error->getCode(),
-                    $error
-                );
-            }
-        };
-
-        /** @psalm-suppress ArgumentTypeCoercion */
+        /** @psalm-suppress PossiblyInvalidArgument */
         return new self(
             $apiBaseUri,
-            $factory($httpClient, static function (): ClientInterface {
-                return Psr18ClientDiscovery::find();
-            }, 'An HTTP client cannot be determined.'),
+            $httpClient ?? self::psrFactory(
+                ClientInterface::class,
+                'An HTTP client cannot be determined.'
+            ),
             (string) $accessToken === '' ? null : $accessToken,
-            $factory($requestFactory, static function (): RequestFactoryInterface {
-                return Psr17FactoryDiscovery::findRequestFactory();
-            }, 'A request factory cannot be determined'),
-            $factory($uriFactory, static function (): UriFactoryInterface {
-                return Psr17FactoryDiscovery::findUriFactory();
-            }, 'A URI factory cannot be determined'),
+            $requestFactory ?? self::psrFactory(
+                RequestFactoryInterface::class,
+                'A request factory cannot be determined'
+            ),
+            $uriFactory ?? self::psrFactory(
+                UriFactoryInterface::class,
+                'A URI factory cannot be determined'
+            ),
             $resultSetFactory ?? new StandardResultSetFactory(),
             $cache
         );
+    }
+
+    /**
+     * phpcs:disable Generic.Files.LineLength.TooLong, Squiz.Commenting.FunctionComment.SpacingAfterParamType
+     * @param T|null $instance
+     * @param class-string<ClientInterface>|class-string<RequestFactoryInterface>|class-string<UriFactoryInterface> $type
+     *
+     * @return ClientInterface|RequestFactoryInterface|UriFactoryInterface
+     *
+     * @template T of object
+     */
+    private static function psrFactory(string $type, string $message)
+    {
+        try {
+            switch ($type) {
+                case ClientInterface::class:
+                    return Psr18ClientDiscovery::find();
+
+                case RequestFactoryInterface::class:
+                    return Psr17FactoryDiscovery::findRequestFactory();
+
+                case UriFactoryInterface::class:
+                    return Psr17FactoryDiscovery::findUriFactory();
+
+                default:
+                    throw new InvalidArgument(sprintf(
+                        'Invalid class-string: "%s"',
+                        $type
+                    ));
+            }
+        } catch (DiscoveryError $error) {
+            throw new RuntimeError(
+                $message,
+                (int) $error->getCode(),
+                $error
+            );
+        }
     }
 
     public function host(): string
