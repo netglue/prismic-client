@@ -15,8 +15,11 @@ use Psr\Cache\CacheItemPoolInterface;
 use Psr\Http\Client\ClientInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
+use function assert;
 use function file_exists;
 use function getenv;
+use function is_array;
+use function is_string;
 
 class TestCase extends PHPUnitTestCase
 {
@@ -63,12 +66,25 @@ class TestCase extends PHPUnitTestCase
             return $endpoints;
         }
 
+        /** @psalm-suppress MissingFile $content */
         $content = require $configPath;
+        if (! is_array($content)) {
+            return $endpoints;
+        }
 
         $configured = $content['endpoints'] ?? [];
+        assert(is_array($configured));
 
         foreach ($configured as $spec) {
-            $endpoints[$spec['url']] = $spec['token'];
+            assert(is_array($spec));
+            $url = isset($spec['url']) && is_string($spec['url']) ? $spec['url'] : null;
+            $token = isset($spec['token']) && is_string($spec['token']) ? $spec['token'] : null;
+
+            if (! $url) {
+                continue;
+            }
+
+            $endpoints[$url] = $token;
         }
 
         return $endpoints;
