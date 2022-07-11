@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PrismicTest\ResultSet;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use Prismic\Document;
 use Prismic\Json;
 use Prismic\ResultSet\StandardResultSet;
@@ -31,6 +33,15 @@ class StandardResultTest extends TestCase
         $this->assertSame('https://example.com/prev', $this->resultSet->previousPage());
         $this->assertCount(2, $this->resultSet->results());
         $this->assertContainsOnlyInstancesOf(DocumentData::class, $this->resultSet->results());
+    }
+
+    public function testThatTheCacheExpiryDateWillBeTheCurrentTimeInUTC(): void
+    {
+        $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
+        self::assertInstanceOf(DateTimeImmutable::class, $now);
+
+        self::assertEqualsWithDelta($now, $this->resultSet->expiresAt(), 0.0001);
+        self::assertEquals('UTC', $this->resultSet->expiresAt()->getTimezone()->getName());
     }
 
     public function testThatResultSetsAreCountable(): void
