@@ -73,7 +73,6 @@ final class Embed implements Fragment
     private function setAttribute(string $name, $value): void
     {
         /**
-         * @psalm-suppress RedundantConditionGivenDocblockType
          * @psalm-suppress DocblockTypeContradiction
          */
         if ($value !== null && ! is_scalar($value)) {

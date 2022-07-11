@@ -20,6 +20,7 @@ use function urlencode;
 
 /**
  * @psalm-type QueryParams = array<string, string|int|list<string>|null>
+ * @final
  */
 class Query
 {
@@ -146,6 +147,8 @@ class Query
      * Limit document count per page.
      *
      * The default is 20 per page and the maximum is 100
+     *
+     * @param positive-int $count
      */
     public function resultsPerPage(int $count): self
     {
@@ -154,6 +157,8 @@ class Query
 
     /**
      * Set the result page to retrieve.
+     *
+     * @param positive-int $page
      */
     public function page(int $page): self
     {
