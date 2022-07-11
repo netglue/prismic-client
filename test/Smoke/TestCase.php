@@ -63,7 +63,6 @@ class TestCase extends PHPUnitTestCase
             return $endpoints;
         }
 
-        /** @psalm-suppress MissingFile $content */
         $content = require $configPath;
 
         $configured = $content['endpoints'] ?? [];
