@@ -27,7 +27,6 @@ class StandardResultTest extends TestCase
         $this->assertSame(1, $this->resultSet->currentPageNumber());
         $this->assertSame(99, $this->resultSet->totalResults());
         $this->assertSame(99, $this->resultSet->pageCount());
-        $this->assertNotNull($this->resultSet->expiresAt());
         $this->assertSame('https://example.com/next', $this->resultSet->nextPage());
         $this->assertSame('https://example.com/prev', $this->resultSet->previousPage());
         $this->assertCount(2, $this->resultSet->results());
