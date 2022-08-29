@@ -91,7 +91,7 @@ class JsonTest extends TestCase
             $this->assertInstanceOf(JsonException::class, $previous);
             $this->assertSame(
                 $error->getCode(),
-                $previous->getCode()
+                $previous->getCode(),
             );
         }
     }

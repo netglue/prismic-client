@@ -44,7 +44,7 @@ final class FormField
             $name,
             self::assertObjectPropertyIsString($value, 'type'),
             self::assertObjectPropertyIsBoolean($value, 'multiple'),
-            self::optionalStringProperty($value, 'default')
+            self::optionalStringProperty($value, 'default'),
         );
     }
 

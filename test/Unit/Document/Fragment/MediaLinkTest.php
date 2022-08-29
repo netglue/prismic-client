@@ -14,7 +14,7 @@ class MediaLinkTest extends TestCase
         $link = MediaLink::new(
             'url',
             'filename',
-            10
+            10,
         );
 
         $this->expectNotToPerformAssertions();

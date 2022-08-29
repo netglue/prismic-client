@@ -17,7 +17,7 @@ final class UnexpectedValue extends UnexpectedValueException implements PrismicE
         $message = sprintf(
             'Expected an object to contain the property "%s" but it was not present: Received %s',
             $property,
-            Json::encode($object)
+            Json::encode($object),
         );
 
         return new self($message);
@@ -30,7 +30,7 @@ final class UnexpectedValue extends UnexpectedValueException implements PrismicE
             $property,
             $expectedType,
             gettype($object->{$property}),
-            Json::encode($object)
+            Json::encode($object),
         ));
     }
 

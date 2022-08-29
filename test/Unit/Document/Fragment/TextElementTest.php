@@ -16,7 +16,7 @@ class TextElementTest extends TestCase
             'paragraph',
             'Some Words',
             [],
-            'groovy'
+            'groovy',
         );
         $this->expectNotToPerformAssertions();
 

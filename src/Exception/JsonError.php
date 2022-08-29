@@ -18,10 +18,10 @@ final class JsonError extends JsonException implements PrismicError
         $error = new self(
             sprintf(
                 'Failed to decode JSON payload: %s',
-                $exception->getMessage()
+                $exception->getMessage(),
             ),
             (int) $exception->getCode(),
-            $exception
+            $exception,
         );
 
         $error->payload = $payload;
@@ -34,10 +34,10 @@ final class JsonError extends JsonException implements PrismicError
         return new self(
             sprintf(
                 'Failed to encode the given data to a JSON string: %s',
-                $exception->getMessage()
+                $exception->getMessage(),
             ),
             (int) $exception->getCode(),
-            $exception
+            $exception,
         );
     }
 
@@ -45,7 +45,7 @@ final class JsonError extends JsonException implements PrismicError
     {
         return new self(sprintf(
             'The given payload cannot be unserialized as an object: %s',
-            $payload
+            $payload,
         ));
     }
 
@@ -53,7 +53,7 @@ final class JsonError extends JsonException implements PrismicError
     {
         return new self(sprintf(
             'The given payload cannot be unserialized as an array: %s',
-            $payload
+            $payload,
         ));
     }
 

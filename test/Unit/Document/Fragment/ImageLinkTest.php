@@ -16,7 +16,7 @@ class ImageLinkTest extends TestCase
             'filename',
             10,
             20,
-            30
+            30,
         );
 
         $this->expectNotToPerformAssertions();

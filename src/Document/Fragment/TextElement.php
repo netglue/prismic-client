@@ -57,7 +57,7 @@ final class TextElement implements Fragment, Stringable
             $type,
             $text ?? '',
             $spans,
-            $label
+            $label,
         );
     }
 

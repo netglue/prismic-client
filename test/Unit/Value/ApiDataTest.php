@@ -16,9 +16,7 @@ use PrismicTest\Framework\TestCase;
 
 use function sprintf;
 
-/**
- * @psalm-suppress DeprecatedClass, DeprecatedMethod
- */
+/** @psalm-suppress DeprecatedClass, DeprecatedMethod */
 class ApiDataTest extends TestCase
 {
     /** @var ApiData */
@@ -31,9 +29,7 @@ class ApiDataTest extends TestCase
         $this->apiData = ApiData::factory(Json::decodeObject($payload));
     }
 
-    /**
-     * @psalm-suppress DeprecatedMethod
-     */
+    /** @psalm-suppress DeprecatedMethod */
     public function testTagsHaveExpectedValue(): void
     {
         self::assertContainsEquals('goats', $this->apiData->tags());
@@ -90,18 +86,14 @@ class ApiDataTest extends TestCase
         $this->apiData->bookmark('not-found');
     }
 
-    /**
-     * @psalm-suppress DeprecatedMethod
-     */
+    /** @psalm-suppress DeprecatedMethod */
     public function testThatAnEmptyTagsArrayIsAcceptable(): void
     {
         $data = ApiData::factory(Json::decodeObject($this->jsonFixtureByFileName('api-data-with-empty-tags.json')));
         self::assertEmpty($data->tags());
     }
 
-    /**
-     * @psalm-suppress DeprecatedMethod
-     */
+    /** @psalm-suppress DeprecatedMethod */
     public function testThatAMissingTagsPropertyInTheDataPayloadIsAcceptable(): void
     {
         $data = ApiData::factory(Json::decodeObject($this->jsonFixtureByFileName('api-data-missing-tags.json')));
@@ -134,7 +126,7 @@ class ApiDataTest extends TestCase
             self::assertContains(
                 $language->id(),
                 $expect,
-                sprintf('Language "%s" is not present in the expected list of values', $language->id())
+                sprintf('Language "%s" is not present in the expected list of values', $language->id()),
             );
         }
     }

@@ -49,7 +49,7 @@ class ApiTest extends TestCase
     /** @var JsonResponse */
     private $response;
 
-    private const DOCUMENT_PREVIEW_PAYLOAD = <<<JSON
+    private const DOCUMENT_PREVIEW_PAYLOAD = <<<'JSON'
         {
           "label": "Example Label",
           "ref": "preview-ref",
@@ -58,7 +58,7 @@ class ApiTest extends TestCase
         }
         JSON;
 
-    private const NO_DOCUMENT_PREVIEW_PAYLOAD = <<<JSON
+    private const NO_DOCUMENT_PREVIEW_PAYLOAD = <<<'JSON'
         {
           "label": "No Document",
           "ref": "preview-ref",
@@ -119,7 +119,7 @@ class ApiTest extends TestCase
         $this->expectException(RequestFailure::class);
         $this->expectExceptionMessage(
             'Error 400. The request to the URL "https://example.com" was rejected '
-            . 'by the api. The error response body was "Nice Body"'
+            . 'by the api. The error response body was "Nice Body"',
         );
         $this->expectExceptionCode(400);
         $api->data();
@@ -151,7 +151,7 @@ class ApiTest extends TestCase
         $this->expectException(RequestFailure::class);
         $this->expectExceptionMessage(
             'The request to the URL "https://example.com" resulted in a server error. '
-            . 'The error response body was "Whoops"'
+            . 'The error response body was "Whoops"',
         );
         $this->expectExceptionCode(500);
         $api->data();
@@ -295,7 +295,7 @@ class ApiTest extends TestCase
         $api = Api::get('https://example.com', null, $this->httpClient);
         $this->httpClient->setDefaultResponse(new JsonResponse(Json::decodeObject(self::NO_DOCUMENT_PREVIEW_PAYLOAD)));
         self::assertNull(
-            $api->previewSession('https://example.com/previews/stuff:morestuff')
+            $api->previewSession('https://example.com/previews/stuff:morestuff'),
         );
     }
 
@@ -321,7 +321,7 @@ class ApiTest extends TestCase
                 self::assertStringContainsString('target-document-id', $url->getQuery());
 
                 return $documentResponse;
-            }
+            },
         );
 
         $link = $api->previewSession('https://example.com/get-preview');
@@ -339,7 +339,7 @@ class ApiTest extends TestCase
         $this->expectException(InvalidPreviewToken::class);
         $this->expectExceptionMessage(
             'The preview url has been rejected because its host name '
-            . '"foobar.com" does not match the api host "example.com"'
+            . '"foobar.com" does not match the api host "example.com"',
         );
         $api->previewSession('https://foobar.com/something-nefarious');
     }
@@ -390,12 +390,12 @@ class ApiTest extends TestCase
                 $sentRequest = $request;
 
                 return $previewResponse;
-            }
+            },
         );
         self::assertNull(
             $api->previewSession(urlencode(
-                sprintf('https://%s/get-preview', $tokenHost)
-            ))
+                sprintf('https://%s/get-preview', $tokenHost),
+            )),
         );
         self::assertInstanceOf(RequestInterface::class, $sentRequest);
     }
@@ -491,7 +491,7 @@ class ApiTest extends TestCase
             new RequestFactory(),
             new UriFactory(),
             $rsFactory,
-            null
+            null,
         );
 
         $client->next($initialResultSet);
@@ -528,7 +528,7 @@ class ApiTest extends TestCase
             new RequestFactory(),
             new UriFactory(),
             $rsFactory,
-            null
+            null,
         );
 
         $client->previous($initialResultSet);

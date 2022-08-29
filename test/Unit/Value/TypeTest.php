@@ -24,7 +24,7 @@ class TypeTest extends TestCase
     {
         self::assertEquals(
             '{"foo":"bar"}',
-            json_encode(Type::new('foo', 'bar'), JSON_THROW_ON_ERROR)
+            json_encode(Type::new('foo', 'bar'), JSON_THROW_ON_ERROR),
         );
     }
 

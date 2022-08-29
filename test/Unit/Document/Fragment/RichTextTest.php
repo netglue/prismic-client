@@ -75,7 +75,7 @@ class RichTextTest extends TestCase
         $list = $richText->get(3);
         assert($list instanceof OrderedList);
 
-        $expect = <<<TEXT
+        $expect = <<<'TEXT'
             Ordered 1
             Ordered 2
             TEXT;

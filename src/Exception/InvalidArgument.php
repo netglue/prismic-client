@@ -20,7 +20,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
     {
         return new self(sprintf(
             'A scalar argument was expected but %s was received',
-            is_object($received) ? get_class($received) : gettype($received)
+            is_object($received) ? get_class($received) : gettype($received),
         ));
     }
 
@@ -29,7 +29,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
     {
         return new self(sprintf(
             'Either a float or an integer was expected but %s was received',
-            is_object($received) ? get_class($received) : gettype($received)
+            is_object($received) ? get_class($received) : gettype($received),
         ));
     }
 
@@ -37,7 +37,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
     {
         return new self(sprintf(
             'Expected a string that looks like a hex colour with a # prefix but received "%s"',
-            $value
+            $value,
         ));
     }
 
@@ -46,7 +46,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
         return new self(sprintf(
             'Expected a date value in the format %s but received "%s"',
             $expectedFormat,
-            $value
+            $value,
         ));
     }
 
@@ -55,7 +55,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
         return new self(sprintf(
             'The link type "%s" is not a known type of link. Found in the object: %s',
             $type,
-            Json::encode($payload)
+            Json::encode($payload),
         ));
     }
 
@@ -65,7 +65,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
         return new self(sprintf(
             'The form field "%s" expects a string value but received %s',
             $field->name(),
-            is_object($invalidValue) ? get_class($invalidValue) : gettype($invalidValue)
+            is_object($invalidValue) ? get_class($invalidValue) : gettype($invalidValue),
         ));
     }
 
@@ -75,7 +75,7 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
         return new self(sprintf(
             'The form field "%s" expects an integer value but received %s',
             $field->name(),
-            is_object($invalidValue) ? get_class($invalidValue) : gettype($invalidValue)
+            is_object($invalidValue) ? get_class($invalidValue) : gettype($invalidValue),
         ));
     }
 }

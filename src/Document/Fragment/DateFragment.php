@@ -9,9 +9,7 @@ use DateTimeZone;
 use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
 
-/**
- * @psalm-immutable
- */
+/** @psalm-immutable */
 final class DateFragment extends DateTimeImmutable implements Fragment
 {
     /**

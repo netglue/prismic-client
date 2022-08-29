@@ -112,7 +112,7 @@ abstract class BaseCollection implements FragmentCollection
         $result = array_filter($this->fragments, $p, ARRAY_FILTER_USE_BOTH);
 
         return new static(
-            $this->isHash($result) ? $result : array_values($result)
+            $this->isHash($result) ? $result : array_values($result),
         );
     }
 

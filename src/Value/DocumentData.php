@@ -98,7 +98,7 @@ final class DocumentData implements Document
             self::assertObjectPropertyIsUtcDateTime($data, 'last_publication_date'),
             self::assertObjectPropertyAllString($data, 'tags'),
             $translations,
-            $body
+            $body,
         );
     }
 

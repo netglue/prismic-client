@@ -15,7 +15,7 @@ final class UnknownFormField extends InvalidArgument
         return new self(sprintf(
             'There is no field with the name %s in the form %s',
             $key,
-            $form->id()
+            $form->id(),
         ));
     }
 }

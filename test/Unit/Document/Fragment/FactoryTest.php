@@ -169,7 +169,7 @@ class FactoryTest extends TestCase
 
     public function testThatAGeoPointCanBeDecoded(): void
     {
-        $fragment = Factory::factory(Json::decodeObject(<<<JSON
+        $fragment = Factory::factory(Json::decodeObject(<<<'JSON'
             {
                 "latitude": 0.12345,
                 "longitude": -1.23456
@@ -186,7 +186,7 @@ class FactoryTest extends TestCase
 
     public function testThatAGeoPointCanBeDecodedIfThePayloadContainsIntegers(): void
     {
-        $fragment = Factory::factory(Json::decodeObject(<<<JSON
+        $fragment = Factory::factory(Json::decodeObject(<<<'JSON'
             {
                 "latitude": 0,
                 "longitude": 1
@@ -204,7 +204,7 @@ class FactoryTest extends TestCase
     public function testThatAGeoPointIsNotDecodedIfTheValuesAreNotNumeric(): void
     {
         $this->expectException(UnexpectedValue::class);
-        Factory::factory(Json::decodeObject(<<<JSON
+        Factory::factory(Json::decodeObject(<<<'JSON'
             {
                 "latitude": "goat",
                 "longitude": "brains"
