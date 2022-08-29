@@ -50,7 +50,7 @@ final class RouteResolverSpec implements JsonSerializable, Stringable
         return new self(
             $data['type'],
             $data['path'],
-            $data['resolvers']
+            $data['resolvers'],
         );
     }
 }

@@ -39,8 +39,8 @@ class DocumentDataTest extends TestCase
 
         $this->documentWithUrl = DocumentData::factory(
             Json::decodeObject(
-                $this->jsonFixtureByFileName('document-with-url.json')
-            )
+                $this->jsonFixtureByFileName('document-with-url.json'),
+            ),
         );
     }
 
@@ -197,8 +197,8 @@ class DocumentDataTest extends TestCase
     {
         $document = DocumentData::factory(
             Json::decodeObject(
-                $this->jsonFixtureByFileName('document-with-null-url.json')
-            )
+                $this->jsonFixtureByFileName('document-with-null-url.json'),
+            ),
         );
         self::assertNull($document->url());
     }

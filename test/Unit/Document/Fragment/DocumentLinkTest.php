@@ -54,7 +54,7 @@ class DocumentLinkTest extends TestCase
             'en-gb',
             false,
             ['a', 'b'],
-            '/some/url'
+            '/some/url',
         );
         self::assertTrue(true);
 
