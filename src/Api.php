@@ -127,19 +127,19 @@ final class Api implements ApiClient
             $apiBaseUri,
             $httpClient ?? self::psrFactory(
                 ClientInterface::class,
-                'An HTTP client cannot be determined.'
+                'An HTTP client cannot be determined.',
             ),
             (string) $accessToken === '' ? null : $accessToken,
             $requestFactory ?? self::psrFactory(
                 RequestFactoryInterface::class,
-                'A request factory cannot be determined'
+                'A request factory cannot be determined',
             ),
             $uriFactory ?? self::psrFactory(
                 UriFactoryInterface::class,
-                'A URI factory cannot be determined'
+                'A URI factory cannot be determined',
             ),
             $resultSetFactory ?? new StandardResultSetFactory(),
-            $cache
+            $cache,
         );
     }
 
@@ -168,14 +168,14 @@ final class Api implements ApiClient
                 default:
                     throw new InvalidArgument(sprintf(
                         'Invalid class-string: "%s"',
-                        $type
+                        $type,
                     ));
             }
         } catch (DiscoveryError $error) {
             throw new RuntimeError(
                 $message,
                 (int) $error->getCode(),
-                $error
+                $error,
             );
         }
     }
@@ -220,7 +220,7 @@ final class Api implements ApiClient
             throw new RuntimeError(
                 sprintf('The caching library in use threw an exception for the cache key: %s', $cacheKey),
                 500,
-                $e
+                $e,
             );
         }
 
@@ -312,7 +312,7 @@ final class Api implements ApiClient
     public function query(Query $query): ResultSet
     {
         return $this->resultSetFactory->withJsonObject($this->jsonResponse(
-            $this->uriFactory->createUri($query->toUrl())
+            $this->uriFactory->createUri($query->toUrl()),
         ));
     }
 
@@ -392,7 +392,7 @@ final class Api implements ApiClient
                 'preview',
                 $cookiePayload,
                 'Preview',
-                false
+                false,
             );
         }
 
@@ -469,7 +469,7 @@ final class Api implements ApiClient
         }
 
         return $this->resultSetFactory->withJsonObject(
-            $this->jsonResponse($uri)
+            $this->jsonResponse($uri),
         );
     }
 
@@ -486,7 +486,7 @@ final class Api implements ApiClient
         }
 
         return $this->resultSetFactory->withJsonObject(
-            $this->jsonResponse($uri)
+            $this->jsonResponse($uri),
         );
     }
 

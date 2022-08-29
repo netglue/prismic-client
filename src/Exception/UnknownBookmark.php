@@ -12,7 +12,7 @@ final class UnknownBookmark extends InvalidArgument
     {
         return new self(sprintf(
             'There is no bookmark available with the name %s',
-            $name
+            $name,
         ));
     }
 }

@@ -34,9 +34,7 @@ class EmbedTest extends TestCase
         return $tweet;
     }
 
-    /**
-     * @return Generator<array-key, array<Embed>>
-     */
+    /** @return Generator<array-key, array<Embed>> */
     public function embedProvider(): Generator
     {
         foreach ($this->embedCollection() as $key => $embed) {
@@ -77,9 +75,7 @@ class EmbedTest extends TestCase
         $this->assertArrayHasKey('provider_name', $attributes);
     }
 
-    /**
-     * @psalm-suppress InvalidArgument
-     */
+    /** @psalm-suppress InvalidArgument */
     public function testAnExceptionIsThrownSettingAnAttributeToANonScalarValue(): void
     {
         $this->expectException(InvalidArgument::class);
@@ -98,7 +94,7 @@ class EmbedTest extends TestCase
             '<html>',
             10,
             20,
-            []
+            [],
         );
 
         self::assertEquals('foo', $embed->type());

@@ -74,7 +74,7 @@ final class DocumentLink implements Fragment, Link
             $document->lang(),
             false,
             $document->tags(),
-            $document->url()
+            $document->url(),
         );
     }
 

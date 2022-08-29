@@ -24,7 +24,7 @@ class RequestFailure extends RuntimeException implements PrismicError
         return new self(
             $exception->getMessage(),
             (int) $exception->getCode(),
-            $exception
+            $exception,
         );
     }
 
@@ -33,7 +33,7 @@ class RequestFailure extends RuntimeException implements PrismicError
         $error = new self(sprintf(
             'The request to the URL "%s" resulted in a %d redirect. I don’t know what to do with that.',
             (string) $request->getUri(),
-            $response->getStatusCode()
+            $response->getStatusCode(),
         ), $response->getStatusCode());
         $error->request = $request;
         $error->response = $response;
@@ -56,7 +56,7 @@ class RequestFailure extends RuntimeException implements PrismicError
             'Error %d. The request to the URL "%s" was rejected by the api. The error response body was "%s"',
             $status,
             (string) $request->getUri(),
-            (string) $response->getBody()
+            (string) $response->getBody(),
         ), $response->getStatusCode());
         $error->request = $request;
         $error->response = $response;
@@ -69,7 +69,7 @@ class RequestFailure extends RuntimeException implements PrismicError
         $error = new self(sprintf(
             'The request to the URL "%s" resulted in a server error. The error response body was "%s"',
             (string) $request->getUri(),
-            (string) $response->getBody()
+            (string) $response->getBody(),
         ), $response->getStatusCode());
         $error->request = $request;
         $error->response = $response;

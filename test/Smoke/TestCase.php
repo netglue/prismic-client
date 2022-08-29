@@ -43,7 +43,7 @@ class TestCase extends PHPUnitTestCase
         if (! $this->httpClient) {
             $this->httpClient = new PluginClient(
                 HttpClientDiscovery::find(),
-                [new CachePlugin($this->psrCachePool(), Psr17FactoryDiscovery::findStreamFactory())]
+                [new CachePlugin($this->psrCachePool(), Psr17FactoryDiscovery::findStreamFactory())],
             );
         }
 
@@ -66,7 +66,7 @@ class TestCase extends PHPUnitTestCase
             return $endpoints;
         }
 
-        /** @psalm-suppress MissingFile $content */
+        /** @psalm-suppress MissingFile */
         $content = require $configPath;
         if (! is_array($content)) {
             return $endpoints;

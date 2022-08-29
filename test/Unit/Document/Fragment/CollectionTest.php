@@ -21,7 +21,7 @@ class CollectionTest extends TestCase
     public function testAnEmptyCollectionIsConsideredEmpty(): void
     {
         $this->assertTrue(
-            Collection::new([])->isEmpty()
+            Collection::new([])->isEmpty(),
         );
     }
 
@@ -38,7 +38,7 @@ class CollectionTest extends TestCase
     public function testACollectionWithNonEmptyFragmentIsNotConsideredEmpty(): void
     {
         $this->assertFalse(
-            Collection::new([StringFragment::new('Foo')])->isEmpty()
+            Collection::new([StringFragment::new('Foo')])->isEmpty(),
         );
     }
 

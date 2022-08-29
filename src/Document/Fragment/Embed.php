@@ -67,14 +67,10 @@ final class Embed implements Fragment
         }
     }
 
-    /**
-     * @param scalar|null $value
-     */
+    /** @param scalar|null $value */
     private function setAttribute(string $name, $value): void
     {
-        /**
-         * @psalm-suppress DocblockTypeContradiction
-         */
+        /** @psalm-suppress DocblockTypeContradiction */
         if ($value !== null && ! is_scalar($value)) {
             throw InvalidArgument::scalarExpected($value);
         }

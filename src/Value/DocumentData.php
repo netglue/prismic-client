@@ -103,7 +103,7 @@ final class DocumentData implements Document
             self::optionalStringProperty($data, 'url'),
             self::assertObjectPropertyAllString($data, 'tags'),
             $translations,
-            $body
+            $body,
         );
     }
 

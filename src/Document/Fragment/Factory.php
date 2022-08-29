@@ -92,7 +92,7 @@ final class Factory
         if (property_exists($data, 'latitude')) {
             return GeoPoint::new(
                 self::assertObjectPropertyIsFloaty($data, 'latitude'),
-                self::assertObjectPropertyIsFloaty($data, 'longitude')
+                self::assertObjectPropertyIsFloaty($data, 'longitude'),
             );
         }
 
@@ -165,7 +165,7 @@ final class Factory
             self::optionalStringProperty($data, 'alt'),
             self::optionalStringProperty($data, 'copyright'),
             $views,
-            $linkTo
+            $linkTo,
         );
     }
 
@@ -176,7 +176,7 @@ final class Factory
         if ($type === 'Web') {
             return WebLink::new(
                 self::assertObjectPropertyIsString($data, 'url'),
-                self::optionalStringProperty($data, 'target')
+                self::optionalStringProperty($data, 'target'),
             );
         }
 
@@ -213,7 +213,7 @@ final class Factory
                 $lang,
                 $isBroken,
                 self::assertObjectPropertyAllString($data, 'tags'),
-                self::optionalStringProperty($data, 'url')
+                self::optionalStringProperty($data, 'url'),
             );
         }
 
@@ -236,7 +236,7 @@ final class Factory
             self::optionalStringProperty($data, 'html'),
             self::optionalIntegerPropertyOrNull($data, 'width'),
             self::optionalIntegerPropertyOrNull($data, 'height'),
-            $scalars
+            $scalars,
         );
     }
 
@@ -255,7 +255,7 @@ final class Factory
             self::assertObjectPropertyIsString($data, 'slice_type'),
             self::optionalStringProperty($data, 'slice_label'),
             $primary,
-            $items
+            $items,
         );
     }
 
@@ -267,7 +267,7 @@ final class Factory
             array_map(static function (object $span): Span {
                 return self::spanFactory($span);
             }, self::assertObjectPropertyIsArray($data, 'spans')),
-            self::optionalStringProperty($data, 'label')
+            self::optionalStringProperty($data, 'label'),
         );
     }
 
@@ -287,7 +287,7 @@ final class Factory
             self::assertObjectPropertyIsInteger($data, 'start'),
             self::assertObjectPropertyIsInteger($data, 'end'),
             $label,
-            $link
+            $link,
         );
     }
 

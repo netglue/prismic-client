@@ -12,7 +12,7 @@ final class UnknownForm extends InvalidArgument
     {
         return new self(sprintf(
             'There is no form available with the name %s',
-            $name
+            $name,
         ));
     }
 }

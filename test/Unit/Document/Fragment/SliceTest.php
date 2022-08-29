@@ -68,7 +68,7 @@ class SliceTest extends TestCase
     /** @depends testThatASliceCanBeFound */
     public function testThatToStringWillYieldTheExpectedValue(Slice $slice): void
     {
-        $expect = <<<TEXT
+        $expect = <<<'TEXT'
             Heading 1
             Heading 2
             42

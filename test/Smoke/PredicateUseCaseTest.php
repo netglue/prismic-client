@@ -45,7 +45,7 @@ class PredicateUseCaseTest extends TestCase
                 $this->fail(sprintf(
                     'The full text search for "%s" failed with the error message: %s',
                     $term,
-                    $error->getMessage()
+                    $error->getMessage(),
                 ));
             }
         }

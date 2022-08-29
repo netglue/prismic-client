@@ -105,13 +105,13 @@ class HtmlSerializer
             case BooleanFragment::class:
                 return sprintf(
                     '<kbd class="boolean">%s</kbd>',
-                    $fragment() ? 'true' : 'false'
+                    $fragment() ? 'true' : 'false',
                 );
 
             case Number::class:
                 return sprintf(
                     '<kbd class="number">%d</kbd>',
-                    (string) $fragment
+                    (string) $fragment,
                 );
 
             case EmptyFragment::class:
@@ -123,21 +123,21 @@ class HtmlSerializer
             case StringFragment::class:
                 return sprintf(
                     '<kbd>%s</kbd>',
-                    $this->escaper->escapeHtml((string) $fragment)
+                    $this->escaper->escapeHtml((string) $fragment),
                 );
 
             case GeoPoint::class:
                 return sprintf(
                     '<span class="geopoint" data-latitude="%1$s" data-longitude="%2$s">%1$s, %2$s</span>',
                     $fragment->latitude(),
-                    $fragment->latitude()
+                    $fragment->latitude(),
                 );
 
             case Color::class:
                 return sprintf(
                     '<kbd class="color" style="background-color: %1$s; color: %2$s">%1$s</kbd>',
                     (string) $fragment,
-                    (string) $fragment->invert()
+                    (string) $fragment->invert(),
                 );
 
             case Image::class:
@@ -161,7 +161,7 @@ class HtmlSerializer
 
         throw new UnexpectedValue(sprintf(
             'I don’t know how to serialize %s instances',
-            get_class($fragment)
+            get_class($fragment),
         ));
     }
 
@@ -172,7 +172,7 @@ class HtmlSerializer
         return sprintf(
             '<time datetime="%s">%s</time>',
             $date->format($fragment->isDay() ? 'Y-m-d' : DateTimeInterface::ATOM),
-            $date->format($fragment->isDay() ? $this->dateFormat : $this->dateTimeFormat)
+            $date->format($fragment->isDay() ? $this->dateFormat : $this->dateTimeFormat),
         );
     }
 
@@ -190,7 +190,7 @@ class HtmlSerializer
         return sprintf(
             '<%1$s>%2$s</%1$s>',
             $htmlList instanceof OrderedList ? 'ol' : 'ul',
-            implode('', $items)
+            implode('', $items),
         );
     }
 
@@ -229,7 +229,7 @@ class HtmlSerializer
         return sprintf(
             '%s%s</a>',
             $openTag,
-            $wraps ?: (string) $link
+            $wraps ?: (string) $link,
         );
     }
 
@@ -266,7 +266,7 @@ class HtmlSerializer
             '<div%s>%s%s</div>',
             $this->htmlAttributes($attributes),
             $primary,
-            $items
+            $items,
         );
     }
 
@@ -284,7 +284,7 @@ class HtmlSerializer
             '<%1$s%2$s>%3$s</%1$s>',
             $this->tagMap[$fragment->type()],
             $attributes,
-            $this->insertSpans($fragment, $fragment->text(), $fragment->spans())
+            $this->insertSpans($fragment, $fragment->text(), $fragment->spans()),
         );
     }
 
@@ -367,7 +367,7 @@ class HtmlSerializer
         return sprintf(
             '<div%1$s>%2$s</div>',
             $attributes,
-            (string) $embed->html()
+            (string) $embed->html(),
         );
     }
 }

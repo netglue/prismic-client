@@ -18,7 +18,7 @@ abstract class TestCase extends PHPUnitTestCase
         if (! file_exists($path)) {
             $this->fail(sprintf(
                 'The JSON fixture %s does not exist',
-                $fileName
+                $fileName,
             ));
         }
 

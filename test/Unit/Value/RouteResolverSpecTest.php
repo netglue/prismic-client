@@ -22,7 +22,7 @@ class RouteResolverSpecTest extends TestCase
 
         self::assertEquals(
             $expect,
-            (string) (new RouteResolverSpec('mine', '/:category/:uid', ['category' => 'some-prop']))
+            (string) (new RouteResolverSpec('mine', '/:category/:uid', ['category' => 'some-prop'])),
         );
     }
 

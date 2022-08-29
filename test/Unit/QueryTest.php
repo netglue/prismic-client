@@ -84,9 +84,7 @@ class QueryTest extends TestCase
         return $queries;
     }
 
-    /**
-     * @dataProvider defaultUrlProvider
-     */
+    /** @dataProvider defaultUrlProvider */
     public function testDefaultUrl(Query $query, string $expectedUrl): void
     {
         $this->assertSame($expectedUrl, $query->toUrl());
@@ -123,15 +121,15 @@ class QueryTest extends TestCase
         $clone = $query->resultsPerPage(99);
         $this->assertStringContainsString(
             'pageSize=20',
-            $query->toUrl()
+            $query->toUrl(),
         );
         $this->assertStringContainsString(
             'pageSize=99',
-            $clone->toUrl()
+            $clone->toUrl(),
         );
         $this->assertStringNotContainsString(
             'pageSize=20',
-            $clone->toUrl()
+            $clone->toUrl(),
         );
     }
 
@@ -140,11 +138,11 @@ class QueryTest extends TestCase
     {
         $this->assertStringNotContainsString(
             'after=DOC_ID',
-            $query->toUrl()
+            $query->toUrl(),
         );
         $this->assertStringContainsString(
             'after=DOC_ID',
-            $query->after('DOC_ID')->toUrl()
+            $query->after('DOC_ID')->toUrl(),
         );
     }
 
@@ -153,11 +151,11 @@ class QueryTest extends TestCase
     {
         $this->assertStringContainsString(
             'page=1',
-            $query->toUrl()
+            $query->toUrl(),
         );
         $this->assertStringContainsString(
             'page=99',
-            $query->page(99)->toUrl()
+            $query->page(99)->toUrl(),
         );
     }
 
@@ -166,7 +164,7 @@ class QueryTest extends TestCase
     {
         $this->assertStringNotContainsString(
             'fetchLinks',
-            $query->toUrl()
+            $query->toUrl(),
         );
     }
 
@@ -175,7 +173,7 @@ class QueryTest extends TestCase
     {
         $this->assertStringNotContainsString(
             'fetch',
-            $query->toUrl()
+            $query->toUrl(),
         );
     }
 
@@ -184,7 +182,7 @@ class QueryTest extends TestCase
     {
         $this->assertStringContainsString(
             urlencode('first,second'),
-            $query->fetch('first', 'second')->toUrl()
+            $query->fetch('first', 'second')->toUrl(),
         );
     }
 
@@ -193,7 +191,7 @@ class QueryTest extends TestCase
     {
         $this->assertStringContainsString(
             urlencode('first,second'),
-            $query->fetch(...['first', 'second'])->toUrl()
+            $query->fetch(...['first', 'second'])->toUrl(),
         );
     }
 
@@ -202,7 +200,7 @@ class QueryTest extends TestCase
     {
         $this->assertStringContainsString(
             urlencode('first,second'),
-            $query->fetchLinks(...['first', 'second'])->toUrl()
+            $query->fetchLinks(...['first', 'second'])->toUrl(),
         );
     }
 
@@ -211,7 +209,7 @@ class QueryTest extends TestCase
     {
         $this->assertStringNotContainsString(
             'fetch=',
-            $query->fetch('first', 'second')->fetch()->toUrl()
+            $query->fetch('first', 'second')->fetch()->toUrl(),
         );
     }
 
@@ -220,7 +218,7 @@ class QueryTest extends TestCase
     {
         $this->assertStringNotContainsString(
             'fetchLinks=',
-            $query->fetchLinks('first', 'second')->fetchLinks()->toUrl()
+            $query->fetchLinks('first', 'second')->fetchLinks()->toUrl(),
         );
     }
 
@@ -272,7 +270,7 @@ class QueryTest extends TestCase
         $expect = urlencode('[a,b,c]');
         $this->assertStringContainsString(
             $expect,
-            $query->order('a', 'b', 'c')->toUrl()
+            $query->order('a', 'b', 'c')->toUrl(),
         );
     }
 
@@ -282,7 +280,7 @@ class QueryTest extends TestCase
         $expect = urlencode('[a,b,c]');
         $this->assertStringNotContainsString(
             $expect,
-            $query->order('a', 'b', 'c')->order()->toUrl()
+            $query->order('a', 'b', 'c')->order()->toUrl(),
         );
     }
 

@@ -23,8 +23,8 @@ class DocumentDataConsumerTest extends TestCase
         parent::setUp();
         $this->document = DocumentData::factory(
             Json::decodeObject(
-                $this->jsonFixtureByFileName('document.json')
-            )
+                $this->jsonFixtureByFileName('document.json'),
+            ),
         );
 
         $this->subject = new class ($this->document) implements Document

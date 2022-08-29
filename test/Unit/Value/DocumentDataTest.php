@@ -33,14 +33,14 @@ class DocumentDataTest extends TestCase
         parent::setUp();
         $this->document = DocumentData::factory(
             Json::decodeObject(
-                $this->jsonFixtureByFileName('document.json')
-            )
+                $this->jsonFixtureByFileName('document.json'),
+            ),
         );
 
         $this->documentWithUrl = DocumentData::factory(
             Json::decodeObject(
-                $this->jsonFixtureByFileName('document-with-url.json')
-            )
+                $this->jsonFixtureByFileName('document-with-url.json'),
+            ),
         );
     }
 
@@ -68,7 +68,7 @@ class DocumentDataTest extends TestCase
     {
         $this->assertSame(
             '2020-01-01 01:23:45 0',
-            $this->document->firstPublished()->format('Y-m-d H:i:s Z')
+            $this->document->firstPublished()->format('Y-m-d H:i:s Z'),
         );
     }
 
@@ -76,7 +76,7 @@ class DocumentDataTest extends TestCase
     {
         $this->assertSame(
             '2020-01-02 01:23:45 0',
-            $this->document->lastPublished()->format('Y-m-d H:i:s Z')
+            $this->document->lastPublished()->format('Y-m-d H:i:s Z'),
         );
     }
 
@@ -106,7 +106,7 @@ class DocumentDataTest extends TestCase
         assert($date instanceof DateFragment);
         $this->assertSame(
             '2020-02-03 00:00:00 0',
-            $date->format('Y-m-d H:i:s Z')
+            $date->format('Y-m-d H:i:s Z'),
         );
     }
 
@@ -116,7 +116,7 @@ class DocumentDataTest extends TestCase
         assert($date instanceof DateFragment);
         $this->assertSame(
             '2020-02-03 12:13:14 0',
-            $date->format('Y-m-d H:i:s Z')
+            $date->format('Y-m-d H:i:s Z'),
         );
     }
 
@@ -174,8 +174,8 @@ class DocumentDataTest extends TestCase
     {
         $data = DocumentData::factory(
             Json::decodeObject(
-                $this->jsonFixtureByFileName('document-lacking-pub-date.json')
-            )
+                $this->jsonFixtureByFileName('document-lacking-pub-date.json'),
+            ),
         );
 
         $minute = new DateInterval('PT60S');
@@ -197,8 +197,8 @@ class DocumentDataTest extends TestCase
     {
         $document = DocumentData::factory(
             Json::decodeObject(
-                $this->jsonFixtureByFileName('document-with-null-url.json')
-            )
+                $this->jsonFixtureByFileName('document-with-null-url.json'),
+            ),
         );
         self::assertNull($document->url());
     }

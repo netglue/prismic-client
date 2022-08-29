@@ -69,7 +69,7 @@ final class FormSpec implements IteratorAggregate
             self::assertObjectPropertyIsString($object, 'action'),
             ...array_map(static function (string $fieldName, object $spec): FormField {
                 return FormField::factory($fieldName, $spec);
-            }, array_keys($fields), $fields)
+            }, array_keys($fields), $fields),
         );
     }
 
