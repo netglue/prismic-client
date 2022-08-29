@@ -66,6 +66,7 @@ class TestCase extends PHPUnitTestCase
             return $endpoints;
         }
 
+        /** @psalm-suppress MissingFile */
         $content = require $configPath;
         if (! is_array($content)) {
             return $endpoints;
