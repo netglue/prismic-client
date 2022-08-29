@@ -6,6 +6,7 @@ namespace Prismic;
 
 use Prismic\Value\FormSpec;
 use Prismic\Value\Ref;
+use Prismic\Value\RouteResolverSpec;
 
 use function array_filter;
 use function array_map;
@@ -50,21 +51,21 @@ class Query
     /** @psalm-return QueryParams */
     private function mergeWithDefaults(): array
     {
-        $parameters = $this->defaultParameters();
+        $defaults = $this->defaultParameters();
         foreach ($this->parameters as $name => $value) {
             if (is_scalar($value)) {
-                $parameters[$name] = $value;
+                $defaults[$name] = $value;
                 continue;
             }
 
-            $merged = isset($parameters[$name]) && is_array($parameters[$name])
-                ? array_merge($parameters[$name], (array) $value)
+            $merged = isset($defaults[$name]) && is_array($defaults[$name])
+                ? array_merge($defaults[$name], (array) $value)
                 : $value;
 
-            $parameters[$name] = $merged;
+            $defaults[$name] = $merged;
         }
 
-        return $parameters;
+        return $defaults;
     }
 
     private function buildQuery(): string
@@ -234,6 +235,18 @@ class Query
     public function ref(Ref $ref): self
     {
         return $this->set('ref', (string) $ref);
+    }
+
+    /**
+     * Override or set Route Resolvers used to return document and link urls in received payloads
+     *
+     * If the api was initialised with a `routes` parameter, the query will be pre-populated with that value.
+     *
+     * @param list<RouteResolverSpec> $routes
+     */
+    public function routes(array $routes): self
+    {
+        return $this->set('routes', Json::encode($routes));
     }
 
     /**

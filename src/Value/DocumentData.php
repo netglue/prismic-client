@@ -39,6 +39,8 @@ final class DocumentData implements Document
     private $body;
     /** @var Translation[] */
     private $translations;
+    /** @var string|null */
+    private $url;
 
     /**
      * @param string[]      $tags
@@ -51,6 +53,7 @@ final class DocumentData implements Document
         string $lang,
         DateTimeImmutable $firstPublished,
         DateTimeImmutable $lastPublished,
+        ?string $url,
         iterable $tags,
         iterable $translations,
         FragmentCollection $body
@@ -61,6 +64,7 @@ final class DocumentData implements Document
         $this->lang = $lang;
         $this->firstPublished = $firstPublished;
         $this->lastPublished = $lastPublished;
+        $this->url = $url;
         $this->setTags(...$tags);
         $this->setTranslations(...$translations);
         $this->body = $body;
@@ -96,6 +100,7 @@ final class DocumentData implements Document
             self::assertObjectPropertyIsString($data, 'lang'),
             self::assertObjectPropertyIsUtcDateTime($data, 'first_publication_date'),
             self::assertObjectPropertyIsUtcDateTime($data, 'last_publication_date'),
+            self::optionalStringProperty($data, 'url'),
             self::assertObjectPropertyAllString($data, 'tags'),
             $translations,
             $body,
@@ -167,5 +172,10 @@ final class DocumentData implements Document
     public function data(): DocumentData
     {
         return $this;
+    }
+
+    public function url(): ?string
+    {
+        return $this->url;
     }
 }
