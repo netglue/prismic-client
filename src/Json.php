@@ -16,9 +16,7 @@ use const JSON_THROW_ON_ERROR;
 
 final class Json
 {
-    /**
-     * @throws JsonError If decoding the payload fails for any reason.
-     */
+    /** @throws JsonError If decoding the payload fails for any reason. */
     public static function decodeObject(string $jsonString): object
     {
         try {

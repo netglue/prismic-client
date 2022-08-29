@@ -17,7 +17,7 @@ class FormSpecTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $json = <<<EOF
+        $json = <<<'EOF'
         {
             "name" : "My Form",
             "rel" : "something",

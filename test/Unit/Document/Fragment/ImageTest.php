@@ -95,7 +95,7 @@ class ImageTest extends TestCase
         } catch (ImageViewNotFound $e) {
             self::assertStringContainsString(
                 'main, view-one, view-two',
-                $e->getMessage()
+                $e->getMessage(),
             );
         }
     }

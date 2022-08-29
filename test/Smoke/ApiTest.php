@@ -14,9 +14,7 @@ use function assert;
 use function count;
 use function sprintf;
 
-/**
- * @psalm-suppress DeprecatedMethod
- */
+/** @psalm-suppress DeprecatedMethod */
 class ApiTest extends TestCase
 {
     /**
@@ -30,7 +28,7 @@ class ApiTest extends TestCase
             assert($api instanceof Api);
             $response = $api->query(
                 $api->createQuery()
-                    ->resultsPerPage(10)
+                    ->resultsPerPage(10),
             );
             foreach ($response as $document) {
                 yield sprintf('%s: %s', $api->host(), $document->id()) => [$api, $document->id()];
@@ -59,7 +57,7 @@ class ApiTest extends TestCase
                 $response = $api->query(
                     $api->createQuery()
                         ->resultsPerPage(1)
-                        ->query(Predicate::has(sprintf('my.%s.uid', $type->id())))
+                        ->query(Predicate::has(sprintf('my.%s.uid', $type->id()))),
                 );
 
                 foreach ($response as $document) {

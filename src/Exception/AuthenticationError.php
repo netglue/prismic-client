@@ -22,7 +22,7 @@ final class AuthenticationError extends RequestFailure
             $response->getStatusCode(),
             $response->getReasonPhrase(),
             $request->getUri()->getHost(),
-            $url
+            $url,
         ), $response->getStatusCode());
         $error->request = $request;
         $error->response = $response;

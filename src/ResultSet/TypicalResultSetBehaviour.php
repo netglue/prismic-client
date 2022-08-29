@@ -11,9 +11,7 @@ use Traversable;
 use function count;
 use function reset;
 
-/**
- * @template T of Document
- */
+/** @template T of Document */
 trait TypicalResultSetBehaviour
 {
     /** @var list<T> */

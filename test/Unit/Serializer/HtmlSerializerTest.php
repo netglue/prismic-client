@@ -64,8 +64,8 @@ class HtmlSerializerTest extends TestCase
     {
         $document = DocumentData::factory(
             Json::decodeObject(
-                $this->jsonFixtureByFileName('document.json')
-            )
+                $this->jsonFixtureByFileName('document.json'),
+            ),
         );
 
         ($this->serializer)($document->content());
@@ -152,13 +152,11 @@ class HtmlSerializerTest extends TestCase
         $richText = $this->richTextSpansFixture();
         $this->assertEquals(
             $expectedMarkup,
-            ($this->serializer)($richText->get($fragmentIndex))
+            ($this->serializer)($richText->get($fragmentIndex)),
         );
     }
 
-    /**
-     * @return array<string, array{0: int, 1: string}>
-     */
+    /** @return array<string, array{0: int, 1: string}> */
     public function richTextBlockElementsData(): array
     {
         return [
@@ -208,7 +206,7 @@ class HtmlSerializerTest extends TestCase
         $fragment = $richText->get($fragmentIndex);
         self::assertEquals(
             $expectedMarkup,
-            ($this->serializer)($fragment)
+            ($this->serializer)($fragment),
         );
     }
 

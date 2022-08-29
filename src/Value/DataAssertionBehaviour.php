@@ -169,7 +169,7 @@ trait DataAssertionBehaviour
         $date = DateTimeImmutable::createFromFormat(
             DateTimeInterface::ATOM,
             self::assertObjectPropertyIsString($object, $property),
-            new DateTimeZone('UTC')
+            new DateTimeZone('UTC'),
         );
         assert($date instanceof DateTimeImmutable);
 

@@ -16,7 +16,7 @@ final class InvalidPreviewToken extends InvalidArgument
         return new self(sprintf(
             'The preview url has been rejected because its host name "%s" does not match the api host "%s"',
             $previewUri->getHost(),
-            $apiUri->getHost()
+            $apiUri->getHost(),
         ));
     }
 

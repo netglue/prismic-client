@@ -89,7 +89,7 @@ final class StandardResultSet implements ResultSet
             self::assertObjectPropertyIsInteger($data, 'total_pages'),
             self::optionalStringProperty($data, 'next_page'),
             self::optionalStringProperty($data, 'prev_page'),
-            $results
+            $results,
         );
     }
 
@@ -121,7 +121,7 @@ final class StandardResultSet implements ResultSet
             max($this->pageCount - 1, 1),
             $with->nextPage(),
             $this->prevPage,
-            $results
+            $results,
         );
     }
 }

@@ -12,9 +12,7 @@ use function array_keys;
 use function array_map;
 use function get_object_vars;
 
-/**
- * @psalm-suppress DeprecatedClass, DeprecatedMethod
- */
+/** @psalm-suppress DeprecatedClass, DeprecatedMethod */
 final class ApiData
 {
     use DataAssertionBehaviour;
@@ -80,7 +78,7 @@ final class ApiData
             $tags,
             array_map(static function (string $name, string $id): Bookmark {
                 return Bookmark::new($name, $id);
-            }, array_keys($bookmarks), $bookmarks)
+            }, array_keys($bookmarks), $bookmarks),
         );
     }
 
@@ -100,9 +98,7 @@ final class ApiData
         return $this->getForm($name) instanceof FormSpec;
     }
 
-    /**
-     * @throws UnknownForm if $name does not correspond to a known form.
-     */
+    /** @throws UnknownForm if $name does not correspond to a known form. */
     public function form(string $name): FormSpec
     {
         $form = $this->getForm($name);
@@ -136,17 +132,13 @@ final class ApiData
         return $this->tags;
     }
 
-    /**
-     * @deprecated Bookmarks are deprecated - Removal in v2.0.
-     */
+    /** @deprecated Bookmarks are deprecated - Removal in v2.0. */
     public function isBookmarked(string $id): bool
     {
         return $this->bookmarkFromDocumentId($id) instanceof Bookmark;
     }
 
-    /**
-     * @deprecated Bookmarks are deprecated - Removal in v2.0.
-     */
+    /** @deprecated Bookmarks are deprecated - Removal in v2.0. */
     public function bookmarkFromDocumentId(string $id): ?Bookmark
     {
         foreach ($this->bookmarks as $bookmark) {

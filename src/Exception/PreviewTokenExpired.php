@@ -47,7 +47,7 @@ final class PreviewTokenExpired extends RequestFailure
     {
         $error = new self(sprintf(
             'Error %d. The preview token provided has expired',
-            $response->getStatusCode()
+            $response->getStatusCode(),
         ), $response->getStatusCode());
         $error->request = $request;
         $error->response = $response;
