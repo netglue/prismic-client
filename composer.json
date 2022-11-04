@@ -38,7 +38,7 @@
         "ext-json": "*",
         "laminas/laminas-escaper": "^2.9",
         "php-http/discovery": "^1.14.1",
-        "psr/cache": "^1.0.0 || ^2.0.0",
+        "psr/cache": "^1.0.0 || ^2.0.0 || ^3.0.0",
         "psr/http-client-implementation": "*",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
