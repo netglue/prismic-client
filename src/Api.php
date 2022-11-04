@@ -175,12 +175,6 @@ final class Api implements ApiClient
 
         // Keys must be hashed to prevent cache exceptions due to invalid characters
         $cacheKey = sha1($method . ' ' . $uri);
-        /**
-         * psr-cache v1 exceptions do not implement throwable. When 7.3 and 7.4 are dropped, cache can be upgraded
-         * and the suppression can be dropped
-         *
-         * @psalm-suppress InvalidCatch
-         */
         try {
             $item = $this->cache->getItem($cacheKey);
         } catch (InvalidPsrCacheKey $e) {
