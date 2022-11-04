@@ -12,15 +12,14 @@ use Prismic\Link;
 
 class DefaultLinkResolverTest extends TestCase
 {
-    /** @var DefaultLinkResolver */
-    private $linkResolver;
+    private DefaultLinkResolver $linkResolver;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->linkResolver = new class extends DefaultLinkResolver {
-            protected function resolveDocumentLink(DocumentLink $link): ?string
+            protected function resolveDocumentLink(DocumentLink $link): string|null
             {
                 return '/some/url';
             }

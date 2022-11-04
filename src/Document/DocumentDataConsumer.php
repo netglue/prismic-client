@@ -65,7 +65,7 @@ trait DocumentDataConsumer
         return $this->data;
     }
 
-    public function url(): ?string
+    public function url(): string|null
     {
         return $this->data->url();
     }

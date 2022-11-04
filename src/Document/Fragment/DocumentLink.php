@@ -101,7 +101,7 @@ final class DocumentLink implements Fragment, Link
         return false;
     }
 
-    public function url(): ?string
+    public function url(): string|null
     {
         return $this->url;
     }
