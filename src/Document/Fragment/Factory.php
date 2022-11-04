@@ -210,6 +210,7 @@ final class Factory
                 $lang,
                 $isBroken,
                 self::assertObjectPropertyAllString($data, 'tags'),
+                self::optionalStringProperty($data, 'url'),
             );
         }
 

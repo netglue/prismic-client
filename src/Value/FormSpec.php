@@ -30,6 +30,12 @@ final class FormSpec implements IteratorAggregate
         FormField ...$fields,
     ) {
         $this->fields = $fields;
+
+        if ($this->hasField('routes')) {
+            return;
+        }
+
+        $this->fields[] = FormField::new('routes', FormField::TYPE_STRING, false, null);
     }
 
     public static function factory(string $id, object $object): self
@@ -106,7 +112,7 @@ final class FormSpec implements IteratorAggregate
     }
 
     /**
-     * @return FormField[]
+     * @return Traversable<array-key, FormField>
      * @psalm-return ArrayIterator<array-key, FormField>
      */
     public function getIterator(): Traversable
