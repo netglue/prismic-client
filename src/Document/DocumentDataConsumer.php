@@ -11,15 +11,14 @@ use Prismic\Value\Translation;
 
 trait DocumentDataConsumer
 {
-    /** @var DocumentData */
-    private $data;
+    private DocumentData $data;
 
     public function id(): string
     {
         return $this->data->id();
     }
 
-    public function uid(): ?string
+    public function uid(): string|null
     {
         return $this->data->uid();
     }

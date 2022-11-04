@@ -93,8 +93,7 @@ trait DataAssertionBehaviour
         return $value;
     }
 
-    /** @param mixed $mixed */
-    private static function assertString($mixed): string
+    private static function assertString(mixed $mixed): string
     {
         if (! is_string($mixed)) {
             throw new UnexpectedValue('Expected a string');
@@ -122,7 +121,7 @@ trait DataAssertionBehaviour
         return $value;
     }
 
-    private static function optionalStringProperty(object $object, string $property): ?string
+    private static function optionalStringProperty(object $object, string $property): string|null
     {
         if (! property_exists($object, $property)) {
             return null;
@@ -141,7 +140,7 @@ trait DataAssertionBehaviour
     }
 
     /** @return mixed[]|null */
-    private static function optionalArrayProperty(object $object, string $property): ?array
+    private static function optionalArrayProperty(object $object, string $property): array|null
     {
         if (! property_exists($object, $property) || ! $object->{$property}) {
             return null;
@@ -150,7 +149,7 @@ trait DataAssertionBehaviour
         return self::assertObjectPropertyIsArray($object, $property);
     }
 
-    private static function optionalIntegerPropertyOrNull(object $object, string $property): ?int
+    private static function optionalIntegerPropertyOrNull(object $object, string $property): int|null
     {
         if (! property_exists($object, $property) || $object->{$property} === null) {
             return null;

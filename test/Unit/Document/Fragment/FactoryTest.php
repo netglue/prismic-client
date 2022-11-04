@@ -49,12 +49,11 @@ class FactoryTest extends TestCase
     }
 
     /**
-     * @param scalar|null  $value
      * @param class-string $expectedType
      *
      * @dataProvider scalarTypes
      */
-    public function testScalarValues($value, string $expectedType): void
+    public function testScalarValues(string|int|float|bool|null $value, string $expectedType): void
     {
         $fragment = Factory::factory($value);
         $this->assertInstanceOf($expectedType, $fragment);

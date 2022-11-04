@@ -12,8 +12,7 @@ use PrismicTest\Framework\TestCase;
 
 class SliceTest extends TestCase
 {
-    /** @var FragmentCollection */
-    private $slices;
+    private FragmentCollection $slices;
 
     protected function setUp(): void
     {

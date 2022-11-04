@@ -137,12 +137,8 @@ class PredicateTest extends TestCase
         ];
     }
 
-    /**
-     * @param numeric $value
-     *
-     * @dataProvider ltProvider
-     */
-    public function testNumberLT(string $fragment, $value, string $expect): void
+    /** @dataProvider ltProvider */
+    public function testNumberLT(string $fragment, int|float|string $value, string $expect): void
     {
         $predicate = Predicate::lt($fragment, $value);
         $this->assertEquals($expect, $predicate->q());
@@ -164,12 +160,8 @@ class PredicateTest extends TestCase
         ];
     }
 
-    /**
-     * @param numeric $value
-     *
-     * @dataProvider gtProvider
-     */
-    public function testNumberGt(string $fragment, $value, string $expect): void
+    /** @dataProvider gtProvider */
+    public function testNumberGt(string $fragment, int|float|string $value, string $expect): void
     {
         $predicate = Predicate::gt($fragment, $value);
         $this->assertEquals($expect, $predicate->q());
@@ -191,13 +183,8 @@ class PredicateTest extends TestCase
         ];
     }
 
-    /**
-     * @param numeric $low
-     * @param numeric $high
-     *
-     * @dataProvider rangeProvider
-     */
-    public function testNumberInRange(string $fragment, $low, $high, string $expect): void
+    /** @dataProvider rangeProvider */
+    public function testNumberInRange(string $fragment, int|float|string $low, int|float|string $high, string $expect): void
     {
         $predicate = Predicate::inRange($fragment, $low, $high);
         $this->assertEquals($expect, $predicate->q());

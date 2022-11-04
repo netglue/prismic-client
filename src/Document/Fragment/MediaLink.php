@@ -9,27 +9,17 @@ use Prismic\UrlLink;
 
 final class MediaLink implements Fragment, UrlLink
 {
-    /** @var string */
-    private $url;
-    /** @var string */
-    private $fileName;
-    /** @var int */
-    private $fileSize;
-
     private function __construct(
-        string $url,
-        string $fileName,
-        int $fileSize
+        private string $url,
+        private string $fileName,
+        private int $fileSize,
     ) {
-        $this->url = $url;
-        $this->fileName = $fileName;
-        $this->fileSize = $fileSize;
     }
 
     public static function new(
         string $url,
         string $fileName,
-        int $fileSize
+        int $fileSize,
     ): self {
         return new self($url, $fileName, $fileSize);
     }

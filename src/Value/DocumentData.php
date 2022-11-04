@@ -21,49 +21,28 @@ final class DocumentData implements Document
 {
     use DataAssertionBehaviour;
 
-    /** @var string */
-    private $id;
-    /** @var string|null */
-    private $uid;
-    /** @var string */
-    private $type;
-    /** @var string */
-    private $lang;
-    /** @var DateTimeImmutable */
-    private $firstPublished;
-    /** @var DateTimeImmutable */
-    private $lastPublished;
     /** @var string[] */
-    private $tags;
-    /** @var FragmentCollection */
-    private $body;
+    private array $tags;
     /** @var Translation[] */
-    private $translations;
+    private array $translations;
 
     /**
      * @param string[]      $tags
      * @param Translation[] $translations
      */
     private function __construct(
-        string $id,
-        ?string $uid,
-        string $type,
-        string $lang,
-        DateTimeImmutable $firstPublished,
-        DateTimeImmutable $lastPublished,
+        private string $id,
+        private string|null $uid,
+        private string $type,
+        private string $lang,
+        private DateTimeImmutable $firstPublished,
+        private DateTimeImmutable $lastPublished,
         iterable $tags,
         iterable $translations,
-        FragmentCollection $body
+        private FragmentCollection $body,
     ) {
-        $this->id = $id;
-        $this->uid = $uid;
-        $this->type = $type;
-        $this->lang = $lang;
-        $this->firstPublished = $firstPublished;
-        $this->lastPublished = $lastPublished;
         $this->setTags(...$tags);
         $this->setTranslations(...$translations);
-        $this->body = $body;
     }
 
     public static function factory(object $data): self
@@ -107,7 +86,7 @@ final class DocumentData implements Document
         return $this->id;
     }
 
-    public function uid(): ?string
+    public function uid(): string|null
     {
         return $this->uid;
     }

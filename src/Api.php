@@ -52,23 +52,8 @@ use function urldecode;
  */
 final class Api implements ApiClient
 {
-    /** @var ClientInterface */
-    private $httpClient;
-
-    /** @var UriInterface */
-    private $baseUri;
-
-    /** @var ApiData|null */
-    private $data;
-
-    /** @var RequestFactoryInterface */
-    private $requestFactory;
-
-    /** @var string|null */
-    private $accessToken;
-
-    /** @var UriFactoryInterface */
-    private $uriFactory;
+    private UriInterface $baseUri;
+    private ApiData|null $data = null;
 
     /**
      * Request cookies to inspect for preview or experiment refs
@@ -77,35 +62,19 @@ final class Api implements ApiClient
      *
      * @var array<array-key, mixed>
      */
-    private $requestCookies;
-
-    /**
-     * This factory is responsible for creating result sets from HTTP responses
-     *
-     * @var ResultSetFactory
-     */
-    private $resultSetFactory;
-
-    /** @var CacheItemPoolInterface|null */
-    private $cache;
+    private array $requestCookies;
 
     private function __construct(
         string $apiBaseUri,
-        ClientInterface $httpClient,
-        ?string $accessToken,
-        RequestFactoryInterface $requestFactory,
-        UriFactoryInterface $uriFactory,
-        ResultSetFactory $resultSetFactory,
-        ?CacheItemPoolInterface $cache
+        private ClientInterface $httpClient,
+        private string|null $accessToken,
+        private RequestFactoryInterface $requestFactory,
+        private UriFactoryInterface $uriFactory,
+        private ResultSetFactory $resultSetFactory,
+        private CacheItemPoolInterface|null $cache,
     ) {
         $this->requestCookies = $_COOKIE;
-        $this->uriFactory = $uriFactory;
         $this->baseUri = $uriFactory->createUri($apiBaseUri);
-        $this->httpClient = $httpClient;
-        $this->requestFactory = $requestFactory;
-        $this->accessToken = $accessToken;
-        $this->resultSetFactory = $resultSetFactory;
-        $this->cache = $cache;
     }
 
     /**
@@ -115,12 +84,12 @@ final class Api implements ApiClient
      */
     public static function get(
         string $apiBaseUri,
-        ?string $accessToken = null,
-        ?ClientInterface $httpClient = null,
-        ?RequestFactoryInterface $requestFactory = null,
-        ?UriFactoryInterface $uriFactory = null,
-        ?ResultSetFactory $resultSetFactory = null,
-        ?CacheItemPoolInterface $cache = null
+        string|null $accessToken = null,
+        ClientInterface|null $httpClient = null,
+        RequestFactoryInterface|null $requestFactory = null,
+        UriFactoryInterface|null $uriFactory = null,
+        ResultSetFactory|null $resultSetFactory = null,
+        CacheItemPoolInterface|null $cache = null,
     ): self {
         /** @psalm-suppress PossiblyInvalidArgument */
         return new self(
@@ -148,11 +117,9 @@ final class Api implements ApiClient
      * @param T|null $instance
      * @param class-string<ClientInterface>|class-string<RequestFactoryInterface>|class-string<UriFactoryInterface> $type
      *
-     * @return ClientInterface|RequestFactoryInterface|UriFactoryInterface
-     *
      * @template T of object
      */
-    private static function psrFactory(string $type, string $message)
+    private static function psrFactory(string $type, string $message): ClientInterface|RequestFactoryInterface|UriFactoryInterface
     {
         try {
             switch ($type) {
@@ -251,7 +218,7 @@ final class Api implements ApiClient
         UriInterface $uri,
         string $method,
         ResponseInterface $response,
-        CacheItemInterface $item
+        CacheItemInterface $item,
     ): void {
         assert($this->cache !== null);
         $data = [
@@ -316,12 +283,12 @@ final class Api implements ApiClient
         ));
     }
 
-    public function queryFirst(Query $query): ?Document
+    public function queryFirst(Query $query): Document|null
     {
         return $this->query($query)->first();
     }
 
-    public function findById(string $id): ?Document
+    public function findById(string $id): Document|null
     {
         $query = $this->createQuery()
             ->lang('*')
@@ -330,7 +297,7 @@ final class Api implements ApiClient
         return $this->queryFirst($query);
     }
 
-    public function findByUid(string $type, string $uid, string $lang = '*'): ?Document
+    public function findByUid(string $type, string $uid, string $lang = '*'): Document|null
     {
         $path = sprintf('my.%s.uid', $type);
         $query = $this->createQuery()
@@ -340,12 +307,17 @@ final class Api implements ApiClient
         return $this->queryFirst($query);
     }
 
-    public function findByBookmark(string $bookmark): ?Document
+    public function findByBookmark(string $bookmark): Document|null
     {
         return $this->findById($this->data()->bookmark($bookmark)->documentId());
     }
 
-    /** @param scalar $value */
+    /**
+     * @param scalar $value
+     *
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @todo Add native type hint in 2.0.0
+     */
     private function uriWithQueryValue(UriInterface $uri, string $parameter, $value): UriInterface
     {
         $params = [];
@@ -364,7 +336,7 @@ final class Api implements ApiClient
     /**
      * If a preview cookie is set, return the ref stored in that cookie
      */
-    private function previewRef(): ?Ref
+    private function previewRef(): Ref|null
     {
         $cookieNames = [
             str_replace(['.', ' '], '_', self::PREVIEW_COOKIE),
@@ -385,7 +357,7 @@ final class Api implements ApiClient
                 if (array_key_exists('_tracker', $decodedPayload) && count($decodedPayload) === 1) {
                     continue;
                 }
-            } catch (JsonError $error) {
+            } catch (JsonError) {
             }
 
             return Ref::new(
@@ -440,7 +412,7 @@ final class Api implements ApiClient
         return $uri;
     }
 
-    public function previewSession(string $token): ?DocumentLink
+    public function previewSession(string $token): DocumentLink|null
     {
         $uri = $this->validatePreviewToken($token);
         $responseBody = $this->decodeResponse($this->sendRequest($uri));
@@ -456,7 +428,7 @@ final class Api implements ApiClient
         return null;
     }
 
-    public function next(ResultSet $resultSet): ?ResultSet
+    public function next(ResultSet $resultSet): ResultSet|null
     {
         $nextPage = $resultSet->nextPage();
         if (! $nextPage) {
@@ -473,7 +445,7 @@ final class Api implements ApiClient
         );
     }
 
-    public function previous(ResultSet $resultSet): ?ResultSet
+    public function previous(ResultSet $resultSet): ResultSet|null
     {
         $previousPage = $resultSet->previousPage();
         if (! $previousPage) {

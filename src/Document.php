@@ -19,7 +19,7 @@ interface Document
      *
      * It is possible for the uid to be null
      */
-    public function uid(): ?string;
+    public function uid(): string|null;
 
     /** The document type */
     public function type(): string;

@@ -37,12 +37,12 @@ interface ResultSet extends IteratorAggregate, Countable
     /**
      * Absolute URL to retrieve the next page of results from the remote api.
      */
-    public function nextPage(): ?string;
+    public function nextPage(): string|null;
 
     /**
      * Absolute URL to retrieve the previous page of results from the remote api.
      */
-    public function previousPage(): ?string;
+    public function previousPage(): string|null;
 
     /**
      * Return the document results as an array
@@ -63,7 +63,7 @@ interface ResultSet extends IteratorAggregate, Countable
      *
      * @psalm-return T|null
      */
-    public function first(): ?Document;
+    public function first(): Document|null;
 
     /**
      * Merge the results of two responses together.

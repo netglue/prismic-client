@@ -8,24 +8,15 @@ final class Translation
 {
     use DataAssertionBehaviour;
 
-    /** @var string */
-    private $id;
-    /** @var string|null */
-    private $uid;
-    /** @var string */
-    private $type;
-    /** @var string */
-    private $lang;
-
-    private function __construct(string $id, ?string $uid, string $type, string $lang)
-    {
-        $this->id = $id;
-        $this->uid = $uid;
-        $this->type = $type;
-        $this->lang = $lang;
+    private function __construct(
+        private string $id,
+        private string|null $uid,
+        private string $type,
+        private string $lang,
+    ) {
     }
 
-    public static function new(string $id, ?string $uid, string $type, string $lang): self
+    public static function new(string $id, string|null $uid, string $type, string $lang): self
     {
         return new self($id, $uid, $type, $lang);
     }
@@ -45,7 +36,7 @@ final class Translation
         return $this->id;
     }
 
-    public function documentUid(): ?string
+    public function documentUid(): string|null
     {
         return $this->uid;
     }

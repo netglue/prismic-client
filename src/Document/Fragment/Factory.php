@@ -33,14 +33,12 @@ final class Factory
     {
     }
 
-    /** @param mixed $data */
-    public function __invoke($data): Fragment
+    public function __invoke(mixed $data): Fragment
     {
         return self::factory($data);
     }
 
-    /** @param mixed $data */
-    public static function factory($data): Fragment
+    public static function factory(mixed $data): Fragment
     {
         if (is_scalar($data)) {
             return self::scalarFactory($data);
@@ -57,8 +55,7 @@ final class Factory
         return new EmptyFragment();
     }
 
-    /** @param int|float|bool|string $data */
-    private static function scalarFactory($data): Fragment
+    private static function scalarFactory(int|float|bool|string $data): Fragment
     {
         if (is_bool($data)) {
             return BooleanFragment::new($data);

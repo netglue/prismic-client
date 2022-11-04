@@ -9,29 +9,13 @@ use Prismic\UrlLink;
 
 final class ImageLink implements Fragment, UrlLink
 {
-    /** @var string */
-    private $url;
-    /** @var string */
-    private $fileName;
-    /** @var int */
-    private $fileSize;
-    /** @var int */
-    private $width;
-    /** @var int */
-    private $height;
-
     private function __construct(
-        string $url,
-        string $fileName,
-        int $fileSize,
-        int $width,
-        int $height
+        private string $url,
+        private string $fileName,
+        private int $fileSize,
+        private int $width,
+        private int $height,
     ) {
-        $this->url = $url;
-        $this->fileName = $fileName;
-        $this->fileSize = $fileSize;
-        $this->width = $width;
-        $this->height = $height;
     }
 
     public static function new(
@@ -39,7 +23,7 @@ final class ImageLink implements Fragment, UrlLink
         string $fileName,
         int $fileSize,
         int $width,
-        int $height
+        int $height,
     ): self {
         return new self($url, $fileName, $fileSize, $width, $height);
     }

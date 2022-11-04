@@ -9,12 +9,8 @@ use Stringable;
 
 final class StringFragment implements Fragment, Stringable
 {
-    /** @var string */
-    private $value;
-
-    private function __construct(string $value)
+    private function __construct(private string $value)
     {
-        $this->value = $value;
     }
 
     public static function new(string $value): self
