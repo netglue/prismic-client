@@ -19,7 +19,7 @@ interface Document
      *
      * It is possible for the uid to be null
      */
-    public function uid(): ?string;
+    public function uid(): string|null;
 
     /** The document type */
     public function type(): string;
@@ -52,5 +52,5 @@ interface Document
     /**
      * If the api has been configured with a route for this type of document, the url might be a string
      */
-    public function url(): ?string;
+    public function url(): string|null;
 }

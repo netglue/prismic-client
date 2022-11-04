@@ -18,8 +18,7 @@ use function urlencode;
 
 class QueryTest extends TestCase
 {
-    /** @var object|null */
-    private $formData;
+    private object|null $formData = null;
 
     /**
      * @return object{everything: object, withQuery: object, collection: object, withRoutes: object}

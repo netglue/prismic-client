@@ -17,6 +17,7 @@ use Psr\Http\Message\ResponseInterface;
 
 use function array_map;
 use function array_merge;
+use function assert;
 use function count;
 use function current;
 use function is_string;
@@ -34,11 +35,8 @@ final class StandardResultSet implements ResultSet
     /** @use TypicalResultSetBehaviour<T> */
     use TypicalResultSetBehaviour;
 
-    /** @var DateTimeImmutable|null */
-    private $cacheDate;
-
-    /** @var int|null */
-    private $maxAge;
+    private DateTimeInterface|null $cacheDate = null;
+    private int|null $maxAge = null;
 
     /** @param list<T> $results */
     private function __construct(
@@ -46,9 +44,9 @@ final class StandardResultSet implements ResultSet
         int $perPage,
         int $totalResults,
         int $pageCount,
-        ?string $nextPage,
-        ?string $prevPage,
-        array $results
+        string|null $nextPage,
+        string|null $prevPage,
+        array $results,
     ) {
         $this->page = $page;
         $this->perPage = $perPage;
@@ -106,6 +104,8 @@ final class StandardResultSet implements ResultSet
         if (! $this->cacheDate || ! $this->maxAge) {
             return (new DateTimeImmutable())->setTimezone(new DateTimeZone('UTC'));
         }
+
+        assert($this->cacheDate instanceof DateTimeImmutable);
 
         return $this->cacheDate->add(new DateInterval(sprintf('PT%dS', $this->maxAge)));
     }

@@ -49,12 +49,11 @@ class FactoryTest extends TestCase
     }
 
     /**
-     * @param scalar|null  $value
      * @param class-string $expectedType
      *
      * @dataProvider scalarTypes
      */
-    public function testScalarValues($value, string $expectedType): void
+    public function testScalarValues(string|int|float|bool|null $value, string $expectedType): void
     {
         $fragment = Factory::factory($value);
         $this->assertInstanceOf($expectedType, $fragment);
@@ -337,7 +336,7 @@ class FactoryTest extends TestCase
     }
 
     /** @dataProvider documentLinkProvider */
-    public function testThatDocumentLinksWithReadyMadeUrlsWillHaveTheExpectedValue(string $json, ?string $expect): void
+    public function testThatDocumentLinksWithReadyMadeUrlsWillHaveTheExpectedValue(string $json, string|null $expect): void
     {
         $data = Json::decodeObject($json);
         $link = Factory::factory($data);
@@ -346,12 +345,11 @@ class FactoryTest extends TestCase
     }
 
     /**
-     * @param scalar|null  $value
      * @param class-string $expectedType
      *
      * @dataProvider scalarTypes
      */
-    public function testThatTheFactoryCanBeNewedAndInvoked($value, string $expectedType): void
+    public function testThatTheFactoryCanBeNewedAndInvoked(string|int|float|bool|null $value, string $expectedType): void
     {
         $factory = new Factory();
         $fragment = $factory($value);

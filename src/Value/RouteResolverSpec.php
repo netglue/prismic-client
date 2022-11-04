@@ -12,21 +12,12 @@ use const JSON_FORCE_OBJECT;
 
 final class RouteResolverSpec implements JsonSerializable, Stringable
 {
-    /** @var string */
-    private $type;
-
-    /** @var string */
-    private $path;
-
-    /** @var array<string, string> */
-    private $resolvers;
-
     /** @param array<string, string> $resolvers */
-    public function __construct(string $type, string $path, array $resolvers)
-    {
-        $this->type = $type;
-        $this->path = $path;
-        $this->resolvers = $resolvers;
+    public function __construct(
+        private string $type,
+        private string $path,
+        private array $resolvers,
+    ) {
     }
 
     public function __toString(): string

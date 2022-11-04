@@ -14,5 +14,5 @@ interface LinkResolver
      *
      * Implementors should return null if it is not possible to resolve a DocumentLink.
      */
-    public function resolve(Link $link): ?string;
+    public function resolve(Link $link): string|null;
 }

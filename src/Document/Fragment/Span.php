@@ -8,27 +8,16 @@ use Prismic\Link;
 
 final class Span
 {
-    /** @var string */
-    private $type;
-    /** @var int */
-    private $start;
-    /** @var int */
-    private $end;
-    /** @var string|null */
-    private $label;
-    /** @var Link|null */
-    private $link;
-
-    private function __construct(string $type, int $start, int $end, ?string $label, ?Link $link)
-    {
-        $this->type = $type;
-        $this->start = $start;
-        $this->end = $end;
-        $this->label = $label;
-        $this->link = $link;
+    private function __construct(
+        private string $type,
+        private int $start,
+        private int $end,
+        private string|null $label,
+        private Link|null $link,
+    ) {
     }
 
-    public static function new(string $type, int $start, int $end, ?string $label, ?Link $link): self
+    public static function new(string $type, int $start, int $end, string|null $label, Link|null $link): self
     {
         return new self($type, $start, $end, $label, $link);
     }
@@ -48,12 +37,12 @@ final class Span
         return $this->end;
     }
 
-    public function label(): ?string
+    public function label(): string|null
     {
         return $this->label;
     }
 
-    public function link(): ?Link
+    public function link(): Link|null
     {
         return $this->link;
     }

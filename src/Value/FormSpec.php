@@ -17,36 +17,18 @@ final class FormSpec implements IteratorAggregate
 {
     use DataAssertionBehaviour;
 
-    /** @var string */
-    private $id;
-    /** @var string|null */
-    private $name;
-    /** @var string */
-    private $method;
-    /** @var string|null */
-    private $rel;
-    /** @var string */
-    private $encType;
-    /** @var string */
-    private $action;
     /** @var FormField[] */
-    private $fields;
+    private array $fields;
 
     private function __construct(
-        string $id,
-        ?string $name,
-        string $method,
-        ?string $rel,
-        string $encType,
-        string $action,
-        FormField ...$fields
+        private string $id,
+        private string|null $name,
+        private string $method,
+        private string|null $rel,
+        private string $encType,
+        private string $action,
+        FormField ...$fields,
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->method = $method;
-        $this->rel = $rel;
-        $this->encType = $encType;
-        $this->action = $action;
         $this->fields = $fields;
 
         if ($this->hasField('routes')) {
@@ -73,12 +55,12 @@ final class FormSpec implements IteratorAggregate
         );
     }
 
-    public function name(): ?string
+    public function name(): string|null
     {
         return $this->name;
     }
 
-    public function rel(): ?string
+    public function rel(): string|null
     {
         return $this->rel;
     }
@@ -103,7 +85,7 @@ final class FormSpec implements IteratorAggregate
         return $this->encType;
     }
 
-    private function getField(string $name): ?FormField
+    private function getField(string $name): FormField|null
     {
         foreach ($this->fields as $field) {
             if ($field->name() === $name) {

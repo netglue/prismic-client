@@ -106,12 +106,8 @@ class FormFieldTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $value
-     *
-     * @dataProvider invalidNumbers
-     */
-    public function testInvalidIntegerValues($value): void
+    /** @dataProvider invalidNumbers */
+    public function testInvalidIntegerValues(mixed $value): void
     {
         $field = FormField::factory('foo', Json::decodeObject('{
             "type":"Integer",
@@ -135,12 +131,8 @@ class FormFieldTest extends TestCase
         ];
     }
 
-    /**
-     * @param mixed $value
-     *
-     * @dataProvider invalidStrings
-     */
-    public function testInvalidStringValues($value): void
+    /** @dataProvider invalidStrings */
+    public function testInvalidStringValues(mixed $value): void
     {
         $field = FormField::factory('foo', Json::decodeObject('{
             "type":"String",

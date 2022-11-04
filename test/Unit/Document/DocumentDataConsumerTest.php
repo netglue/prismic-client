@@ -12,11 +12,9 @@ use PrismicTest\Framework\TestCase;
 
 class DocumentDataConsumerTest extends TestCase
 {
-    /** @var DocumentData */
-    private $document;
+    private DocumentData $document;
 
-    /** @var Document */
-    private $subject;
+    private Document $subject;
 
     protected function setUp(): void
     {

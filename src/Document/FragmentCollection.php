@@ -12,6 +12,9 @@ use Stringable;
 /**
  * @template-covariant T of Fragment
  * @template-extends IteratorAggregate<array-key, T>
+ * @phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+ * @phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+ * @todo Add native parameter and return type hints in 2.0.0
  */
 interface FragmentCollection extends Fragment, IteratorAggregate, Countable, Stringable
 {

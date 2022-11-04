@@ -51,11 +51,9 @@ final class Json
     /**
      * Decode a json string without enforcing the return type
      *
-     * @return mixed
-     *
      * @throws JsonError If decoding the payload fails for any reason.
      */
-    public static function decode(string $jsonString, bool $asArray)
+    public static function decode(string $jsonString, bool $asArray): mixed
     {
         try {
             return json_decode($jsonString, $asArray, 512, JSON_THROW_ON_ERROR);
@@ -64,12 +62,8 @@ final class Json
         }
     }
 
-    /**
-     * @param mixed $value
-     *
-     * @throws JsonError If encoding the value fails for any reason.
-     */
-    public static function encode($value, int $flags = 0): string
+    /** @throws JsonError If encoding the value fails for any reason. */
+    public static function encode(mixed $value, int $flags = 0): string
     {
         try {
             return json_encode($value, JSON_THROW_ON_ERROR | $flags);

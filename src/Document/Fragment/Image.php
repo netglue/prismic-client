@@ -18,41 +18,20 @@ use function count;
 /** @template-implements IteratorAggregate<string, Image> */
 final class Image implements Fragment, IteratorAggregate, Countable
 {
-    /** @var string */
-    private $name;
-    /** @var string */
-    private $url;
-    /** @var int */
-    private $width;
-    /** @var int */
-    private $height;
-    /** @var string|null */
-    private $alt;
-    /** @var string|null */
-    private $copyright;
     /** @var array<string, self> */
-    private $views;
-    /** @var Link|null */
-    private $link;
+    private array $views;
 
     /** @param self[] $views */
     private function __construct(
-        string $name,
-        string $url,
-        int $width,
-        int $height,
-        ?string $alt,
-        ?string $copyright,
-        ?iterable $views,
-        ?Link $linkTo
+        private string $name,
+        private string $url,
+        private int $width,
+        private int $height,
+        private string|null $alt,
+        private string|null $copyright,
+        iterable|null $views,
+        private Link|null $link,
     ) {
-        $this->name = $name;
-        $this->url = $url;
-        $this->width = $width;
-        $this->height = $height;
-        $this->alt = $alt;
-        $this->copyright = $copyright;
-        $this->link = $linkTo;
         $this->views = [];
         $this->addView($this);
         if (! $views) {
@@ -70,10 +49,10 @@ final class Image implements Fragment, IteratorAggregate, Countable
         string $url,
         int $width,
         int $height,
-        ?string $alt,
-        ?string $copyright,
-        ?iterable $views,
-        ?Link $linkTo
+        string|null $alt,
+        string|null $copyright,
+        iterable|null $views,
+        Link|null $linkTo,
     ): self {
         return new self($name, $url, $width, $height, $alt, $copyright, $views, $linkTo);
     }
@@ -103,7 +82,7 @@ final class Image implements Fragment, IteratorAggregate, Countable
         return array_keys($this->views);
     }
 
-    public function alt(): ?string
+    public function alt(): string|null
     {
         return $this->alt;
     }
@@ -123,12 +102,12 @@ final class Image implements Fragment, IteratorAggregate, Countable
         return $this->url;
     }
 
-    public function copyright(): ?string
+    public function copyright(): string|null
     {
         return $this->copyright;
     }
 
-    public function linkTo(): ?Link
+    public function linkTo(): Link|null
     {
         return $this->link;
     }

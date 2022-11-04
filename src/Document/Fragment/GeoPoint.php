@@ -11,16 +11,8 @@ use function sprintf;
 
 final class GeoPoint implements Fragment, Stringable
 {
-    /** @var float */
-    private $latitude;
-
-    /** @var float */
-    private $longitude;
-
-    private function __construct(float $lat, float $lng)
+    private function __construct(private float $latitude, private float $longitude)
     {
-        $this->latitude  = $lat;
-        $this->longitude = $lng;
     }
 
     public static function new(float $lat, float $lng): self

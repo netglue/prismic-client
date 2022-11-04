@@ -11,37 +11,19 @@ use function is_scalar;
 
 final class Embed implements Fragment
 {
-    /** @var string */
-    private $type;
-    /** @var string */
-    private $url;
     /** @var array<string, int|float|bool|string|null> */
-    private $attributes;
-    /** @var string|null */
-    private $provider;
-    /** @var string|null */
-    private $html;
-    /** @var int|null */
-    private $width;
-    /** @var int|null */
-    private $height;
+    private array $attributes;
 
     /** @param iterable<string, int|float|bool|string|null> $attributes */
     private function __construct(
-        string $type,
-        string $url,
-        ?string $provider,
-        ?string $html,
-        ?int $width,
-        ?int $height,
-        iterable $attributes
+        private string $type,
+        private string $url,
+        private string|null $provider,
+        private string|null $html,
+        private int|null $width,
+        private int|null $height,
+        iterable $attributes,
     ) {
-        $this->type = $type;
-        $this->url = $url;
-        $this->provider = $provider;
-        $this->html = $html;
-        $this->width = $width;
-        $this->height = $height;
         $this->attributes = [];
         $this->setAttributes($attributes);
     }
@@ -50,11 +32,11 @@ final class Embed implements Fragment
     public static function new(
         string $type,
         string $url,
-        ?string $provider,
-        ?string $html,
-        ?int $width,
-        ?int $height,
-        iterable $attributes
+        string|null $provider,
+        string|null $html,
+        int|null $width,
+        int|null $height,
+        iterable $attributes,
     ): self {
         return new self($type, $url, $provider, $html, $width, $height, $attributes);
     }
@@ -67,11 +49,9 @@ final class Embed implements Fragment
         }
     }
 
-    /** @param scalar|null $value */
-    private function setAttribute(string $name, $value): void
+    private function setAttribute(string $name, mixed $value): void
     {
-        /** @psalm-suppress DocblockTypeContradiction */
-        if ($value !== null && ! is_scalar($value)) {
+        if (! is_scalar($value) && $value !== null) {
             throw InvalidArgument::scalarExpected($value);
         }
 
@@ -88,22 +68,22 @@ final class Embed implements Fragment
         return $this->type;
     }
 
-    public function provider(): ?string
+    public function provider(): string|null
     {
         return $this->provider;
     }
 
-    public function html(): ?string
+    public function html(): string|null
     {
         return $this->html;
     }
 
-    public function width(): ?int
+    public function width(): int|null
     {
         return $this->width;
     }
 
-    public function height(): ?int
+    public function height(): int|null
     {
         return $this->height;
     }
@@ -119,7 +99,12 @@ final class Embed implements Fragment
         return false;
     }
 
-    /** @return string|int|float|bool|null */
+    /**
+     * @return string|int|float|bool|null
+     *
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @todo Add native return type hint in 2.0.0
+     */
     public function attribute(string $name)
     {
         return $this->attributes[$name] ?? null;

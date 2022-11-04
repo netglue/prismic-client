@@ -17,19 +17,6 @@ final class ApiData
 {
     use DataAssertionBehaviour;
 
-    /** @var Ref[] */
-    private $refs;
-    /** @var Bookmark[] */
-    private $bookmarks;
-    /** @var Type[] */
-    private $types;
-    /** @var Language[] */
-    private $languages;
-    /** @var string[] */
-    private $tags;
-    /** @var FormSpec[] */
-    private $forms;
-
     /**
      * @param array<array-key, Ref>      $refs
      * @param array<array-key, Type>     $types
@@ -39,19 +26,13 @@ final class ApiData
      * @param array<array-key, Bookmark> $bookmarks
      */
     private function __construct(
-        array $refs,
-        array $types,
-        array $languages,
-        array $forms,
-        array $tags,
-        array $bookmarks
+        private array $refs,
+        private array $types,
+        private array $languages,
+        private array $forms,
+        private array $tags,
+        private array $bookmarks,
     ) {
-        $this->refs = $refs;
-        $this->types = $types;
-        $this->languages = $languages;
-        $this->forms = $forms;
-        $this->tags = $tags;
-        $this->bookmarks = $bookmarks;
     }
 
     public static function factory(object $payload): ApiData
@@ -82,7 +63,7 @@ final class ApiData
         );
     }
 
-    private function getForm(string $name): ?FormSpec
+    private function getForm(string $name): FormSpec|null
     {
         foreach ($this->forms as $form) {
             if ($form->id() === $name) {
@@ -139,7 +120,7 @@ final class ApiData
     }
 
     /** @deprecated Bookmarks are deprecated - Removal in v2.0. */
-    public function bookmarkFromDocumentId(string $id): ?Bookmark
+    public function bookmarkFromDocumentId(string $id): Bookmark|null
     {
         foreach ($this->bookmarks as $bookmark) {
             if ($bookmark->documentId() === $id) {

@@ -11,8 +11,7 @@ use PrismicTest\TestLinkResolver;
 
 class HtmlSerializerTest extends TestCase
 {
-    /** @var HtmlSerializer */
-    private $serializer;
+    private HtmlSerializer $serializer;
 
     protected function setUp(): void
     {

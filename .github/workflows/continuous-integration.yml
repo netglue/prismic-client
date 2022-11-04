@@ -4,31 +4,43 @@ on:
   pull_request:
   push:
     branches:
+      - '[0-9]+.[0-9]+.x'
     tags:
 
 jobs:
-  matrix:
-    name: Generate job matrix
+  ci:
+    uses: laminas/workflow-continuous-integration/.github/workflows/continuous-integration.yml@1.x
+  coverage:
+    name: PHPUnit Coverage
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.matrix.outputs.matrix }}
     steps:
-      - name: Gather CI configuration
-        id: matrix
-        uses: laminas/laminas-ci-matrix-action@v1
-
-  qa:
-    name: QA Checks
-    needs: [matrix]
-    runs-on: ${{ matrix.operatingSystem }}
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
-    steps:
-      - name: ${{ matrix.name }}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-          PRISMIC_REPO: ${{ secrets.PRISMIC_REPO }}
-        uses: laminas/laminas-continuous-integration-action@v1
+      - uses: actions/checkout@v3
+      - uses: shivammathur/setup-php@v2
         with:
-          job: ${{ matrix.job }}
+          php-version: 8.0
+          extensions: pcov
+          coverage: pcov
+          ini-values: pcov.enabled=1
+      - uses: "ramsey/composer-install@2.1.0"
+      - run: php ./vendor/bin/phpunit --coverage-clover=coverage.xml
+      - uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          fail_ci_if_error: false
+
+  composer-require-checker:
+    name: "Check for missing dependencies"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.1
+      - uses: "ramsey/composer-install@2.1.0"
+        with:
+          dependency-versions: "highest"
+      - run: composer global config bin-dir /usr/local/bin
+      - run: composer global require -W maglnet/composer-require-checker
+      - run: /usr/local/bin/composer-require-checker check

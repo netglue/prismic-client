@@ -13,17 +13,12 @@ use function is_int;
 
 final class Number implements Fragment, Stringable
 {
-    /** @var int|float */
-    private $value;
-
-    /** @param int|float $number */
-    private function __construct($number)
+    private function __construct(private int|float $value)
     {
-        $this->value = $number;
     }
 
     /** @param int|float $number */
-    public static function new($number): self
+    public static function new(mixed $number): self
     {
         /** @psalm-suppress DocblockTypeContradiction */
         if (! is_int($number) && ! is_float($number)) {
@@ -43,7 +38,12 @@ final class Number implements Fragment, Stringable
         return is_int($this->value);
     }
 
-    /** @return int|float */
+    /**
+     * @return int|float
+     *
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     * @todo Add native type hint in 2.0.0
+     */
     public function value()
     {
         return $this->value;

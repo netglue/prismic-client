@@ -23,11 +23,9 @@ use function is_string;
 
 class TestCase extends PHPUnitTestCase
 {
-    /** @var CacheItemPoolInterface|null */
-    private static $cache;
+    private static CacheItemPoolInterface|null $cache = null;
 
-    /** @var ClientInterface|null */
-    private $httpClient;
+    private ClientInterface|null $httpClient = null;
 
     protected function psrCachePool(): CacheItemPoolInterface
     {

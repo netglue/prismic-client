@@ -23,10 +23,8 @@ use function reset;
 
 class DocumentDataTest extends TestCase
 {
-    /** @var DocumentData */
-    private $document;
-    /** @var DocumentData */
-    private $documentWithUrl;
+    private DocumentData $document;
+    private DocumentData $documentWithUrl;
 
     protected function setUp(): void
     {

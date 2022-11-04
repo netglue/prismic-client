@@ -8,28 +8,25 @@ use InvalidArgumentException;
 use Prismic\Json;
 use Prismic\Value\FormField;
 
-use function get_class;
 use function gettype;
 use function is_object;
 use function sprintf;
 
 class InvalidArgument extends InvalidArgumentException implements PrismicError
 {
-    /** @param mixed $received */
-    public static function scalarExpected($received): self
+    public static function scalarExpected(mixed $received): self
     {
         return new self(sprintf(
             'A scalar argument was expected but %s was received',
-            is_object($received) ? get_class($received) : gettype($received),
+            is_object($received) ? $received::class : gettype($received),
         ));
     }
 
-    /** @param mixed $received */
-    public static function numberExpected($received): self
+    public static function numberExpected(mixed $received): self
     {
         return new self(sprintf(
             'Either a float or an integer was expected but %s was received',
-            is_object($received) ? get_class($received) : gettype($received),
+            is_object($received) ? $received::class : gettype($received),
         ));
     }
 
@@ -59,23 +56,21 @@ class InvalidArgument extends InvalidArgumentException implements PrismicError
         ));
     }
 
-    /** @param mixed $invalidValue */
-    public static function fieldExpectsString(FormField $field, $invalidValue): self
+    public static function fieldExpectsString(FormField $field, mixed $invalidValue): self
     {
         return new self(sprintf(
             'The form field "%s" expects a string value but received %s',
             $field->name(),
-            is_object($invalidValue) ? get_class($invalidValue) : gettype($invalidValue),
+            is_object($invalidValue) ? $invalidValue::class : gettype($invalidValue),
         ));
     }
 
-    /** @param mixed $invalidValue */
-    public static function fieldExpectsNumber(FormField $field, $invalidValue): self
+    public static function fieldExpectsNumber(FormField $field, mixed $invalidValue): self
     {
         return new self(sprintf(
             'The form field "%s" expects an integer value but received %s',
             $field->name(),
-            is_object($invalidValue) ? get_class($invalidValue) : gettype($invalidValue),
+            is_object($invalidValue) ? $invalidValue::class : gettype($invalidValue),
         ));
     }
 }

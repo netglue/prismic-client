@@ -24,19 +24,14 @@ use function urlencode;
  */
 class Query
 {
-    /** @var FormSpec */
-    private $form;
-
     /**
      * @var array<string, mixed>
      * @psalm-var QueryParams
      */
-    private $parameters;
+    private array $parameters = [];
 
-    public function __construct(FormSpec $form)
+    public function __construct(private FormSpec $form)
     {
-        $this->form = $form;
-        $this->parameters = [];
     }
 
     public function toUrl(): string
@@ -90,7 +85,12 @@ class Query
         return implode('&', $query);
     }
 
-    /** @param int|string $value */
+    /**
+     * @param int|string $value
+     *
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+     * @todo Add native type hint in 2.0.0
+     */
     public function set(string $key, $value): self
     {
         $field = $this->form->field($key);

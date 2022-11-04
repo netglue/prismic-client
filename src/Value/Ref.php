@@ -12,21 +12,12 @@ use function is_string;
 
 final class Ref implements Stringable
 {
-    /** @var string */
-    private $id;
-    /** @var string */
-    private $ref;
-    /** @var string */
-    private $label;
-    /** @var bool */
-    private $isMasterRef;
-
-    private function __construct(string $id, string $ref, string $label, bool $isMasterRef)
-    {
-        $this->id = $id;
-        $this->ref = $ref;
-        $this->label = $label;
-        $this->isMasterRef = $isMasterRef;
+    private function __construct(
+        private string $id,
+        private string $ref,
+        private string $label,
+        private bool $isMasterRef,
+    ) {
     }
 
     public static function new(string $id, string $ref, string $label, bool $isMasterRef): self

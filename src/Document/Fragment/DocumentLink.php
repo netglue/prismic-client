@@ -11,36 +11,18 @@ use Prismic\Link;
 final class DocumentLink implements Fragment, Link
 {
     /** @var string[] */
-    private $tags;
-    /** @var string */
-    private $id;
-    /** @var string|null */
-    private $uid;
-    /** @var string */
-    private $type;
-    /** @var string */
-    private $lang;
-    /** @var bool */
-    private $isBroken;
-    /** @var string|null */
-    private $url;
+    private array $tags;
 
     /** @param string[] $tags */
     private function __construct(
-        string $id,
-        ?string $uid,
-        string $type,
-        string $lang,
-        bool $isBroken,
+        private string $id,
+        private string|null $uid,
+        private string $type,
+        private string $lang,
+        private bool $isBroken,
         iterable $tags,
-        ?string $url
+        private string|null $url,
     ) {
-        $this->id = $id;
-        $this->uid = $uid;
-        $this->type = $type;
-        $this->lang = $lang;
-        $this->isBroken = $isBroken;
-        $this->url = $url;
         $this->tags = [];
         foreach ($tags as $tag) {
             $this->addTag($tag);
@@ -55,12 +37,12 @@ final class DocumentLink implements Fragment, Link
     /** @param string[] $tags */
     public static function new(
         string $id,
-        ?string $uid,
+        string|null $uid,
         string $type,
         string $lang,
         bool $isBroken = false,
         iterable $tags = [],
-        ?string $url = null
+        string|null $url = null,
     ): self {
         return new self($id, $uid, $type, $lang, $isBroken, $tags, $url);
     }
@@ -83,7 +65,7 @@ final class DocumentLink implements Fragment, Link
         return $this->id;
     }
 
-    public function uid(): ?string
+    public function uid(): string|null
     {
         return $this->uid;
     }
@@ -119,7 +101,7 @@ final class DocumentLink implements Fragment, Link
         return false;
     }
 
-    public function url(): ?string
+    public function url(): string|null
     {
         return $this->url;
     }

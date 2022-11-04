@@ -8,12 +8,8 @@ use Prismic\Document\Fragment;
 
 final class BooleanFragment implements Fragment
 {
-    /** @var bool */
-    private $value;
-
-    private function __construct(bool $value)
+    private function __construct(private bool $value)
     {
-        $this->value = $value;
     }
 
     public static function new(bool $value): self
