@@ -19,8 +19,7 @@ use function strpos;
 
 final class PreviewTokenExpired extends RequestFailure
 {
-    /** @var string[] */
-    private static $magicWords = [
+    private const MAGIC_WORDS = [
         'preview',
         'token',
         'expired',
@@ -55,7 +54,7 @@ final class PreviewTokenExpired extends RequestFailure
         return $error;
     }
 
-    private static function extractErrorMessage(object $payload): ?string
+    private static function extractErrorMessage(object $payload): string|null
     {
         foreach (['error', 'message'] as $key) {
             if (! property_exists($payload, $key)) {
@@ -78,6 +77,6 @@ final class PreviewTokenExpired extends RequestFailure
     {
         $words = array_map('strtolower', explode(' ', $error));
 
-        return count(array_intersect($words, self::$magicWords)) === count(self::$magicWords);
+        return count(array_intersect($words, self::MAGIC_WORDS)) === count(self::MAGIC_WORDS);
     }
 }

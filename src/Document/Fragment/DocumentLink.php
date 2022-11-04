@@ -11,32 +11,17 @@ use Prismic\Link;
 final class DocumentLink implements Fragment, Link
 {
     /** @var string[] */
-    private $tags;
-    /** @var string */
-    private $id;
-    /** @var string|null */
-    private $uid;
-    /** @var string */
-    private $type;
-    /** @var string */
-    private $lang;
-    /** @var bool */
-    private $isBroken;
+    private array $tags;
 
     /** @param string[] $tags */
     private function __construct(
-        string $id,
-        ?string $uid,
-        string $type,
-        string $lang,
-        bool $isBroken,
-        iterable $tags
+        private string $id,
+        private string|null $uid,
+        private string $type,
+        private string $lang,
+        private bool $isBroken,
+        iterable $tags,
     ) {
-        $this->id = $id;
-        $this->uid = $uid;
-        $this->type = $type;
-        $this->lang = $lang;
-        $this->isBroken = $isBroken;
         $this->tags = [];
         foreach ($tags as $tag) {
             $this->addTag($tag);
@@ -51,11 +36,11 @@ final class DocumentLink implements Fragment, Link
     /** @param string[] $tags */
     public static function new(
         string $id,
-        ?string $uid,
+        string|null $uid,
         string $type,
         string $lang,
         bool $isBroken = false,
-        iterable $tags = []
+        iterable $tags = [],
     ): self {
         return new self($id, $uid, $type, $lang, $isBroken, $tags);
     }
@@ -77,7 +62,7 @@ final class DocumentLink implements Fragment, Link
         return $this->id;
     }
 
-    public function uid(): ?string
+    public function uid(): string|null
     {
         return $this->uid;
     }

@@ -9,20 +9,13 @@ use Prismic\UrlLink;
 
 final class WebLink implements Fragment, UrlLink
 {
-    /** @var string */
-    private $url;
-    /** @var string|null */
-    private $target;
-
     private function __construct(
-        string $url,
-        ?string $target
+        private string $url,
+        private string|null $target,
     ) {
-        $this->url = $url;
-        $this->target = $target;
     }
 
-    public static function new(string $url, ?string $target): self
+    public static function new(string $url, string|null $target): self
     {
         return new self($url, $target);
     }
@@ -32,7 +25,7 @@ final class WebLink implements Fragment, UrlLink
         return $this->url;
     }
 
-    public function target(): ?string
+    public function target(): string|null
     {
         return $this->target;
     }

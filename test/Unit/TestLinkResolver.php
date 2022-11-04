@@ -11,7 +11,7 @@ use function sprintf;
 
 class TestLinkResolver extends DefaultLinkResolver
 {
-    protected function resolveDocumentLink(DocumentLink $link): ?string
+    protected function resolveDocumentLink(DocumentLink $link): string|null
     {
         if ($link->isBroken()) {
             return null;

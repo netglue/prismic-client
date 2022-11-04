@@ -15,8 +15,7 @@ use function assert;
 
 class ImageTest extends TestCase
 {
-    /** @var FragmentCollection */
-    private $collection;
+    private FragmentCollection $collection;
 
     protected function setUp(): void
     {

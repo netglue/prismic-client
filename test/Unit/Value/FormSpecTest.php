@@ -11,8 +11,7 @@ use PrismicTest\Framework\TestCase;
 
 class FormSpecTest extends TestCase
 {
-    /** @var FormSpec */
-    private $form;
+    private FormSpec $form;
 
     protected function setUp(): void
     {

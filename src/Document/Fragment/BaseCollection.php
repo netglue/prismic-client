@@ -28,7 +28,11 @@ use const PHP_EOL;
  */
 abstract class BaseCollection implements FragmentCollection
 {
-    /** @var array<array-key, Fragment> */
+    /**
+     * @var array<array-key, Fragment>
+     * @phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+     * @todo Add native type hint in 2.0.0
+     */
     protected $fragments;
 
     /** @param iterable<array-key, Fragment> $fragments */

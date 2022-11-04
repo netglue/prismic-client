@@ -14,8 +14,7 @@ use PrismicTest\Framework\TestCase;
 
 class StandardResultTest extends TestCase
 {
-    /** @var StandardResultSet */
-    private $resultSet;
+    private StandardResultSet $resultSet;
 
     protected function setUp(): void
     {

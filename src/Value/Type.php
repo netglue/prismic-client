@@ -9,15 +9,8 @@ use Stringable;
 
 final class Type implements JsonSerializable, Stringable
 {
-    /** @var string */
-    private $id;
-    /** @var string */
-    private $name;
-
-    private function __construct(string $id, string $name)
+    private function __construct(private string $id, private string $name)
     {
-        $this->id = $id;
-        $this->name = $name;
     }
 
     public static function new(string $id, string $name): self

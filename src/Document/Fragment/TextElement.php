@@ -22,24 +22,16 @@ final class TextElement implements Fragment, Stringable
     public const TYPE_PARAGRAPH = 'paragraph';
     public const TYPE_PREFORMATTED = 'preformatted';
 
-    /** @var string */
-    private $type;
-
-    /** @var string */
-    private $text;
-
     /** @var Span[] */
-    private $spans;
-
-    /** @var string|null */
-    private $label;
+    private array $spans;
 
     /** @param Span[] $spans */
-    private function __construct(string $type, string $text, iterable $spans, ?string $label)
-    {
-        $this->type = $type;
-        $this->text = $text;
-        $this->label = $label;
+    private function __construct(
+        private string $type,
+        private string $text,
+        iterable $spans,
+        private string|null $label,
+    ) {
         $this->spans = [];
         foreach ($spans as $span) {
             $this->addSpan($span);
@@ -49,9 +41,9 @@ final class TextElement implements Fragment, Stringable
     /** @param Span[] $spans */
     public static function new(
         string $type,
-        ?string $text,
+        string|null $text,
         iterable $spans,
-        ?string $label
+        string|null $label,
     ): self {
         return new self(
             $type,
@@ -72,7 +64,7 @@ final class TextElement implements Fragment, Stringable
         return $this->label !== null;
     }
 
-    public function label(): ?string
+    public function label(): string|null
     {
         return $this->label;
     }
@@ -82,7 +74,7 @@ final class TextElement implements Fragment, Stringable
         return $this->type;
     }
 
-    public function text(): ?string
+    public function text(): string|null
     {
         return $this->text;
     }

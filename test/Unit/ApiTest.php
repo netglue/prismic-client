@@ -43,11 +43,9 @@ use const CURLOPT_TIMEOUT_MS;
 
 class ApiTest extends TestCase
 {
-    /** @var MockClient */
-    private $httpClient;
+    private MockClient $httpClient;
 
-    /** @var JsonResponse */
-    private $response;
+    private JsonResponse $response;
 
     private const DOCUMENT_PREVIEW_PAYLOAD = <<<'JSON'
         {
@@ -240,7 +238,7 @@ class ApiTest extends TestCase
      */
     public function testThatAPreviewRefIsReturnedWhenRequestCookiesArePresent(
         array $cookiePayload,
-        string $expectedRef
+        string $expectedRef,
     ): void {
         $this->httpClient->setDefaultResponse($this->response);
         $api = Api::get('https://example.com', null, $this->httpClient);
@@ -378,7 +376,7 @@ class ApiTest extends TestCase
     /** @dataProvider previewHostVariations */
     public function testThatAnExceptionIsNotThrownWithCdnVariationsOfApiHostNames(
         string $configuredHost,
-        string $tokenHost
+        string $tokenHost,
     ): void {
         $api = Api::get(sprintf('https://%s', $configuredHost), null, $this->httpClient);
         $previewResponse = new JsonResponse(Json::decodeObject(self::NO_DOCUMENT_PREVIEW_PAYLOAD));

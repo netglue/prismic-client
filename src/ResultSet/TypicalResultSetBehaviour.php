@@ -15,25 +15,13 @@ use function reset;
 trait TypicalResultSetBehaviour
 {
     /** @var list<T> */
-    private $results;
-
-    /** @var int */
-    private $page;
-
-    /** @var int */
-    private $perPage;
-
-    /** @var int */
-    private $totalResults;
-
-    /** @var int */
-    private $pageCount;
-
-    /** @var string|null */
-    private $nextPage;
-
-    /** @var string|null */
-    private $prevPage;
+    private array $results;
+    private int $page;
+    private int $perPage;
+    private int $totalResults;
+    private int $pageCount;
+    private string|null $nextPage;
+    private string|null $prevPage;
 
     public function currentPageNumber(): int
     {
@@ -55,12 +43,12 @@ trait TypicalResultSetBehaviour
         return $this->pageCount;
     }
 
-    public function nextPage(): ?string
+    public function nextPage(): string|null
     {
         return $this->nextPage;
     }
 
-    public function previousPage(): ?string
+    public function previousPage(): string|null
     {
         return $this->prevPage;
     }
@@ -78,7 +66,7 @@ trait TypicalResultSetBehaviour
     }
 
     /** @psalm-return T|null */
-    public function first(): ?Document
+    public function first(): Document|null
     {
         $first = reset($this->results);
 

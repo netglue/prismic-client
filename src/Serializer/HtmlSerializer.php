@@ -38,7 +38,6 @@ use function array_walk;
 use function assert;
 use function count;
 use function date_default_timezone_get;
-use function get_class;
 use function implode;
 use function is_array;
 use function is_string;
@@ -50,18 +49,12 @@ use const PREG_SPLIT_NO_EMPTY;
 
 class HtmlSerializer
 {
-    /** @var string */
-    private $dateFormat = 'l jS F Y';
-    /** @var string */
-    private $dateTimeFormat = 'l jS F Y H:i:s';
-    /** @var DateTimeZone */
-    private $timezone;
-    /** @var Escaper */
-    private $escaper;
-    /** @var LinkResolver */
-    private $resolver;
-    /** @var string[] */
-    private $tagMap = [
+    private string $dateFormat = 'l jS F Y';
+    private string $dateTimeFormat = 'l jS F Y H:i:s';
+    private DateTimeZone $timezone;
+    private Escaper $escaper;
+    /** @var array<string, string> */
+    private array $tagMap = [
         TextElement::TYPE_HEADING1 => 'h1',
         TextElement::TYPE_HEADING2 => 'h2',
         TextElement::TYPE_HEADING3 => 'h3',
@@ -74,9 +67,8 @@ class HtmlSerializer
         TextElement::TYPE_UNORDERED_LIST_ITEM => 'li',
     ];
 
-    public function __construct(LinkResolver $resolver)
+    public function __construct(private LinkResolver $resolver)
     {
-        $this->resolver = $resolver;
         $this->timezone = new DateTimeZone(date_default_timezone_get());
         $this->escaper = new Escaper();
     }
@@ -101,7 +93,7 @@ class HtmlSerializer
 
     private function serializeFragment(Fragment $fragment): string
     {
-        switch (get_class($fragment)) {
+        switch ($fragment::class) {
             case BooleanFragment::class:
                 return sprintf(
                     '<kbd class="boolean">%s</kbd>',
@@ -161,7 +153,7 @@ class HtmlSerializer
 
         throw new UnexpectedValue(sprintf(
             'I don’t know how to serialize %s instances',
-            get_class($fragment),
+            $fragment::class,
         ));
     }
 
@@ -204,7 +196,7 @@ class HtmlSerializer
         return empty($atrs) ? '' : ' ' . $atrs;
     }
 
-    private function linkOpenTag(Link $link): ?string
+    private function linkOpenTag(Link $link): string|null
     {
         $url = $this->resolver->resolve($link);
         if (! $url) {
@@ -219,7 +211,7 @@ class HtmlSerializer
         return sprintf('<a%s>', $this->htmlAttributes($attributes));
     }
 
-    private function link(Link $link, ?string $wraps = null): string
+    private function link(Link $link, string|null $wraps = null): string
     {
         $openTag = $this->linkOpenTag($link);
         if (! $openTag) {

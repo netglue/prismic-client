@@ -7,15 +7,8 @@ namespace Prismic\Value;
 /** @deprecated Bookmarks are deprecated - Removal in v2.0. */
 final class Bookmark
 {
-    /** @var string */
-    private $name;
-    /** @var string */
-    private $id;
-
-    private function __construct(string $name, string $id)
+    private function __construct(private string $name, private string $id)
     {
-        $this->name = $name;
-        $this->id = $id;
     }
 
     public static function new(string $name, string $id): self

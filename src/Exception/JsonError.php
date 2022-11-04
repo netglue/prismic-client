@@ -10,8 +10,7 @@ use function sprintf;
 
 final class JsonError extends JsonException implements PrismicError
 {
-    /** @var string|null */
-    private $payload;
+    private string|null $payload = null;
 
     public static function unserializeFailed(JsonException $exception, string $payload): self
     {
@@ -57,7 +56,7 @@ final class JsonError extends JsonException implements PrismicError
         ));
     }
 
-    public function payload(): ?string
+    public function payload(): string|null
     {
         return $this->payload;
     }

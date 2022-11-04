@@ -15,32 +15,19 @@ use const PHP_EOL;
 
 final class Slice implements Fragment, Stringable
 {
-    /** @var string */
-    private $type;
-    /** @var string|null */
-    private $label;
-    /** @var FragmentCollection */
-    private $primary;
-    /** @var FragmentCollection */
-    private $items;
-
     private function __construct(
-        string $type,
-        ?string $label,
-        FragmentCollection $primary,
-        FragmentCollection $items
+        private string $type,
+        private string|null $label,
+        private FragmentCollection $primary,
+        private FragmentCollection $items,
     ) {
-        $this->type = $type;
-        $this->label = $label;
-        $this->primary = $primary;
-        $this->items = $items;
     }
 
     public static function new(
         string $type,
-        ?string $label,
+        string|null $label,
         FragmentCollection $primary,
-        FragmentCollection $items
+        FragmentCollection $items,
     ): self {
         return new self($type, $label, $primary, $items);
     }
@@ -50,7 +37,7 @@ final class Slice implements Fragment, Stringable
         return $this->type;
     }
 
-    public function label(): ?string
+    public function label(): string|null
     {
         return $this->label;
     }

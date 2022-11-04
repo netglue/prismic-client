@@ -11,16 +11,8 @@ use function is_string;
 
 final class Language implements Stringable
 {
-    /** @var string */
-    private $id;
-
-    /** @var string */
-    private $name;
-
-    private function __construct(string $id, string $name)
+    private function __construct(private string $id, private string $name)
     {
-        $this->id = $id;
-        $this->name = $name;
     }
 
     public static function new(string $id, string $name): self

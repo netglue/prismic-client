@@ -16,24 +16,15 @@ final class FormField
     public const TYPE_STRING = 'String';
     public const TYPE_INTEGER = 'Integer';
 
-    /** @var string */
-    private $name;
-    /** @var string */
-    private $type;
-    /** @var bool */
-    private $multiple;
-    /** @var string|null */
-    private $default;
-
-    private function __construct(string $name, string $type, bool $multiple, ?string $default)
-    {
-        $this->name = $name;
-        $this->type = $type;
-        $this->multiple = $multiple;
-        $this->default = $default;
+    private function __construct(
+        private string $name,
+        private string $type,
+        private bool $multiple,
+        private string|null $default,
+    ) {
     }
 
-    public static function new(string $name, string $type, bool $multiple, ?string $default): self
+    public static function new(string $name, string $type, bool $multiple, string|null $default): self
     {
         return new self($name, $type, $multiple, $default);
     }
@@ -63,7 +54,7 @@ final class FormField
         return $this->multiple;
     }
 
-    public function defaultValue(): ?string
+    public function defaultValue(): string|null
     {
         return $this->default;
     }
@@ -78,8 +69,7 @@ final class FormField
         return $this->type === self::TYPE_INTEGER;
     }
 
-    /** @param mixed $value */
-    public function validateValue($value): void
+    public function validateValue(mixed $value): void
     {
         if (! is_string($value) && $this->expectsString()) {
             throw InvalidArgument::fieldExpectsString($this, $value);

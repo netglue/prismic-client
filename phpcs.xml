@@ -17,13 +17,6 @@
     <!-- Inherit rules from Doctrine Coding Standard -->
     <rule ref="Doctrine" />
 
-    <!-- Disable native type hint whilst this lib is compatible with 7.3 -->
-    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint">
-        <properties>
-            <property name="enableNativeTypeHint" value="false" />
-        </properties>
-    </rule>
-
     <rule ref="Generic.Formatting.MultipleStatementAlignment.NotSame">
         <severity>0</severity>
     </rule>

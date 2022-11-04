@@ -21,12 +21,8 @@ use function substr;
 
 final class Color implements Fragment, Stringable
 {
-    /** @var string */
-    private $value;
-
-    private function __construct(string $value)
+    private function __construct(private string $value)
     {
-        $this->value = $value;
     }
 
     public static function new(string $value): self
@@ -52,7 +48,7 @@ final class Color implements Fragment, Stringable
         ];
     }
 
-    public function asRgbString(?float $alpha = null): ?string
+    public function asRgbString(float|null $alpha = null): string|null
     {
         ['r' => $r, 'g' => $g, 'b' => $b] = $this->asRgb();
         if ($alpha) {
@@ -67,7 +63,7 @@ final class Color implements Fragment, Stringable
         return (bool) preg_match('/^#[0-9A-F]{6,8}$/i', $value);
     }
 
-    public function asInteger(): ?int
+    public function asInteger(): int|null
     {
         return (int) hexdec(substr($this->value, 1));
     }

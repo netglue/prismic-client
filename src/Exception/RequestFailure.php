@@ -13,11 +13,8 @@ use function sprintf;
 
 class RequestFailure extends RuntimeException implements PrismicError
 {
-    /** @var RequestInterface|null */
-    protected $request;
-
-    /** @var ResponseInterface|null */
-    protected $response;
+    protected RequestInterface|null $request = null;
+    protected ResponseInterface|null $response = null;
 
     public static function withClientException(ClientExceptionInterface $exception): self
     {
@@ -77,12 +74,12 @@ class RequestFailure extends RuntimeException implements PrismicError
         return $error;
     }
 
-    public function getRequest(): ?RequestInterface
+    public function getRequest(): RequestInterface|null
     {
         return $this->request;
     }
 
-    public function getResponse(): ?ResponseInterface
+    public function getResponse(): ResponseInterface|null
     {
         return $this->response;
     }

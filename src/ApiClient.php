@@ -64,24 +64,24 @@ interface ApiClient
     /**
      * Convenience method to return the first document for the given query
      */
-    public function queryFirst(Query $query): ?Document;
+    public function queryFirst(Query $query): Document|null;
 
     /**
      * Locate a single document by its unique identifier
      */
-    public function findById(string $id): ?Document;
+    public function findById(string $id): Document|null;
 
     /**
      * Locate a single document by its type and user unique id
      */
-    public function findByUid(string $type, string $uid, string $lang = '*'): ?Document;
+    public function findByUid(string $type, string $uid, string $lang = '*'): Document|null;
 
     /**
      * Locate the document referenced by the given bookmark
      *
      * @deprecated Will be removed in v2.0
      */
-    public function findByBookmark(string $bookmark): ?Document;
+    public function findByBookmark(string $bookmark): Document|null;
 
     /**
      * Return a result set containing all, un-paginated results for the given query
@@ -91,12 +91,12 @@ interface ApiClient
     /**
      * Given a paginated result, return the next page of the results, if any
      */
-    public function next(ResultSet $resultSet): ?ResultSet;
+    public function next(ResultSet $resultSet): ResultSet|null;
 
     /**
      * Given a paginated result, return the previous page of the results, if any
      */
-    public function previous(ResultSet $resultSet): ?ResultSet;
+    public function previous(ResultSet $resultSet): ResultSet|null;
 
     /**
      * Set cookie values found in the request
@@ -124,5 +124,5 @@ interface ApiClient
      * @throws PreviewTokenExpired if the token provided has expired.
      * @throws RequestFailure if an error occurs communicating with the API.
      */
-    public function previewSession(string $token): ?DocumentLink;
+    public function previewSession(string $token): DocumentLink|null;
 }

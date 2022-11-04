@@ -19,8 +19,7 @@ use function sprintf;
 /** @psalm-suppress DeprecatedClass, DeprecatedMethod */
 class ApiDataTest extends TestCase
 {
-    /** @var ApiData */
-    private $apiData;
+    private ApiData $apiData;
 
     protected function setUp(): void
     {
