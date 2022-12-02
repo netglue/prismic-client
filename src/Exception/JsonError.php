@@ -19,7 +19,7 @@ final class JsonError extends JsonException implements PrismicError
                 'Failed to decode JSON payload: %s',
                 $exception->getMessage(),
             ),
-            (int) $exception->getCode(),
+            $exception->getCode(),
             $exception,
         );
 
@@ -35,7 +35,7 @@ final class JsonError extends JsonException implements PrismicError
                 'Failed to encode the given data to a JSON string: %s',
                 $exception->getMessage(),
             ),
-            (int) $exception->getCode(),
+            $exception->getCode(),
             $exception,
         );
     }

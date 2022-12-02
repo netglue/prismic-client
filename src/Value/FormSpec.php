@@ -13,6 +13,7 @@ use function array_keys;
 use function array_map;
 use function get_object_vars;
 
+/** @implements IteratorAggregate<array-key, FormField> */
 final class FormSpec implements IteratorAggregate
 {
     use DataAssertionBehaviour;
