@@ -13,7 +13,7 @@ class NumberTest extends TestCase
     public function testNonNumbersAreExceptional(): void
     {
         $this->expectException(InvalidArgument::class);
-        /** @psalm-suppress InvalidScalarArgument */
+        /** @psalm-suppress InvalidArgument */
         Number::new('foo');
     }
 

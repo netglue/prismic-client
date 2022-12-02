@@ -20,7 +20,7 @@ class RequestFailure extends RuntimeException implements PrismicError
     {
         return new self(
             $exception->getMessage(),
-            (int) $exception->getCode(),
+            $exception->getCode(),
             $exception,
         );
     }
