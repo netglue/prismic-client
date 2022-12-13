@@ -68,6 +68,7 @@ class ApiTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->httpClient = new MockClient();
         $response = new JsonResponse([]);
         $responseBody = (new StreamFactory())->createStream($this->jsonFixtureByFileName('api-data.json'));

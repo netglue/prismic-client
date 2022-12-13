@@ -21,6 +21,7 @@ final class RichText extends BaseCollection implements FragmentCollection
     protected function __construct(iterable $fragments)
     {
         parent::__construct([]);
+
         $fragments = $fragments instanceof Traversable ? iterator_to_array($fragments) : $fragments;
         $currentType = null;
         $collection = null;

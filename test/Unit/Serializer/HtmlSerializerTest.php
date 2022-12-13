@@ -26,6 +26,7 @@ class HtmlSerializerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->serializer = new HtmlSerializer(new TestLinkResolver());
     }
 

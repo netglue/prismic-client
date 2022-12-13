@@ -19,6 +19,7 @@ class StandardResultTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->resultSet = StandardResultSet::factory(Json::decodeObject($this->jsonFixtureByFileName('response.json')));
     }
 
