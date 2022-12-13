@@ -46,7 +46,7 @@
     },
     "require-dev": {
         "ext-curl": "*",
-        "doctrine/coding-standard": "^10.0",
+        "doctrine/coding-standard": "^11.0",
         "laminas/laminas-diactoros": "^2.22",
         "php-http/cache-plugin": "^1.7.5",
         "php-http/curl-client": "^2.2.1",
