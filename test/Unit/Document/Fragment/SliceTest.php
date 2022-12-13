@@ -17,6 +17,7 @@ class SliceTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $document = DocumentData::factory(Json::decodeObject($this->jsonFixtureByFileName('basic-slices.json')));
         $slice = $document->content()->get('slice-zone');
         self::assertInstanceOf(FragmentCollection::class, $slice);

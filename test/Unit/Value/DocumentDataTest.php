@@ -28,6 +28,7 @@ class DocumentDataTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->document = DocumentData::factory(
             Json::decodeObject(
                 $this->jsonFixtureByFileName('document.json'),
