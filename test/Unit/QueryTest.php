@@ -17,7 +17,7 @@ use function urlencode;
 
 class QueryTest extends TestCase
 {
-    private object|null $formData = null;
+    private static object|null $formData = null;
 
     /**
      * @return object{everything: object, withQuery: object, collection: object}
@@ -25,56 +25,51 @@ class QueryTest extends TestCase
      * @psalm-suppress LessSpecificReturnStatement
      * @psalm-suppress MoreSpecificReturnType
      */
-    private function formData(): object
+    private static function formData(): object
     {
-        if (! $this->formData) {
-            $this->formData = Json::decodeObject($this->jsonFixtureByFileName('forms.json'));
+        if (! self::$formData) {
+            self::$formData = Json::decodeObject(self::jsonFixtureByFileName('forms.json'));
         }
 
-        return $this->formData;
+        return self::$formData;
     }
 
     /** @return array<string, array{0: Query}> */
-    public function queryWithoutDefaultQueryProvider(): array
+    public static function queryWithoutDefaultQueryProvider(): array
     {
         return [
             'Standard Form' => [
-                new Query(FormSpec::factory('everything', $this->formData()->everything)),
+                new Query(FormSpec::factory('everything', self::formData()->everything)),
             ],
             'With Query' => [
-                new Query(FormSpec::factory('withQuery', $this->formData()->withQuery)),
+                new Query(FormSpec::factory('withQuery', self::formData()->withQuery)),
             ],
         ];
     }
 
-    /** @return array<string, array{0: Query}> */
-    public function queryWithDefaultQueryProvider(): array
+    /** @return array{Collection: array{0: Query}} */
+    public static function queryWithDefaultQueryProvider(): array
     {
         return [
             'Collection' => [
-                new Query(FormSpec::factory('collection', $this->formData()->collection)),
+                new Query(FormSpec::factory('collection', self::formData()->collection)),
             ],
         ];
     }
 
     /** @return array<string, array{0: Query}> */
-    public function queryProvider(): array
+    public static function queryProvider(): array
     {
         return array_merge(
-            $this->queryWithoutDefaultQueryProvider(),
-            $this->queryWithDefaultQueryProvider(),
+            self::queryWithoutDefaultQueryProvider(),
+            self::queryWithDefaultQueryProvider(),
         );
     }
 
-    /**
-     * @return array<string, array{0: Query, 1: string}>
-     *
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-suppress MoreSpecificReturnType
-     */
-    public function defaultUrlProvider(): array
+    /** @return array<string, array{0: Query, 1: string}> */
+    public static function defaultUrlProvider(): array
     {
-        $queries = $this->queryProvider();
+        $queries = self::queryProvider();
         $queries['Standard Form'][1] = 'https://example.com/api/v2?page=1&pageSize=20';
         $queries['Collection'][1] = sprintf('https://example.com?q=%s&page=1&pageSize=20', urlencode('[[:d = any(document.type, ["doc-type"])]]'));
         $queries['With Query'][1] = 'https://example.com/?term=something&page=1&pageSize=20';
@@ -88,15 +83,10 @@ class QueryTest extends TestCase
         $this->assertSame($expectedUrl, $query->toUrl());
     }
 
-    /**
-     * @return array<string, array{0: Query, 1: string}>
-     *
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-suppress MoreSpecificReturnType
-     */
-    public function queryUrlProvider(): array
+    /** @return array<string, array{0: Query, 1: string}> */
+    public static function queryUrlProvider(): array
     {
-        $queries = $this->queryProvider();
+        $queries = self::queryProvider();
         $queries['Standard Form'][1] = 'https://example.com/api/v2?page=1&pageSize=20&q=foo';
         $queries['Collection'][1] = sprintf('https://example.com?q=%s&q=foo&page=1&pageSize=20', urlencode('[[:d = any(document.type, ["doc-type"])]]'));
         $queries['With Query'][1] = 'https://example.com/?term=something&page=1&pageSize=20&q=foo';
