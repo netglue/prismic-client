@@ -10,6 +10,7 @@ use Stringable;
 
 use function array_map;
 use function assert;
+use function count;
 use function dechex;
 use function hexdec;
 use function implode;
@@ -39,6 +40,7 @@ final class Color implements Fragment, Stringable
     {
         $parts = sscanf($this->value, '#%02x%02x%02x');
         assert(is_array($parts));
+        assert(count($parts) === 3);
         [$r, $g, $b] = $parts;
 
         return [
