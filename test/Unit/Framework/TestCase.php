@@ -12,11 +12,11 @@ use function sprintf;
 
 abstract class TestCase extends PHPUnitTestCase
 {
-    protected function jsonFixtureByFileName(string $fileName): string
+    protected static function jsonFixtureByFileName(string $fileName): string
     {
         $path = __DIR__ . '/../../fixture/' . $fileName;
         if (! file_exists($path)) {
-            $this->fail(sprintf(
+            self::fail(sprintf(
                 'The JSON fixture %s does not exist',
                 $fileName,
             ));
