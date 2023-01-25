@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@2.23.0
         with:
           php-version: 8.0
           extensions: pcov
@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@2.23.0
         with:
           php-version: 8.1
       - uses: "ramsey/composer-install@2.2.0"
