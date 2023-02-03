@@ -14,10 +14,10 @@ use PrismicSmokeTest\TestCase;
 class ExampleHydratingResultSetTest extends TestCase
 {
     /** @return Generator<string, array{0:Api}> */
-    public function hydratingApiProvider(): Generator
+    public static function hydratingApiProvider(): Generator
     {
-        foreach ($this->compileEndPoints() as $url => $token) {
-            $api = Api::get($url, $token, $this->httpClient());
+        foreach (self::compileEndPoints() as $url => $token) {
+            $api = Api::get($url, $token, self::httpClient());
             $typeMap = [];
             foreach ($api->data()->types() as $type) {
                 $typeMap[$type->id()] = CustomDocumentType::class;
@@ -26,7 +26,7 @@ class ExampleHydratingResultSetTest extends TestCase
             $factory = new MyResultSetFactory($typeMap);
 
             yield $api->host() => [
-                Api::get($url, $token, $this->httpClient(), null, null, $factory),
+                Api::get($url, $token, self::httpClient(), null, null, $factory),
             ];
         }
     }

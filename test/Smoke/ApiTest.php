@@ -22,9 +22,9 @@ class ApiTest extends TestCase
      *
      * @psalm-suppress RedundantConditionGivenDocblockType
      */
-    public function documentIdDataProvider(): Generator
+    public static function documentIdDataProvider(): Generator
     {
-        foreach ($this->apiInstances() as $api) {
+        foreach (self::apiInstances() as $api) {
             assert($api instanceof Api);
             $response = $api->query(
                 $api->createQuery()
@@ -49,9 +49,9 @@ class ApiTest extends TestCase
      *
      * @psalm-suppress RedundantConditionGivenDocblockType
      */
-    public function documentUidDataProvider(): Generator
+    public static function documentUidDataProvider(): Generator
     {
-        foreach ($this->apiInstances() as $api) {
+        foreach (self::apiInstances() as $api) {
             assert($api instanceof Api);
             foreach ($api->data()->types() as $type) {
                 $response = $api->query(
@@ -88,9 +88,9 @@ class ApiTest extends TestCase
      *
      * @psalm-suppress RedundantConditionGivenDocblockType
      */
-    public function bookmarkDataProvider(): Generator
+    public static function bookmarkDataProvider(): Generator
     {
-        foreach ($this->apiInstances() as $api) {
+        foreach (self::apiInstances() as $api) {
             assert($api instanceof Api);
             foreach ($api->data()->bookmarks() as $bookmark) {
                 yield sprintf('%s: %s', $api->host(), $bookmark->name()) => [$api, $bookmark->name()];

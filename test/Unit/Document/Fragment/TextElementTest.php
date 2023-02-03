@@ -81,7 +81,7 @@ class TextElementTest extends TestCase
     }
 
     /** @return array<string, array{0: string}> */
-    public function headingTypeProvider(): array
+    public static function headingTypeProvider(): array
     {
         return [
             TextElement::TYPE_HEADING1 => [TextElement::TYPE_HEADING1],
@@ -119,7 +119,7 @@ class TextElementTest extends TestCase
     }
 
     /** @return array<string, array{0: string, 1: bool, 2: bool, 3: bool, 4: bool, 5: bool, 6: bool}> */
-    public function typeCheckProvider(): array
+    public static function typeCheckProvider(): array
     {
         return [
             TextElement::TYPE_HEADING1            => [TextElement::TYPE_HEADING1,            false, true,  false, false, false, false],

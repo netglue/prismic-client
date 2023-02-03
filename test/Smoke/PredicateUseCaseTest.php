@@ -13,7 +13,7 @@ use function sprintf;
 class PredicateUseCaseTest extends TestCase
 {
     /** @return string[][] */
-    public function searchTermProvider(): iterable
+    public static function searchTermProvider(): iterable
     {
         return [
             'Double Quoted'      => ['"Quoted String"'],

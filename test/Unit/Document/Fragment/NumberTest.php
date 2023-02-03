@@ -44,7 +44,7 @@ class NumberTest extends TestCase
     }
 
     /** @return array<string, array{0: Number}> */
-    public function numberProvider(): iterable
+    public static function numberProvider(): iterable
     {
         return [
             'Value: 1'     => [Number::new(1)],

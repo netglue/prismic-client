@@ -125,7 +125,7 @@ class ApiTest extends TestCase
     }
 
     /** @return Generator<int, int[]> */
-    public function authErrorStatusCodes(): Generator
+    public static function authErrorStatusCodes(): Generator
     {
         yield 401 => [401];
 
@@ -214,7 +214,7 @@ class ApiTest extends TestCase
     }
 
     /** @return array<string, array{0: string[], 1: string}> */
-    public function cookiePayloads(): array
+    public static function cookiePayloads(): array
     {
         return [
             'io.prismic.preview' => [
@@ -352,7 +352,7 @@ class ApiTest extends TestCase
     }
 
     /** @return array<string, array{0: string, 1: string}> */
-    public function previewHostVariations(): array
+    public static function previewHostVariations(): array
     {
         return [
             'CDN Configured, Not in Preview' => [
