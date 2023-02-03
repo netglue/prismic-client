@@ -110,7 +110,11 @@ abstract class BaseCollection implements FragmentCollection
         return end($this->fragments);
     }
 
-    /** @return static */
+    /**
+     * @psalm-param Closure(mixed, ?array-key): bool $p
+     *
+     * @return static
+     */
     public function filter(Closure $p): self
     {
         $result = array_filter($this->fragments, $p, ARRAY_FILTER_USE_BOTH);
