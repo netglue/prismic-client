@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: shivammathur/setup-php@2.24.0
         with:
-          php-version: 8.0
+          php-version: 8.1
           extensions: pcov
           coverage: pcov
           ini-values: pcov.enabled=1

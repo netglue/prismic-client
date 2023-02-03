@@ -21,6 +21,8 @@ interface FragmentCollection extends Fragment, IteratorAggregate, Countable, Str
     /**
      * Return a new collection by filtering with the given closure
      *
+     * @psalm-param Closure(mixed, ?array-key): bool $p
+     *
      * @return static
      */
     public function filter(Closure $p);
