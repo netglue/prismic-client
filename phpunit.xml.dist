@@ -8,6 +8,7 @@
          displayDetailsOnTestsThatTriggerDeprecations="true"
          displayDetailsOnTestsThatTriggerNotices="true"
          displayDetailsOnTestsThatTriggerErrors="true"
+         beStrictAboutTestsThatDoNotTestAnything="false"
          colors="true">
     <coverage>
         <include>
