@@ -51,7 +51,7 @@ class TestCase extends PHPUnitTestCase
     /** @return array<string, string|null> */
     protected static function compileEndPoints(): array
     {
-        $endpoints = [];
+        $endpoints = ['https://primo.cdn.prismic.io/api/v2' => null];
         $repo = getenv('PRISMIC_REPO') ?: null;
         $token = getenv('PRISMIC_TOKEN') ?: null;
         if ($repo) {
