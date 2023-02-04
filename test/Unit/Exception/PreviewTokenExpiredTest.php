@@ -12,7 +12,7 @@ use Psr\Http\Message\RequestInterface;
 class PreviewTokenExpiredTest extends TestCase
 {
     /** @return array<string, array{0: array<string, string>, 1:int}> */
-    public function possibleResponseBodiesThatShouldRepresentExpiredPreviews(): array
+    public static function possibleResponseBodiesThatShouldRepresentExpiredPreviews(): array
     {
         return [
             'Legacy version of error message' => [
@@ -32,7 +32,7 @@ class PreviewTokenExpiredTest extends TestCase
     }
 
     /** @return array<string, array{0: array<string, string>, 1:int}> */
-    public function responseBodiesThatShouldNotRepresentExpiredTokens(): array
+    public static function responseBodiesThatShouldNotRepresentExpiredTokens(): array
     {
         return [
             'No message or error key' => [

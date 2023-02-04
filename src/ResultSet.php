@@ -10,7 +10,7 @@ use Traversable;
 
 /**
  * @template T of Document
- * @template-implements IteratorAggregate<T>
+ * @extends IteratorAggregate<array-key, T>
  */
 interface ResultSet extends IteratorAggregate, Countable
 {

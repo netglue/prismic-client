@@ -51,7 +51,7 @@ class ColorTest extends TestCase
     }
 
     /** @return array<array-key, array{0: string, 1: string}> */
-    public function inversions(): array
+    public static function inversions(): array
     {
         return [
             ['#ff0000', '#00ffff'],

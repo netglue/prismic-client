@@ -25,9 +25,9 @@ class TestCase extends PHPUnitTestCase
 {
     private static CacheItemPoolInterface|null $cache = null;
 
-    private ClientInterface|null $httpClient = null;
+    private static ClientInterface|null $httpClient = null;
 
-    protected function psrCachePool(): CacheItemPoolInterface
+    protected static function psrCachePool(): CacheItemPoolInterface
     {
         if (! self::$cache) {
             self::$cache = new ArrayAdapter(600, false);
@@ -36,22 +36,22 @@ class TestCase extends PHPUnitTestCase
         return self::$cache;
     }
 
-    protected function httpClient(): ClientInterface
+    protected static function httpClient(): ClientInterface
     {
-        if (! $this->httpClient) {
-            $this->httpClient = new PluginClient(
+        if (! self::$httpClient) {
+            self::$httpClient = new PluginClient(
                 HttpClientDiscovery::find(),
-                [new CachePlugin($this->psrCachePool(), Psr17FactoryDiscovery::findStreamFactory())],
+                [new CachePlugin(self::psrCachePool(), Psr17FactoryDiscovery::findStreamFactory())],
             );
         }
 
-        return $this->httpClient;
+        return self::$httpClient;
     }
 
     /** @return array<string, string|null> */
-    protected function compileEndPoints(): array
+    protected static function compileEndPoints(): array
     {
-        $endpoints = [];
+        $endpoints = ['https://primo.cdn.prismic.io/api/v2' => null];
         $repo = getenv('PRISMIC_REPO') ?: null;
         $token = getenv('PRISMIC_TOKEN') ?: null;
         if ($repo) {
@@ -89,18 +89,18 @@ class TestCase extends PHPUnitTestCase
     }
 
     /** @return Generator<string, array{0: Api}> */
-    public function apiDataProvider(): Generator
+    public static function apiDataProvider(): Generator
     {
-        foreach ($this->apiInstances() as $url => $api) {
+        foreach (self::apiInstances() as $url => $api) {
             yield $url => [$api];
         }
     }
 
     /** @return Generator<string, Api> */
-    protected function apiInstances(): Generator
+    protected static function apiInstances(): Generator
     {
-        foreach ($this->compileEndPoints() as $url => $token) {
-            $api = Api::get($url, $token, $this->httpClient());
+        foreach (self::compileEndPoints() as $url => $token) {
+            $api = Api::get($url, $token, self::httpClient());
 
             yield $api->host() => $api;
         }

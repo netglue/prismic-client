@@ -13,7 +13,7 @@ class DocumentLinkTest extends TestCase
     public function testItIsATypeErrorForATagToBeANonString(): void
     {
         $this->expectException(TypeError::class);
-        /** @psalm-suppress InvalidScalarArgument */
+        /** @psalm-suppress InvalidArgument */
         DocumentLink::new(
             'id',
             'uid',

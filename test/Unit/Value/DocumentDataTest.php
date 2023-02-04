@@ -29,6 +29,7 @@ class DocumentDataTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->document = DocumentData::factory(
             Json::decodeObject(
                 $this->jsonFixtureByFileName('document.json'),
@@ -180,10 +181,10 @@ class DocumentDataTest extends TestCase
         $now = (new DateTimeImmutable('now'))->sub($minute);
         $then = (new DateTimeImmutable('now'))->add($minute);
 
-        $this->assertGreaterThanOrEqual($now, $data->firstPublished());
-        $this->assertLessThanOrEqual($then, $data->firstPublished());
-        $this->assertGreaterThanOrEqual($now, $data->lastPublished());
-        $this->assertLessThanOrEqual($then, $data->lastPublished());
+        $this->assertGreaterThanOrEqual($now->getTimestamp(), $data->firstPublished()->getTimestamp());
+        $this->assertLessThanOrEqual($then->getTimestamp(), $data->firstPublished()->getTimestamp());
+        $this->assertGreaterThanOrEqual($now->getTimestamp(), $data->lastPublished()->getTimestamp());
+        $this->assertLessThanOrEqual($then->getTimestamp(), $data->lastPublished()->getTimestamp());
     }
 
     public function testThatADocumentWithoutAUrlPropertyWillHaveANullUrl(): void

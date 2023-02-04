@@ -98,7 +98,7 @@ class FormFieldTest extends TestCase
     }
 
     /** @return array<int, array<array-key, mixed>> */
-    public function invalidNumbers(): array
+    public static function invalidNumbers(): array
     {
         return [
             ['foo'],
@@ -121,7 +121,7 @@ class FormFieldTest extends TestCase
     }
 
     /** @return array<int, array<array-key, mixed>> */
-    public function invalidStrings(): array
+    public static function invalidStrings(): array
     {
         return [
             [true],

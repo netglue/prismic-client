@@ -16,9 +16,9 @@ use function assert;
 
 class EmbedTest extends TestCase
 {
-    private function embedCollection(): Collection
+    private static function embedCollection(): Collection
     {
-        $data = Json::decodeObject($this->jsonFixtureByFileName('embed-types.json'));
+        $data = Json::decodeObject(self::jsonFixtureByFileName('embed-types.json'));
         $collection = Factory::factory($data);
         assert($collection instanceof Collection);
         self::assertContainsOnlyInstancesOf(Embed::class, $collection);
@@ -28,16 +28,16 @@ class EmbedTest extends TestCase
 
     private function tweet(): Embed
     {
-        $tweet = $this->embedCollection()->get('twitter');
+        $tweet = self::embedCollection()->get('twitter');
         assert($tweet instanceof Embed);
 
         return $tweet;
     }
 
     /** @return Generator<array-key, array<Embed>> */
-    public function embedProvider(): Generator
+    public static function embedProvider(): Generator
     {
-        foreach ($this->embedCollection() as $key => $embed) {
+        foreach (self::embedCollection() as $key => $embed) {
             assert($embed instanceof Embed);
 
             yield $key => [$embed];

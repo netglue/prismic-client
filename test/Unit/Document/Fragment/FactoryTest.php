@@ -34,7 +34,7 @@ class FactoryTest extends TestCase
     }
 
     /** @return array<string, array{0: scalar|null, 1: class-string}> */
-    public function scalarTypes(): iterable
+    public static function scalarTypes(): iterable
     {
         return [
             'integer'    => [1, Number::class],
@@ -82,7 +82,7 @@ class FactoryTest extends TestCase
     }
 
     /** @return array<string, array{0: string, 1: string}> */
-    public function exceptionalImageSpecs(): array
+    public static function exceptionalImageSpecs(): array
     {
         return [
             'Dimensions not object' => [

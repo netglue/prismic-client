@@ -24,6 +24,7 @@ class ApiDataTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $payload = $this->jsonFixtureByFileName('api-data.json');
         $this->apiData = ApiData::factory(Json::decodeObject($payload));
     }

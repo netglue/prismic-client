@@ -10,7 +10,7 @@ use PrismicTest\Framework\TestCase;
 class BooleanFragmentTest extends TestCase
 {
     /** @return array<string, bool[]> */
-    public function booleans(): array
+    public static function booleans(): array
     {
         return [
             'true' => [true],

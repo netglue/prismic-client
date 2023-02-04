@@ -126,7 +126,7 @@ final class Factory
 
     private static function isHash(object $object): bool
     {
-        /** @psalm-suppress RedundantConditionGivenDocblockType */
+        /** @psalm-suppress RedundantCondition */
         return count(array_filter(array_keys(get_object_vars($object)), '\is_string')) > 0;
     }
 

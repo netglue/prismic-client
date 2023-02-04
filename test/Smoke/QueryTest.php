@@ -27,7 +27,7 @@ class QueryTest extends TestCase
                 continue;
             }
 
-            $this->assertGreaterThanOrEqual($last->firstPublished(), $document->firstPublished());
+            $this->assertGreaterThanOrEqual($last->firstPublished()->getTimestamp(), $document->firstPublished()->getTimestamp());
         }
 
         $reversed = $api->query($query->order('document.first_publication_date desc'));
@@ -38,7 +38,7 @@ class QueryTest extends TestCase
                 continue;
             }
 
-            $this->assertLessThanOrEqual($last->firstPublished(), $document->firstPublished());
+            $this->assertLessThanOrEqual($last->firstPublished()->getTimestamp(), $document->firstPublished()->getTimestamp());
         }
     }
 }

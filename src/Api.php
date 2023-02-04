@@ -141,7 +141,7 @@ final class Api implements ApiClient
         } catch (DiscoveryError $error) {
             throw new RuntimeError(
                 $message,
-                (int) $error->getCode(),
+                $error->getCode(),
                 $error,
             );
         }
