@@ -14,7 +14,7 @@ use const STDOUT;
 class JsonTest extends TestCase
 {
     /** @return array<string, array{0: string}> */
-    public function notObjects(): array
+    public static function notObjects(): array
     {
         return [
             'Array' => ['[{"foo":"bar"},{"foo":"bar"}]'],
@@ -39,7 +39,7 @@ class JsonTest extends TestCase
     }
 
     /** @return array<string, array{0:string}> */
-    public function invalidJson(): array
+    public static function invalidJson(): array
     {
         return [
             'Trailing Comma' => ['[{"foo":"bar"},]'],

@@ -104,7 +104,7 @@ class HtmlSerializerTest extends TestCase
     }
 
     /** @return array<string, array{0: int, 1: string}> */
-    public function richTextSpanMarkupData(): iterable
+    public static function richTextSpanMarkupData(): iterable
     {
         return [
             'Bold & Italic' => [
@@ -157,7 +157,7 @@ class HtmlSerializerTest extends TestCase
     }
 
     /** @return array<string, array{0: int, 1: string}> */
-    public function richTextBlockElementsData(): array
+    public static function richTextBlockElementsData(): array
     {
         return [
             'H1' => [

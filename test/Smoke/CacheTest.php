@@ -16,10 +16,10 @@ use function uniqid;
 class CacheTest extends TestCase
 {
     /** @return Generator<string, array{0:Api}> */
-    public function cachingApiClientProvider(): Generator
+    public static function cachingApiClientProvider(): Generator
     {
-        foreach ($this->compileEndPoints() as $uri => $token) {
-            $api = Api::get($uri, $token, null, null, null, null, $this->psrCachePool());
+        foreach (self::compileEndPoints() as $uri => $token) {
+            $api = Api::get($uri, $token, null, null, null, null, self::psrCachePool());
 
             yield $api->host() => [$api];
         }
@@ -28,7 +28,7 @@ class CacheTest extends TestCase
     /** @dataProvider cachingApiClientProvider */
     public function testThatAGetRequestWillResultInAnExpectedKeyBeingPresentInTheCache(ApiClient $api): void
     {
-        $cache = $this->psrCachePool();
+        $cache = self::psrCachePool();
 
         $query = $api->createQuery()
             ->resultsPerPage(1)
@@ -44,7 +44,7 @@ class CacheTest extends TestCase
     /** @dataProvider cachingApiClientProvider */
     public function testThatRepeatedQueriesHitTheCache(ApiClient $api): void
     {
-        $cache = $this->psrCachePool();
+        $cache = self::psrCachePool();
 
         $query = $api->createQuery()
             ->resultsPerPage(1)

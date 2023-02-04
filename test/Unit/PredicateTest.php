@@ -18,7 +18,7 @@ use function var_export;
 class PredicateTest extends TestCase
 {
     /** @return array<array-key, array{0: string, 1: scalar|list<scalar>, 2:string}> */
-    public function atProvider(): array
+    public static function atProvider(): array
     {
         return [
             ['document.type', 'blog-post', '[:d = at(document.type, "blog-post")]'],
@@ -40,7 +40,7 @@ class PredicateTest extends TestCase
     }
 
     /** @return array<array-key, array{0:string, 1:scalar|list<scalar>, 2:string}> */
-    public function notProvider(): array
+    public static function notProvider(): array
     {
         return [
             ['document.type', 'blog-post', '[:d = not(document.type, "blog-post")]'],
@@ -63,7 +63,7 @@ class PredicateTest extends TestCase
     }
 
     /** @return array<array-key, array{0: string, 1: list<string>, 2:string}> */
-    public function anyProvider(): array
+    public static function anyProvider(): array
     {
         return [
             ['document.id', ['id1', 'id2'], '[:d = any(document.id, ["id1","id2"])]'],
@@ -84,7 +84,7 @@ class PredicateTest extends TestCase
     }
 
     /** @return array<array-key, array{0: string, 1: list<string>, 2:string}> */
-    public function inProvider(): array
+    public static function inProvider(): array
     {
         return [
             ['document.id', ['id1', 'id2'], '[:d = in(document.id, ["id1","id2"])]'],
@@ -128,7 +128,7 @@ class PredicateTest extends TestCase
     }
 
     /** @return array<array-key, array{0: string, 1:numeric, 2:string}> */
-    public function ltProvider(): array
+    public static function ltProvider(): array
     {
         return [
             ['my.page.num', 1, '[:d = number.lt(my.page.num, 1)]'],
@@ -151,7 +151,7 @@ class PredicateTest extends TestCase
     }
 
     /** @return array<array-key, array{0: string, 1:numeric, 2:string}> */
-    public function gtProvider(): array
+    public static function gtProvider(): array
     {
         return [
             ['my.page.num', 1, '[:d = number.gt(my.page.num, 1)]'],
@@ -174,7 +174,7 @@ class PredicateTest extends TestCase
     }
 
     /** @return array<array-key, array{0: string, 1:numeric, 2:numeric, 3:string}> */
-    public function rangeProvider(): array
+    public static function rangeProvider(): array
     {
         return [
             ['my.page.num', 1, 2,  '[:d = number.inRange(my.page.num, 1, 2)]'],
