@@ -39,6 +39,7 @@ class TestCase extends PHPUnitTestCase
     protected static function httpClient(): ClientInterface
     {
         if (! self::$httpClient) {
+            /** @psalm-suppress DeprecatedInterface - This issue cannot be solved here */
             self::$httpClient = new PluginClient(
                 HttpClientDiscovery::find(),
                 [new CachePlugin(self::psrCachePool(), Psr17FactoryDiscovery::findStreamFactory())],
