@@ -33,7 +33,7 @@ class PredicateTest extends TestCase
      *
      * @dataProvider atProvider
      */
-    public function testAtPredicate(string $fragment, $value, string $expect): void
+    public function testAtPredicate(string $fragment, string|int|float|bool|array $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
         $this->assertEquals($expect, $predicate->q());
@@ -56,7 +56,7 @@ class PredicateTest extends TestCase
      *
      * @dataProvider notProvider
      */
-    public function testNotPredicate(string $fragment, $value, string $expect): void
+    public function testNotPredicate(string $fragment, string|int|float|bool|array $value, string $expect): void
     {
         $predicate = Predicate::not($fragment, $value);
         $this->assertEquals($expect, $predicate->q());
@@ -319,7 +319,7 @@ class PredicateTest extends TestCase
      *
      * @dataProvider atProvider
      */
-    public function testPredicatesCanBeCastToString(string $fragment, $value, string $expect): void
+    public function testPredicatesCanBeCastToString(string $fragment, string|int|float|bool|array $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
         $this->assertEquals($expect, $predicate->__toString());
@@ -330,7 +330,7 @@ class PredicateTest extends TestCase
      *
      * @dataProvider atProvider
      */
-    public function testSetState(string $fragment, $value, string $expect): void
+    public function testSetState(string $fragment, string|int|float|bool|array $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
         $phpCode = '$rehydrated = ' . var_export($predicate, true) . ';';
@@ -345,7 +345,7 @@ class PredicateTest extends TestCase
      *
      * @dataProvider atProvider
      */
-    public function testPredicatesAreSerializable(string $fragment, $value, string $expect): void
+    public function testPredicatesAreSerializable(string $fragment, string|int|float|bool|array $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
         $rehydrated = unserialize(serialize($predicate));
