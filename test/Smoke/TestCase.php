@@ -7,8 +7,8 @@ namespace PrismicSmokeTest;
 use Generator;
 use Http\Client\Common\Plugin\CachePlugin;
 use Http\Client\Common\PluginClient;
-use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Prismic\Api;
 use Psr\Cache\CacheItemPoolInterface;
@@ -39,9 +39,8 @@ class TestCase extends PHPUnitTestCase
     protected static function httpClient(): ClientInterface
     {
         if (! self::$httpClient) {
-            /** @psalm-suppress DeprecatedInterface - This issue cannot be solved here */
             self::$httpClient = new PluginClient(
-                HttpClientDiscovery::find(),
+                Psr18ClientDiscovery::find(),
                 [new CachePlugin(self::psrCachePool(), Psr17FactoryDiscovery::findStreamFactory())],
             );
         }
