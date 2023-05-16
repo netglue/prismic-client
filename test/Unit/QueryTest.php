@@ -70,12 +70,20 @@ class QueryTest extends TestCase
     /** @return array<string, array{0: Query, 1: string}> */
     public static function defaultUrlProvider(): array
     {
-        $queries = self::queryProvider();
-        $queries['Standard Form'][1] = 'https://example.com/api/v2?page=1&pageSize=20';
-        $queries['Collection'][1] = sprintf('https://example.com?q=%s&page=1&pageSize=20', urlencode('[[:d = any(document.type, ["doc-type"])]]'));
-        $queries['With Query'][1] = 'https://example.com/?term=something&page=1&pageSize=20';
-
-        return $queries;
+        return [
+            'Standard Form' => [
+                new Query(FormSpec::factory('everything', self::formData()->everything)),
+                'https://example.com/api/v2?page=1&pageSize=20',
+            ],
+            'With Query' => [
+                new Query(FormSpec::factory('withQuery', self::formData()->withQuery)),
+                'https://example.com/?term=something&page=1&pageSize=20',
+            ],
+            'Collection' => [
+                new Query(FormSpec::factory('collection', self::formData()->collection)),
+                sprintf('https://example.com?q=%s&page=1&pageSize=20', urlencode('[[:d = any(document.type, ["doc-type"])]]')),
+            ],
+        ];
     }
 
     /** @dataProvider defaultUrlProvider */
@@ -87,12 +95,20 @@ class QueryTest extends TestCase
     /** @return array<string, array{0: Query, 1: string}> */
     public static function queryUrlProvider(): array
     {
-        $queries = self::queryProvider();
-        $queries['Standard Form'][1] = 'https://example.com/api/v2?page=1&pageSize=20&q=foo';
-        $queries['Collection'][1] = sprintf('https://example.com?q=%s&q=foo&page=1&pageSize=20', urlencode('[[:d = any(document.type, ["doc-type"])]]'));
-        $queries['With Query'][1] = 'https://example.com/?term=something&page=1&pageSize=20&q=foo';
-
-        return $queries;
+        return [
+            'Standard Form' => [
+                new Query(FormSpec::factory('everything', self::formData()->everything)),
+                'https://example.com/api/v2?page=1&pageSize=20&q=foo',
+            ],
+            'With Query' => [
+                new Query(FormSpec::factory('withQuery', self::formData()->withQuery)),
+                'https://example.com/?term=something&page=1&pageSize=20&q=foo',
+            ],
+            'Collection' => [
+                new Query(FormSpec::factory('collection', self::formData()->collection)),
+                sprintf('https://example.com?q=%s&q=foo&page=1&pageSize=20', urlencode('[[:d = any(document.type, ["doc-type"])]]')),
+            ],
+        ];
     }
 
     /** @dataProvider queryUrlProvider */
