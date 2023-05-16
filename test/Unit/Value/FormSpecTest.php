@@ -38,6 +38,8 @@ class FormSpecTest extends TestCase
 
     public function testBasicAccessors(): void
     {
+        $this->assertEquals('My Form', $this->form->name());
+        $this->assertEquals('something', $this->form->rel());
         $this->assertEquals('GET', $this->form->method());
         $this->assertEquals('https://example.com', $this->form->action());
         $this->assertEquals('whatever', $this->form->encType());

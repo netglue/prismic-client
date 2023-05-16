@@ -29,10 +29,6 @@ final class Factory
 {
     use DataAssertionBehaviour;
 
-    public function __construct()
-    {
-    }
-
     public function __invoke(mixed $data): Fragment
     {
         return self::factory($data);

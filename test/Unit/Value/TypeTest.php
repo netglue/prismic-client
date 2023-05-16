@@ -23,6 +23,11 @@ class TypeTest extends TestCase
     public function testJsonEncode(): void
     {
         self::assertEquals(
+            ['baz' => 'bat'],
+            Type::new('baz', 'bat')->jsonSerialize(),
+        );
+
+        self::assertEquals(
             '{"foo":"bar"}',
             json_encode(Type::new('foo', 'bar'), JSON_THROW_ON_ERROR),
         );
