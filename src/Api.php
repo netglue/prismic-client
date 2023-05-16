@@ -114,7 +114,6 @@ final class Api implements ApiClient
 
     /**
      * phpcs:disable Generic.Files.LineLength.TooLong, Squiz.Commenting.FunctionComment.SpacingAfterParamType
-     * @param T|null $instance
      * @param class-string<ClientInterface>|class-string<RequestFactoryInterface>|class-string<UriFactoryInterface> $type
      *
      * @template T of object

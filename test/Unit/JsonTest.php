@@ -95,4 +95,10 @@ class JsonTest extends TestCase
             );
         }
     }
+
+    public function testSuccessfulDecode(): void
+    {
+        $value = Json::decode('{"foo":"bar"}', true);
+        self::assertSame(['foo' => 'bar'], $value);
+    }
 }

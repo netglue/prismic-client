@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.4.0@62db5d4f6a7ae0a20f7cc5a4952d730272fc0863">
+<files psalm-version="5.11.0@c9b192ab8400fdaf04b2b13d110575adc879aa90">
+  <file src="src/ResultSet/ResultSetFactory.php">
+    <PossiblyUnusedMethod>
+      <code>withHttpResponse</code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/Smoke/TestCase.php">
-    <RedundantCondition occurrences="6">
+    <RedundantCondition>
       <code>assert(is_array($configured))</code>
       <code>assert(is_array($spec))</code>
       <code>is_array($configured)</code>
       <code>is_array($spec)</code>
-      <code>is_string($spec['url'])</code>
-      <code>isset($spec['url']) &amp;&amp; is_string($spec['url'])</code>
+      <code><![CDATA[is_string($spec['url'])]]></code>
+      <code><![CDATA[isset($spec['url']) && is_string($spec['url'])]]></code>
+      <code>null</code>
     </RedundantCondition>
-    <TypeDoesNotContainType occurrences="4">
+    <TypeDoesNotContainType>
       <code>is_array($content)</code>
-      <code>is_string($spec['token'])</code>
-      <code>isset($spec['token'])</code>
-      <code>isset($spec['token']) &amp;&amp; is_string($spec['token'])</code>
+      <code><![CDATA[is_string($spec['token'])]]></code>
+      <code><![CDATA[isset($spec['token'])]]></code>
+      <code><![CDATA[isset($spec['token']) && is_string($spec['token'])]]></code>
+      <code>null</code>
     </TypeDoesNotContainType>
-    <UnusedPsalmSuppress occurrences="1">
+    <UnusedPsalmSuppress>
       <code>MissingFile</code>
     </UnusedPsalmSuppress>
   </file>
   <file src="test/Unit/QueryTest.php">
-    <InvalidReturnStatement occurrences="2">
+    <InvalidReturnStatement>
       <code>$queries</code>
       <code>$queries</code>
     </InvalidReturnStatement>
-    <InvalidReturnType occurrences="2">
-      <code>array&lt;string, array{0: Query, 1: string}&gt;</code>
-      <code>array&lt;string, array{0: Query, 1: string}&gt;</code>
+    <InvalidReturnType>
+      <code><![CDATA[array<string, array{0: Query, 1: string}>]]></code>
+      <code><![CDATA[array<string, array{0: Query, 1: string}>]]></code>
     </InvalidReturnType>
   </file>
 </files>
