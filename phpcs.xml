@@ -24,4 +24,9 @@
     <rule ref="Generic.Files.LineLength.TooLong">
         <exclude-pattern>/test/</exclude-pattern>
     </rule>
+
+    <!-- PHP 4 Constructors are not possible on PHP 8+ -->
+    <rule ref="Generic.NamingConventions.ConstructorName.OldStyle">
+        <severity>0</severity>
+    </rule>
 </ruleset>

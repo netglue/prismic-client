@@ -5,35 +5,4 @@
       <code>withHttpResponse</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/Smoke/TestCase.php">
-    <RedundantCondition>
-      <code>assert(is_array($configured))</code>
-      <code>assert(is_array($spec))</code>
-      <code>is_array($configured)</code>
-      <code>is_array($spec)</code>
-      <code><![CDATA[is_string($spec['url'])]]></code>
-      <code><![CDATA[isset($spec['url']) && is_string($spec['url'])]]></code>
-      <code>null</code>
-    </RedundantCondition>
-    <TypeDoesNotContainType>
-      <code>is_array($content)</code>
-      <code><![CDATA[is_string($spec['token'])]]></code>
-      <code><![CDATA[isset($spec['token'])]]></code>
-      <code><![CDATA[isset($spec['token']) && is_string($spec['token'])]]></code>
-      <code>null</code>
-    </TypeDoesNotContainType>
-    <UnusedPsalmSuppress>
-      <code>MissingFile</code>
-    </UnusedPsalmSuppress>
-  </file>
-  <file src="test/Unit/QueryTest.php">
-    <InvalidReturnStatement>
-      <code>$queries</code>
-      <code>$queries</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType>
-      <code><![CDATA[array<string, array{0: Query, 1: string}>]]></code>
-      <code><![CDATA[array<string, array{0: Query, 1: string}>]]></code>
-    </InvalidReturnType>
-  </file>
 </files>
