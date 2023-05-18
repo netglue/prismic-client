@@ -10,17 +10,28 @@ use function assert;
 use function is_bool;
 use function is_string;
 
+/** @psalm-immutable */
 final class Ref implements Stringable
 {
+    /**
+     * @param non-empty-string      $id
+     * @param non-empty-string      $ref
+     * @param non-empty-string|null $label
+     */
     private function __construct(
-        private string $id,
-        private string $ref,
-        private string $label,
-        private bool $isMasterRef,
+        public readonly string $id,
+        public readonly string $ref,
+        public readonly string|null $label,
+        public readonly bool $isMasterRef,
     ) {
     }
 
-    public static function new(string $id, string $ref, string $label, bool $isMasterRef): self
+    /**
+     * @param non-empty-string      $id
+     * @param non-empty-string      $ref
+     * @param non-empty-string|null $label
+     */
+    public static function new(string $id, string $ref, string|null $label, bool $isMasterRef): self
     {
         return new self($id, $ref, $label, $isMasterRef);
     }
@@ -32,24 +43,30 @@ final class Ref implements Stringable
         $label = $object->label ?? null;
         $isMaster = $object->isMasterRef ?? false;
         assert(is_string($id));
+        assert($id !== '');
         assert(is_string($ref));
-        assert(is_string($label));
+        assert($ref !== '');
+        assert(is_string($label) || $label === null);
+        $label = $label === '' ? null : $label;
         assert(is_bool($isMaster));
 
         return self::new($id, $ref, $label, $isMaster);
     }
 
+    /** @return non-empty-string */
     public function id(): string
     {
         return $this->id;
     }
 
+    /** @return non-empty-string */
     public function ref(): string
     {
         return $this->ref;
     }
 
-    public function label(): string
+    /** @return non-empty-string|null */
+    public function label(): string|null
     {
         return $this->label;
     }
