@@ -341,6 +341,7 @@ final class Api implements ApiClient
             }
 
             $cookiePayload = (string) $this->requestCookies[$cookieName];
+            assert($cookiePayload !== '');
             // Fuck this. If you have the toolbar installed on your website. Prismic set the preview cookie for
             // *every single request*. This means that if you rely on determining whether a preview is active or not
             // by inspecting cookies in order to disable caching for example, this fucks things. It does not matter
