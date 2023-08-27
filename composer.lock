@@ -4667,16 +4667,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v6.3.2",
+            "version": "v6.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "d176b97600860df13e851538c2df2ad88e9e5ca9"
+                "reference": "e60d00b4f633efa4c1ef54e77c12762d9073e7b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/d176b97600860df13e851538c2df2ad88e9e5ca9",
-                "reference": "d176b97600860df13e851538c2df2ad88e9e5ca9",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/e60d00b4f633efa4c1ef54e77c12762d9073e7b3",
+                "reference": "e60d00b4f633efa4c1ef54e77c12762d9073e7b3",
                 "shasum": ""
             },
             "require": {
@@ -4743,7 +4743,7 @@
                 "psr6"
             ],
             "support": {
-                "source": "https://github.com/symfony/cache/tree/v6.3.2"
+                "source": "https://github.com/symfony/cache/tree/v6.3.4"
             },
             "funding": [
                 {
@@ -4759,7 +4759,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-27T16:19:14+00:00"
+            "time": "2023-08-05T09:10:27+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -4839,16 +4839,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v6.3.2",
+            "version": "v6.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "aa5d64ad3f63f2e48964fc81ee45cb318a723898"
+                "reference": "eca495f2ee845130855ddf1cf18460c38966c8b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/aa5d64ad3f63f2e48964fc81ee45cb318a723898",
-                "reference": "aa5d64ad3f63f2e48964fc81ee45cb318a723898",
+                "url": "https://api.github.com/repos/symfony/console/zipball/eca495f2ee845130855ddf1cf18460c38966c8b6",
+                "reference": "eca495f2ee845130855ddf1cf18460c38966c8b6",
                 "shasum": ""
             },
             "require": {
@@ -4909,7 +4909,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v6.3.2"
+                "source": "https://github.com/symfony/console/tree/v6.3.4"
             },
             "funding": [
                 {
@@ -4925,7 +4925,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-19T20:17:28+00:00"
+            "time": "2023-08-16T10:10:12+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -5707,16 +5707,16 @@
         },
         {
             "name": "symfony/var-exporter",
-            "version": "v6.3.2",
+            "version": "v6.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-exporter.git",
-                "reference": "3400949782c0cb5b3e73aa64cfd71dde000beccc"
+                "reference": "df1f8aac5751871b83d30bf3e2c355770f8f0691"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/3400949782c0cb5b3e73aa64cfd71dde000beccc",
-                "reference": "3400949782c0cb5b3e73aa64cfd71dde000beccc",
+                "url": "https://api.github.com/repos/symfony/var-exporter/zipball/df1f8aac5751871b83d30bf3e2c355770f8f0691",
+                "reference": "df1f8aac5751871b83d30bf3e2c355770f8f0691",
                 "shasum": ""
             },
             "require": {
@@ -5761,7 +5761,7 @@
                 "serialize"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-exporter/tree/v6.3.2"
+                "source": "https://github.com/symfony/var-exporter/tree/v6.3.4"
             },
             "funding": [
                 {
@@ -5777,7 +5777,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-26T17:39:03+00:00"
+            "time": "2023-08-16T18:14:47+00:00"
         },
         {
             "name": "theseer/tokenizer",
