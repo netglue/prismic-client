@@ -1,8 +1,8 @@
-[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine)
-
 # PHP Api Client for Prismic.io
 
-[![Build Status](https://github.com/netglue/prismic-client/workflows/Continuous%20Integration/badge.svg)](https://github.com/netglue/prismic-client/actions?query=workflow%3A"Continuous+Integration") 
+[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine)
+
+[![Build Status](https://github.com/netglue/prismic-client/workflows/Continuous%20Integration/badge.svg)](https://github.com/netglue/prismic-client/actions?query=workflow%3A"Continuous+Integration")
 [![codecov](https://codecov.io/gh/netglue/prismic-client/branch/main/graph/badge.svg)](https://codecov.io/gh/netglue/prismic-client)
 [![Psalm Type Coverage](https://shepherd.dev/github/netglue/prismic-client/coverage.svg)](https://shepherd.dev/github/netglue/prismic-client)
 [![Latest Stable Version](https://poser.pugx.org/netglue/prismic-client/v/stable)](https://packagist.org/packages/netglue/prismic-client)
@@ -31,7 +31,7 @@ There is practically zero backwards compatibility with other prismic clients so 
 
 ## Installation
 
-Install with composer: `composer require netglue/prismic-client` 
+Install with composer: `composer require netglue/prismic-client`
 
 You will also require a PSR-18 HTTP client implementation, of which there are many, for example:
 
@@ -46,7 +46,7 @@ Docs are a work in progress and are hosted in a public prismic repository _(obvi
 
 You can view the docs by cloning the library, cd to the source and issue a `composer install` followed by a `composer serve`. This will start up PHP's built-in server on [http://127.0.0.1:8080](http://127.0.0.1:8080) showing the docs.
 
-#### Samples & Examples
+### Samples & Examples
 
 Take a look around in the `./samples` directory; that's where you’ll find the document explorer used for rendering the documentation and examples for setting up hydrating result sets, link resolver implementations and other stuff.
 

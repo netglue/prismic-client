@@ -9,6 +9,9 @@
          displayDetailsOnTestsThatTriggerNotices="true"
          displayDetailsOnTestsThatTriggerErrors="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
+         failOnNotice="true"
+         failOnDeprecation="true"
+         failOnWarning="true"
          colors="true">
     <source>
         <include>
