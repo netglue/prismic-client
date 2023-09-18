@@ -294,7 +294,7 @@ class FactoryTest extends TestCase
     }
 
     /** @return array<string, array{0: string, 1: string|null}> */
-    public function documentLinkProvider(): array
+    public static function documentLinkProvider(): array
     {
         return [
             'Valid String Url' => [
