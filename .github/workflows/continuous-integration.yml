@@ -27,7 +27,7 @@ jobs:
           PRISMIC_REPO: ${{ secrets.PRISMIC_REPO }}
           PRISMIC_TOKEN: ${{ secrets.PRISMIC_TOKEN }}
 
-      - uses: codecov/codecov-action@v4-beta
+      - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage.xml
