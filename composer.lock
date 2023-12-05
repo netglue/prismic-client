@@ -2911,12 +2911,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "b4728d9c4af8c60b059c1d7872759eedacccdb12"
+                "reference": "c7332a39b09af9d355cf0048e985c54055bd1fe5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/b4728d9c4af8c60b059c1d7872759eedacccdb12",
-                "reference": "b4728d9c4af8c60b059c1d7872759eedacccdb12",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/c7332a39b09af9d355cf0048e985c54055bd1fe5",
+                "reference": "c7332a39b09af9d355cf0048e985c54055bd1fe5",
                 "shasum": ""
             },
             "conflict": {
@@ -3292,7 +3292,7 @@
                 "phpmyfaq/phpmyfaq": "<=3.1.7",
                 "phpoffice/phpexcel": "<1.8",
                 "phpoffice/phpspreadsheet": "<1.16",
-                "phpseclib/phpseclib": "<3.0.34",
+                "phpseclib/phpseclib": "<2.0.31|>=3,<3.0.34",
                 "phpservermon/phpservermon": "<3.6",
                 "phpsysinfo/phpsysinfo": "<3.2.5",
                 "phpunit/phpunit": ">=4.8.19,<4.8.28|>=5,<5.6.3",
@@ -3611,7 +3611,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-11-30T20:04:21+00:00"
+            "time": "2023-12-05T01:28:42+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -5884,16 +5884,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "5.16.0",
+            "version": "5.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "2897ba636551a8cb61601cc26f6ccfbba6c36591"
+                "reference": "c620f6e80d0abfca532b00bda366062aaedf6e5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/2897ba636551a8cb61601cc26f6ccfbba6c36591",
-                "reference": "2897ba636551a8cb61601cc26f6ccfbba6c36591",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/c620f6e80d0abfca532b00bda366062aaedf6e5d",
+                "reference": "c620f6e80d0abfca532b00bda366062aaedf6e5d",
                 "shasum": ""
             },
             "require": {
@@ -5990,7 +5990,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2023-11-22T20:38:47+00:00"
+            "time": "2023-12-03T20:21:41+00:00"
         },
         {
             "name": "webmozart/assert",
