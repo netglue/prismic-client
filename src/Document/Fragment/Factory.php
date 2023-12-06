@@ -134,7 +134,15 @@ final class Factory
     private static function imageFactory(object $data, string $name = 'main'): Image
     {
         $values = get_object_vars($data);
-        unset($values['dimensions'], $values['alt'], $values['copyright'], $values['url'], $values['linkTo']);
+        unset(
+            $values['dimensions'],
+            $values['alt'],
+            $values['copyright'],
+            $values['url'],
+            $values['linkTo'],
+            $values['edit'],
+        );
+
         $views = [];
         foreach ($values as $viewName => $view) {
             if (! is_object($view)) {
