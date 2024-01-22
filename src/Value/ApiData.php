@@ -40,7 +40,7 @@ final class ApiData
         $bookmarks = get_object_vars(self::assertObjectPropertyIsObject($payload, 'bookmarks'));
         $types = get_object_vars(self::assertObjectPropertyIsObject($payload, 'types'));
         /** @var string[] $tags */
-        $tags = self::optionalArrayProperty($payload, 'tags') ?: [];
+        $tags = self::optionalArrayProperty($payload, 'tags') ?? [];
         $forms = get_object_vars(self::assertObjectPropertyIsObject($payload, 'forms'));
 
         return new self(

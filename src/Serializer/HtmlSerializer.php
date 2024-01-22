@@ -199,7 +199,7 @@ class HtmlSerializer
     private function linkOpenTag(Link $link): string|null
     {
         $url = $this->resolver->resolve($link);
-        if (! $url) {
+        if ($url === null) {
             return null;
         }
 
@@ -214,14 +214,14 @@ class HtmlSerializer
     private function link(Link $link, string|null $wraps = null): string
     {
         $openTag = $this->linkOpenTag($link);
-        if (! $openTag) {
-            return $wraps ?: '';
+        if ($openTag === null) {
+            return $wraps ?? '';
         }
 
         return sprintf(
             '%s%s</a>',
             $openTag,
-            $wraps ?: (string) $link,
+            $wraps ?? (string) $link,
         );
     }
 
@@ -264,7 +264,7 @@ class HtmlSerializer
 
     private function textElement(TextElement $fragment): string
     {
-        if (empty($fragment->text())) {
+        if ($fragment->isEmpty()) {
             return '';
         }
 
@@ -276,7 +276,7 @@ class HtmlSerializer
             '<%1$s%2$s>%3$s</%1$s>',
             $this->tagMap[$fragment->type()],
             $attributes,
-            $this->insertSpans($fragment, $fragment->text(), $fragment->spans()),
+            $this->insertSpans($fragment, (string) $fragment->text(), $fragment->spans()),
         );
     }
 
@@ -331,7 +331,7 @@ class HtmlSerializer
                     break;
             }
 
-            if (! $openTag || ! $closeTag) {
+            if ($openTag === null || $closeTag === null) {
                 continue;
             }
 

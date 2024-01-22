@@ -35,7 +35,7 @@ final class PreviewTokenExpired extends RequestFailure
         $payload = Json::decodeObject((string) $response->getBody());
         $error = self::extractErrorMessage($payload);
 
-        if (! $error) {
+        if ($error === null) {
             return false;
         }
 

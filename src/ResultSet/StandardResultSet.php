@@ -101,7 +101,7 @@ final class StandardResultSet implements ResultSet
      */
     public function expiresAt(): DateTimeImmutable
     {
-        if (! $this->cacheDate || ! $this->maxAge) {
+        if ($this->cacheDate === null || $this->maxAge === null) {
             return (new DateTimeImmutable())->setTimezone(new DateTimeZone('UTC'));
         }
 

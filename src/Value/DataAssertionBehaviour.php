@@ -142,7 +142,7 @@ trait DataAssertionBehaviour
     /** @return mixed[]|null */
     private static function optionalArrayProperty(object $object, string $property): array|null
     {
-        if (! property_exists($object, $property) || ! $object->{$property}) {
+        if (! property_exists($object, $property)) {
             return null;
         }
 
@@ -151,7 +151,7 @@ trait DataAssertionBehaviour
 
     private static function optionalIntegerPropertyOrNull(object $object, string $property): int|null
     {
-        if (! property_exists($object, $property) || $object->{$property} === null) {
+        if (! property_exists($object, $property)) {
             return null;
         }
 
