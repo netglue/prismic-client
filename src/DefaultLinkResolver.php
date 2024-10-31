@@ -15,7 +15,7 @@ abstract class DefaultLinkResolver implements LinkResolver
         }
 
         if ($link instanceof DocumentLink) {
-            return $this->resolveDocumentLink($link);
+            return $link->url() ?? $this->resolveDocumentLink($link);
         }
 
         return null;

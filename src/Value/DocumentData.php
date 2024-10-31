@@ -37,6 +37,7 @@ final class DocumentData implements Document
         private string $lang,
         private DateTimeImmutable $firstPublished,
         private DateTimeImmutable $lastPublished,
+        private string|null $url,
         iterable $tags,
         iterable $translations,
         private FragmentCollection $body,
@@ -75,6 +76,7 @@ final class DocumentData implements Document
             self::assertObjectPropertyIsString($data, 'lang'),
             self::assertObjectPropertyIsUtcDateTime($data, 'first_publication_date'),
             self::assertObjectPropertyIsUtcDateTime($data, 'last_publication_date'),
+            self::optionalStringProperty($data, 'url'),
             self::assertObjectPropertyAllString($data, 'tags'),
             $translations,
             $body,
@@ -146,5 +148,10 @@ final class DocumentData implements Document
     public function data(): DocumentData
     {
         return $this;
+    }
+
+    public function url(): string|null
+    {
+        return $this->url;
     }
 }

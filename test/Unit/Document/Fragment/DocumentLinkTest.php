@@ -34,7 +34,29 @@ class DocumentLinkTest extends TestCase
             false,
             ['a', 'b'],
         );
-        $this->expectNotToPerformAssertions();
+        self::assertTrue(true);
+
+        return $link;
+    }
+
+    /** @depends testConstructor */
+    public function testThatCastingALinkToAStringWillYieldItsId(DocumentLink $link): void
+    {
+        self::assertSame('id', (string) $link);
+    }
+
+    public function testConstructorWithUrl(): DocumentLink
+    {
+        $link = DocumentLink::new(
+            'id',
+            'uid',
+            'type',
+            'en-gb',
+            false,
+            ['a', 'b'],
+            '/some/url',
+        );
+        self::assertTrue(true);
 
         return $link;
     }
@@ -80,5 +102,17 @@ class DocumentLinkTest extends TestCase
     {
         $this->assertContainsEquals('a', $link->tags());
         $this->assertContainsEquals('b', $link->tags());
+    }
+
+    /** @depends testConstructor */
+    public function testTheLinkMayHaveAUrlAndItIsNullByDefault(DocumentLink $link): void
+    {
+        self::assertNull($link->url());
+    }
+
+    /** @depends testConstructorWithUrl */
+    public function testThatUrlReturnsTheExpectedValue(DocumentLink $link): void
+    {
+        self::assertSame('/some/url', $link->url());
     }
 }
