@@ -123,7 +123,7 @@ class Query
     {
         $parameters = [];
         foreach ($this->form as $field) {
-            if (! $field->defaultValue()) {
+            if ($field->defaultValue() === null) {
                 continue;
             }
 

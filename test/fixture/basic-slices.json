@@ -45,6 +45,28 @@
                 "slice_label": null,
                 "items": [],
                 "primary": {}
+            },
+            {
+                "slice_type": "shared_slice",
+                "slice_label": null,
+                "id": "shared_slice$62db7b7f-1191-41b4-833f-cee6d499d82e",
+                "variation": "default",
+                "version": "123",
+                "items": [ ],
+                "primary": {
+                    "text": 1
+                }
+            },
+            {
+                "slice_type": "shared_slice_empty_version",
+                "slice_label": null,
+                "id": "shared_slice_empty_version$62db7b7f-1191-41b4-833f-cee6d499d82e",
+                "variation": "default",
+                "version": "",
+                "items": [ ],
+                "primary": {
+                    "text": 1
+                }
             }
         ]
     }

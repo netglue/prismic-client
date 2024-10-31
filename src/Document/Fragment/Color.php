@@ -53,7 +53,7 @@ final class Color implements Fragment, Stringable
     public function asRgbString(float|null $alpha = null): string|null
     {
         ['r' => $r, 'g' => $g, 'b' => $b] = $this->asRgb();
-        if ($alpha) {
+        if ($alpha !== null) {
             return sprintf('rgba(%d, %d, %d, %0.3f)', $r, $g, $b, $alpha);
         }
 

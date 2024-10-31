@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Document\Fragment\Slice;
 use Prismic\Document\FragmentCollection;
 use Prismic\Json;
@@ -47,25 +48,47 @@ class SliceTest extends TestCase
         return $slice;
     }
 
-    /** @depends testThatASliceCanBeFound */
+    public function testThatASharedSliceCanBeFound(): Slice
+    {
+        self::assertInstanceOf(FragmentCollection::class, $this->slices);
+        $slice = $this->slices->filter(static function (Slice $slice): bool {
+            return $slice->type() === 'shared_slice';
+        })->first();
+        self::assertInstanceOf(Slice::class, $slice);
+
+        return $slice;
+    }
+
+    public function testThatASharedSliceCanBeFoundWithAnEmptyVersionString(): Slice
+    {
+        self::assertInstanceOf(FragmentCollection::class, $this->slices);
+        $slice = $this->slices->filter(static function (Slice $slice): bool {
+            return $slice->type() === 'shared_slice_empty_version';
+        })->first();
+        self::assertInstanceOf(Slice::class, $slice);
+
+        return $slice;
+    }
+
+    #[Depends('testThatASliceCanBeFound')]
     public function testThatTheLabelIsTheExpectedValue(Slice $slice): void
     {
         self::assertEquals('custom-label', $slice->label());
     }
 
-    /** @depends testThatASliceCanBeFound */
+    #[Depends('testThatASliceCanBeFound')]
     public function testThatTheSliceIsNotEmpty(Slice $slice): void
     {
         self::assertFalse($slice->isEmpty());
     }
 
-    /** @depends testThatAnEmptySliceCanBeFound */
+    #[Depends('testThatAnEmptySliceCanBeFound')]
     public function testThatTheEmptySliceIsEmpty(Slice $slice): void
     {
         self::assertTrue($slice->isEmpty());
     }
 
-    /** @depends testThatASliceCanBeFound */
+    #[Depends('testThatASliceCanBeFound')]
     public function testThatToStringWillYieldTheExpectedValue(Slice $slice): void
     {
         $expect = <<<'TEXT'
@@ -84,5 +107,29 @@ class SliceTest extends TestCase
     public function testThatTheEmptySliceIsAnEmptyStringWhenCastToAString(Slice $slice): void
     {
         self::assertEquals('', (string) $slice);
+    }
+
+    #[Depends('testThatASliceCanBeFound')]
+    public function testSharedSlicePropertiesAreNullForRegularSlices(Slice $slice): void
+    {
+        self::assertNull($slice->id());
+        self::assertNull($slice->variation());
+        self::assertNull($slice->version());
+    }
+
+    #[Depends('testThatASharedSliceCanBeFound')]
+    public function testSharedSlicesHaveAdditionalProperties(Slice $slice): void
+    {
+        self::assertNotEmpty($slice->id());
+        self::assertNotEmpty($slice->variation());
+        self::assertNotEmpty($slice->version());
+    }
+
+    #[Depends('testThatASharedSliceCanBeFoundWithAnEmptyVersionString')]
+    public function testSliceWithEmptyVersionWillHaveNullVersion(Slice $slice): void
+    {
+        self::assertNotEmpty($slice->id());
+        self::assertNotEmpty($slice->variation());
+        self::assertNull($slice->version());
     }
 }

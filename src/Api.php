@@ -158,7 +158,7 @@ final class Api implements ApiClient
             return $this->data;
         }
 
-        $uri = $this->accessToken
+        $uri = $this->accessToken !== null
             ? $this->uriWithQueryValue($this->baseUri, 'access_token', $this->accessToken)
             : $this->baseUri;
 
@@ -426,7 +426,7 @@ final class Api implements ApiClient
     public function next(ResultSet $resultSet): ResultSet|null
     {
         $nextPage = $resultSet->nextPage();
-        if (! $nextPage) {
+        if ($nextPage === null) {
             return null;
         }
 
@@ -443,7 +443,7 @@ final class Api implements ApiClient
     public function previous(ResultSet $resultSet): ResultSet|null
     {
         $previousPage = $resultSet->previousPage();
-        if (! $previousPage) {
+        if ($previousPage === null) {
             return null;
         }
 

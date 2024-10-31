@@ -355,4 +355,36 @@ class FactoryTest extends TestCase
         $fragment = $factory($value);
         $this->assertInstanceOf($expectedType, $fragment);
     }
+
+    public function testSlicesMustProvideANonEmptySliceType(): void
+    {
+        $data = Json::decodeObject('{
+            "slice_type": "",
+            "items":[],
+            "primary":{}
+        }');
+
+        $this->expectException(UnexpectedValue::class);
+        $this->expectExceptionMessage('Expected the object property "slice_type" to be a non-empty-string');
+
+        Factory::factory($data);
+    }
+
+    public function testSharedSlicesMayHaveAnEmptyVersion(): void
+    {
+        $data = Json::decodeObject('{
+            "slice_type": "foo",
+            "items":[],
+            "primary":{},
+            "id":"bar",
+            "version":"",
+            "variation":""
+        }');
+
+        $slice = Factory::factory($data);
+        self::assertInstanceOf(Fragment\Slice::class, $slice);
+
+        self::assertNull($slice->version());
+        self::assertNull($slice->variation());
+    }
 }

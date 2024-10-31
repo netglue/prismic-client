@@ -15,28 +15,59 @@ use const PHP_EOL;
 
 final class Slice implements Fragment, Stringable
 {
+    /**
+     * @param non-empty-string      $type
+     * @param non-empty-string|null $label
+     * @param non-empty-string|null $id
+     */
     private function __construct(
-        private string $type,
-        private string|null $label,
-        private FragmentCollection $primary,
-        private FragmentCollection $items,
+        private readonly string $type,
+        private readonly string|null $label,
+        private readonly FragmentCollection $primary,
+        private readonly FragmentCollection $items,
+        private readonly string|null $variation,
+        private readonly string|null $version,
+        private readonly string|null $id,
     ) {
     }
 
+    /**
+     * @param non-empty-string      $type
+     * @param non-empty-string|null $label
+     */
     public static function new(
         string $type,
         string|null $label,
         FragmentCollection $primary,
         FragmentCollection $items,
     ): self {
-        return new self($type, $label, $primary, $items);
+        return new self($type, $label, $primary, $items, null, null, null);
     }
 
+    /**
+     * @param non-empty-string      $type
+     * @param non-empty-string|null $label
+     * @param non-empty-string      $id
+     */
+    public static function shared(
+        string $type,
+        string|null $label,
+        FragmentCollection $primary,
+        FragmentCollection $items,
+        string $variation,
+        string|null $version,
+        string $id,
+    ): self {
+        return new self($type, $label, $primary, $items, $variation, $version, $id);
+    }
+
+    /** @return non-empty-string */
     public function type(): string
     {
         return $this->type;
     }
 
+    /** @return non-empty-string|null */
     public function label(): string|null
     {
         return $this->label;
@@ -50,6 +81,22 @@ final class Slice implements Fragment, Stringable
     public function items(): FragmentCollection
     {
         return $this->items;
+    }
+
+    public function variation(): string|null
+    {
+        return $this->variation;
+    }
+
+    public function version(): string|null
+    {
+        return $this->version;
+    }
+
+    /** @return non-empty-string|null */
+    public function id(): string|null
+    {
+        return $this->id;
     }
 
     public function isEmpty(): bool

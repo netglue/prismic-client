@@ -34,7 +34,7 @@ final class Image implements Fragment, IteratorAggregate, Countable
     ) {
         $this->views = [];
         $this->addView($this);
-        if (! $views) {
+        if ($views === null) {
             return;
         }
 

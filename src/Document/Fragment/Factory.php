@@ -21,6 +21,7 @@ use function is_float;
 use function is_int;
 use function is_object;
 use function is_scalar;
+use function is_string;
 use function preg_match;
 use function property_exists;
 use function strpos;
@@ -205,7 +206,7 @@ final class Factory
             $isBroken = self::assertObjectPropertyIsBoolean($data, 'isBroken');
             $lang = self::optionalStringProperty($data, 'lang');
             // The language for broken document links is null in some situations
-            $lang = ! $lang ? '*' : $lang;
+            $lang ??= '*';
 
             return DocumentLink::new(
                 self::assertObjectPropertyIsString($data, 'id'),
@@ -252,9 +253,27 @@ final class Factory
             return self::factory($value);
         }, $primary));
 
+        $type = self::assertObjectPropertyIsNonEmptyString($data, 'slice_type');
+        $label = self::optionalNonEmptyStringProperty($data, 'slice_label');
+        $variation = self::optionalStringProperty($data, 'variation');
+        $version = self::optionalNonEmptyStringProperty($data, 'version');
+        $id = self::optionalNonEmptyStringProperty($data, 'id');
+
+        if (is_string($id) && is_string($variation)) {
+            return Slice::shared(
+                $type,
+                $label,
+                $primary,
+                $items,
+                $variation,
+                $version,
+                $id,
+            );
+        }
+
         return Slice::new(
-            self::assertObjectPropertyIsString($data, 'slice_type'),
-            self::optionalStringProperty($data, 'slice_label'),
+            $type,
+            $label,
             $primary,
             $items,
         );
@@ -280,7 +299,7 @@ final class Factory
         if ($extra) {
             $label = self::optionalStringProperty($extra, 'label');
             $linkType = self::optionalStringProperty($extra, 'link_type');
-            $link = $linkType ? self::linkFactory($extra) : null;
+            $link = $linkType !== null ? self::linkFactory($extra) : null;
         }
 
         return Span::new(
