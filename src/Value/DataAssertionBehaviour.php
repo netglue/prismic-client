@@ -155,9 +155,7 @@ trait DataAssertionBehaviour
     private static function optionalNonEmptyStringProperty(object $object, string $property): string|null
     {
         $value = self::optionalStringProperty($object, $property);
-        if ($value === '') {
-            return null;
-        }
+        assert($value !== '');
 
         return $value;
     }
