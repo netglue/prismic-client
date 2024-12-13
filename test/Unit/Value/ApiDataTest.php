@@ -94,6 +94,13 @@ class ApiDataTest extends TestCase
     }
 
     /** @psalm-suppress DeprecatedMethod */
+    public function testThatAMissingBookmarksStructureIsAcceptable(): void
+    {
+        $data = ApiData::factory(Json::decodeObject($this->jsonFixtureByFileName('api-data-without-bookmarks.json')));
+        self::assertEmpty($data->bookmarks());
+    }
+
+    /** @psalm-suppress DeprecatedMethod */
     public function testThatAMissingTagsPropertyInTheDataPayloadIsAcceptable(): void
     {
         $data = ApiData::factory(Json::decodeObject($this->jsonFixtureByFileName('api-data-missing-tags.json')));
