@@ -11,6 +11,7 @@ use Prismic\Exception\UnknownForm;
 use function array_keys;
 use function array_map;
 use function get_object_vars;
+use function is_object;
 
 /** @psalm-suppress DeprecatedClass, DeprecatedMethod */
 final class ApiData
@@ -37,7 +38,9 @@ final class ApiData
 
     public static function factory(object $payload): ApiData
     {
-        $bookmarks = get_object_vars(self::assertObjectPropertyIsObject($payload, 'bookmarks'));
+        /** @var mixed $bookmarks */
+        $bookmarks = $payload->bookmarks ?? null;
+        $bookmarks = is_object($bookmarks) ? (array) $bookmarks : [];
         $types = get_object_vars(self::assertObjectPropertyIsObject($payload, 'types'));
         /** @var string[] $tags */
         $tags = self::optionalArrayProperty($payload, 'tags') ?? [];
