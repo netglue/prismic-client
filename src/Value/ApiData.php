@@ -40,6 +40,7 @@ final class ApiData
     {
         /** @var mixed $bookmarks */
         $bookmarks = $payload->bookmarks ?? null;
+        /** @psalm-var array<string, string> $bookmarks */
         $bookmarks = is_object($bookmarks) ? (array) $bookmarks : [];
         $types = get_object_vars(self::assertObjectPropertyIsObject($payload, 'types'));
         /** @var string[] $tags */
