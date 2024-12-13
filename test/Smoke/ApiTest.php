@@ -54,6 +54,17 @@ class ApiTest extends TestCase
         foreach (self::apiInstances() as $api) {
             assert($api instanceof Api);
             foreach ($api->data()->types() as $type) {
+                $exists = $api->query(
+                    $api->createQuery()
+                        ->resultsPerPage(1)
+                        ->query(Predicate::at('document.type', $type->id())),
+                );
+
+                // Prevent issues querying docs where there are zero published docs for the type
+                if ($exists->count() === 0) {
+                    continue;
+                }
+
                 $response = $api->query(
                     $api->createQuery()
                         ->resultsPerPage(1)
