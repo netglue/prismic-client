@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Document\Fragment\GeoPoint;
 use PrismicTest\Framework\TestCase;
 
@@ -17,19 +18,19 @@ class GeoPointTest extends TestCase
         return $point;
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testLatitudeIsExpectedValue(GeoPoint $point): void
     {
         self::assertEquals(1.234, $point->latitude());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testLongitudeIsExpectedValue(GeoPoint $point): void
     {
         self::assertEquals(5.678, $point->longitude());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testThatGeoPointsAreNotConsideredEmpty(GeoPoint $point): void
     {
         self::assertFalse($point->isEmpty());

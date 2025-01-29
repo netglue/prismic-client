@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Document\Fragment\Color;
 use Prismic\Exception\InvalidArgument;
 use PrismicTest\Framework\TestCase;
@@ -58,7 +59,7 @@ class ColorTest extends TestCase
         ];
     }
 
-    /** @dataProvider inversions */
+    #[DataProvider('inversions')]
     public function testInversions(string $input, string $expect): void
     {
         $base = Color::new($input);

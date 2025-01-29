@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PrismicTest;
 
 use DateTime;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Predicate;
 use PrismicTest\Framework\TestCase;
@@ -28,11 +29,8 @@ class PredicateTest extends TestCase
         ];
     }
 
-    /**
-     * @param scalar|list<scalar> $value
-     *
-     * @dataProvider atProvider
-     */
+    /** @param scalar|list<scalar> $value */
+    #[DataProvider('atProvider')]
     public function testAtPredicate(string $fragment, string|int|float|bool|array $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
@@ -51,11 +49,8 @@ class PredicateTest extends TestCase
         ];
     }
 
-    /**
-     * @param scalar|list<scalar> $value
-     *
-     * @dataProvider notProvider
-     */
+    /** @param scalar|list<scalar> $value */
+    #[DataProvider('notProvider')]
     public function testNotPredicate(string $fragment, string|int|float|bool|array $value, string $expect): void
     {
         $predicate = Predicate::not($fragment, $value);
@@ -72,11 +67,8 @@ class PredicateTest extends TestCase
         ];
     }
 
-    /**
-     * @param list<string> $value
-     *
-     * @dataProvider anyProvider
-     */
+    /** @param list<string> $value */
+    #[DataProvider('anyProvider')]
     public function testAnyPredicate(string $fragment, array $value, string $expect): void
     {
         $predicate = Predicate::any($fragment, $value);
@@ -92,11 +84,8 @@ class PredicateTest extends TestCase
         ];
     }
 
-    /**
-     * @param list<string> $value
-     *
-     * @dataProvider inProvider
-     */
+    /** @param list<string> $value */
+    #[DataProvider('inProvider')]
     public function testInPredicate(string $fragment, array $value, string $expect): void
     {
         $predicate = Predicate::in($fragment, $value);
@@ -137,7 +126,7 @@ class PredicateTest extends TestCase
         ];
     }
 
-    /** @dataProvider ltProvider */
+    #[DataProvider('ltProvider')]
     public function testNumberLT(string $fragment, int|float|string $value, string $expect): void
     {
         $predicate = Predicate::lt($fragment, $value);
@@ -160,7 +149,7 @@ class PredicateTest extends TestCase
         ];
     }
 
-    /** @dataProvider gtProvider */
+    #[DataProvider('gtProvider')]
     public function testNumberGt(string $fragment, int|float|string $value, string $expect): void
     {
         $predicate = Predicate::gt($fragment, $value);
@@ -183,7 +172,7 @@ class PredicateTest extends TestCase
         ];
     }
 
-    /** @dataProvider rangeProvider */
+    #[DataProvider('rangeProvider')]
     public function testNumberInRange(string $fragment, int|float|string $low, int|float|string $high, string $expect): void
     {
         $predicate = Predicate::inRange($fragment, $low, $high);
@@ -314,11 +303,8 @@ class PredicateTest extends TestCase
         $this->assertEquals('[:d = at(my.doc.field, false)]', $p->q());
     }
 
-    /**
-     * @param scalar|list<scalar> $value
-     *
-     * @dataProvider atProvider
-     */
+    /** @param scalar|list<scalar> $value */
+    #[DataProvider('atProvider')]
     public function testPredicatesCanBeCastToString(string $fragment, string|int|float|bool|array $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
@@ -329,8 +315,8 @@ class PredicateTest extends TestCase
      * @param scalar|list<scalar> $value
      *
      * @psalm-suppress PossiblyUnusedParam
-     * @dataProvider atProvider
      */
+    #[DataProvider('atProvider')]
     public function testSetState(string $fragment, string|int|float|bool|array $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);
@@ -341,11 +327,8 @@ class PredicateTest extends TestCase
         $this->assertSame($expect, $rehydrated->q());
     }
 
-    /**
-     * @param scalar|list<scalar> $value
-     *
-     * @dataProvider atProvider
-     */
+    /** @param scalar|list<scalar> $value */
+    #[DataProvider('atProvider')]
     public function testPredicatesAreSerializable(string $fragment, string|int|float|bool|array $value, string $expect): void
     {
         $predicate = Predicate::at($fragment, $value);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicSmokeTest;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Exception\RequestFailure;
 use Prismic\Predicate;
 
@@ -31,7 +32,7 @@ class PredicateUseCaseTest extends TestCase
         ];
     }
 
-    /** @dataProvider searchTermProvider */
+    #[DataProvider('searchTermProvider')]
     public function testThatFullTextSearchIsPossibleWithAVarietyOfTerms(string $term): void
     {
         foreach ($this->apiInstances() as $api) {

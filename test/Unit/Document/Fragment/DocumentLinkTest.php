@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Document\Fragment\DocumentLink;
 use PrismicTest\Framework\TestCase;
 use TypeError;
@@ -61,43 +62,43 @@ class DocumentLinkTest extends TestCase
         return $link;
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testThatIdIsExpectedValue(DocumentLink $link): void
     {
         $this->assertSame('id', $link->id());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testThatUidIsExpectedValue(DocumentLink $link): void
     {
         $this->assertSame('uid', $link->uid());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testThatTypeIsExpectedValue(DocumentLink $link): void
     {
         $this->assertSame('type', $link->type());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testThatLanguageIsExpectedValue(DocumentLink $link): void
     {
         $this->assertSame('en-gb', $link->language());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testThatIsBrokenIsExpectedValue(DocumentLink $link): void
     {
         $this->assertFalse($link->isBroken());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testThatALinkIsNotConsideredEmpty(DocumentLink $link): void
     {
         $this->assertFalse($link->isEmpty());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testThatTagsHaveExpectedMembers(DocumentLink $link): void
     {
         $this->assertContainsEquals('a', $link->tags());

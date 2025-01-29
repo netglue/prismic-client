@@ -7,8 +7,10 @@ namespace Prismic;
 use JsonException;
 use Prismic\Exception\JsonError;
 
+use function assert;
 use function is_array;
 use function is_object;
+use function is_string;
 use function json_decode;
 use function json_encode;
 
@@ -62,11 +64,18 @@ final class Json
         }
     }
 
-    /** @throws JsonError If encoding the value fails for any reason. */
+    /**
+     * @return non-empty-string
+     *
+     * @throws JsonError If encoding the value fails for any reason.
+     */
     public static function encode(mixed $value, int $flags = 0): string
     {
         try {
-            return json_encode($value, JSON_THROW_ON_ERROR | $flags);
+            $value = json_encode($value, JSON_THROW_ON_ERROR | $flags);
+            assert(is_string($value));
+
+            return $value;
         } catch (JsonException $exception) {
             throw JsonError::serializeFailed($exception);
         }

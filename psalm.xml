@@ -9,6 +9,7 @@
         findUnusedPsalmSuppress="true"
         findUnusedCode="true"
         findUnusedBaselineEntry="true"
+        findUnusedIssueHandlerSuppression="false"
 >
     <projectFiles>
         <directory name="src"/>
@@ -36,5 +37,11 @@
                 <file name="test/Smoke/TestCase.php" />
             </errorLevel>
         </TypeDoesNotContainType>
+        <!-- Data Providers in tests are always regarded as unused -->
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="test" />
+            </errorLevel>
+        </PossiblyUnusedMethod>
     </issueHandlers>
 </psalm>

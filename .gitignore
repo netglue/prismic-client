@@ -4,3 +4,4 @@ phpunit.xml
 .phpunit.cache
 .phpunit.result.cache
 .php_cs.cache
+rector.php

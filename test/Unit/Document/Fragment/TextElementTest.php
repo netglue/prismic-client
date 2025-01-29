@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Document\Fragment\TextElement;
 use PrismicTest\Framework\TestCase;
 use TypeError;
@@ -23,31 +25,31 @@ class TextElementTest extends TestCase
         return $text;
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testTypeIsExpectedValue(TextElement $text): void
     {
         self::assertSame('paragraph', $text->type());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testTextHasExpectedValue(TextElement $text): void
     {
         self::assertSame('Some Words', $text->text());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testThatElementWithLabelIsDeemedHavingLabel(TextElement $text): void
     {
         self::assertTrue($text->hasLabel());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testLabelIsExpectedValue(TextElement $text): void
     {
         self::assertSame('groovy', $text->label());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testThatAnElementWithNonEmptyTextIsDeemedNonEmpty(TextElement $text): void
     {
         self::assertFalse($text->isEmpty());
@@ -93,7 +95,7 @@ class TextElementTest extends TestCase
         ];
     }
 
-    /** @dataProvider headingTypeProvider */
+    #[DataProvider('headingTypeProvider')]
     public function testThatHeadingsAreConsideredHeadings(string $type): void
     {
         $text = TextElement::new($type, 'Foo', [], null);
@@ -135,7 +137,7 @@ class TextElementTest extends TestCase
         ];
     }
 
-    /** @dataProvider typeCheckProvider */
+    #[DataProvider('typeCheckProvider')]
     public function testTypes(string $type, bool $empty, bool $heading, bool $paragraph, bool $list, bool $ordered, bool $unordered): void
     {
         $item = TextElement::new($type, 'Foo', [], null);

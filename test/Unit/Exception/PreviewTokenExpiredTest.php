@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PrismicTest\Exception;
 
 use Laminas\Diactoros\Response\JsonResponse;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Exception\PreviewTokenExpired;
 use PrismicTest\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
@@ -42,11 +43,8 @@ class PreviewTokenExpiredTest extends TestCase
         ];
     }
 
-    /**
-     * @param array<string, string> $bodyPayload
-     *
-     * @dataProvider responseBodiesThatShouldNotRepresentExpiredTokens
-     */
+    /** @param array<string, string> $bodyPayload */
+    #[DataProvider('responseBodiesThatShouldNotRepresentExpiredTokens')]
     public function testIsPreviewTokenExpiryIsFalseWhenErrorMessageDoesNotMatchExpectedValue(array $bodyPayload, int $responseCode): void
     {
         $response = new JsonResponse($bodyPayload, $responseCode);
@@ -54,11 +52,8 @@ class PreviewTokenExpiredTest extends TestCase
         $this->assertFalse(PreviewTokenExpired::isPreviewTokenExpiry($response));
     }
 
-    /**
-     * @param array<string, string> $bodyPayload
-     *
-     * @dataProvider possibleResponseBodiesThatShouldRepresentExpiredPreviews
-     */
+    /** @param array<string, string> $bodyPayload */
+    #[DataProvider('possibleResponseBodiesThatShouldRepresentExpiredPreviews')]
     public function testThatSimulatedTokenExpiryResponseYieldsExpectedExceptionProperties(array $bodyPayload, int $responseCode): void
     {
         $response = new JsonResponse($bodyPayload, $responseCode);
@@ -71,11 +66,8 @@ class PreviewTokenExpiredTest extends TestCase
         $this->assertSame($response, $error->getResponse());
     }
 
-    /**
-     * @param array<string, string> $bodyPayload
-     *
-     * @dataProvider possibleResponseBodiesThatShouldRepresentExpiredPreviews
-     */
+    /** @param array<string, string> $bodyPayload */
+    #[DataProvider('possibleResponseBodiesThatShouldRepresentExpiredPreviews')]
     public function testVariousResponsesWillBeConsideredTokenExpiryConditions(array $bodyPayload, int $responseCode): void
     {
         $response = new JsonResponse($bodyPayload, $responseCode);

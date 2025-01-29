@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PrismicTest\Document\Fragment;
 
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Document\Fragment\Collection;
 use Prismic\Document\Fragment\Embed;
 use Prismic\Document\Fragment\Factory;
@@ -44,7 +45,7 @@ class EmbedTest extends TestCase
         }
     }
 
-    /** @dataProvider embedProvider */
+    #[DataProvider('embedProvider')]
     public function testThatEmbedAreNotConsideredEmpty(Embed $embed): void
     {
         $this->assertFalse($embed->isEmpty());
@@ -58,7 +59,7 @@ class EmbedTest extends TestCase
         $this->assertIsString($tweet->attribute('author_name'));
     }
 
-    /** @dataProvider embedProvider */
+    #[DataProvider('embedProvider')]
     public function testThatAttributesAreTheSameAsCorrespondingNamedMethods(Embed $embed): void
     {
         $this->assertSame($embed->url(), $embed->attribute('embed_url'));
@@ -67,7 +68,7 @@ class EmbedTest extends TestCase
         $this->assertSame($embed->html(), $embed->attribute('html'));
     }
 
-    /** @dataProvider embedProvider */
+    #[DataProvider('embedProvider')]
     public function testThatAttributesArrayCanBeRetrieved(Embed $embed): void
     {
         $attributes = $embed->attributes();
