@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Value;
 
+use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Exception\UnexpectedValue;
 use Prismic\Exception\UnknownBookmark;
 use Prismic\Exception\UnknownForm;
@@ -125,7 +126,7 @@ class ApiDataTest extends TestCase
         self::assertCount(2, $this->apiData->languages());
     }
 
-    /** @depends testThatLanguagesAreTheExpectedValue */
+    #[Depends('testThatLanguagesAreTheExpectedValue')]
     public function testThatLanguagesContainsTheExpectedInstances(): void
     {
         $expect = ['en-gb', 'en-au'];

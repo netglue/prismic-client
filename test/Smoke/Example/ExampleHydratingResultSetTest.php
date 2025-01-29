@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PrismicSmokeTest\Example;
 
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Api;
 use Prismic\Example\CustomHydratingResultSet\CustomDocumentType;
 use Prismic\Example\CustomHydratingResultSet\MyResultSet;
@@ -31,7 +32,7 @@ class ExampleHydratingResultSetTest extends TestCase
         }
     }
 
-    /** @dataProvider hydratingApiProvider */
+    #[DataProvider('hydratingApiProvider')]
     public function testBasicFunctionalityIsSane(Api $api): void
     {
         $query = $api->createQuery()->resultsPerPage(1);

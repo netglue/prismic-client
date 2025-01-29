@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PrismicSmokeTest;
 
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Api;
 use Prismic\Exception\RequestFailure;
 use Prismic\Predicate;
@@ -36,7 +37,7 @@ class ApiTest extends TestCase
         }
     }
 
-    /** @dataProvider documentIdDataProvider */
+    #[DataProvider('documentIdDataProvider')]
     public function testThatFindByIdReturnsTheExpectedDocument(Api $api, string $id): void
     {
         $document = $api->findById($id);
@@ -85,7 +86,7 @@ class ApiTest extends TestCase
         }
     }
 
-    /** @dataProvider documentUidDataProvider */
+    #[DataProvider('documentUidDataProvider')]
     public function testThatFindByUidReturnsTheExpectedDocument(Api $api, string $type, string $uid): void
     {
         $document = $api->findByUid($type, $uid);
@@ -109,7 +110,7 @@ class ApiTest extends TestCase
         }
     }
 
-    /** @dataProvider bookmarkDataProvider */
+    #[DataProvider('bookmarkDataProvider')]
     public function testThatAllKnownBookmarksCanBeRetrieved(Api $api, string $bookmark): void
     {
         /**
@@ -119,7 +120,7 @@ class ApiTest extends TestCase
         self::assertNotNull($api->findByBookmark($bookmark));
     }
 
-    /** @dataProvider apiDataProvider */
+    #[DataProvider('apiDataProvider')]
     public function testThatNextAndPreviousReturnTheExpectedResults(Api $api): void
     {
         $query = $api->createQuery()
@@ -142,7 +143,7 @@ class ApiTest extends TestCase
         $this->assertSame($first->nextPage(), $firstAgain->nextPage());
     }
 
-    /** @dataProvider apiDataProvider */
+    #[DataProvider('apiDataProvider')]
     public function testThatSettingAnUnknownRefWillCauseAnException(Api $api): void
     {
         $query = $api->createQuery()

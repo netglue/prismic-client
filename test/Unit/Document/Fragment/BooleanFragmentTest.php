@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Document\Fragment\BooleanFragment;
 use PrismicTest\Framework\TestCase;
 
@@ -18,14 +19,14 @@ class BooleanFragmentTest extends TestCase
         ];
     }
 
-    /** @dataProvider booleans */
+    #[DataProvider('booleans')]
     public function testInvoke(bool $value): void
     {
         $bool = BooleanFragment::new($value);
         $this->assertSame($value, $bool());
     }
 
-    /** @dataProvider booleans */
+    #[DataProvider('booleans')]
     public function testBooleansAreNotConsideredEmpty(bool $value): void
     {
         $bool = BooleanFragment::new($value);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicSmokeTest\Serializer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Api;
 use Prismic\Serializer\HtmlSerializer;
 use PrismicSmokeTest\TestCase;
@@ -20,7 +21,7 @@ class HtmlSerializerTest extends TestCase
         $this->serializer = new HtmlSerializer(new TestLinkResolver());
     }
 
-    /** @dataProvider apiDataProvider */
+    #[DataProvider('apiDataProvider')]
     public function testThatAllDocumentsCanBeRenderedWithOutError(Api $api): void
     {
         $this->expectNotToPerformAssertions();

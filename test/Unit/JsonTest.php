@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PrismicTest;
 
 use JsonException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Exception\JsonError;
 use Prismic\Json;
 use PrismicTest\Framework\TestCase;
@@ -23,7 +24,7 @@ class JsonTest extends TestCase
         ];
     }
 
-    /** @dataProvider notObjects */
+    #[DataProvider('notObjects')]
     public function testObjectUnserializeFailure(string $payload): void
     {
         $this->expectException(JsonError::class);
@@ -48,7 +49,7 @@ class JsonTest extends TestCase
         ];
     }
 
-    /** @dataProvider invalidJson */
+    #[DataProvider('invalidJson')]
     public function testInvalidJsonInDecodeObject(string $payload): void
     {
         $this->expectException(JsonError::class);
@@ -56,7 +57,7 @@ class JsonTest extends TestCase
         Json::decodeObject($payload);
     }
 
-    /** @dataProvider invalidJson */
+    #[DataProvider('invalidJson')]
     public function testInvalidJsonInDecodeArray(string $payload): void
     {
         $this->expectException(JsonError::class);
@@ -64,7 +65,7 @@ class JsonTest extends TestCase
         Json::decodeArray($payload);
     }
 
-    /** @dataProvider invalidJson */
+    #[DataProvider('invalidJson')]
     public function testInvalidJsonInDecode(string $payload): void
     {
         $this->expectException(JsonError::class);

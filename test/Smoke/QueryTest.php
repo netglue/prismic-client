@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace PrismicSmokeTest;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Api;
 
 class QueryTest extends TestCase
 {
-    /** @dataProvider apiDataProvider */
+    #[DataProvider('apiDataProvider')]
     public function testThatOrderingResultsIsPossible(Api $api): void
     {
         $query = $api->createQuery()
