@@ -40,7 +40,7 @@ class DocumentLinkTest extends TestCase
         return $link;
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testThatCastingALinkToAStringWillYieldItsId(DocumentLink $link): void
     {
         self::assertSame('id', (string) $link);
@@ -105,13 +105,13 @@ class DocumentLinkTest extends TestCase
         $this->assertContainsEquals('b', $link->tags());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testTheLinkMayHaveAUrlAndItIsNullByDefault(DocumentLink $link): void
     {
         self::assertNull($link->url());
     }
 
-    /** @depends testConstructorWithUrl */
+    #[Depends('testConstructorWithUrl')]
     public function testThatUrlReturnsTheExpectedValue(DocumentLink $link): void
     {
         self::assertSame('/some/url', $link->url());
