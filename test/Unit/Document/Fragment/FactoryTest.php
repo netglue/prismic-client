@@ -333,7 +333,7 @@ class FactoryTest extends TestCase
         ];
     }
 
-    /** @dataProvider documentLinkProvider */
+    #[DataProvider('documentLinkProvider')]
     public function testThatDocumentLinksWithReadyMadeUrlsWillHaveTheExpectedValue(string $json, string|null $expect): void
     {
         $data = Json::decodeObject($json);
@@ -342,11 +342,8 @@ class FactoryTest extends TestCase
         self::assertSame($expect, $link->url());
     }
 
-    /**
-     * @param class-string $expectedType
-     *
-     * @dataProvider scalarTypes
-     */
+    /** @param class-string $expectedType */
+    #[DataProvider('scalarTypes')]
     public function testThatTheFactoryCanBeNewedAndInvoked(string|int|float|bool|null $value, string $expectedType): void
     {
         $factory = new Factory();
