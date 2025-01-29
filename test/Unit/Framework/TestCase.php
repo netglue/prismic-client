@@ -6,8 +6,10 @@ namespace PrismicTest\Framework;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
+use function assert;
 use function file_exists;
 use function file_get_contents;
+use function is_string;
 use function sprintf;
 
 abstract class TestCase extends PHPUnitTestCase
@@ -22,6 +24,9 @@ abstract class TestCase extends PHPUnitTestCase
             ));
         }
 
-        return file_get_contents($path);
+        $contents = file_get_contents($path);
+        assert(is_string($contents));
+
+        return $contents;
     }
 }

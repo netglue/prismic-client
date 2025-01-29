@@ -17,6 +17,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Diactoros\StreamFactory;
 use Laminas\Diactoros\UriFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Api;
 use Prismic\Exception\AuthenticationError;
 use Prismic\Exception\InvalidPreviewToken;
@@ -132,7 +133,7 @@ class ApiTest extends TestCase
         yield 403 => [403];
     }
 
-    /** @dataProvider authErrorStatusCodes */
+    #[DataProvider('authErrorStatusCodes')]
     public function testThatA401WillCauseAnAuthenticationException(int $code): void
     {
         $this->httpClient->setDefaultResponse(new TextResponse('Bad Auth', $code));

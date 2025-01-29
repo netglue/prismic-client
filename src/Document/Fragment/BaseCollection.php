@@ -14,6 +14,7 @@ use Traversable;
 use function array_filter;
 use function array_keys;
 use function array_values;
+use function assert;
 use function count;
 use function end;
 use function implode;
@@ -55,7 +56,7 @@ abstract class BaseCollection implements FragmentCollection
     }
 
     /** @param array-key|null $key */
-    final protected function addFragment(Fragment $fragment, $key = null): void
+    final protected function addFragment(Fragment $fragment, int|string|null $key = null): void
     {
         if ($key !== null) {
             $this->fragments[$key] = $fragment;
@@ -98,7 +99,10 @@ abstract class BaseCollection implements FragmentCollection
             return new EmptyFragment();
         }
 
-        return reset($this->fragments);
+        $first = reset($this->fragments);
+        assert($first instanceof Fragment);
+
+        return $first;
     }
 
     public function last(): Fragment
@@ -107,7 +111,11 @@ abstract class BaseCollection implements FragmentCollection
             return new EmptyFragment();
         }
 
-        return end($this->fragments);
+        $last = end($this->fragments);
+        assert($last instanceof Fragment);
+        reset($this->fragments);
+
+        return $last;
     }
 
     /**

@@ -19,7 +19,7 @@
             "php-http/discovery": false
         },
         "platform": {
-            "php": "8.1.99"
+            "php": "8.2.99"
         }
     },
     "autoload": {
@@ -35,7 +35,7 @@
         }
     },
     "require": {
-        "php": "~8.1 || ~8.2 || ~8.3 || ~8.4",
+        "php": "~8.2 || ~8.3 || ~8.4",
         "ext-json": "*",
         "laminas/laminas-escaper": "^2.9",
         "php-http/discovery": "^1.18.0",
@@ -52,11 +52,11 @@
         "php-http/cache-plugin": "^2.0.1",
         "php-http/curl-client": "^2.3.3",
         "php-http/mock-client": "^1.6.1",
-        "phpunit/phpunit": "^10.5.38",
-        "psalm/plugin-phpunit": "^0.19.0",
+        "phpunit/phpunit": "^11.5.4",
+        "psalm/plugin-phpunit": "^0.19.2",
         "roave/security-advisories": "dev-latest",
-        "symfony/cache": "^6.4.13 || ^7.0",
-        "vimeo/psalm": "^5.26.1"
+        "symfony/cache": "^6.4.13 || ^7.2.3",
+        "vimeo/psalm": "^6.0.0"
     },
     "conflict": {
         "php-http/httplug": "<2.4.1",
