@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PrismicSmokeTest;
 
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Api;
 use Prismic\ApiClient;
 use Prismic\Predicate;
@@ -25,7 +26,7 @@ class CacheTest extends TestCase
         }
     }
 
-    /** @dataProvider cachingApiClientProvider */
+    #[DataProvider('cachingApiClientProvider')]
     public function testThatAGetRequestWillResultInAnExpectedKeyBeingPresentInTheCache(ApiClient $api): void
     {
         $cache = self::psrCachePool();
@@ -41,7 +42,7 @@ class CacheTest extends TestCase
         self::assertTrue($cache->hasItem($expectedKey));
     }
 
-    /** @dataProvider cachingApiClientProvider */
+    #[DataProvider('cachingApiClientProvider')]
     public function testThatRepeatedQueriesHitTheCache(ApiClient $api): void
     {
         $cache = self::psrCachePool();

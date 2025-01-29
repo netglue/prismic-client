@@ -38,3 +38,17 @@ test: ## Run unit tests
 
 qa: cs sa test ## Run all QA Checks
 .PHONY: check
+
+get-rector: ## Install rector as a dev dependency
+ifeq (,$(wildcard ./vendor/bin/rector))
+	composer require --dev rector/rector
+endif
+.PHONY: get-rector
+
+remove-rector: ## Remove rector dependency
+	composer remove --dev rector/rector
+.PHONY: remove-rector
+
+rector: get-rector ## Run Rector
+	vendor/bin/rector
+.PHONY: rector

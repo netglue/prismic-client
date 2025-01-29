@@ -233,11 +233,8 @@ class ApiTest extends TestCase
         ];
     }
 
-    /**
-     * @param string[] $cookiePayload
-     *
-     * @dataProvider cookiePayloads
-     */
+    /** @param string[] $cookiePayload */
+    #[DataProvider('cookiePayloads')]
     public function testThatAPreviewRefIsReturnedWhenRequestCookiesArePresent(
         array $cookiePayload,
         string $expectedRef,
@@ -260,11 +257,8 @@ class ApiTest extends TestCase
         self::assertFalse($api->inPreview());
     }
 
-    /**
-     * @param string[] $cookiePayload
-     *
-     * @dataProvider cookiePayloads
-     */
+    /** @param string[] $cookiePayload */
+    #[DataProvider('cookiePayloads')]
     public function testThatCookieSuperGlobalsAreNotConsideredAfterConstruction(array $cookiePayload): void
     {
         $backup = $_COOKIE;
@@ -275,11 +269,8 @@ class ApiTest extends TestCase
         $_COOKIE = $backup;
     }
 
-    /**
-     * @param string[] $cookiePayload
-     *
-     * @dataProvider cookiePayloads
-     */
+    /** @param string[] $cookiePayload */
+    #[DataProvider('cookiePayloads')]
     public function testThatCookieSuperGlobalsAreConsultedDuringConstruction(array $cookiePayload): void
     {
         $backup = $_COOKIE;
@@ -375,7 +366,7 @@ class ApiTest extends TestCase
         ];
     }
 
-    /** @dataProvider previewHostVariations */
+    #[DataProvider('previewHostVariations')]
     public function testThatAnExceptionIsNotThrownWithCdnVariationsOfApiHostNames(
         string $configuredHost,
         string $tokenHost,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Document\Fragment\ImageLink;
 use PrismicTest\Framework\TestCase;
 
@@ -24,37 +25,37 @@ class ImageLinkTest extends TestCase
         return $link;
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testUrlIsExpectedValue(ImageLink $link): void
     {
         $this->assertSame('url', $link->url());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testFilenameIsExpectedValue(ImageLink $link): void
     {
         $this->assertSame('filename', $link->filename());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testFileSizeIsExpectedValue(ImageLink $link): void
     {
         $this->assertSame(10, $link->filesize());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testWidthIsExpectedValue(ImageLink $link): void
     {
         $this->assertSame(20, $link->width());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testHeightIsExpectedValue(ImageLink $link): void
     {
         $this->assertSame(30, $link->height());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testImageLinksAreNotConsideredEmpty(ImageLink $link): void
     {
         $this->assertFalse($link->isEmpty());

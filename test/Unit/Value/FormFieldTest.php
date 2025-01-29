@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Value;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Exception\UnexpectedValue;
 use Prismic\Json;
@@ -106,7 +107,7 @@ class FormFieldTest extends TestCase
         ];
     }
 
-    /** @dataProvider invalidNumbers */
+    #[DataProvider('invalidNumbers')]
     public function testInvalidIntegerValues(mixed $value): void
     {
         $field = FormField::factory('foo', Json::decodeObject('{
@@ -131,7 +132,7 @@ class FormFieldTest extends TestCase
         ];
     }
 
-    /** @dataProvider invalidStrings */
+    #[DataProvider('invalidStrings')]
     public function testInvalidStringValues(mixed $value): void
     {
         $field = FormField::factory('foo', Json::decodeObject('{

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Document\Fragment;
 use Prismic\Document\Fragment\BooleanFragment;
 use Prismic\Document\Fragment\Color;
@@ -48,11 +49,8 @@ class FactoryTest extends TestCase
         ];
     }
 
-    /**
-     * @param class-string $expectedType
-     *
-     * @dataProvider scalarTypes
-     */
+    /** @param class-string $expectedType */
+    #[DataProvider('scalarTypes')]
     public function testScalarValues(string|int|float|bool|null $value, string $expectedType): void
     {
         $fragment = Factory::factory($value);
@@ -116,7 +114,7 @@ class FactoryTest extends TestCase
         ];
     }
 
-    /** @dataProvider exceptionalImageSpecs */
+    #[DataProvider('exceptionalImageSpecs')]
     public function testInvalidImageSpecsAreExceptional(string $json, string $expectedMessage): void
     {
         $this->expectException(UnexpectedValue::class);

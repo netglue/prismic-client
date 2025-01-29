@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Document\Fragment\Number;
 use Prismic\Exception\InvalidArgument;
 use PrismicTest\Framework\TestCase;
@@ -25,19 +27,19 @@ class NumberTest extends TestCase
         return $number;
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testValueIsExpectedValue(Number $number): void
     {
         $this->assertSame(1, $number->value());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testToIntegerIsExpectedValue(Number $number): void
     {
         $this->assertSame(1, $number->toInteger());
     }
 
-    /** @depends testConstructor */
+    #[Depends('testConstructor')]
     public function testToFloatIsExpectedValue(Number $number): void
     {
         $this->assertSame(1.0, $number->toFloat());
@@ -56,7 +58,7 @@ class NumberTest extends TestCase
         ];
     }
 
-    /** @dataProvider numberProvider */
+    #[DataProvider('numberProvider')]
     public function testANumberIsNotConsideredEmpty(Number $number): void
     {
         $this->assertFalse($number->isEmpty());

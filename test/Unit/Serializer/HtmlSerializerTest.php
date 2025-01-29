@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Serializer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Document\Fragment;
 use Prismic\Document\Fragment\Factory;
 use Prismic\Document\Fragment\OrderedList;
@@ -146,7 +147,7 @@ class HtmlSerializerTest extends TestCase
         ];
     }
 
-    /** @dataProvider richTextSpanMarkupData */
+    #[DataProvider('richTextSpanMarkupData')]
     public function testSpansCorrectlyWrapText(int $fragmentIndex, string $expectedMarkup): void
     {
         $richText = $this->richTextSpansFixture();
@@ -199,7 +200,7 @@ class HtmlSerializerTest extends TestCase
         ];
     }
 
-    /** @dataProvider richTextBlockElementsData */
+    #[DataProvider('richTextBlockElementsData')]
     public function testBlockElementsMarkup(int $fragmentIndex, string $expectedMarkup): void
     {
         $richText = $this->richTextBlockElementsFixture();

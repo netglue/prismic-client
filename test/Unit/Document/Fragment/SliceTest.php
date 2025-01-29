@@ -103,7 +103,7 @@ class SliceTest extends TestCase
         self::assertEquals($expect, (string) $slice);
     }
 
-    /** @depends testThatAnEmptySliceCanBeFound */
+    #[Depends('testThatAnEmptySliceCanBeFound')]
     public function testThatTheEmptySliceIsAnEmptyStringWhenCastToAString(Slice $slice): void
     {
         self::assertEquals('', (string) $slice);

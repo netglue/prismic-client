@@ -36,5 +36,11 @@
                 <file name="test/Smoke/TestCase.php" />
             </errorLevel>
         </TypeDoesNotContainType>
+        <!-- Data Providers in tests are always regarded as unused -->
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="test" />
+            </errorLevel>
+        </PossiblyUnusedMethod>
     </issueHandlers>
 </psalm>

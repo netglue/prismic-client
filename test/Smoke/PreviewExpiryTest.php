@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicSmokeTest;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Api;
 use Prismic\Exception\PreviewTokenExpired;
 
@@ -12,7 +13,7 @@ use function str_replace;
 
 class PreviewExpiryTest extends TestCase
 {
-    /** @dataProvider apiDataProvider */
+    #[DataProvider('apiDataProvider')]
     public function testThatRequestsToInvalidPreviewUrlsOnTheSameHostYieldPreviewExpiryExceptions(Api $api): void
     {
         // Tokens come back from the api with the cdn subdomain stripped
