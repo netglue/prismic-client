@@ -9,6 +9,7 @@
         findUnusedPsalmSuppress="true"
         findUnusedCode="true"
         findUnusedBaselineEntry="true"
+        findUnusedIssueHandlerSuppression="false"
 >
     <projectFiles>
         <directory name="src"/>
