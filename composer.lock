@@ -3876,12 +3876,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "4015f7fbd4aedd2ebe19143e26e9f64fafae8d88"
+                "reference": "ec1d1ce93931a0560cbb5b9ba2d6a3a2719c0c79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/4015f7fbd4aedd2ebe19143e26e9f64fafae8d88",
-                "reference": "4015f7fbd4aedd2ebe19143e26e9f64fafae8d88",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/ec1d1ce93931a0560cbb5b9ba2d6a3a2719c0c79",
+                "reference": "ec1d1ce93931a0560cbb5b9ba2d6a3a2719c0c79",
                 "shasum": ""
             },
             "conflict": {
@@ -4478,7 +4478,7 @@
                 "snipe/snipe-it": "<=7.0.13",
                 "socalnick/scn-social-auth": "<1.15.2",
                 "socialiteproviders/steam": "<1.1",
-                "spatie/browsershot": "<5.0.3",
+                "spatie/browsershot": "<5.0.5",
                 "spatie/image-optimizer": "<1.7.3",
                 "spencer14420/sp-php-email-handler": "<1",
                 "spipu/html2pdf": "<5.2.8",
@@ -4740,7 +4740,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-02-03T16:05:30+00:00"
+            "time": "2025-02-05T22:04:25+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -7100,16 +7100,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "6.2.0",
+            "version": "6.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "814dfde37b43a1fe6d9b0996e08b19661af53bc5"
+                "reference": "04f312ac6ea48ba1c3e5db4d815bf6d74641c0ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/814dfde37b43a1fe6d9b0996e08b19661af53bc5",
-                "reference": "814dfde37b43a1fe6d9b0996e08b19661af53bc5",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/04f312ac6ea48ba1c3e5db4d815bf6d74641c0ee",
+                "reference": "04f312ac6ea48ba1c3e5db4d815bf6d74641c0ee",
                 "shasum": ""
             },
             "require": {
@@ -7167,6 +7167,7 @@
                 "psalm-language-server",
                 "psalm-plugin",
                 "psalm-refactor",
+                "psalm-review",
                 "psalter"
             ],
             "type": "project",
@@ -7211,7 +7212,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2025-02-01T16:30:21+00:00"
+            "time": "2025-02-05T12:31:01+00:00"
         },
         {
             "name": "webmozart/assert",
