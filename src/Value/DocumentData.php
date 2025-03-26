@@ -161,6 +161,7 @@ final class DocumentData implements Document
         return $this;
     }
 
+    #[Override]
     public function url(): string|null
     {
         return $this->url;

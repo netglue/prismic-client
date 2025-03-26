@@ -18,11 +18,8 @@ use function sprintf;
 use function strpos;
 use function urlencode;
 
-/**
- * @psalm-type QueryParams = array<string, string|int|list<string>|null>
- * @final
- */
-class Query
+/** @psalm-type QueryParams = array<string, string|int|list<string>|null> */
+final class Query
 {
     /**
      * @var array<string, mixed>
