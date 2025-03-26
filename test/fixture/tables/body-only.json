@@ -1,0 +1,128 @@
+{
+    "id": "whatever",
+    "uid": "home",
+    "url": null,
+    "type": "page",
+    "href": "https://whatever.cdn.prismic.io/api/v2/documents/search?ref=foo",
+    "tags": [],
+    "first_publication_date": "2025-03-26T15:43:27+0000",
+    "last_publication_date": "2025-03-26T15:43:27+0000",
+    "slugs": [],
+    "linked_documents": [],
+    "lang": "en-gb",
+    "alternate_languages": [],
+    "data": {
+        "table": {
+            "body": {
+                "rows": [
+                    {
+                        "key": "5cd199a8-d4ff-4b36-b1d1-0ac0b81ef335",
+                        "cells": [
+                            {
+                                "key": "d07b7f4b-f597-45ea-b0fa-a8ad3fe269be",
+                                "type": "data",
+                                "content": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": "1",
+                                        "spans": [],
+                                        "direction": "ltr"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "2b03c2ba-950b-4223-a818-643d8c73b68d",
+                                "type": "data",
+                                "content": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": "2",
+                                        "spans": [],
+                                        "direction": "ltr"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "afe82840-58fd-4073-b175-c4dc33fafca7",
+                                "type": "data",
+                                "content": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": "3",
+                                        "spans": [],
+                                        "direction": "ltr"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "bb63fa01-c413-4e53-a62d-aa116e0b1a28",
+                                "type": "data",
+                                "content": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": "4",
+                                        "spans": [],
+                                        "direction": "ltr"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "key": "271e3410-706c-4d9c-853b-00222c2594ab",
+                        "cells": [
+                            {
+                                "key": "437a1305-8238-4f3c-8d46-c07d30e67591",
+                                "type": "data",
+                                "content": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": "",
+                                        "spans": [],
+                                        "direction": "ltr"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "71895248-767e-468c-a016-ddd7fc336c28",
+                                "type": "data",
+                                "content": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": "",
+                                        "spans": [],
+                                        "direction": "ltr"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "2b9a9188-d6d3-4d7c-87aa-860f63c90764",
+                                "type": "data",
+                                "content": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": "",
+                                        "spans": [],
+                                        "direction": "ltr"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "85c99517-7dae-4170-8a58-177d35a02f0d",
+                                "type": "data",
+                                "content": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": "",
+                                        "spans": [],
+                                        "direction": "ltr"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

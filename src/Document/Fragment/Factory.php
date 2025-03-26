@@ -12,6 +12,7 @@ use Prismic\Value\DataAssertionBehaviour;
 use function array_filter;
 use function array_keys;
 use function array_map;
+use function array_values;
 use function assert;
 use function count;
 use function get_object_vars;
@@ -26,6 +27,12 @@ use function preg_match;
 use function property_exists;
 use function strpos;
 
+/**
+ * @psalm-type TableShape = object{
+ *     head?: object{rows: non-empty-list<object>},
+ *     body?: object{rows: non-empty-list<object>},
+ * }
+ */
 final class Factory
 {
     use DataAssertionBehaviour;
@@ -79,6 +86,11 @@ final class Factory
 
     private static function objectFactory(object $data): Fragment
     {
+        if (self::isTable($data)) {
+            /** @psalm-var TableShape $data */
+            return self::tableFactory($data);
+        }
+
         if (property_exists($data, 'dimensions')) {
             return self::imageFactory($data);
         }
@@ -311,7 +323,7 @@ final class Factory
     }
 
     /** @param mixed[] $data */
-    private static function arrayFactory(array $data): Fragment
+    private static function arrayFactory(array $data): RichText|Collection
     {
         $fragments = [];
         $richText = false;
@@ -328,5 +340,73 @@ final class Factory
         return $richText
             ? RichText::new($fragments)
             : Collection::new($fragments);
+    }
+
+    private static function isTable(object $data): bool
+    {
+        return (
+            property_exists($data, 'head')
+            &&
+            is_object($data->head)
+            &&
+            property_exists($data->head, 'rows')
+            &&
+            is_array($data->head->rows)
+        ) || (
+            property_exists($data, 'body')
+            &&
+            is_object($data->body)
+            &&
+            property_exists($data->body, 'rows')
+            &&
+            is_array($data->body->rows)
+        );
+    }
+
+    /** @param TableShape $data */
+    private static function tableFactory(object $data): Table
+    {
+        $head = null;
+        if (property_exists($data, 'head')) {
+            $head = self::tableRowFactory($data->head->rows[0]);
+        }
+
+        $body = [];
+
+        if (property_exists($data, 'body')) {
+            $body = array_map(
+                self::tableRowFactory(...),
+                $data->body->rows,
+            );
+        }
+
+        return new Table($head, $body);
+    }
+
+    private static function tableRowFactory(object $row): TableRow
+    {
+        assert(isset($row->key) && is_string($row->key) && $row->key !== '');
+        assert(isset($row->cells) && is_array($row->cells) && count($row->cells) > 0);
+
+        return new TableRow(
+            $row->key,
+            array_values(array_map(
+                self::tableCellFactory(...),
+                $row->cells,
+            )),
+        );
+    }
+
+    private static function tableCellFactory(object $cell): TableCell
+    {
+        assert(isset($cell->key) && is_string($cell->key) && $cell->key !== '');
+        assert(isset($cell->type));
+        assert($cell->type === TableCell::TYPE_HEADER || $cell->type === TableCell::TYPE_DATA);
+        assert(isset($cell->content) && is_array($cell->content));
+
+        $content = self::arrayFactory($cell->content);
+        assert($content instanceof RichText);
+
+        return new TableCell($cell->key, $cell->type, $content);
     }
 }

@@ -1,0 +1,75 @@
+{
+    "id": "whatever",
+    "uid": "home",
+    "url": null,
+    "type": "page",
+    "href": "https://whatever.cdn.prismic.io/api/v2/documents/search?ref=foo",
+    "tags": [],
+    "first_publication_date": "2025-03-26T15:43:27+0000",
+    "last_publication_date": "2025-03-26T15:43:27+0000",
+    "slugs": [],
+    "linked_documents": [],
+    "lang": "en-gb",
+    "alternate_languages": [],
+    "data": {
+        "table": {
+            "head": {
+                "rows": [
+                    {
+                        "key": "ac95733e-4a36-4659-b385-aa25a4a73628",
+                        "cells": [
+                            {
+                                "key": "a4f61d62-34e7-402c-b963-0f3a2b3177aa",
+                                "type": "header",
+                                "content": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": "Foo",
+                                        "spans": [],
+                                        "direction": "ltr"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "66e97446-f41c-436a-9334-2c86193b401e",
+                                "type": "header",
+                                "content": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": "Bar",
+                                        "spans": [],
+                                        "direction": "ltr"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "407ce876-6bb4-45c4-bba2-c54a26b26891",
+                                "type": "header",
+                                "content": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": "Baz",
+                                        "spans": [],
+                                        "direction": "ltr"
+                                    }
+                                ]
+                            },
+                            {
+                                "key": "050fcd50-ead6-4959-9348-fa4d51fd8235",
+                                "type": "header",
+                                "content": [
+                                    {
+                                        "type": "paragraph",
+                                        "text": "Bat",
+                                        "spans": [],
+                                        "direction": "ltr"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
