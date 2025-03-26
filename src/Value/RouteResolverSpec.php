@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Prismic\Value;
 
 use JsonSerializable;
+use Override;
 use Prismic\Json;
 use Stringable;
 
@@ -20,12 +21,14 @@ final class RouteResolverSpec implements JsonSerializable, Stringable
     ) {
     }
 
+    #[Override]
     public function __toString(): string
     {
         return Json::encode($this, JSON_FORCE_OBJECT);
     }
 
     /** @return array{type: string, path: string, resolvers: array<string, string>} */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [

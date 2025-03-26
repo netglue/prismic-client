@@ -4,21 +4,24 @@ declare(strict_types=1);
 
 namespace PrismicTest;
 
+use Override;
 use PHPUnit\Framework\TestCase;
 use Prismic\DefaultLinkResolver;
 use Prismic\Document\Fragment\DocumentLink;
 use Prismic\Document\Fragment\MediaLink;
 use Prismic\Link;
 
-class DefaultLinkResolverTest extends TestCase
+final class DefaultLinkResolverTest extends TestCase
 {
     private DefaultLinkResolver $linkResolver;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->linkResolver = new class extends DefaultLinkResolver {
+            #[Override]
             protected function resolveDocumentLink(DocumentLink $link): string|null
             {
                 return '/some/url';

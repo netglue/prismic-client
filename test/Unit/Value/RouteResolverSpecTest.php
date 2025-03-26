@@ -7,7 +7,7 @@ namespace PrismicTest\Value;
 use PHPUnit\Framework\TestCase;
 use Prismic\Value\RouteResolverSpec;
 
-class RouteResolverSpecTest extends TestCase
+final class RouteResolverSpecTest extends TestCase
 {
     public function testExpectedStringValueWithEmptyResolvers(): void
     {
