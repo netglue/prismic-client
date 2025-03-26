@@ -50,8 +50,7 @@ use function sprintf;
 
 use const PREG_SPLIT_NO_EMPTY;
 
-/** @final This class will become hard-final in the next major (2.0) */
-class HtmlSerializer
+final class HtmlSerializer
 {
     private string $dateFormat = 'l jS F Y';
     private string $dateTimeFormat = 'l jS F Y H:i:s';
