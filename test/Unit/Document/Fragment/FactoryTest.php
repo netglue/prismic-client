@@ -20,9 +20,11 @@ use Prismic\Document\FragmentCollection;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Exception\UnexpectedValue;
 use Prismic\Json;
+use Prismic\Value\DocumentData;
 use PrismicTest\Framework\TestCase;
 
 use function assert;
+use function file_get_contents;
 
 final class FactoryTest extends TestCase
 {
@@ -321,5 +323,27 @@ final class FactoryTest extends TestCase
 
         self::assertNull($slice->version());
         self::assertNull($slice->variation());
+    }
+
+    /** @return list<array{0: non-empty-string}> */
+    public static function tableFixtureProvider(): array
+    {
+        return [
+            [__DIR__ . '/../../../fixture/tables/body-only.json'],
+            [__DIR__ . '/../../../fixture/tables/both-header-and-footer.json'],
+            [__DIR__ . '/../../../fixture/tables/empty-body.json'],
+            [__DIR__ . '/../../../fixture/tables/header-only.json'],
+        ];
+    }
+
+    #[DataProvider('tableFixtureProvider')]
+    public function testTables(string $fixture): void
+    {
+        $json = file_get_contents($fixture);
+        assert($json !== false);
+        $document = DocumentData::factory(Json::decodeObject($json));
+
+        $table = $document->content()->get('table');
+        self::assertInstanceOf(Fragment\Table::class, $table);
     }
 }

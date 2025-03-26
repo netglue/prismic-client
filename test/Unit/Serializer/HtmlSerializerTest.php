@@ -247,4 +247,113 @@ final class HtmlSerializerTest extends TestCase
 
         self::assertEquals($expect, ($this->serializer)($embed));
     }
+
+    public function testTableMarkupWithHeadOnly(): void
+    {
+        $content = RichText::new([
+            Fragment\TextElement::new('paragraph', 'Foo', [], null),
+        ]);
+
+        $table = new Fragment\Table(
+            new Fragment\TableRow(
+                'foo',
+                [
+                    new Fragment\TableCell(
+                        'foo',
+                        Fragment\TableCell::TYPE_HEADER,
+                        $content,
+                    ),
+                    new Fragment\TableCell(
+                        'foo',
+                        Fragment\TableCell::TYPE_HEADER,
+                        $content,
+                    ),
+                ],
+            ),
+            [],
+        );
+
+        $expect = '<table><thead><tr><th><p>Foo</p></th><th><p>Foo</p></th></tr></thead></table>';
+
+        self::assertSame(
+            $expect,
+            $this->serializer->__invoke($table),
+        );
+    }
+
+    public function testEmptyTableYieldsEmptyString(): void
+    {
+        $table = new Fragment\Table(null, []);
+        self::assertSame('', $this->serializer->__invoke($table));
+    }
+
+    public function testTableWithoutHead(): void
+    {
+        $content = RichText::new([
+            Fragment\TextElement::new('paragraph', 'Foo', [], null),
+        ]);
+
+        $table = new Fragment\Table(
+            null,
+            [
+                new Fragment\TableRow(
+                    'foo',
+                    [
+                        new Fragment\TableCell(
+                            'foo',
+                            Fragment\TableCell::TYPE_DATA,
+                            $content,
+                        ),
+                        new Fragment\TableCell(
+                            'foo',
+                            Fragment\TableCell::TYPE_DATA,
+                            $content,
+                        ),
+                    ],
+                ),
+            ],
+        );
+
+        $expect = '<table><tbody><tr><td><p>Foo</p></td><td><p>Foo</p></td></tr></tbody></table>';
+
+        self::assertSame(
+            $expect,
+            $this->serializer->__invoke($table),
+        );
+    }
+
+    public function testEmptyTableContentYieldsEmptyCells(): void
+    {
+        $table = new Fragment\Table(
+            null,
+            [
+                new Fragment\TableRow(
+                    'foo',
+                    [
+                        new Fragment\TableCell(
+                            'foo',
+                            Fragment\TableCell::TYPE_DATA,
+                            RichText::new([
+                                Fragment\TextElement::new('paragraph', 'Foo', [], null),
+                            ]),
+                        ),
+                        new Fragment\TableCell(
+                            'foo',
+                            Fragment\TableCell::TYPE_DATA,
+                            RichText::new([
+                                Fragment\TextElement::new('paragraph', '', [], null),
+                            ]),
+                        ),
+                    ],
+                ),
+            ],
+        );
+
+        $expect = '<table><tbody><tr><td><p>Foo</p></td><td></td></tr></tbody></table>';
+
+        self::assertSame(
+            $expect,
+            $this->serializer->__invoke($table),
+        );
+    }
 }
