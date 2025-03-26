@@ -17,6 +17,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Diactoros\StreamFactory;
 use Laminas\Diactoros\UriFactory;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Api;
 use Prismic\Exception\AuthenticationError;
@@ -66,6 +67,7 @@ final class ApiTest extends TestCase
         }
         JSON;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

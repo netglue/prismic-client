@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Value;
 
+use Override;
 use Prismic\Exception\UnknownFormField;
 use Prismic\Json;
 use Prismic\Value\FormSpec;
@@ -13,6 +14,7 @@ final class FormSpecTest extends TestCase
 {
     private FormSpec $form;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

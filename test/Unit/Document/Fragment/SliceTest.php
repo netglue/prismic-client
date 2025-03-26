@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use Override;
 use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Document\Fragment\Slice;
 use Prismic\Document\FragmentCollection;
@@ -15,6 +16,7 @@ final class SliceTest extends TestCase
 {
     private FragmentCollection $slices;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Override;
 use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
 
@@ -94,6 +95,7 @@ final class Embed implements Fragment
         return $this->attributes;
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return false;

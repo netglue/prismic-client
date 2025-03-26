@@ -6,6 +6,7 @@ namespace PrismicTest\Value;
 
 use DateInterval;
 use DateTimeImmutable;
+use Override;
 use Prismic\Document\Fragment\BooleanFragment;
 use Prismic\Document\Fragment\Collection;
 use Prismic\Document\Fragment\Color;
@@ -25,6 +26,7 @@ final class DocumentDataTest extends TestCase
 {
     private DocumentData $document;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

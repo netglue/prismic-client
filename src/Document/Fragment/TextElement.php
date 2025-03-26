@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Override;
 use Prismic\Document\Fragment;
 use Stringable;
 
@@ -111,6 +112,7 @@ final class TextElement implements Fragment, Stringable
         return $this->type === self::TYPE_PARAGRAPH;
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return $this->text === '';
@@ -121,6 +123,7 @@ final class TextElement implements Fragment, Stringable
         $this->spans[] = $span;
     }
 
+    #[Override]
     public function __toString(): string
     {
         return $this->text;

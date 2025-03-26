@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Override;
 use Prismic\Document\Fragment;
 
 final class BooleanFragment implements Fragment
@@ -22,6 +23,7 @@ final class BooleanFragment implements Fragment
         return $this->value;
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return false;

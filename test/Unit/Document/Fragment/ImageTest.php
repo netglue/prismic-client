@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use Override;
 use Prismic\Document\Fragment\Factory;
 use Prismic\Document\Fragment\Image;
 use Prismic\Document\FragmentCollection;
@@ -17,6 +18,7 @@ final class ImageTest extends TestCase
 {
     private FragmentCollection $collection;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

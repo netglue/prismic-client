@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Value;
 
+use Override;
 use Stringable;
 
 use function assert;
@@ -40,6 +41,7 @@ final class Language implements Stringable
         return $this->name;
     }
 
+    #[Override]
     public function __toString(): string
     {
         return $this->id;

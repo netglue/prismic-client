@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document;
 
+use Override;
 use Prismic\Document;
 use Prismic\Document\DocumentDataConsumer;
 use Prismic\Json;
@@ -16,6 +17,7 @@ final class DocumentDataConsumerTest extends TestCase
 
     private Document $subject;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

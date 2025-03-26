@@ -314,7 +314,7 @@ final class PredicateTest extends TestCase
     /**
      * @param scalar|list<scalar> $value
      *
-     * @psalm-suppress PossiblyUnusedParam
+     * @psalm-suppress UnusedParam
      */
     #[DataProvider('atProvider')]
     public function testSetState(string $fragment, string|int|float|bool|array $value, string $expect): void

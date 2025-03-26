@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Serializer;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Document\Fragment;
 use Prismic\Document\Fragment\Factory;
@@ -24,6 +25,7 @@ final class HtmlSerializerTest extends TestCase
 {
     private HtmlSerializer $serializer;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -214,6 +216,7 @@ final class HtmlSerializerTest extends TestCase
     public function testExceptionThrownWhenAnUnknownFragmentTypeIsEncountered(): void
     {
         $fragment = new class implements Fragment {
+            #[Override]
             public function isEmpty(): bool
             {
                 return false;
