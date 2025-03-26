@@ -9,7 +9,7 @@ use Prismic\Document\Fragment\DocumentLink;
 
 use function sprintf;
 
-class TestLinkResolver extends DefaultLinkResolver
+final class TestLinkResolver extends DefaultLinkResolver
 {
     protected function resolveDocumentLink(DocumentLink $link): string|null
     {

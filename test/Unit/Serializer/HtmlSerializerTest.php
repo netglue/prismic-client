@@ -20,7 +20,7 @@ use PrismicTest\TestLinkResolver;
 
 use function assert;
 
-class HtmlSerializerTest extends TestCase
+final class HtmlSerializerTest extends TestCase
 {
     private HtmlSerializer $serializer;
 

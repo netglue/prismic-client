@@ -12,7 +12,7 @@ use PrismicTest\Framework\TestCase;
 
 use const STDOUT;
 
-class JsonTest extends TestCase
+final class JsonTest extends TestCase
 {
     /** @return array<string, array{0: string}> */
     public static function notObjects(): array

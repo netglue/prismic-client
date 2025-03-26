@@ -11,7 +11,7 @@ use function json_encode;
 
 use const JSON_THROW_ON_ERROR;
 
-class TypeTest extends TestCase
+final class TypeTest extends TestCase
 {
     public function testNewInstance(): void
     {

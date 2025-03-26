@@ -10,7 +10,7 @@ use Prismic\Serializer\HtmlSerializer;
 use PrismicSmokeTest\TestCase;
 use PrismicTest\TestLinkResolver;
 
-class HtmlSerializerTest extends TestCase
+final class HtmlSerializerTest extends TestCase
 {
     private HtmlSerializer $serializer;
 

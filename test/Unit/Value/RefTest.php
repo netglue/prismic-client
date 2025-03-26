@@ -7,7 +7,7 @@ namespace PrismicTest\Value;
 use Prismic\Value\Ref;
 use PrismicTest\Framework\TestCase;
 
-class RefTest extends TestCase
+final class RefTest extends TestCase
 {
     public function testExpectedBehaviour(): void
     {

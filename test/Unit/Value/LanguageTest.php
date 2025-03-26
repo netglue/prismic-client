@@ -7,7 +7,7 @@ namespace PrismicTest\Value;
 use Prismic\Value\Language;
 use PrismicTest\Framework\TestCase;
 
-class LanguageTest extends TestCase
+final class LanguageTest extends TestCase
 {
     public function testExpectedBehaviour(): void
     {

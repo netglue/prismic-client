@@ -10,7 +10,7 @@ use Prismic\Exception\PreviewTokenExpired;
 use PrismicTest\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
-class PreviewTokenExpiredTest extends TestCase
+final class PreviewTokenExpiredTest extends TestCase
 {
     /** @return array<string, array{0: array<string, string>, 1:int}> */
     public static function possibleResponseBodiesThatShouldRepresentExpiredPreviews(): array

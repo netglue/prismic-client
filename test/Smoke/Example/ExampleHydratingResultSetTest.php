@@ -12,7 +12,7 @@ use Prismic\Example\CustomHydratingResultSet\MyResultSet;
 use Prismic\Example\CustomHydratingResultSet\MyResultSetFactory;
 use PrismicSmokeTest\TestCase;
 
-class ExampleHydratingResultSetTest extends TestCase
+final class ExampleHydratingResultSetTest extends TestCase
 {
     /** @return Generator<string, array{0:Api}> */
     public static function hydratingApiProvider(): Generator

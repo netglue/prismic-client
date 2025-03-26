@@ -21,7 +21,7 @@ use PrismicTest\Framework\TestCase;
 use function assert;
 use function reset;
 
-class DocumentDataTest extends TestCase
+final class DocumentDataTest extends TestCase
 {
     private DocumentData $document;
 

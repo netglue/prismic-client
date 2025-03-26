@@ -13,7 +13,7 @@ use PrismicTest\Framework\TestCase;
 
 use function assert;
 
-class ImageTest extends TestCase
+final class ImageTest extends TestCase
 {
     private FragmentCollection $collection;
 

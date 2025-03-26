@@ -42,7 +42,7 @@ use function urlencode;
 
 use const CURLOPT_TIMEOUT_MS;
 
-class ApiTest extends TestCase
+final class ApiTest extends TestCase
 {
     private MockClient $httpClient;
 

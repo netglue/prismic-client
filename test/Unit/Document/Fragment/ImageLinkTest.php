@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Document\Fragment\ImageLink;
 use PrismicTest\Framework\TestCase;
 
-class ImageLinkTest extends TestCase
+final class ImageLinkTest extends TestCase
 {
     public function testConstructor(): ImageLink
     {

@@ -9,7 +9,7 @@ use Prismic\Json;
 use Prismic\Value\FormSpec;
 use PrismicTest\Framework\TestCase;
 
-class FormSpecTest extends TestCase
+final class FormSpecTest extends TestCase
 {
     private FormSpec $form;
 

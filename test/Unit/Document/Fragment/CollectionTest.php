@@ -9,7 +9,7 @@ use Prismic\Document\Fragment\EmptyFragment;
 use Prismic\Document\Fragment\StringFragment;
 use PrismicTest\Framework\TestCase;
 
-class CollectionTest extends TestCase
+final class CollectionTest extends TestCase
 {
     public function testEmptyCollectionReturnsEmptyFragmentForFirstAndLast(): void
     {

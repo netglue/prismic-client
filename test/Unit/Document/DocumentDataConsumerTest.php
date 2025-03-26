@@ -10,7 +10,7 @@ use Prismic\Json;
 use Prismic\Value\DocumentData;
 use PrismicTest\Framework\TestCase;
 
-class DocumentDataConsumerTest extends TestCase
+final class DocumentDataConsumerTest extends TestCase
 {
     private DocumentData $document;
 

@@ -12,7 +12,7 @@ use Prismic\ResultSet\StandardResultSet;
 use Prismic\Value\DocumentData;
 use PrismicTest\Framework\TestCase;
 
-class StandardResultTest extends TestCase
+final class StandardResultTest extends TestCase
 {
     private StandardResultSet $resultSet;
 

@@ -16,7 +16,7 @@ use function count;
 use function sprintf;
 
 /** @psalm-suppress DeprecatedMethod */
-class ApiTest extends TestCase
+final class ApiTest extends TestCase
 {
     /**
      * @return Generator<string, array{0: Api, 1: string}>

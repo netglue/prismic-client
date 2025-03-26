@@ -11,7 +11,7 @@ use Prismic\Exception\PreviewTokenExpired;
 use function sprintf;
 use function str_replace;
 
-class PreviewExpiryTest extends TestCase
+final class PreviewExpiryTest extends TestCase
 {
     #[DataProvider('apiDataProvider')]
     public function testThatRequestsToInvalidPreviewUrlsOnTheSameHostYieldPreviewExpiryExceptions(Api $api): void

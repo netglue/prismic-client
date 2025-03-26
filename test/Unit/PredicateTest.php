@@ -16,7 +16,7 @@ use function unserialize;
 use function var_export;
 
 /** @psalm-import-type ArgType from Predicate */
-class PredicateTest extends TestCase
+final class PredicateTest extends TestCase
 {
     /** @return array<array-key, array{0: string, 1: scalar|list<scalar>, 2:string}> */
     public static function atProvider(): array

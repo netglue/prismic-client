@@ -11,7 +11,7 @@ use Prismic\Json;
 use Prismic\Value\DocumentData;
 use PrismicTest\Framework\TestCase;
 
-class SliceTest extends TestCase
+final class SliceTest extends TestCase
 {
     private FragmentCollection $slices;
 
