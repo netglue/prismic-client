@@ -8,6 +8,7 @@ use DateInterval;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use Override;
 use Prismic\Document;
 use Prismic\Json;
 use Prismic\ResultSet;
@@ -110,6 +111,7 @@ final class StandardResultSet implements ResultSet
         return $this->cacheDate->add(new DateInterval(sprintf('PT%dS', $this->maxAge)));
     }
 
+    #[Override]
     public function merge(ResultSet $with): ResultSet
     {
         $results = array_merge($this->results, $with->results());

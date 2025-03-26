@@ -7,6 +7,6 @@ namespace PrismicTest\Framework;
 use Exception;
 use Psr\Cache\InvalidArgumentException;
 
-class CacheKeyInvalid extends Exception implements InvalidArgumentException
+final class CacheKeyInvalid extends Exception implements InvalidArgumentException
 {
 }

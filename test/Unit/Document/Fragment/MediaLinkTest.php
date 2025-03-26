@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Document\Fragment\MediaLink;
 use PrismicTest\Framework\TestCase;
 
-class MediaLinkTest extends TestCase
+final class MediaLinkTest extends TestCase
 {
     public function testConstructor(): MediaLink
     {

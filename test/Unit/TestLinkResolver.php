@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace PrismicTest;
 
+use Override;
 use Prismic\DefaultLinkResolver;
 use Prismic\Document\Fragment\DocumentLink;
 
 use function sprintf;
 
-class TestLinkResolver extends DefaultLinkResolver
+final class TestLinkResolver extends DefaultLinkResolver
 {
+    #[Override]
     protected function resolveDocumentLink(DocumentLink $link): string|null
     {
         if ($link->isBroken()) {

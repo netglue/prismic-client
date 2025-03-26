@@ -9,7 +9,7 @@ use Prismic\Document\Fragment\DocumentLink;
 use PrismicTest\Framework\TestCase;
 use TypeError;
 
-class DocumentLinkTest extends TestCase
+final class DocumentLinkTest extends TestCase
 {
     public function testItIsATypeErrorForATagToBeANonString(): void
     {

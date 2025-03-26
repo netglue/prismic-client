@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Override;
 use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
 use Stringable;
@@ -59,11 +60,13 @@ final class Number implements Fragment, Stringable
         return (float) $this->value;
     }
 
+    #[Override]
     public function __toString(): string
     {
         return (string) $this->value;
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return false;

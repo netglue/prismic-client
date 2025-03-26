@@ -12,7 +12,7 @@ use Prismic\Value\FormField;
 use PrismicTest\Framework\TestCase;
 use stdClass;
 
-class FormFieldTest extends TestCase
+final class FormFieldTest extends TestCase
 {
     public function testBasicBehaviour(): void
     {

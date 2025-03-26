@@ -17,6 +17,7 @@ use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Response\TextResponse;
 use Laminas\Diactoros\StreamFactory;
 use Laminas\Diactoros\UriFactory;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Api;
 use Prismic\Exception\AuthenticationError;
@@ -42,7 +43,7 @@ use function urlencode;
 
 use const CURLOPT_TIMEOUT_MS;
 
-class ApiTest extends TestCase
+final class ApiTest extends TestCase
 {
     private MockClient $httpClient;
 
@@ -66,6 +67,7 @@ class ApiTest extends TestCase
         }
         JSON;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Override;
 use Prismic\Document\Fragment;
 use Prismic\Document\FragmentCollection;
 use Stringable;
@@ -99,11 +100,13 @@ final class Slice implements Fragment, Stringable
         return $this->id;
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return $this->primary->isEmpty() && $this->items->isEmpty();
     }
 
+    #[Override]
     public function __toString(): string
     {
         $buffer = array_filter([

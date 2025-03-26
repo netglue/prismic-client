@@ -8,7 +8,7 @@ use Prismic\Document\Fragment\DateFragment;
 use Prismic\Exception\InvalidArgument;
 use PrismicTest\Framework\TestCase;
 
-class DateFragmentTest extends TestCase
+final class DateFragmentTest extends TestCase
 {
     public function testThatDateFragmentsAreNotConsideredEmpty(): void
     {

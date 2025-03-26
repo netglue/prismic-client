@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Document\Fragment\GeoPoint;
 use PrismicTest\Framework\TestCase;
 
-class GeoPointTest extends TestCase
+final class GeoPointTest extends TestCase
 {
     public function testConstructor(): GeoPoint
     {

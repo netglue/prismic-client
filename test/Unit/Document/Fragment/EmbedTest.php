@@ -15,7 +15,7 @@ use PrismicTest\Framework\TestCase;
 
 use function assert;
 
-class EmbedTest extends TestCase
+final class EmbedTest extends TestCase
 {
     private static function embedCollection(): Collection
     {

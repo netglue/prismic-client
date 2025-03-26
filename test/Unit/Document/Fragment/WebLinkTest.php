@@ -7,7 +7,7 @@ namespace PrismicTest\Document\Fragment;
 use Prismic\Document\Fragment\WebLink;
 use PrismicTest\Framework\TestCase;
 
-class WebLinkTest extends TestCase
+final class WebLinkTest extends TestCase
 {
     public function testAccessors(): void
     {

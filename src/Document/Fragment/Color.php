@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Override;
 use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
 use Stringable;
@@ -70,6 +71,7 @@ final class Color implements Fragment, Stringable
         return (int) hexdec(substr($this->value, 1));
     }
 
+    #[Override]
     public function __toString(): string
     {
         return $this->value;
@@ -84,6 +86,7 @@ final class Color implements Fragment, Stringable
         return self::new(sprintf('#%s', implode('', $parts)));
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return false;

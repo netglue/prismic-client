@@ -11,7 +11,7 @@ use PrismicTest\Framework\TestCase;
 
 use function hexdec;
 
-class ColorTest extends TestCase
+final class ColorTest extends TestCase
 {
     public function testColorIsStringable(): void
     {

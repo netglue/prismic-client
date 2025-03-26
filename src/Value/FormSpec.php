@@ -6,6 +6,7 @@ namespace Prismic\Value;
 
 use ArrayIterator;
 use IteratorAggregate;
+use Override;
 use Prismic\Exception\UnknownFormField;
 use Traversable;
 
@@ -116,6 +117,7 @@ final class FormSpec implements IteratorAggregate
      * @return Traversable<array-key, FormField>
      * @psalm-return ArrayIterator<array-key, FormField>
      */
+    #[Override]
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->fields);

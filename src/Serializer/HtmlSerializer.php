@@ -24,6 +24,9 @@ use Prismic\Document\Fragment\OrderedList;
 use Prismic\Document\Fragment\Slice;
 use Prismic\Document\Fragment\Span;
 use Prismic\Document\Fragment\StringFragment;
+use Prismic\Document\Fragment\Table;
+use Prismic\Document\Fragment\TableCell;
+use Prismic\Document\Fragment\TableRow;
 use Prismic\Document\Fragment\TextElement;
 use Prismic\Document\Fragment\WebLink;
 use Prismic\Document\FragmentCollection;
@@ -47,6 +50,7 @@ use function sprintf;
 
 use const PREG_SPLIT_NO_EMPTY;
 
+/** @final This class will become hard-final in the next major (2.0) */
 class HtmlSerializer
 {
     private string $dateFormat = 'l jS F Y';
@@ -149,6 +153,9 @@ class HtmlSerializer
 
             case Embed::class:
                 return $this->embed($fragment);
+
+            case Table::class:
+                return $this->table($fragment);
         }
 
         throw new UnexpectedValue(sprintf(
@@ -360,6 +367,53 @@ class HtmlSerializer
             '<div%1$s>%2$s</div>',
             $attributes,
             (string) $embed->html(),
+        );
+    }
+
+    private function table(Table $table): string
+    {
+        if ($table->isEmpty()) {
+            return '';
+        }
+
+        $head = $table->hasHead()
+            ? sprintf('<thead>%s</thead>', $this->tableRow($table->head))
+            : '';
+
+        $body = $table->hasBody()
+            ? sprintf(
+                '<tbody>%s</tbody>',
+                implode('', array_map(
+                    $this->tableRow(...),
+                    $table->body,
+                )),
+            )
+            : '';
+
+        return sprintf('<table>%s%s</table>', $head, $body);
+    }
+
+    private function tableRow(TableRow $row): string
+    {
+        $cells = implode('', array_map(
+            function (TableCell $cell): string {
+                $tag = $cell->isHeaderCell() ? 'th' : 'td';
+                $content = $cell->content === null || $cell->content->isEmpty()
+                    ? ''
+                    : ($this)($cell->content);
+
+                return sprintf(
+                    '<%1$s>%2$s</%1$s>',
+                    $tag,
+                    $content,
+                );
+            },
+            $row->cells,
+        ));
+
+        return sprintf(
+            '<tr>%s</tr>',
+            $cells,
         );
     }
 }

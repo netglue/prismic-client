@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Override;
 use Prismic\Document;
 use Prismic\Document\Fragment;
 use Prismic\Link;
@@ -96,6 +97,7 @@ final class DocumentLink implements Fragment, Link
         return $this->id;
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return false;

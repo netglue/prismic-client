@@ -7,7 +7,7 @@ namespace PrismicSmokeTest;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Api;
 
-class QueryTest extends TestCase
+final class QueryTest extends TestCase
 {
     #[DataProvider('apiDataProvider')]
     public function testThatOrderingResultsIsPossible(Api $api): void

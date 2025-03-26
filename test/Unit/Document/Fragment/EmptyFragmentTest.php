@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Prismic\Document\Fragment\EmptyFragment;
 
-class EmptyFragmentTest extends TestCase
+final class EmptyFragmentTest extends TestCase
 {
     #[Test]
     public function anEmptyFragmentIsAlwaysConsideredEmpty(): void

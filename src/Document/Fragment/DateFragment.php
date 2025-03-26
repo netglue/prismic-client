@@ -6,6 +6,7 @@ namespace Prismic\Document\Fragment;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use Override;
 use Prismic\Document\Fragment;
 use Prismic\Exception\InvalidArgument;
 
@@ -46,6 +47,7 @@ final class DateFragment extends DateTimeImmutable implements Fragment
         return (new self())->setTimestamp($date->getTimestamp())->setTimezone($date->getTimezone());
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return false;

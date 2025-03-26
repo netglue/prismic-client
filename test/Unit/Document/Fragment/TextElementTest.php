@@ -10,7 +10,7 @@ use Prismic\Document\Fragment\TextElement;
 use PrismicTest\Framework\TestCase;
 use TypeError;
 
-class TextElementTest extends TestCase
+final class TextElementTest extends TestCase
 {
     public function testConstructor(): TextElement
     {

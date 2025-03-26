@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Override;
 use Prismic\Document\Fragment;
 use Prismic\UrlLink;
 
@@ -24,6 +25,7 @@ final class MediaLink implements Fragment, UrlLink
         return new self($url, $fileName, $fileSize);
     }
 
+    #[Override]
     public function url(): string
     {
         return $this->url;
@@ -44,6 +46,7 @@ final class MediaLink implements Fragment, UrlLink
         return $this->fileName;
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return false;
