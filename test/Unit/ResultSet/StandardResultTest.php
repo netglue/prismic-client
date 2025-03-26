@@ -6,16 +6,18 @@ namespace PrismicTest\ResultSet;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use Override;
 use Prismic\Document;
 use Prismic\Json;
 use Prismic\ResultSet\StandardResultSet;
 use Prismic\Value\DocumentData;
 use PrismicTest\Framework\TestCase;
 
-class StandardResultTest extends TestCase
+final class StandardResultTest extends TestCase
 {
     private StandardResultSet $resultSet;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

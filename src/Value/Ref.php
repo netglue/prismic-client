@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Value;
 
+use Override;
 use Stringable;
 
 use function assert;
@@ -76,6 +77,7 @@ final class Ref implements Stringable
         return $this->isMasterRef;
     }
 
+    #[Override]
     public function __toString(): string
     {
         return $this->ref;

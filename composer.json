@@ -47,16 +47,16 @@
     },
     "require-dev": {
         "ext-curl": "*",
-        "doctrine/coding-standard": "^12.0",
+        "doctrine/coding-standard": "^13.0.0",
         "laminas/laminas-diactoros": "^3.5.0",
         "php-http/cache-plugin": "^2.0.1",
         "php-http/curl-client": "^2.3.3",
         "php-http/mock-client": "^1.6.1",
-        "phpunit/phpunit": "^11.5.4",
-        "psalm/plugin-phpunit": "^0.19.2",
+        "phpunit/phpunit": "^11.5.15",
+        "psalm/plugin-phpunit": "^0.19.3",
         "roave/security-advisories": "dev-latest",
-        "symfony/cache": "^6.4.13 || ^7.2.3",
-        "vimeo/psalm": "^6.0.0"
+        "symfony/cache": "^6.4.13 || ^7.2.4",
+        "vimeo/psalm": "^6.9.5"
     },
     "conflict": {
         "php-http/httplug": "<2.4.1",

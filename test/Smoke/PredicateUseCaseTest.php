@@ -11,7 +11,7 @@ use Prismic\Predicate;
 use function chr;
 use function sprintf;
 
-class PredicateUseCaseTest extends TestCase
+final class PredicateUseCaseTest extends TestCase
 {
     /** @return string[][] */
     public static function searchTermProvider(): iterable

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Override;
 use Prismic\Document\Fragment;
 use Prismic\UrlLink;
 
@@ -20,6 +21,7 @@ final class WebLink implements Fragment, UrlLink
         return new self($url, $target);
     }
 
+    #[Override]
     public function url(): string
     {
         return $this->url;
@@ -35,6 +37,7 @@ final class WebLink implements Fragment, UrlLink
         return $this->url;
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return false;

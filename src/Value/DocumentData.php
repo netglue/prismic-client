@@ -7,6 +7,7 @@ namespace Prismic\Value;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use Override;
 use Prismic\Document;
 use Prismic\Document\Fragment;
 use Prismic\Document\Fragment\Collection;
@@ -81,37 +82,44 @@ final class DocumentData implements Document
         );
     }
 
+    #[Override]
     public function id(): string
     {
         return $this->id;
     }
 
+    #[Override]
     public function uid(): string|null
     {
         return $this->uid;
     }
 
+    #[Override]
     public function type(): string
     {
         return $this->type;
     }
 
     /** @inheritDoc */
+    #[Override]
     public function tags(): iterable
     {
         return $this->tags;
     }
 
+    #[Override]
     public function lang(): string
     {
         return $this->lang;
     }
 
+    #[Override]
     public function firstPublished(): DateTimeInterface
     {
         return $this->firstPublished;
     }
 
+    #[Override]
     public function lastPublished(): DateTimeInterface
     {
         return $this->lastPublished;
@@ -133,16 +141,19 @@ final class DocumentData implements Document
     }
 
     /** @return Translation[] */
+    #[Override]
     public function translations(): iterable
     {
         return $this->translations;
     }
 
+    #[Override]
     public function asLink(): DocumentLink
     {
         return DocumentLink::withDocument($this);
     }
 
+    #[Override]
     public function data(): DocumentData
     {
         return $this;

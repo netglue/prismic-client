@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Override;
 use Prismic\Document\Fragment;
 use Stringable;
 
@@ -30,11 +31,13 @@ final class GeoPoint implements Fragment, Stringable
         return $this->longitude;
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return false;
     }
 
+    #[Override]
     public function __toString(): string
     {
         return sprintf('%0.6f,%0.6f', $this->latitude, $this->longitude);

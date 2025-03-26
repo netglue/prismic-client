@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Prismic;
 
 use DateTimeInterface;
+use Override;
 use Prismic\Exception\InvalidArgument;
 use Stringable;
 
@@ -35,6 +36,7 @@ final class Predicate implements Stringable
         );
     }
 
+    #[Override]
     public function __toString(): string
     {
         return $this->q();

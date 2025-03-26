@@ -14,7 +14,7 @@ use function sha1;
 use function sprintf;
 use function uniqid;
 
-class CacheTest extends TestCase
+final class CacheTest extends TestCase
 {
     /** @return Generator<string, array{0:Api}> */
     public static function cachingApiClientProvider(): Generator

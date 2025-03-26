@@ -10,7 +10,7 @@ use Prismic\Document\Fragment\Number;
 use Prismic\Exception\InvalidArgument;
 use PrismicTest\Framework\TestCase;
 
-class NumberTest extends TestCase
+final class NumberTest extends TestCase
 {
     public function testNonNumbersAreExceptional(): void
     {

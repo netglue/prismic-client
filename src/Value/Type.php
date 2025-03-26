@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Prismic\Value;
 
 use JsonSerializable;
+use Override;
 use Stringable;
 
 final class Type implements JsonSerializable, Stringable
@@ -29,6 +30,7 @@ final class Type implements JsonSerializable, Stringable
     }
 
     /** @return mixed[] */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -36,6 +38,7 @@ final class Type implements JsonSerializable, Stringable
         ];
     }
 
+    #[Override]
     public function __toString(): string
     {
         return $this->id;

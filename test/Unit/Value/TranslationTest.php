@@ -7,7 +7,7 @@ namespace PrismicTest\Value;
 use Prismic\Value\Translation;
 use PrismicTest\Framework\TestCase;
 
-class TranslationTest extends TestCase
+final class TranslationTest extends TestCase
 {
     public function testBasicAccessors(): void
     {

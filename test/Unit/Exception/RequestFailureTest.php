@@ -10,7 +10,7 @@ use Prismic\Exception\RequestFailure;
 use PrismicTest\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 
-class RequestFailureTest extends TestCase
+final class RequestFailureTest extends TestCase
 {
     public function testWithClientErrorReturnsPreviewTokenExpiredInstanceWhenResponseBodyMatchesExpectedValue(): void
     {

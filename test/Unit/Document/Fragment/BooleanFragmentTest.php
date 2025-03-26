@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Document\Fragment\BooleanFragment;
 use PrismicTest\Framework\TestCase;
 
-class BooleanFragmentTest extends TestCase
+final class BooleanFragmentTest extends TestCase
 {
     /** @return array<string, bool[]> */
     public static function booleans(): array

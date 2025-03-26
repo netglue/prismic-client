@@ -6,6 +6,7 @@ namespace Prismic;
 
 use Countable;
 use IteratorAggregate;
+use Override;
 use Traversable;
 
 /**
@@ -56,6 +57,7 @@ interface ResultSet extends IteratorAggregate, Countable
      *
      * @return Traversable<array-key, T>
      */
+    #[Override]
     public function getIterator(): Traversable;
 
     /**

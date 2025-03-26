@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use Override;
 use Prismic\Document\Fragment;
 use Stringable;
 
@@ -18,11 +19,13 @@ final class StringFragment implements Fragment, Stringable
         return new self($value);
     }
 
+    #[Override]
     public function __toString(): string
     {
         return $this->value;
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         return $this->value === '';

@@ -16,7 +16,7 @@ use PrismicTest\Framework\TestCase;
 
 use function assert;
 
-class RichTextTest extends TestCase
+final class RichTextTest extends TestCase
 {
     private function listItemsFixture(): RichText
     {

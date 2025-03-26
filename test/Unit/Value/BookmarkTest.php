@@ -8,7 +8,7 @@ use Prismic\Value\Bookmark;
 use PrismicTest\Framework\TestCase;
 
 /** @psalm-suppress DeprecatedClass */
-class BookmarkTest extends TestCase
+final class BookmarkTest extends TestCase
 {
     public function testNewInstance(): void
     {

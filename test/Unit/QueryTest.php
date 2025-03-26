@@ -16,7 +16,7 @@ use function sprintf;
 use function substr_count;
 use function urlencode;
 
-class QueryTest extends TestCase
+final class QueryTest extends TestCase
 {
     private static object|null $formData = null;
 

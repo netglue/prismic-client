@@ -47,6 +47,7 @@ use function sprintf;
 
 use const PREG_SPLIT_NO_EMPTY;
 
+/** @final This class will become hard-final in the next major (2.0) */
 class HtmlSerializer
 {
     private string $dateFormat = 'l jS F Y';

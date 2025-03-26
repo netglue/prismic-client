@@ -7,6 +7,7 @@ namespace Prismic;
 use Http\Discovery\Exception as DiscoveryError;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
+use Override;
 use Prismic\Document\Fragment\DocumentLink;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Exception\InvalidPreviewToken;
@@ -147,11 +148,13 @@ final class Api implements ApiClient
         }
     }
 
+    #[Override]
     public function host(): string
     {
         return $this->baseUri->getHost();
     }
 
+    #[Override]
     public function data(): ApiData
     {
         if ($this->data) {
@@ -174,7 +177,7 @@ final class Api implements ApiClient
         }
 
         // Keys must be hashed to prevent cache exceptions due to invalid characters
-        $cacheKey = sha1($method . ' ' . $uri);
+        $cacheKey = sha1($method . ' ' . (string) $uri);
         try {
             $item = $this->cache->getItem($cacheKey);
         } catch (InvalidPsrCacheKey $e) {
@@ -254,6 +257,7 @@ final class Api implements ApiClient
         return $response;
     }
 
+    #[Override]
     public function ref(): Ref
     {
         $ref = $this->previewRef();
@@ -264,12 +268,14 @@ final class Api implements ApiClient
         return $this->data()->master();
     }
 
+    #[Override]
     public function createQuery(string $form = self::DEFAULT_FORM): Query
     {
         return (new Query($this->data()->form($form)))
             ->ref($this->ref());
     }
 
+    #[Override]
     public function query(Query $query): ResultSet
     {
         return $this->resultSetFactory->withJsonObject($this->jsonResponse(
@@ -277,11 +283,13 @@ final class Api implements ApiClient
         ));
     }
 
+    #[Override]
     public function queryFirst(Query $query): Document|null
     {
         return $this->query($query)->first();
     }
 
+    #[Override]
     public function findById(string $id): Document|null
     {
         $query = $this->createQuery()
@@ -291,6 +299,7 @@ final class Api implements ApiClient
         return $this->queryFirst($query);
     }
 
+    #[Override]
     public function findByUid(string $type, string $uid, string $lang = '*'): Document|null
     {
         $path = sprintf('my.%s.uid', $type);
@@ -301,6 +310,7 @@ final class Api implements ApiClient
         return $this->queryFirst($query);
     }
 
+    #[Override]
     public function findByBookmark(string $bookmark): Document|null
     {
         return $this->findById($this->data()->bookmark($bookmark)->documentId());
@@ -322,6 +332,7 @@ final class Api implements ApiClient
     }
 
     /** @inheritDoc */
+    #[Override]
     public function setRequestCookies(array $cookies): void
     {
         $this->requestCookies = $cookies;
@@ -369,6 +380,7 @@ final class Api implements ApiClient
     /**
      * Whether the current ref in use is a preview, i.e. the user is in preview mode
      */
+    #[Override]
     public function inPreview(): bool
     {
         return $this->previewRef() !== null;
@@ -407,6 +419,7 @@ final class Api implements ApiClient
         return $uri;
     }
 
+    #[Override]
     public function previewSession(string $token): DocumentLink|null
     {
         $uri = $this->validatePreviewToken($token);
@@ -423,6 +436,7 @@ final class Api implements ApiClient
         return null;
     }
 
+    #[Override]
     public function next(ResultSet $resultSet): ResultSet|null
     {
         $nextPage = $resultSet->nextPage();
@@ -440,6 +454,7 @@ final class Api implements ApiClient
         );
     }
 
+    #[Override]
     public function previous(ResultSet $resultSet): ResultSet|null
     {
         $previousPage = $resultSet->previousPage();
@@ -457,6 +472,7 @@ final class Api implements ApiClient
         );
     }
 
+    #[Override]
     public function findAll(Query $query): ResultSet
     {
         $resultSet = $this->query($query);

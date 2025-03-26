@@ -6,6 +6,7 @@ namespace Prismic\Document\Fragment;
 
 use ArrayIterator;
 use Closure;
+use Override;
 use Prismic\Document\Fragment;
 use Prismic\Document\FragmentCollection;
 use Stringable;
@@ -68,16 +69,19 @@ abstract class BaseCollection implements FragmentCollection
     }
 
     /** @return Traversable<array-key, Fragment> */
+    #[Override]
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->fragments);
     }
 
+    #[Override]
     public function count(): int
     {
         return count($this->fragments);
     }
 
+    #[Override]
     public function isEmpty(): bool
     {
         if ($this->count() === 0) {
@@ -93,6 +97,7 @@ abstract class BaseCollection implements FragmentCollection
         return true;
     }
 
+    #[Override]
     public function first(): Fragment
     {
         if (! $this->count()) {
@@ -105,6 +110,7 @@ abstract class BaseCollection implements FragmentCollection
         return $first;
     }
 
+    #[Override]
     public function last(): Fragment
     {
         if (! $this->count()) {
@@ -123,6 +129,7 @@ abstract class BaseCollection implements FragmentCollection
      *
      * @return static
      */
+    #[Override]
     public function filter(Closure $p): self
     {
         $result = array_filter($this->fragments, $p, ARRAY_FILTER_USE_BOTH);
@@ -139,12 +146,14 @@ abstract class BaseCollection implements FragmentCollection
     }
 
     /** @inheritDoc */
+    #[Override]
     public function has($name): bool
     {
         return isset($this->fragments[$name]);
     }
 
     /** @inheritDoc */
+    #[Override]
     public function get($name): Fragment
     {
         if (! $this->has($name)) {

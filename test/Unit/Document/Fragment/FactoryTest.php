@@ -24,7 +24,7 @@ use PrismicTest\Framework\TestCase;
 
 use function assert;
 
-class FactoryTest extends TestCase
+final class FactoryTest extends TestCase
 {
     private function imageFixture(): FragmentCollection
     {
