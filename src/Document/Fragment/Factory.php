@@ -293,6 +293,7 @@ final class Factory
 
     private static function textElementFactory(object $data): Fragment
     {
+        /** @psalm-suppress ArgumentTypeCoercion Not validating 'type' against known types here. */
         return TextElement::new(
             self::assertObjectPropertyIsString($data, 'type'),
             self::optionalStringProperty($data, 'text'),
