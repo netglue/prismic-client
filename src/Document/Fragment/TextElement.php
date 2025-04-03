@@ -7,9 +7,16 @@ namespace Prismic\Document\Fragment;
 use Override;
 use Prismic\Document\Fragment;
 use Stringable;
+use Traversable;
 
+use function array_map;
+use function array_values;
+use function explode;
+use function implode;
 use function in_array;
+use function iterator_to_array;
 
+/** @psalm-immutable */
 final class TextElement implements Fragment, Stringable
 {
     public const TYPE_ORDERED_LIST_ITEM = 'o-list-item';
@@ -23,29 +30,39 @@ final class TextElement implements Fragment, Stringable
     public const TYPE_PARAGRAPH = 'paragraph';
     public const TYPE_PREFORMATTED = 'preformatted';
 
-    /** @var Span[] */
-    private array $spans;
+    /** @var list<Span> */
+    private readonly array $spans;
 
-    /** @param Span[] $spans */
+    /**
+     * @param self::TYPE_* $type
+     * @param list<Span>   $spans
+     */
     private function __construct(
-        private string $type,
-        private string $text,
-        iterable $spans,
-        private string|null $label,
+        private readonly string $type,
+        private readonly string $text,
+        array $spans,
+        private readonly string|null $label,
     ) {
-        $this->spans = [];
-        foreach ($spans as $span) {
-            $this->addSpan($span);
-        }
+        $this->spans = array_map(
+            static fn (Span $span): Span => $span,
+            $spans,
+        );
     }
 
-    /** @param Span[] $spans */
+    /**
+     * @param self::TYPE_*   $type
+     * @param iterable<Span> $spans
+     */
     public static function new(
         string $type,
         string|null $text,
         iterable $spans,
         string|null $label,
     ): self {
+        $spans = $spans instanceof Traversable
+            ? iterator_to_array($spans, false)
+            : array_values($spans);
+
         return new self(
             $type,
             $text ?? '',
@@ -54,7 +71,7 @@ final class TextElement implements Fragment, Stringable
         );
     }
 
-    /** @return Span[] */
+    /** @return list<Span> */
     public function spans(): iterable
     {
         return $this->spans;
@@ -70,6 +87,7 @@ final class TextElement implements Fragment, Stringable
         return $this->label;
     }
 
+    /** @return self::TYPE_* */
     public function type(): string
     {
         return $this->type;
@@ -118,14 +136,50 @@ final class TextElement implements Fragment, Stringable
         return $this->text === '';
     }
 
-    private function addSpan(Span $span): void
-    {
-        $this->spans[] = $span;
-    }
-
     #[Override]
     public function __toString(): string
     {
         return $this->text;
+    }
+
+    /** @param self::TYPE_* $type */
+    public function withDifferentType(string $type): self
+    {
+        return new self(
+            $type,
+            $this->text,
+            $this->spans,
+            $this->label,
+        );
+    }
+
+    /** @param non-empty-string $label */
+    public function withReplacementLabel(string $label): self
+    {
+        return new self(
+            $this->type,
+            $this->text,
+            $this->spans,
+            $label,
+        );
+    }
+
+    /** @param non-empty-string $label */
+    public function withAddedLabel(string $label): self
+    {
+        $labels = explode(' ', (string) $this->label);
+        $labels[] = $label;
+
+        return self::withReplacementLabel(implode(' ', $labels));
+    }
+
+    public function withoutSpans(): self
+    {
+        return new self(
+            $this->type,
+            $this->text,
+            [],
+            $this->label,
+        );
     }
 }
