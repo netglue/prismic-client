@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use ArrayObject;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Document\Fragment\Span;
@@ -207,5 +208,15 @@ final class TextElementTest extends TestCase
 
         self::assertSame($spans, $item->spans());
         self::assertSame([], $copy->spans());
+    }
+
+    public function testSpansAreCastToAListInternally(): void
+    {
+        $spans = [
+            Span::new('strong', 0, 3, null, null),
+        ];
+        $item = TextElement::new(TextElement::TYPE_HEADING1, 'Heading', new ArrayObject($spans), null);
+
+        self::assertSame($spans, $item->spans());
     }
 }
