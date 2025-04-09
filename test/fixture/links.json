@@ -46,6 +46,96 @@
             "size": "94188",
             "width": "1248",
             "height": "702"
-        }
+        },
+        "text-link-list": [
+            {
+                "link_type": "Web",
+                "key": "64b9c0eb-003c-4cad-9b68-b955d75a844c",
+                "url": "https://www.example.com",
+                "text": "Link 1"
+            },
+            {
+                "link_type": "Media",
+                "key": "858939cd-44dd-4d25-b5ce-2c741e7bf6c5",
+                "kind": "image",
+                "id": "some-id",
+                "url": "https://images.prismic.io/some-repo/whatever.png",
+                "name": "Animal.jpg",
+                "size": "94188",
+                "width": "1248",
+                "height": "702",
+                "text": "Link 2"
+            },
+            {
+                "id": "some-id",
+                "type": "page",
+                "tags": [],
+                "lang": "en-gb",
+                "slug": "homepage",
+                "first_publication_date": "2025-03-26T15:43:27+0000",
+                "last_publication_date": "2025-03-26T15:43:27+0000",
+                "uid": "home",
+                "link_type": "Document",
+                "key": "3dd9a967-3199-4ec7-9a22-88a386ca718c",
+                "isBroken": false,
+                "text": "Link 3"
+            },
+            {
+                "link_type": "Web",
+                "key": "link-without-text",
+                "url": "https://www.example.com"
+            }
+        ],
+        "variants": [
+            {
+                "link_type": "Web",
+                "key": "64b9c0eb-003c-4cad-9b68-b955d75a844c",
+                "url": "https://www.example.com",
+                "text": "Link 1",
+                "variant": "Secondary"
+            },
+            {
+                "link_type": "Media",
+                "key": "858939cd-44dd-4d25-b5ce-2c741e7bf6c5",
+                "kind": "image",
+                "id": "some-id",
+                "url": "https://some-image",
+                "name": "Animal.jpg",
+                "size": "94188",
+                "width": "1248",
+                "height": "702",
+                "text": "Link 2",
+                "variant": "Primary"
+            },
+            {
+                "id": "some-id",
+                "type": "page",
+                "tags": [],
+                "lang": "en-gb",
+                "slug": "homepage",
+                "first_publication_date": "2025-03-26T15:43:27+0000",
+                "last_publication_date": "2025-03-26T15:43:27+0000",
+                "uid": "home",
+                "link_type": "Document",
+                "key": "3dd9a967-3199-4ec7-9a22-88a386ca718c",
+                "isBroken": false,
+                "text": "Link 3",
+                "variant": "Secondary"
+            },
+            {
+                "link_type": "Web",
+                "key": "8a8f6913-7a75-4b38-b98f-6e3c9b2b7521",
+                "url": "https://www.example.com",
+                "variant": "Primary"
+            },
+            {
+                "link_type": "Web",
+                "key": "e2896f27-4f23-4efa-9b52-e5fb83063141",
+                "url": "https://www.example.com",
+                "target": "_blank",
+                "text": "With Blank",
+                "variant": "Primary"
+            }
+        ]
     }
 }
