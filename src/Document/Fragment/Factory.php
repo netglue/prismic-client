@@ -187,11 +187,13 @@ final class Factory
     {
         $type = self::assertObjectPropertyIsString($data, 'link_type');
         $text = self::optionalNonEmptyStringProperty($data, 'text');
+        $variant = self::optionalNonEmptyStringProperty($data, 'variant');
 
         if ($type === 'Web') {
             $link = WebLink::new(
                 self::assertObjectPropertyIsString($data, 'url'),
                 self::optionalStringProperty($data, 'target'),
+                $variant,
             );
 
             return $text === null ? $link : TextLink::new($text, $link);
@@ -206,6 +208,7 @@ final class Factory
                 self::assertObjectPropertyIsIntegerish($data, 'size'),
                 self::assertObjectPropertyIsIntegerish($data, 'width'),
                 self::assertObjectPropertyIsIntegerish($data, 'height'),
+                $variant,
             );
 
             return $text === null ? $link : TextLink::new($text, $link);
@@ -216,6 +219,7 @@ final class Factory
                 self::assertObjectPropertyIsString($data, 'url'),
                 self::assertObjectPropertyIsString($data, 'name'),
                 self::assertObjectPropertyIsIntegerish($data, 'size'),
+                $variant,
             );
 
             return $text === null ? $link : TextLink::new($text, $link);
@@ -245,6 +249,7 @@ final class Factory
                     $slug,
                     $first,
                     $last,
+                    $variant,
                 );
 
                 return $text === null ? $link : TextLink::new($text, $link);
@@ -257,6 +262,7 @@ final class Factory
                 $lang,
                 $isBroken,
                 self::assertObjectPropertyAllString($data, 'tags'),
+                $variant,
             );
 
             return $text === null ? $link : TextLink::new($text, $link);

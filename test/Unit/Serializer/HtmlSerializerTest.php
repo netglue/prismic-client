@@ -377,4 +377,23 @@ final class HtmlSerializerTest extends TestCase
             $this->serializer->__invoke($link),
         );
     }
+
+    public function testLinkVariantsAreAddedAsCSSClasses(): void
+    {
+        $document = DocumentData::factory(
+            Json::decodeObject(
+                $this->jsonFixtureByFileName('links.json'),
+            ),
+        );
+
+        $textLinks = $document->content()->get('variants');
+        self::assertInstanceOf(FragmentCollection::class, $textLinks);
+        $link = iterator_to_array($textLinks, false)[0];
+        self::assertInstanceOf(TextLink::class, $link);
+
+        self::assertSame(
+            '<a href="https://www.example.com" class="Secondary">Link 1</a>',
+            $this->serializer->__invoke($link),
+        );
+    }
 }

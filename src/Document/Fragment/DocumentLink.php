@@ -9,6 +9,7 @@ use Override;
 use Prismic\Document;
 use Prismic\Document\Fragment;
 use Prismic\Link;
+use Prismic\LinkVariant;
 use Traversable;
 
 use function array_filter;
@@ -16,7 +17,7 @@ use function array_map;
 use function array_values;
 use function iterator_to_array;
 
-final readonly class DocumentLink implements Fragment, Link
+final readonly class DocumentLink implements Fragment, Link, LinkVariant
 {
     /** @var list<non-empty-string> */
     private array $tags;
@@ -28,6 +29,7 @@ final readonly class DocumentLink implements Fragment, Link
      * @param non-empty-string         $lang
      * @param array<array-key, string> $tags
      * @param non-empty-string|null    $slug
+     * @param non-empty-string|null    $variant
      */
     private function __construct(
         private string $id,
@@ -39,6 +41,7 @@ final readonly class DocumentLink implements Fragment, Link
         private string|null $slug = null,
         private DateTimeImmutable|null $firstPublicationDate = null,
         private DateTimeImmutable|null $lastPublicationDate = null,
+        private string|null $variant = null,
     ) {
         $this->tags = array_values(array_filter(
             $tags,
@@ -52,6 +55,7 @@ final readonly class DocumentLink implements Fragment, Link
      * @param non-empty-string            $type
      * @param non-empty-string            $lang
      * @param iterable<array-key, string> $tags
+     * @param non-empty-string|null       $variant
      */
     public static function new(
         string $id,
@@ -60,13 +64,14 @@ final readonly class DocumentLink implements Fragment, Link
         string $lang,
         bool $isBroken = false,
         iterable $tags = [],
+        string|null $variant = null,
     ): self {
         $tags = $tags instanceof Traversable ? iterator_to_array($tags, false) : $tags;
         $tags = array_values(array_map(static function (mixed $tag): string {
             return $tag;
         }, $tags));
 
-        return new self($id, $uid, $type, $lang, $isBroken, $tags);
+        return new self($id, $uid, $type, $lang, $isBroken, $tags, null, null, null, $variant);
     }
 
     /**
@@ -76,6 +81,7 @@ final readonly class DocumentLink implements Fragment, Link
      * @param non-empty-string         $lang
      * @param array<array-key, string> $tags
      * @param non-empty-string|null    $slug
+     * @param non-empty-string|null    $variant
      */
     public static function withExtendedInformation(
         string $id,
@@ -87,6 +93,7 @@ final readonly class DocumentLink implements Fragment, Link
         string|null $slug = null,
         DateTimeImmutable|null $firstPublicationDate = null,
         DateTimeImmutable|null $lastPublicationDate = null,
+        string|null $variant = null,
     ): self {
         return new self(
             $id,
@@ -98,6 +105,7 @@ final readonly class DocumentLink implements Fragment, Link
             $slug,
             $firstPublicationDate,
             $lastPublicationDate,
+            $variant,
         );
     }
 
@@ -169,5 +177,12 @@ final readonly class DocumentLink implements Fragment, Link
     public function slug(): string|null
     {
         return $this->slug;
+    }
+
+    /** @return non-empty-string|null */
+    #[Override]
+    public function variant(): string|null
+    {
+        return $this->variant;
     }
 }
