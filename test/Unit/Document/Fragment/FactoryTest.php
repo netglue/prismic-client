@@ -298,6 +298,66 @@ final class FactoryTest extends TestCase
         Factory::factory($data);
     }
 
+    /** @return array<string, array{0: string, 1: string|null}> */
+    public static function documentLinkProvider(): array
+    {
+        return [
+            'Valid String Url' => [
+                '{
+                    "link_type": "Document",
+                    "id": "foo",
+                    "uid": "bar",
+                    "url": "/something",
+                    "type": "bing",
+                    "isBroken": false,
+                    "tags": []
+                }',
+                '/something',
+            ],
+            'Unset URL' => [
+                '{
+                    "link_type": "Document",
+                    "id": "foo",
+                    "uid": "bar",
+                    "type": "bing",
+                    "isBroken": false,
+                    "tags": []
+                }',
+                null,
+            ],
+            'Explicit Null' => [
+                '{
+                    "link_type": "Document",
+                    "id": "foo",
+                    "uid": "bar",
+                    "type": "bing",
+                    "isBroken": false,
+                    "tags": [],
+                    "url": null
+                }',
+                null,
+            ],
+        ];
+    }
+
+    #[DataProvider('documentLinkProvider')]
+    public function testThatDocumentLinksWithReadyMadeUrlsWillHaveTheExpectedValue(string $json, string|null $expect): void
+    {
+        $data = Json::decodeObject($json);
+        $link = Factory::factory($data);
+        self::assertInstanceOf(DocumentLink::class, $link);
+        self::assertSame($expect, $link->url());
+    }
+
+    /** @param class-string $expectedType */
+    #[DataProvider('scalarTypes')]
+    public function testThatTheFactoryCanBeNewedAndInvoked(string|int|float|bool|null $value, string $expectedType): void
+    {
+        $factory = new Factory();
+        $fragment = $factory($value);
+        $this->assertInstanceOf($expectedType, $fragment);
+    }
+
     public function testSlicesMustProvideANonEmptySliceType(): void
     {
         $data = Json::decodeObject('{

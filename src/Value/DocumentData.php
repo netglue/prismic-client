@@ -38,6 +38,7 @@ final readonly class DocumentData implements Document
         private string $lang,
         private DateTimeImmutable $firstPublished,
         private DateTimeImmutable $lastPublished,
+        private string|null $url,
         private array $tags,
         private array $translations,
         private FragmentCollection $body,
@@ -74,6 +75,7 @@ final readonly class DocumentData implements Document
             self::assertObjectPropertyIsNonEmptyString($data, 'lang'),
             self::assertObjectPropertyIsUtcDateTime($data, 'first_publication_date'),
             self::assertObjectPropertyIsUtcDateTime($data, 'last_publication_date'),
+            self::optionalStringProperty($data, 'url'),
             array_values(self::assertObjectPropertyAllNonEmptyString($data, 'tags')),
             $translations,
             $body,
@@ -145,5 +147,11 @@ final readonly class DocumentData implements Document
     public function data(): DocumentData
     {
         return $this;
+    }
+
+    #[Override]
+    public function url(): string|null
+    {
+        return $this->url;
     }
 }

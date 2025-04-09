@@ -234,6 +234,7 @@ final class Factory
             $slug = self::optionalNonEmptyStringProperty($data, 'slug');
             $first = self::optionalNonEmptyStringProperty($data, 'first_publication_date');
             $last = self::optionalNonEmptyStringProperty($data, 'last_publication_date');
+            $url = self::optionalNonEmptyStringProperty($data, 'url');
 
             if ($first !== null && $last !== null) {
                 $first = self::assertObjectPropertyIsUtcDateTime($data, 'first_publication_date');
@@ -246,6 +247,7 @@ final class Factory
                     $lang,
                     $isBroken,
                     self::assertObjectPropertyAllString($data, 'tags'),
+                    $url,
                     $slug,
                     $first,
                     $last,
@@ -262,6 +264,7 @@ final class Factory
                 $lang,
                 $isBroken,
                 self::assertObjectPropertyAllString($data, 'tags'),
+                $url,
                 $variant,
             );
 

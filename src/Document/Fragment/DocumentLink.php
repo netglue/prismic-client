@@ -38,6 +38,7 @@ final readonly class DocumentLink implements Fragment, Link, LinkVariant
         private string $lang,
         private bool $isBroken,
         array $tags,
+        private string|null $url,
         private string|null $slug = null,
         private DateTimeImmutable|null $firstPublicationDate = null,
         private DateTimeImmutable|null $lastPublicationDate = null,
@@ -50,12 +51,12 @@ final readonly class DocumentLink implements Fragment, Link, LinkVariant
     }
 
     /**
-     * @param non-empty-string            $id
-     * @param non-empty-string|null       $uid
-     * @param non-empty-string            $type
-     * @param non-empty-string            $lang
-     * @param iterable<array-key, string> $tags
-     * @param non-empty-string|null       $variant
+     * @param non-empty-string         $id
+     * @param non-empty-string|null    $uid
+     * @param non-empty-string         $type
+     * @param non-empty-string         $lang
+     * @param array<array-key, string> $tags
+     * @param non-empty-string|null    $variant
      */
     public static function new(
         string $id,
@@ -63,15 +64,11 @@ final readonly class DocumentLink implements Fragment, Link, LinkVariant
         string $type,
         string $lang,
         bool $isBroken = false,
-        iterable $tags = [],
+        array $tags = [],
+        string|null $url = null,
         string|null $variant = null,
     ): self {
-        $tags = $tags instanceof Traversable ? iterator_to_array($tags, false) : $tags;
-        $tags = array_values(array_map(static function (mixed $tag): string {
-            return $tag;
-        }, $tags));
-
-        return new self($id, $uid, $type, $lang, $isBroken, $tags, null, null, null, $variant);
+        return new self($id, $uid, $type, $lang, $isBroken, $tags, $url, null, null, null, $variant);
     }
 
     /**
@@ -90,6 +87,7 @@ final readonly class DocumentLink implements Fragment, Link, LinkVariant
         string $lang,
         bool $isBroken = false,
         array $tags = [],
+        string|null $url = null,
         string|null $slug = null,
         DateTimeImmutable|null $firstPublicationDate = null,
         DateTimeImmutable|null $lastPublicationDate = null,
@@ -102,6 +100,7 @@ final readonly class DocumentLink implements Fragment, Link, LinkVariant
             $lang,
             $isBroken,
             $tags,
+            $url,
             $slug,
             $firstPublicationDate,
             $lastPublicationDate,
@@ -118,6 +117,7 @@ final readonly class DocumentLink implements Fragment, Link, LinkVariant
             $document->lang(),
             false,
             $document->tags(),
+            $document->url(),
         );
     }
 
@@ -161,6 +161,11 @@ final readonly class DocumentLink implements Fragment, Link, LinkVariant
     public function isEmpty(): bool
     {
         return false;
+    }
+
+    public function url(): string|null
+    {
+        return $this->url;
     }
 
     public function firstPublished(): DateTimeImmutable|null
