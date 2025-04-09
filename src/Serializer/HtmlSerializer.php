@@ -28,11 +28,13 @@ use Prismic\Document\Fragment\Table;
 use Prismic\Document\Fragment\TableCell;
 use Prismic\Document\Fragment\TableRow;
 use Prismic\Document\Fragment\TextElement;
+use Prismic\Document\Fragment\TextLink;
 use Prismic\Document\Fragment\WebLink;
 use Prismic\Document\FragmentCollection;
 use Prismic\Exception\UnexpectedValue;
 use Prismic\Link;
 use Prismic\LinkResolver;
+use Prismic\LinkVariant;
 
 use function array_filter;
 use function array_keys;
@@ -138,6 +140,9 @@ final class HtmlSerializer
             case Image::class:
                 return $this->image($fragment);
 
+            case TextLink::class:
+                return $this->textLink($fragment);
+
             case WebLink::class:
             case DocumentLink::class:
             case ImageLink::class:
@@ -212,6 +217,7 @@ final class HtmlSerializer
         $attributes = array_filter([
             'href' => $url,
             'target' => $link instanceof WebLink ? $link->target() : null,
+            'class' => $link instanceof LinkVariant ? $link->variant() : null,
         ]);
 
         return sprintf('<a%s>', $this->htmlAttributes($attributes));
@@ -228,6 +234,14 @@ final class HtmlSerializer
             '%s%s</a>',
             $openTag,
             $wraps ?? (string) $link,
+        );
+    }
+
+    private function textLink(TextLink $fragment): string
+    {
+        return $this->link(
+            $fragment->link,
+            $this->escaper->escapeHtml($fragment->text),
         );
     }
 

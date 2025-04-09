@@ -14,8 +14,12 @@ use Prismic\Document\Fragment\EmptyFragment;
 use Prismic\Document\Fragment\Factory;
 use Prismic\Document\Fragment\GeoPoint;
 use Prismic\Document\Fragment\Image;
+use Prismic\Document\Fragment\ImageLink;
+use Prismic\Document\Fragment\MediaLink;
 use Prismic\Document\Fragment\Number;
 use Prismic\Document\Fragment\StringFragment;
+use Prismic\Document\Fragment\TextLink;
+use Prismic\Document\Fragment\WebLink;
 use Prismic\Document\FragmentCollection;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Exception\UnexpectedValue;
@@ -25,6 +29,7 @@ use PrismicTest\Framework\TestCase;
 
 use function assert;
 use function file_get_contents;
+use function iterator_to_array;
 
 final class FactoryTest extends TestCase
 {
@@ -405,5 +410,91 @@ final class FactoryTest extends TestCase
 
         $table = $document->content()->get('table');
         self::assertInstanceOf(Fragment\Table::class, $table);
+    }
+
+    public function testGenericLinkParsing(): void
+    {
+        $json = file_get_contents(__DIR__ . '/../../../fixture/links.json');
+        self::assertNotFalse($json);
+        $document = DocumentData::factory(Json::decodeObject($json));
+
+        $doc = $document->content()->get('doc-link');
+        self::assertInstanceOf(DocumentLink::class, $doc);
+        self::assertNull($doc->firstPublished());
+
+        $extended = $document->content()->get('doc-link-extended');
+        self::assertInstanceOf(DocumentLink::class, $extended);
+        self::assertNotNull($extended->firstPublished());
+
+        $web = $document->content()->get('web-link');
+        self::assertInstanceOf(WebLink::class, $web);
+
+        $image = $document->content()->get('image-link');
+        self::assertInstanceOf(ImageLink::class, $image);
+    }
+
+    public function testTextLinksAreReturnedWhenTheTextPropertyIsPresentAndNonEmpty(): void
+    {
+        $json = file_get_contents(__DIR__ . '/../../../fixture/links.json');
+        self::assertNotFalse($json);
+        $document = DocumentData::factory(Json::decodeObject($json));
+
+        $collection = $document->content()->get('text-link-list');
+        self::assertInstanceOf(FragmentCollection::class, $collection);
+
+        $links = iterator_to_array($collection, false);
+        self::assertCount(4, $links);
+
+        /** @psalm-suppress PossiblyUndefinedArrayOffset */
+        [$web, $media, $doc, $bare] = $links;
+
+        self::assertInstanceOf(TextLink::class, $web);
+        self::assertSame('Link 1', $web->text);
+        self::assertInstanceOf(WebLink::class, $web->link);
+
+        self::assertInstanceOf(TextLink::class, $media);
+        self::assertSame('Link 2', $media->text);
+        self::assertInstanceOf(ImageLink::class, $media->link);
+
+        self::assertInstanceOf(TextLink::class, $doc);
+        self::assertSame('Link 3', $doc->text);
+        self::assertInstanceOf(DocumentLink::class, $doc->link);
+
+        self::assertInstanceOf(WebLink::class, $bare);
+    }
+
+    public function testLinksWithVariantsHaveTheExpectedValues(): void
+    {
+        $json = file_get_contents(__DIR__ . '/../../../fixture/links.json');
+        self::assertNotFalse($json);
+        $document = DocumentData::factory(Json::decodeObject($json));
+
+        $collection = $document->content()->get('variants');
+        self::assertInstanceOf(FragmentCollection::class, $collection);
+
+        $links = iterator_to_array($collection, false);
+        self::assertCount(5, $links);
+
+        /** @psalm-suppress PossiblyUndefinedArrayOffset */
+        [$web, $image, $doc, $bare, $media] = $links;
+
+        self::assertInstanceOf(TextLink::class, $web);
+        self::assertInstanceOf(WebLink::class, $web->link);
+        self::assertSame('Secondary', $web->link->variant());
+
+        self::assertInstanceOf(TextLink::class, $image);
+        self::assertInstanceOf(ImageLink::class, $image->link);
+        self::assertSame('Primary', $image->link->variant());
+
+        self::assertInstanceOf(TextLink::class, $doc);
+        self::assertInstanceOf(DocumentLink::class, $doc->link);
+        self::assertSame('Secondary', $doc->link->variant());
+
+        self::assertInstanceOf(WebLink::class, $bare);
+        self::assertSame('Primary', $bare->variant());
+
+        self::assertInstanceOf(TextLink::class, $media);
+        self::assertInstanceOf(MediaLink::class, $media->link);
+        self::assertSame('Primary', $media->link->variant());
     }
 }

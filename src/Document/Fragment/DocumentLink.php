@@ -4,48 +4,110 @@ declare(strict_types=1);
 
 namespace Prismic\Document\Fragment;
 
+use DateTimeImmutable;
 use Override;
 use Prismic\Document;
 use Prismic\Document\Fragment;
 use Prismic\Link;
+use Prismic\LinkVariant;
 
-final class DocumentLink implements Fragment, Link
+use function array_filter;
+use function array_map;
+use function array_values;
+
+final readonly class DocumentLink implements Fragment, Link, LinkVariant
 {
-    /** @var string[] */
+    /** @var list<non-empty-string> */
     private array $tags;
 
-    /** @param string[] $tags */
+    /**
+     * @param non-empty-string         $id
+     * @param non-empty-string|null    $uid
+     * @param non-empty-string         $type
+     * @param non-empty-string         $lang
+     * @param array<array-key, string> $tags
+     * @param non-empty-string|null    $slug
+     * @param non-empty-string|null    $variant
+     */
     private function __construct(
         private string $id,
         private string|null $uid,
         private string $type,
         private string $lang,
         private bool $isBroken,
-        iterable $tags,
+        array $tags,
         private string|null $url,
+        private string|null $slug = null,
+        private DateTimeImmutable|null $firstPublicationDate = null,
+        private DateTimeImmutable|null $lastPublicationDate = null,
+        private string|null $variant = null,
     ) {
-        $this->tags = [];
-        foreach ($tags as $tag) {
-            $this->addTag($tag);
-        }
+        $this->tags = array_values(array_filter(
+            $tags,
+            static fn (string $tag): bool => $tag !== '',
+        ));
     }
 
-    private function addTag(string $tag): void
-    {
-        $this->tags[] = $tag;
-    }
-
-    /** @param string[] $tags */
+    /**
+     * @param non-empty-string         $id
+     * @param non-empty-string|null    $uid
+     * @param non-empty-string         $type
+     * @param non-empty-string         $lang
+     * @param array<array-key, string> $tags
+     * @param non-empty-string|null    $variant
+     */
     public static function new(
         string $id,
         string|null $uid,
         string $type,
         string $lang,
         bool $isBroken = false,
-        iterable $tags = [],
+        array $tags = [],
         string|null $url = null,
+        string|null $variant = null,
     ): self {
-        return new self($id, $uid, $type, $lang, $isBroken, $tags, $url);
+        $tags = array_values(array_map(static function (mixed $tag): string {
+            return $tag;
+        }, $tags));
+
+        return new self($id, $uid, $type, $lang, $isBroken, $tags, $url, null, null, null, $variant);
+    }
+
+    /**
+     * @param non-empty-string         $id
+     * @param non-empty-string|null    $uid
+     * @param non-empty-string         $type
+     * @param non-empty-string         $lang
+     * @param array<array-key, string> $tags
+     * @param non-empty-string|null    $slug
+     * @param non-empty-string|null    $variant
+     */
+    public static function withExtendedInformation(
+        string $id,
+        string|null $uid,
+        string $type,
+        string $lang,
+        bool $isBroken = false,
+        array $tags = [],
+        string|null $url = null,
+        string|null $slug = null,
+        DateTimeImmutable|null $firstPublicationDate = null,
+        DateTimeImmutable|null $lastPublicationDate = null,
+        string|null $variant = null,
+    ): self {
+        return new self(
+            $id,
+            $uid,
+            $type,
+            $lang,
+            $isBroken,
+            $tags,
+            $url,
+            $slug,
+            $firstPublicationDate,
+            $lastPublicationDate,
+            $variant,
+        );
     }
 
     public static function withDocument(Document $document): self
@@ -86,8 +148,8 @@ final class DocumentLink implements Fragment, Link
         return $this->isBroken;
     }
 
-    /** @return string[] */
-    public function tags(): iterable
+    /** @return list<string> */
+    public function tags(): array
     {
         return $this->tags;
     }
@@ -106,5 +168,28 @@ final class DocumentLink implements Fragment, Link
     public function url(): string|null
     {
         return $this->url;
+    }
+
+    public function firstPublished(): DateTimeImmutable|null
+    {
+        return $this->firstPublicationDate;
+    }
+
+    public function lastPublished(): DateTimeImmutable|null
+    {
+        return $this->lastPublicationDate;
+    }
+
+    /** @return non-empty-string|null */
+    public function slug(): string|null
+    {
+        return $this->slug;
+    }
+
+    /** @return non-empty-string|null */
+    #[Override]
+    public function variant(): string|null
+    {
+        return $this->variant;
     }
 }

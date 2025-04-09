@@ -186,49 +186,89 @@ final class Factory
     private static function linkFactory(object $data): Link
     {
         $type = self::assertObjectPropertyIsString($data, 'link_type');
+        $text = self::optionalNonEmptyStringProperty($data, 'text');
+        $variant = self::optionalNonEmptyStringProperty($data, 'variant');
 
         if ($type === 'Web') {
-            return WebLink::new(
+            $link = WebLink::new(
                 self::assertObjectPropertyIsString($data, 'url'),
                 self::optionalStringProperty($data, 'target'),
+                $variant,
             );
+
+            return $text === null ? $link : TextLink::new($text, $link);
         }
 
         $kind = self::optionalStringProperty($data, 'kind');
 
         if ($type === 'Media' && $kind === 'image') {
-            return ImageLink::new(
+            $link = ImageLink::new(
                 self::assertObjectPropertyIsString($data, 'url'),
                 self::assertObjectPropertyIsString($data, 'name'),
                 self::assertObjectPropertyIsIntegerish($data, 'size'),
                 self::assertObjectPropertyIsIntegerish($data, 'width'),
                 self::assertObjectPropertyIsIntegerish($data, 'height'),
+                $variant,
             );
+
+            return $text === null ? $link : TextLink::new($text, $link);
         }
 
         if ($type === 'Media') {
-            return MediaLink::new(
+            $link = MediaLink::new(
                 self::assertObjectPropertyIsString($data, 'url'),
                 self::assertObjectPropertyIsString($data, 'name'),
                 self::assertObjectPropertyIsIntegerish($data, 'size'),
+                $variant,
             );
+
+            return $text === null ? $link : TextLink::new($text, $link);
         }
 
         if ($type === 'Document') {
             $isBroken = self::assertObjectPropertyIsBoolean($data, 'isBroken');
-            $lang = self::optionalStringProperty($data, 'lang');
+            $lang = self::optionalNonEmptyStringProperty($data, 'lang');
             // The language for broken document links is null in some situations
             $lang ??= '*';
 
-            return DocumentLink::new(
-                self::assertObjectPropertyIsString($data, 'id'),
-                self::optionalStringProperty($data, 'uid'),
-                self::assertObjectPropertyIsString($data, 'type'),
+            $slug = self::optionalNonEmptyStringProperty($data, 'slug');
+            $first = self::optionalNonEmptyStringProperty($data, 'first_publication_date');
+            $last = self::optionalNonEmptyStringProperty($data, 'last_publication_date');
+            $url = self::optionalNonEmptyStringProperty($data, 'url');
+
+            if ($first !== null && $last !== null) {
+                $first = self::assertObjectPropertyIsUtcDateTime($data, 'first_publication_date');
+                $last = self::assertObjectPropertyIsUtcDateTime($data, 'last_publication_date');
+
+                $link = DocumentLink::withExtendedInformation(
+                    self::assertObjectPropertyIsNonEmptyString($data, 'id'),
+                    self::optionalNonEmptyStringProperty($data, 'uid'),
+                    self::assertObjectPropertyIsNonEmptyString($data, 'type'),
+                    $lang,
+                    $isBroken,
+                    self::assertObjectPropertyAllString($data, 'tags'),
+                    $url,
+                    $slug,
+                    $first,
+                    $last,
+                    $variant,
+                );
+
+                return $text === null ? $link : TextLink::new($text, $link);
+            }
+
+            $link = DocumentLink::new(
+                self::assertObjectPropertyIsNonEmptyString($data, 'id'),
+                self::optionalNonEmptyStringProperty($data, 'uid'),
+                self::assertObjectPropertyIsNonEmptyString($data, 'type'),
                 $lang,
                 $isBroken,
                 self::assertObjectPropertyAllString($data, 'tags'),
-                self::optionalStringProperty($data, 'url'),
+                $url,
+                $variant,
             );
+
+            return $text === null ? $link : TextLink::new($text, $link);
         }
 
         throw InvalidArgument::unknownLinkType($type, $data);

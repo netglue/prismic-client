@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace PrismicTest\Document\Fragment;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use PHPUnit\Framework\Attributes\Depends;
 use Prismic\Document\Fragment\DocumentLink;
 use PrismicTest\Framework\TestCase;
@@ -115,5 +117,57 @@ final class DocumentLinkTest extends TestCase
     public function testThatUrlReturnsTheExpectedValue(DocumentLink $link): void
     {
         self::assertSame('/some/url', $link->url());
+    }
+
+    public function testExtendedInformation(): DocumentLink
+    {
+        $firstPublicationDate = DateTimeImmutable::createFromFormat('!Y-m-d', '2020-01-01', new DateTimeZone('UTC'));
+        $lastPublicationDate = DateTimeImmutable::createFromFormat('!Y-m-d', '2020-02-02', new DateTimeZone('UTC'));
+
+        self::assertNotFalse($firstPublicationDate);
+        self::assertNotFalse($lastPublicationDate);
+
+        return DocumentLink::withExtendedInformation(
+            'some-id',
+            'some-uid',
+            'some-type',
+            'en-gb',
+            false,
+            ['foo', 'bar'],
+            null,
+            'some-slug',
+            $firstPublicationDate,
+            $lastPublicationDate,
+        );
+    }
+
+    #[Depends('testConstructor')]
+    #[Depends('testExtendedInformation')]
+    public function testThatLinksCanReportFirstPublicationDate(DocumentLink $link, DocumentLink $extended): void
+    {
+        self::assertNull($link->firstPublished());
+
+        $date = $extended->firstPublished();
+        self::assertNotNull($date);
+        self::assertSame('2020-01-01', $date->format('Y-m-d'));
+    }
+
+    #[Depends('testConstructor')]
+    #[Depends('testExtendedInformation')]
+    public function testThatLinksCanReportLastPublicationDate(DocumentLink $link, DocumentLink $extended): void
+    {
+        self::assertNull($link->lastPublished());
+
+        $date = $extended->lastPublished();
+        self::assertNotNull($date);
+        self::assertSame('2020-02-02', $date->format('Y-m-d'));
+    }
+
+    #[Depends('testConstructor')]
+    #[Depends('testExtendedInformation')]
+    public function testThatLinksCanBeAssociatedWithASlug(DocumentLink $link, DocumentLink $extended): void
+    {
+        self::assertNull($link->slug());
+        self::assertSame('some-slug', $extended->slug());
     }
 }
