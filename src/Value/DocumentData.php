@@ -16,20 +16,20 @@ use Prismic\Document\Fragment\Factory;
 use Prismic\Document\FragmentCollection;
 
 use function array_map;
+use function array_values;
 use function get_object_vars;
 
-final class DocumentData implements Document
+final readonly class DocumentData implements Document
 {
     use DataAssertionBehaviour;
 
-    /** @var string[] */
-    private array $tags;
-    /** @var Translation[] */
-    private array $translations;
-
     /**
-     * @param string[]      $tags
-     * @param Translation[] $translations
+     * @param non-empty-string       $id
+     * @param non-empty-string|null  $uid
+     * @param non-empty-string       $type
+     * @param non-empty-string       $lang
+     * @param list<non-empty-string> $tags
+     * @param list<Translation>      $translations
      */
     private function __construct(
         private string $id,
@@ -38,12 +38,10 @@ final class DocumentData implements Document
         private string $lang,
         private DateTimeImmutable $firstPublished,
         private DateTimeImmutable $lastPublished,
-        iterable $tags,
-        iterable $translations,
+        private array $tags,
+        private array $translations,
         private FragmentCollection $body,
     ) {
-        $this->setTags(...$tags);
-        $this->setTranslations(...$translations);
     }
 
     public static function factory(object $data): self
@@ -53,15 +51,15 @@ final class DocumentData implements Document
             return Factory::factory($value);
         }, get_object_vars($documentBody)));
 
-        $translations = array_map(static function (object $value): Translation {
+        $translations = array_values(array_map(static function (object $value): Translation {
             return Translation::factory($value);
-        }, self::assertObjectPropertyIsArray($data, 'alternate_languages'));
+        }, self::assertObjectPropertyIsArray($data, 'alternate_languages')));
 
         /**
          * In Preview mode, Document dates are nullified, FFS.
          */
         foreach (['first_publication_date', 'last_publication_date'] as $prop) {
-            if (isset($data->{$prop}) && $data->{$prop} !== null) {
+            if (isset($data->{$prop})) {
                 continue;
             }
 
@@ -70,13 +68,13 @@ final class DocumentData implements Document
         }
 
         return new self(
-            self::assertObjectPropertyIsString($data, 'id'),
-            self::optionalStringProperty($data, 'uid'),
-            self::assertObjectPropertyIsString($data, 'type'),
-            self::assertObjectPropertyIsString($data, 'lang'),
+            self::assertObjectPropertyIsNonEmptyString($data, 'id'),
+            self::optionalNonEmptyStringProperty($data, 'uid'),
+            self::assertObjectPropertyIsNonEmptyString($data, 'type'),
+            self::assertObjectPropertyIsNonEmptyString($data, 'lang'),
             self::assertObjectPropertyIsUtcDateTime($data, 'first_publication_date'),
             self::assertObjectPropertyIsUtcDateTime($data, 'last_publication_date'),
-            self::assertObjectPropertyAllString($data, 'tags'),
+            array_values(self::assertObjectPropertyAllNonEmptyString($data, 'tags')),
             $translations,
             $body,
         );
@@ -125,22 +123,12 @@ final class DocumentData implements Document
         return $this->lastPublished;
     }
 
-    private function setTags(string ...$tags): void
-    {
-        $this->tags = $tags;
-    }
-
     public function content(): FragmentCollection
     {
         return $this->body;
     }
 
-    private function setTranslations(Translation ...$translations): void
-    {
-        $this->translations = $translations;
-    }
-
-    /** @return Translation[] */
+    /** @inheritDoc */
     #[Override]
     public function translations(): iterable
     {

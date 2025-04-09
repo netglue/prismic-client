@@ -216,14 +216,35 @@ final class Factory
 
         if ($type === 'Document') {
             $isBroken = self::assertObjectPropertyIsBoolean($data, 'isBroken');
-            $lang = self::optionalStringProperty($data, 'lang');
+            $lang = self::optionalNonEmptyStringProperty($data, 'lang');
             // The language for broken document links is null in some situations
             $lang ??= '*';
 
+            $slug = self::optionalNonEmptyStringProperty($data, 'slug');
+            $first = self::optionalNonEmptyStringProperty($data, 'first_publication_date');
+            $last = self::optionalNonEmptyStringProperty($data, 'last_publication_date');
+
+            if ($first !== null && $last !== null) {
+                $first = self::assertObjectPropertyIsUtcDateTime($data, 'first_publication_date');
+                $last = self::assertObjectPropertyIsUtcDateTime($data, 'last_publication_date');
+
+                return DocumentLink::withExtendedInformation(
+                    self::assertObjectPropertyIsNonEmptyString($data, 'id'),
+                    self::optionalNonEmptyStringProperty($data, 'uid'),
+                    self::assertObjectPropertyIsNonEmptyString($data, 'type'),
+                    $lang,
+                    $isBroken,
+                    self::assertObjectPropertyAllString($data, 'tags'),
+                    $slug,
+                    $first,
+                    $last,
+                );
+            }
+
             return DocumentLink::new(
-                self::assertObjectPropertyIsString($data, 'id'),
-                self::optionalStringProperty($data, 'uid'),
-                self::assertObjectPropertyIsString($data, 'type'),
+                self::assertObjectPropertyIsNonEmptyString($data, 'id'),
+                self::optionalNonEmptyStringProperty($data, 'uid'),
+                self::assertObjectPropertyIsNonEmptyString($data, 'type'),
                 $lang,
                 $isBroken,
                 self::assertObjectPropertyAllString($data, 'tags'),

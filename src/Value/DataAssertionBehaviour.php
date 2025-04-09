@@ -114,11 +114,29 @@ trait DataAssertionBehaviour
         return $mixed;
     }
 
+    /** @return non-empty-string */
+    private static function assertNonEmptyString(mixed $mixed): string
+    {
+        if (! is_string($mixed) || $mixed === '') {
+            throw new UnexpectedValue('Expected a non-empty-string');
+        }
+
+        return $mixed;
+    }
+
     /** @return array<array-key, string> */
     private static function assertObjectPropertyAllString(object $object, string $property): array
     {
         return array_map(static function ($value): string {
             return self::assertString($value);
+        }, self::assertObjectPropertyIsArray($object, $property));
+    }
+
+    /** @return array<array-key, non-empty-string> */
+    private static function assertObjectPropertyAllNonEmptyString(object $object, string $property): array
+    {
+        return array_map(static function ($value): string {
+            return self::assertNonEmptyString($value);
         }, self::assertObjectPropertyIsArray($object, $property));
     }
 
@@ -140,7 +158,7 @@ trait DataAssertionBehaviour
         }
 
         $value = $object->{$property};
-        if (! $value) {
+        if ($value === null || $value === '') {
             return null;
         }
 
