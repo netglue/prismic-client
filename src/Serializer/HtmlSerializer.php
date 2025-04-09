@@ -34,6 +34,7 @@ use Prismic\Document\FragmentCollection;
 use Prismic\Exception\UnexpectedValue;
 use Prismic\Link;
 use Prismic\LinkResolver;
+use Prismic\LinkVariant;
 
 use function array_filter;
 use function array_keys;
@@ -217,6 +218,7 @@ class HtmlSerializer
         $attributes = array_filter([
             'href' => $url,
             'target' => $link instanceof WebLink ? $link->target() : null,
+            'class' => $link instanceof LinkVariant ? $link->variant() : null,
         ]);
 
         return sprintf('<a%s>', $this->htmlAttributes($attributes));

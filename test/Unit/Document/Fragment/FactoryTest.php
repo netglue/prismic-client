@@ -15,6 +15,7 @@ use Prismic\Document\Fragment\Factory;
 use Prismic\Document\Fragment\GeoPoint;
 use Prismic\Document\Fragment\Image;
 use Prismic\Document\Fragment\ImageLink;
+use Prismic\Document\Fragment\MediaLink;
 use Prismic\Document\Fragment\Number;
 use Prismic\Document\Fragment\StringFragment;
 use Prismic\Document\Fragment\TextLink;
@@ -400,5 +401,40 @@ final class FactoryTest extends TestCase
         self::assertInstanceOf(DocumentLink::class, $doc->link);
 
         self::assertInstanceOf(WebLink::class, $bare);
+    }
+
+    public function testLinksWithVariantsHaveTheExpectedValues(): void
+    {
+        $json = file_get_contents(__DIR__ . '/../../../fixture/links.json');
+        self::assertNotFalse($json);
+        $document = DocumentData::factory(Json::decodeObject($json));
+
+        $collection = $document->content()->get('variants');
+        self::assertInstanceOf(FragmentCollection::class, $collection);
+
+        $links = iterator_to_array($collection, false);
+        self::assertCount(5, $links);
+
+        /** @psalm-suppress PossiblyUndefinedArrayOffset */
+        [$web, $image, $doc, $bare, $media] = $links;
+
+        self::assertInstanceOf(TextLink::class, $web);
+        self::assertInstanceOf(WebLink::class, $web->link);
+        self::assertSame('Secondary', $web->link->variant());
+
+        self::assertInstanceOf(TextLink::class, $image);
+        self::assertInstanceOf(ImageLink::class, $image->link);
+        self::assertSame('Primary', $image->link->variant());
+
+        self::assertInstanceOf(TextLink::class, $doc);
+        self::assertInstanceOf(DocumentLink::class, $doc->link);
+        self::assertSame('Secondary', $doc->link->variant());
+
+        self::assertInstanceOf(WebLink::class, $bare);
+        self::assertSame('Primary', $bare->variant());
+
+        self::assertInstanceOf(TextLink::class, $media);
+        self::assertInstanceOf(MediaLink::class, $media->link);
+        self::assertSame('Primary', $media->link->variant());
     }
 }

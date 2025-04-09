@@ -129,9 +129,11 @@
                 "variant": "Primary"
             },
             {
-                "link_type": "Web",
+                "link_type": "Media",
                 "key": "e2896f27-4f23-4efa-9b52-e5fb83063141",
                 "url": "https://www.example.com",
+                "name": "bar",
+                "size": 123456,
                 "target": "_blank",
                 "text": "With Blank",
                 "variant": "Primary"
