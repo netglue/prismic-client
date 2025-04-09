@@ -1,0 +1,51 @@
+{
+    "id": "document-id",
+    "uid": "document-uid",
+    "type": "custom-type",
+    "href": "foo",
+    "tags": [],
+    "first_publication_date": "2020-01-01T01:23:45+0000",
+    "last_publication_date": "2020-01-02T01:23:45+0000",
+    "slugs": [],
+    "linked_documents": [],
+    "lang": "en-gb",
+    "alternate_languages": [],
+    "data": {
+        "doc-link": {
+            "id": "some-id",
+            "type": "page",
+            "tags": [],
+            "lang": "en-gb",
+            "slug": "homepage",
+            "uid": "home",
+            "link_type": "Document",
+            "isBroken": false
+        },
+        "doc-link-extended": {
+            "id": "some-id",
+            "type": "page",
+            "tags": [],
+            "lang": "en-gb",
+            "slug": "homepage",
+            "first_publication_date": "2025-03-26T15:43:27+0000",
+            "last_publication_date": "2025-03-26T15:43:27+0000",
+            "uid": "home",
+            "link_type": "Document",
+            "isBroken": false
+        },
+        "web-link": {
+            "link_type": "Web",
+            "url": "https://example.com"
+        },
+        "image-link": {
+            "link_type": "Media",
+            "kind": "image",
+            "id": "Z_Z2UHdAxsiBwfKb",
+            "url": "https://images.prismic.io/some-repo/whatever.png",
+            "name": "Animal.jpg",
+            "size": "94188",
+            "width": "1248",
+            "height": "702"
+        }
+    }
+}

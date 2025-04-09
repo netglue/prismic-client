@@ -14,8 +14,10 @@ use Prismic\Document\Fragment\EmptyFragment;
 use Prismic\Document\Fragment\Factory;
 use Prismic\Document\Fragment\GeoPoint;
 use Prismic\Document\Fragment\Image;
+use Prismic\Document\Fragment\ImageLink;
 use Prismic\Document\Fragment\Number;
 use Prismic\Document\Fragment\StringFragment;
+use Prismic\Document\Fragment\WebLink;
 use Prismic\Document\FragmentCollection;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Exception\UnexpectedValue;
@@ -345,5 +347,26 @@ final class FactoryTest extends TestCase
 
         $table = $document->content()->get('table');
         self::assertInstanceOf(Fragment\Table::class, $table);
+    }
+
+    public function testGenericLinkParsing(): void
+    {
+        $json = file_get_contents(__DIR__ . '/../../../fixture/links.json');
+        self::assertNotFalse($json);
+        $document = DocumentData::factory(Json::decodeObject($json));
+
+        $doc = $document->content()->get('doc-link');
+        self::assertInstanceOf(DocumentLink::class, $doc);
+        self::assertNull($doc->firstPublished());
+
+        $extended = $document->content()->get('doc-link-extended');
+        self::assertInstanceOf(DocumentLink::class, $extended);
+        self::assertNotNull($extended->firstPublished());
+
+        $web = $document->content()->get('web-link');
+        self::assertInstanceOf(WebLink::class, $web);
+
+        $image = $document->content()->get('image-link');
+        self::assertInstanceOf(ImageLink::class, $image);
     }
 }
