@@ -10,12 +10,10 @@ use Prismic\Document;
 use Prismic\Document\Fragment;
 use Prismic\Link;
 use Prismic\LinkVariant;
-use Traversable;
 
 use function array_filter;
 use function array_map;
 use function array_values;
-use function iterator_to_array;
 
 final readonly class DocumentLink implements Fragment, Link, LinkVariant
 {
@@ -68,6 +66,10 @@ final readonly class DocumentLink implements Fragment, Link, LinkVariant
         string|null $url = null,
         string|null $variant = null,
     ): self {
+        $tags = array_values(array_map(static function (mixed $tag): string {
+            return $tag;
+        }, $tags));
+
         return new self($id, $uid, $type, $lang, $isBroken, $tags, $url, null, null, null, $variant);
     }
 
