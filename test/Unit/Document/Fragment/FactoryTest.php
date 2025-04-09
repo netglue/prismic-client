@@ -17,6 +17,7 @@ use Prismic\Document\Fragment\Image;
 use Prismic\Document\Fragment\ImageLink;
 use Prismic\Document\Fragment\Number;
 use Prismic\Document\Fragment\StringFragment;
+use Prismic\Document\Fragment\TextLink;
 use Prismic\Document\Fragment\WebLink;
 use Prismic\Document\FragmentCollection;
 use Prismic\Exception\InvalidArgument;
@@ -27,6 +28,7 @@ use PrismicTest\Framework\TestCase;
 
 use function assert;
 use function file_get_contents;
+use function iterator_to_array;
 
 final class FactoryTest extends TestCase
 {
@@ -368,5 +370,35 @@ final class FactoryTest extends TestCase
 
         $image = $document->content()->get('image-link');
         self::assertInstanceOf(ImageLink::class, $image);
+    }
+
+    public function testTextLinksAreReturnedWhenTheTextPropertyIsPresentAndNonEmpty(): void
+    {
+        $json = file_get_contents(__DIR__ . '/../../../fixture/links.json');
+        self::assertNotFalse($json);
+        $document = DocumentData::factory(Json::decodeObject($json));
+
+        $collection = $document->content()->get('text-link-list');
+        self::assertInstanceOf(FragmentCollection::class, $collection);
+
+        $links = iterator_to_array($collection, false);
+        self::assertCount(4, $links);
+
+        /** @psalm-suppress PossiblyUndefinedArrayOffset */
+        [$web, $media, $doc, $bare] = $links;
+
+        self::assertInstanceOf(TextLink::class, $web);
+        self::assertSame('Link 1', $web->text);
+        self::assertInstanceOf(WebLink::class, $web->link);
+
+        self::assertInstanceOf(TextLink::class, $media);
+        self::assertSame('Link 2', $media->text);
+        self::assertInstanceOf(ImageLink::class, $media->link);
+
+        self::assertInstanceOf(TextLink::class, $doc);
+        self::assertSame('Link 3', $doc->text);
+        self::assertInstanceOf(DocumentLink::class, $doc->link);
+
+        self::assertInstanceOf(WebLink::class, $bare);
     }
 }

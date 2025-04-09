@@ -186,32 +186,39 @@ final class Factory
     private static function linkFactory(object $data): Link
     {
         $type = self::assertObjectPropertyIsString($data, 'link_type');
+        $text = self::optionalNonEmptyStringProperty($data, 'text');
 
         if ($type === 'Web') {
-            return WebLink::new(
+            $link = WebLink::new(
                 self::assertObjectPropertyIsString($data, 'url'),
                 self::optionalStringProperty($data, 'target'),
             );
+
+            return $text === null ? $link : TextLink::new($text, $link);
         }
 
         $kind = self::optionalStringProperty($data, 'kind');
 
         if ($type === 'Media' && $kind === 'image') {
-            return ImageLink::new(
+            $link = ImageLink::new(
                 self::assertObjectPropertyIsString($data, 'url'),
                 self::assertObjectPropertyIsString($data, 'name'),
                 self::assertObjectPropertyIsIntegerish($data, 'size'),
                 self::assertObjectPropertyIsIntegerish($data, 'width'),
                 self::assertObjectPropertyIsIntegerish($data, 'height'),
             );
+
+            return $text === null ? $link : TextLink::new($text, $link);
         }
 
         if ($type === 'Media') {
-            return MediaLink::new(
+            $link = MediaLink::new(
                 self::assertObjectPropertyIsString($data, 'url'),
                 self::assertObjectPropertyIsString($data, 'name'),
                 self::assertObjectPropertyIsIntegerish($data, 'size'),
             );
+
+            return $text === null ? $link : TextLink::new($text, $link);
         }
 
         if ($type === 'Document') {
@@ -228,7 +235,7 @@ final class Factory
                 $first = self::assertObjectPropertyIsUtcDateTime($data, 'first_publication_date');
                 $last = self::assertObjectPropertyIsUtcDateTime($data, 'last_publication_date');
 
-                return DocumentLink::withExtendedInformation(
+                $link = DocumentLink::withExtendedInformation(
                     self::assertObjectPropertyIsNonEmptyString($data, 'id'),
                     self::optionalNonEmptyStringProperty($data, 'uid'),
                     self::assertObjectPropertyIsNonEmptyString($data, 'type'),
@@ -239,9 +246,11 @@ final class Factory
                     $first,
                     $last,
                 );
+
+                return $text === null ? $link : TextLink::new($text, $link);
             }
 
-            return DocumentLink::new(
+            $link = DocumentLink::new(
                 self::assertObjectPropertyIsNonEmptyString($data, 'id'),
                 self::optionalNonEmptyStringProperty($data, 'uid'),
                 self::assertObjectPropertyIsNonEmptyString($data, 'type'),
@@ -249,6 +258,8 @@ final class Factory
                 $isBroken,
                 self::assertObjectPropertyAllString($data, 'tags'),
             );
+
+            return $text === null ? $link : TextLink::new($text, $link);
         }
 
         throw InvalidArgument::unknownLinkType($type, $data);

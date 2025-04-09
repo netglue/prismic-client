@@ -10,6 +10,7 @@ use Prismic\Document\Fragment;
 use Prismic\Document\Fragment\Factory;
 use Prismic\Document\Fragment\OrderedList;
 use Prismic\Document\Fragment\RichText;
+use Prismic\Document\Fragment\TextLink;
 use Prismic\Document\Fragment\UnorderedList;
 use Prismic\Document\FragmentCollection;
 use Prismic\Exception\UnexpectedValue;
@@ -20,6 +21,7 @@ use PrismicTest\Framework\TestCase;
 use PrismicTest\TestLinkResolver;
 
 use function assert;
+use function iterator_to_array;
 
 final class HtmlSerializerTest extends TestCase
 {
@@ -354,6 +356,25 @@ final class HtmlSerializerTest extends TestCase
         self::assertSame(
             $expect,
             $this->serializer->__invoke($table),
+        );
+    }
+
+    public function testTextLinkRendering(): void
+    {
+        $document = DocumentData::factory(
+            Json::decodeObject(
+                $this->jsonFixtureByFileName('links.json'),
+            ),
+        );
+
+        $textLinks = $document->content()->get('text-link-list');
+        self::assertInstanceOf(FragmentCollection::class, $textLinks);
+        $link = iterator_to_array($textLinks, false)[0];
+        self::assertInstanceOf(TextLink::class, $link);
+
+        self::assertSame(
+            '<a href="https://www.example.com">Link 1</a>',
+            $this->serializer->__invoke($link),
         );
     }
 }
