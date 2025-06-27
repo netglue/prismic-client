@@ -179,19 +179,29 @@ final class Factory
             self::optionalStringProperty($data, 'alt'),
             self::optionalStringProperty($data, 'copyright'),
             $views,
-            $linkTo,
+            $linkTo instanceof Link ? $linkTo : null,
         );
     }
 
-    private static function linkFactory(object $data): Link
+    private static function linkFactory(object $data): Fragment
     {
         $type = self::assertObjectPropertyIsString($data, 'link_type');
         $text = self::optionalNonEmptyStringProperty($data, 'text');
         $variant = self::optionalNonEmptyStringProperty($data, 'variant');
+        $url = self::optionalNonEmptyStringProperty($data, 'url');
+
+        if ($type === 'Any') {
+            // This is probably a text link where the user has added some text, but not linked to anything
+            return $text === null ? new EmptyFragment() : StringFragment::new($text);
+        }
 
         if ($type === 'Web') {
+            if ($url === null) {
+                return $text === null ? new EmptyFragment() : StringFragment::new($text);
+            }
+
             $link = WebLink::new(
-                self::assertObjectPropertyIsString($data, 'url'),
+                $url,
                 self::optionalStringProperty($data, 'target'),
                 $variant,
             );
@@ -202,8 +212,12 @@ final class Factory
         $kind = self::optionalStringProperty($data, 'kind');
 
         if ($type === 'Media' && $kind === 'image') {
+            if ($url === null) {
+                return $text === null ? new EmptyFragment() : StringFragment::new($text);
+            }
+
             $link = ImageLink::new(
-                self::assertObjectPropertyIsString($data, 'url'),
+                $url,
                 self::assertObjectPropertyIsString($data, 'name'),
                 self::assertObjectPropertyIsIntegerish($data, 'size'),
                 self::assertObjectPropertyIsIntegerish($data, 'width'),
@@ -215,8 +229,12 @@ final class Factory
         }
 
         if ($type === 'Media') {
+            if ($url === null) {
+                return $text === null ? new EmptyFragment() : StringFragment::new($text);
+            }
+
             $link = MediaLink::new(
-                self::assertObjectPropertyIsString($data, 'url'),
+                $url,
                 self::assertObjectPropertyIsString($data, 'name'),
                 self::assertObjectPropertyIsIntegerish($data, 'size'),
                 $variant,
@@ -226,6 +244,12 @@ final class Factory
         }
 
         if ($type === 'Document') {
+            $id = self::optionalNonEmptyStringProperty($data, 'id');
+            if ($id === null) {
+                // This is likely a text link that has not been linked anywhere
+                return $text === null ? new EmptyFragment() : StringFragment::new($text);
+            }
+
             $isBroken = self::assertObjectPropertyIsBoolean($data, 'isBroken');
             $lang = self::optionalNonEmptyStringProperty($data, 'lang');
             // The language for broken document links is null in some situations
@@ -256,7 +280,7 @@ final class Factory
             }
 
             $link = DocumentLink::new(
-                self::assertObjectPropertyIsNonEmptyString($data, 'id'),
+                $id,
                 self::optionalNonEmptyStringProperty($data, 'uid'),
                 self::assertObjectPropertyIsNonEmptyString($data, 'type'),
                 $lang,
@@ -357,7 +381,7 @@ final class Factory
             self::assertObjectPropertyIsInteger($data, 'start'),
             self::assertObjectPropertyIsInteger($data, 'end'),
             $label,
-            $link,
+            $link instanceof Link ? $link : null,
         );
     }
 
