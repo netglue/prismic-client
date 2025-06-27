@@ -25,6 +25,7 @@ use function reset;
 final class DocumentDataTest extends TestCase
 {
     private DocumentData $document;
+    private DocumentData $documentWithUrl;
 
     #[Override]
     protected function setUp(): void
@@ -34,6 +35,12 @@ final class DocumentDataTest extends TestCase
         $this->document = DocumentData::factory(
             Json::decodeObject(
                 $this->jsonFixtureByFileName('document.json'),
+            ),
+        );
+
+        $this->documentWithUrl = DocumentData::factory(
+            Json::decodeObject(
+                $this->jsonFixtureByFileName('document-with-url.json'),
             ),
         );
     }
@@ -180,5 +187,30 @@ final class DocumentDataTest extends TestCase
         $this->assertLessThanOrEqual($then->getTimestamp(), $data->firstPublished()->getTimestamp());
         $this->assertGreaterThanOrEqual($now->getTimestamp(), $data->lastPublished()->getTimestamp());
         $this->assertLessThanOrEqual($then->getTimestamp(), $data->lastPublished()->getTimestamp());
+    }
+
+    public function testThatADocumentWithoutAUrlPropertyWillHaveANullUrl(): void
+    {
+        self::assertNull($this->document->url());
+    }
+
+    public function testThatADocumentWithANullUrlWillHaveANullUrl(): void
+    {
+        $document = DocumentData::factory(
+            Json::decodeObject(
+                $this->jsonFixtureByFileName('document-with-null-url.json'),
+            ),
+        );
+        self::assertNull($document->url());
+    }
+
+    public function testThatADocumentWithAStringUrlWillReturnExpectedValue(): void
+    {
+        self::assertSame('/example/url', $this->documentWithUrl->url());
+    }
+
+    public function testThatADocumentWithAStringUrlWillReturnTheCorrectUrlWhenCastToALink(): void
+    {
+        self::assertSame('/example/url', $this->documentWithUrl->asLink()->url());
     }
 }

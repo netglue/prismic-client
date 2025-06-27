@@ -37,7 +37,29 @@ final class DocumentLinkTest extends TestCase
             false,
             ['a', 'b'],
         );
-        $this->expectNotToPerformAssertions();
+        self::assertTrue(true);
+
+        return $link;
+    }
+
+    #[Depends('testConstructor')]
+    public function testThatCastingALinkToAStringWillYieldItsId(DocumentLink $link): void
+    {
+        self::assertSame('id', (string) $link);
+    }
+
+    public function testConstructorWithUrl(): DocumentLink
+    {
+        $link = DocumentLink::new(
+            'id',
+            'uid',
+            'type',
+            'en-gb',
+            false,
+            ['a', 'b'],
+            '/some/url',
+        );
+        self::assertTrue(true);
 
         return $link;
     }
@@ -85,6 +107,18 @@ final class DocumentLinkTest extends TestCase
         $this->assertContainsEquals('b', $link->tags());
     }
 
+    #[Depends('testConstructor')]
+    public function testTheLinkMayHaveAUrlAndItIsNullByDefault(DocumentLink $link): void
+    {
+        self::assertNull($link->url());
+    }
+
+    #[Depends('testConstructorWithUrl')]
+    public function testThatUrlReturnsTheExpectedValue(DocumentLink $link): void
+    {
+        self::assertSame('/some/url', $link->url());
+    }
+
     public function testExtendedInformation(): DocumentLink
     {
         $firstPublicationDate = DateTimeImmutable::createFromFormat('!Y-m-d', '2020-01-01', new DateTimeZone('UTC'));
@@ -100,6 +134,7 @@ final class DocumentLinkTest extends TestCase
             'en-gb',
             false,
             ['foo', 'bar'],
+            null,
             'some-slug',
             $firstPublicationDate,
             $lastPublicationDate,
