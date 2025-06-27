@@ -84,6 +84,52 @@
                 "link_type": "Web",
                 "key": "link-without-text",
                 "url": "https://www.example.com"
+            },
+            {
+                "link_type": "Any",
+                "key": "link-that-doesnt-link-anywhere-for-any-type",
+                "text": "Some Text"
+            },
+            {
+                "link_type": "Web",
+                "key": "web-link-with-no-link",
+                "text": "Some Text"
+            },
+            {
+                "link_type": "Document",
+                "key": "document-link-with-no-link",
+                "text": "Some Text"
+            },
+            {
+                "link_type": "Media",
+                "key": "media-link-with-no-link",
+                "text": "Some Text"
+            },
+            {
+                "link_type": "Media",
+                "kind": "image",
+                "key": "image-link-with-no-link",
+                "text": "Some Text"
+            },
+            {
+                "link_type": "Any",
+                "key": "A link with no text, type or url",
+                "variant": "Primary"
+            },
+            {
+                "link_type": "Web",
+                "key": "A web link with no text or url",
+                "variant": "Primary"
+            },
+            {
+                "link_type": "Document",
+                "key": "A document link with no text or id/uid",
+                "variant": "Primary"
+            },
+            {
+                "link_type": "Media",
+                "key": "A media link with no text or url",
+                "variant": "Primary"
             }
         ],
         "variants": [

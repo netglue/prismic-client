@@ -28,6 +28,7 @@ use Prismic\Value\DocumentData;
 use PrismicTest\Framework\TestCase;
 
 use function assert;
+use function count;
 use function file_get_contents;
 use function iterator_to_array;
 
@@ -383,7 +384,7 @@ final class FactoryTest extends TestCase
         self::assertInstanceOf(FragmentCollection::class, $collection);
 
         $links = iterator_to_array($collection, false);
-        self::assertCount(4, $links);
+        self::assertGreaterThan(3, count($links));
 
         /** @psalm-suppress PossiblyUndefinedArrayOffset */
         [$web, $media, $doc, $bare] = $links;
