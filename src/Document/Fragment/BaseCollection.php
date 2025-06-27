@@ -25,19 +25,20 @@ use const ARRAY_FILTER_USE_BOTH;
 use const PHP_EOL;
 
 /**
- * @template-implements FragmentCollection<Fragment>
+ * @template T of Fragment
+ * @implements FragmentCollection<T>
  * @psalm-consistent-constructor
  */
 abstract class BaseCollection implements FragmentCollection
 {
     /**
-     * @var array<array-key, Fragment>
+     * @var array<array-key, T>
      * @phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      * @todo Add native type hint in 2.0.0
      */
     protected $fragments;
 
-    /** @param iterable<array-key, Fragment> $fragments */
+    /** @param iterable<array-key, T> $fragments */
     protected function __construct(iterable $fragments)
     {
         $this->fragments = [];
@@ -47,16 +48,21 @@ abstract class BaseCollection implements FragmentCollection
     }
 
     /**
-     * @param iterable<array-key, Fragment> $fragments
+     * @param iterable<array-key, T2> $fragments
      *
-     * @return static
+     * @return static<T2>
+     *
+     * @template T2 of Fragment
      */
     public static function new(iterable $fragments): self
     {
         return new static($fragments);
     }
 
-    /** @param array-key|null $key */
+    /**
+     * @param T              $fragment
+     * @param array-key|null $key
+     */
     final protected function addFragment(Fragment $fragment, int|string|null $key = null): void
     {
         if ($key !== null) {
@@ -68,7 +74,7 @@ abstract class BaseCollection implements FragmentCollection
         $this->fragments[] = $fragment;
     }
 
-    /** @return Traversable<array-key, Fragment> */
+    /** @return Traversable<array-key, T> */
     #[Override]
     public function getIterator(): Traversable
     {
@@ -101,6 +107,7 @@ abstract class BaseCollection implements FragmentCollection
     public function first(): Fragment
     {
         if (! $this->count()) {
+            /** @psalm-var T */
             return new EmptyFragment();
         }
 
@@ -114,6 +121,7 @@ abstract class BaseCollection implements FragmentCollection
     public function last(): Fragment
     {
         if (! $this->count()) {
+            /** @psalm-var T */
             return new EmptyFragment();
         }
 
@@ -124,11 +132,6 @@ abstract class BaseCollection implements FragmentCollection
         return $last;
     }
 
-    /**
-     * @psalm-param Closure(mixed, ?array-key): bool $p
-     *
-     * @return static
-     */
     #[Override]
     public function filter(Closure $p): self
     {
@@ -178,6 +181,8 @@ abstract class BaseCollection implements FragmentCollection
             if (! $fragment instanceof Stringable) {
                 continue;
             }
+
+            /** @psalm-var Fragment&Stringable $fragment */
 
             $buffer[] = (string) $fragment;
         }

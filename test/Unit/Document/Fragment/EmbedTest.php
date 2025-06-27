@@ -9,22 +9,26 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Document\Fragment\Collection;
 use Prismic\Document\Fragment\Embed;
 use Prismic\Document\Fragment\Factory;
+use Prismic\Document\FragmentCollection;
 use Prismic\Exception\InvalidArgument;
 use Prismic\Json;
 use PrismicTest\Framework\TestCase;
 
 use function assert;
+use function iterator_to_array;
 
 final class EmbedTest extends TestCase
 {
-    private static function embedCollection(): Collection
+    /** @return FragmentCollection<Embed> */
+    private static function embedCollection(): FragmentCollection
     {
         $data = Json::decodeObject(self::jsonFixtureByFileName('embed-types.json'));
         $collection = Factory::factory($data);
-        assert($collection instanceof Collection);
+        self::assertInstanceOf(FragmentCollection::class, $collection);
+        $collection = iterator_to_array($collection);
         self::assertContainsOnlyInstancesOf(Embed::class, $collection);
 
-        return $collection;
+        return Collection::new($collection);
     }
 
     private function tweet(): Embed
@@ -39,8 +43,6 @@ final class EmbedTest extends TestCase
     public static function embedProvider(): Generator
     {
         foreach (self::embedCollection() as $key => $embed) {
-            assert($embed instanceof Embed);
-
             yield $key => [$embed];
         }
     }

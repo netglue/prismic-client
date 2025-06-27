@@ -6,7 +6,11 @@ namespace Prismic\Document\Fragment;
 
 use Prismic\Document\Fragment;
 
-/** @final This class will become hard-final in the next major (2.0) */
+/**
+ * @template T of Fragment
+ * @extends BaseCollection<T>
+ * @final This class will become hard-final in the next major (2.0)
+ */
 class Collection extends BaseCollection
 {
     public function slicesOfType(string $type): self
