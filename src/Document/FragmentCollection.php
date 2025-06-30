@@ -10,7 +10,7 @@ use IteratorAggregate;
 use Stringable;
 
 /**
- * @template T of Fragment
+ * @template-covariant T of Fragment
  * @template-extends IteratorAggregate<array-key, T>
  * @phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
  * @phpcs:disable SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
@@ -23,7 +23,7 @@ interface FragmentCollection extends Fragment, IteratorAggregate, Countable, Str
      *
      * @psalm-param Closure(mixed, ?array-key): bool $p
      *
-     * @return static<T>
+     * @return static
      */
     public function filter(Closure $p);
 

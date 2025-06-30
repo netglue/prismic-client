@@ -28,6 +28,7 @@ final class EmbedTest extends TestCase
         $collection = iterator_to_array($collection);
         self::assertContainsOnlyInstancesOf(Embed::class, $collection);
 
+        /** @psalm-var FragmentCollection<Embed> */
         return Collection::new($collection);
     }
 
