@@ -10,3 +10,4 @@
 /test/ export-ignore
 /Makefile export-ignore
 /renovate.json export-ignore
+*.http  text eol=crlf
