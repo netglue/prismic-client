@@ -1,0 +1,19 @@
+HTTP/1.1 422 Unknown
+Content-Type: application/json
+Content-Length: 103
+Connection: close
+Date: Thu, 24 Jul 2025 11:14:42 GMT
+X-Amzn-Trace-Id: Root=1-6832159f-102bd7a711dda3ff47d6ef4e
+X-RateLimit-Limit: 200
+X-RateLimit-Remaining: 199
+X-RateLimit-Reset: 1753355680
+x-amzn-RequestId: 5dd39803-8818-448f-9758-d109ddec3470
+x-amz-apigw-id: ONhRDHzqIAMFTAw=
+X-Cache: Error from cloudfront
+Via: 1.1 ed63ba28ec03a429dffd93eedad2fd5e.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: LHR50-P5
+X-Amz-Cf-Id: QwhPEL2YBf5C2J2Thjmfyz5XGLeoYGFXKc4SReKZjAJaMG15KCWWZg==
+
+
+The maximum size of response body is: 6 MO (6291456 bytes)
+Your response is:  6.03 MO (6320955 bytes)

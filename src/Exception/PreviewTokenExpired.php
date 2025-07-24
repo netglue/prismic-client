@@ -15,7 +15,7 @@ use function explode;
 use function is_string;
 use function property_exists;
 use function sprintf;
-use function strpos;
+use function str_contains;
 
 final class PreviewTokenExpired extends RequestFailure
 {
@@ -28,11 +28,16 @@ final class PreviewTokenExpired extends RequestFailure
     public static function isPreviewTokenExpiry(ResponseInterface $response): bool
     {
         $type = $response->getHeaderLine('content-type');
-        if (strpos($type, 'json') === false) {
+        if (! str_contains($type, 'json')) {
             return false;
         }
 
-        $payload = Json::decodeObject((string) $response->getBody());
+        try {
+            $payload = Json::decodeObject((string) $response->getBody());
+        } catch (JsonError) {
+            return false;
+        }
+
         $error = self::extractErrorMessage($payload);
 
         if ($error === null) {
@@ -75,6 +80,11 @@ final class PreviewTokenExpired extends RequestFailure
 
     private static function errorStringHasMagicWords(string $error): bool
     {
+        // We seem to get 404 errors these days when a preview is no longer accessible…
+        if (str_contains($error, 'websitePreviewId=') && str_contains($error, 'not found')) {
+            return true;
+        }
+
         $words = array_map('strtolower', explode(' ', $error));
 
         return count(array_intersect($words, self::MAGIC_WORDS)) === count(self::MAGIC_WORDS);

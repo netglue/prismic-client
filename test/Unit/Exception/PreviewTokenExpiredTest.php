@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace PrismicTest\Exception;
 
+use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\JsonResponse;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Prismic\Exception\PreviewTokenExpired;
 use PrismicTest\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
+
+use function file_get_contents;
 
 final class PreviewTokenExpiredTest extends TestCase
 {
@@ -26,6 +29,13 @@ final class PreviewTokenExpiredTest extends TestCase
                     'message' => 'This preview token has expired',
                     'oauth_initiate' => 'https://something.prismic.io/auth',
                     'oauth_token' => 'https://something.prismic.io/auth/token',
+                ],
+                404,
+            ],
+            'Yet another change to the error format around 2024 maybe' => [
+                [
+                    'type' => 'api_notfound_error',
+                    'message' => 'https://whatever.prismic.io/previews/aID57hcAACYAP-nz:aIIBzxcAACYAQYax?websitePreviewId=Z-aJqxEAACgA_GAh not found',
                 ],
                 404,
             ],
@@ -72,5 +82,14 @@ final class PreviewTokenExpiredTest extends TestCase
     {
         $response = new JsonResponse($bodyPayload, $responseCode);
         self::assertTrue(PreviewTokenExpired::isPreviewTokenExpiry($response));
+    }
+
+    public function testPrismicFuckedUp422ResponseIsNotAPreviewExpiryException(): void
+    {
+        $message = file_get_contents(__DIR__ . '/../../fixture/responses/422.http');
+        self::assertIsString($message);
+        $response = Response\Serializer::fromString($message);
+
+        self::assertFalse(PreviewTokenExpired::isPreviewTokenExpiry($response));
     }
 }
