@@ -56,7 +56,6 @@ abstract class BaseCollection implements FragmentCollection
         return new static($fragments);
     }
 
-    /** @param array-key|null $key */
     final protected function addFragment(Fragment $fragment, int|string|null $key = null): void
     {
         if ($key !== null) {
