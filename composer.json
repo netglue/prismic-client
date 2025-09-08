@@ -52,11 +52,11 @@
         "php-http/cache-plugin": "^2.0.1",
         "php-http/curl-client": "^2.3.3",
         "php-http/mock-client": "^1.6.1",
-        "phpunit/phpunit": "^11.5.25",
+        "phpunit/phpunit": "^11.5.36",
         "psalm/plugin-phpunit": "^0.19.5",
         "roave/security-advisories": "dev-latest",
-        "symfony/cache": "^6.4.13 || ^7.3.0",
-        "vimeo/psalm": "^6.12.0"
+        "symfony/cache": "^6.4.13 || ^7.3.2",
+        "vimeo/psalm": "^6.13.1"
     },
     "conflict": {
         "php-http/httplug": "<2.4.1",
