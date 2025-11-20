@@ -17,7 +17,7 @@ jobs:
     name: PHPUnit Coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5.0.1
+      - uses: actions/checkout@v6.0.0
       - uses: shivammathur/setup-php@2.35.5
         with:
           php-version: ${{ env.default_php }}
@@ -40,7 +40,7 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      - uses: actions/checkout@v5.0.1
+      - uses: actions/checkout@v6.0.0
       - uses: shivammathur/setup-php@2.35.5
         with:
           php-version: ${{ env.default_php }}
@@ -58,7 +58,7 @@ jobs:
       contents: read
       security-events: write
     steps:
-      - uses: actions/checkout@v5.0.1
+      - uses: actions/checkout@v6.0.0
       - uses: shivammathur/setup-php@2.35.5
         with:
           php-version: ${{ env.default_php }}
