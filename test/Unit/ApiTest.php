@@ -260,7 +260,7 @@ final class ApiTest extends TestCase
     }
 
     /** @param string[] $cookiePayload */
-    #[DataProvider('cookiePayloads')]
+    #[DataProvider('cookiePayloads', false)]
     public function testThatCookieSuperGlobalsAreNotConsideredAfterConstruction(array $cookiePayload): void
     {
         $backup = $_COOKIE;
@@ -272,7 +272,7 @@ final class ApiTest extends TestCase
     }
 
     /** @param string[] $cookiePayload */
-    #[DataProvider('cookiePayloads')]
+    #[DataProvider('cookiePayloads', false)]
     public function testThatCookieSuperGlobalsAreConsultedDuringConstruction(array $cookiePayload): void
     {
         $backup = $_COOKIE;
@@ -415,7 +415,7 @@ final class ApiTest extends TestCase
         $strategies = Psr17FactoryDiscovery::getStrategies();
         Psr17FactoryDiscovery::setStrategies([]);
         try {
-            Api::get('foo', null, $this->createMock(ClientInterface::class));
+            Api::get('foo', null, $this->createStub(ClientInterface::class));
             self::fail('An exception was not thrown');
         } catch (PrismicError $error) {
             self::assertStringContainsString('A request factory cannot be determined', $error->getMessage());
@@ -435,8 +435,8 @@ final class ApiTest extends TestCase
             Api::get(
                 'foo',
                 null,
-                $this->createMock(ClientInterface::class),
-                $this->createMock(RequestFactoryInterface::class),
+                $this->createStub(ClientInterface::class),
+                $this->createStub(RequestFactoryInterface::class),
             );
             self::fail('An exception was not thrown');
         } catch (PrismicError $error) {
@@ -453,7 +453,8 @@ final class ApiTest extends TestCase
     {
         $cacheException = new CacheKeyInvalid();
         $cache = $this->createMock(CacheItemPoolInterface::class);
-        $cache->method('getItem')
+        $cache->expects($this->once())
+            ->method('getItem')
             ->willThrowException($cacheException);
 
         $api = Api::get('http://example.com', null, $this->httpClient, null, null, null, $cache);
