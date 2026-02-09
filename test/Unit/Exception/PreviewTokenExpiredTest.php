@@ -67,7 +67,7 @@ final class PreviewTokenExpiredTest extends TestCase
     public function testThatSimulatedTokenExpiryResponseYieldsExpectedExceptionProperties(array $bodyPayload, int $responseCode): void
     {
         $response = new JsonResponse($bodyPayload, $responseCode);
-        $request = $this->createMock(RequestInterface::class);
+        $request = $this->createStub(RequestInterface::class);
         $error = PreviewTokenExpired::with($request, $response);
 
         $this->assertStringContainsString('The preview token provided has expired', $error->getMessage());
