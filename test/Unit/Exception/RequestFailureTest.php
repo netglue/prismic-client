@@ -19,7 +19,7 @@ final class RequestFailureTest extends TestCase
     public function testWithClientErrorReturnsPreviewTokenExpiredInstanceWhenResponseBodyMatchesExpectedValue(): void
     {
         $response = new JsonResponse(['error' => 'Preview token has expired'], 400);
-        $request = $this->createMock(RequestInterface::class);
+        $request = $this->createStub(RequestInterface::class);
 
         $error = RequestFailure::withClientError($request, $response);
         $this->assertInstanceOf(PreviewTokenExpired::class, $error);
@@ -30,7 +30,7 @@ final class RequestFailureTest extends TestCase
         $message = file_get_contents(__DIR__ . '/../../fixture/responses/422.http');
         self::assertIsString($message);
         $response = Serializer::fromString($message);
-        $request = $this->createMock(RequestInterface::class);
+        $request = $this->createStub(RequestInterface::class);
 
         $error = RequestFailure::withClientError($request, $response);
         self::assertInstanceOf(ResponseTooLarge::class, $error);

@@ -17,8 +17,8 @@ jobs:
     name: PHPUnit Coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: shivammathur/setup-php@2.34.1
+      - uses: actions/checkout@v6.0.2
+      - uses: shivammathur/setup-php@2.36.0
         with:
           php-version: ${{ env.default_php }}
           extensions: pcov
@@ -40,8 +40,8 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: shivammathur/setup-php@2.34.1
+      - uses: actions/checkout@v6.0.2
+      - uses: shivammathur/setup-php@2.36.0
         with:
           php-version: ${{ env.default_php }}
       - uses: "ramsey/composer-install@3.1.1"
@@ -58,14 +58,14 @@ jobs:
       contents: read
       security-events: write
     steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: shivammathur/setup-php@2.34.1
+      - uses: actions/checkout@v6.0.2
+      - uses: shivammathur/setup-php@2.36.0
         with:
           php-version: ${{ env.default_php }}
       - uses: "ramsey/composer-install@3.1.1"
       - name: "Psalm"
         run: vendor/bin/psalm --report=results.sarif
       - name: "Upload Security Analysis results to GitHub"
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: results.sarif
