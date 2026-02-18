@@ -9,8 +9,8 @@ use Prismic\Document\Fragment;
 
 final readonly class TableCell implements Fragment
 {
-    public const TYPE_HEADER = 'header';
-    public const TYPE_DATA = 'data';
+    public const string TYPE_HEADER = 'header';
+    public const string TYPE_DATA = 'data';
 
     /**
      * @param non-empty-string                  $key

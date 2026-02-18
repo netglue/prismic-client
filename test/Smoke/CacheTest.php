@@ -10,7 +10,7 @@ use Prismic\Api;
 use Prismic\ApiClient;
 use Prismic\Predicate;
 
-use function sha1;
+use function hash;
 use function sprintf;
 use function uniqid;
 
@@ -35,7 +35,7 @@ final class CacheTest extends TestCase
             ->resultsPerPage(1)
             ->query(Predicate::fulltext('document', uniqid('', false)));
 
-        $expectedKey = sha1(sprintf('GET %s', $query->toUrl()));
+        $expectedKey = hash('xxh3', sprintf('GET-%s-%s', $query->toUrl(), $api->ref()->ref));
 
         self::assertFalse($cache->hasItem($expectedKey));
         $api->query($query);
@@ -51,7 +51,7 @@ final class CacheTest extends TestCase
             ->resultsPerPage(1)
             ->query(Predicate::fulltext('document', uniqid('', false)));
 
-        $expectedKey = sha1(sprintf('GET %s', $query->toUrl()));
+        $expectedKey = hash('xxh3', sprintf('GET-%s-%s', $query->toUrl(), $api->ref()->ref));
 
         $item = $cache->getItem($expectedKey);
         self::assertFalse($item->isHit());
