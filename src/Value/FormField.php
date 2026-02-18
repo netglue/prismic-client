@@ -13,8 +13,8 @@ final class FormField
 {
     use DataAssertionBehaviour;
 
-    public const TYPE_STRING = 'String';
-    public const TYPE_INTEGER = 'Integer';
+    public const string TYPE_STRING = 'String';
+    public const string TYPE_INTEGER = 'Integer';
 
     private function __construct(
         private string $name,

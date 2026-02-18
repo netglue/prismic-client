@@ -19,7 +19,7 @@ use function str_contains;
 
 final class PreviewTokenExpired extends RequestFailure
 {
-    private const MAGIC_WORDS = [
+    private const array MAGIC_WORDS = [
         'preview',
         'token',
         'expired',

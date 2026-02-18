@@ -49,7 +49,7 @@ final class ApiTest extends TestCase
 
     private JsonResponse $response;
 
-    private const DOCUMENT_PREVIEW_PAYLOAD = <<<'JSON'
+    private const string DOCUMENT_PREVIEW_PAYLOAD = <<<'JSON'
         {
           "label": "Example Label",
           "ref": "preview-ref",
@@ -58,7 +58,7 @@ final class ApiTest extends TestCase
         }
         JSON;
 
-    private const NO_DOCUMENT_PREVIEW_PAYLOAD = <<<'JSON'
+    private const string NO_DOCUMENT_PREVIEW_PAYLOAD = <<<'JSON'
         {
           "label": "No Document",
           "ref": "preview-ref",

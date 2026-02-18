@@ -16,24 +16,24 @@ interface ApiClient
     /**
      * The default form/collection name to query for results
      */
-    public const DEFAULT_FORM = 'everything';
+    public const string DEFAULT_FORM = 'everything';
 
     /**
      * Name of the cookie that will be used to remember the preview reference
      */
-    public const PREVIEW_COOKIE = 'io.prismic.preview';
+    public const string PREVIEW_COOKIE = 'io.prismic.preview';
 
     /**
      * Name of the cookie that will be used to remember the experiment reference
      *
      * This constant is currently unused because it is no longer possible to run A/B tests with Prismic
      */
-    public const EXPERIMENTS_COOKIE = 'io.prismic.experiment';
+    public const string EXPERIMENTS_COOKIE = 'io.prismic.experiment';
 
     /**
      * The maximum page size of result sets returned by the API
      */
-    public const MAX_PAGE_SIZE = 100;
+    public const int MAX_PAGE_SIZE = 100;
 
     /** Return the host name of the api endpoint */
     public function host(): string;

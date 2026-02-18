@@ -19,16 +19,16 @@ use function iterator_to_array;
 /** @psalm-immutable */
 final class TextElement implements Fragment, Stringable
 {
-    public const TYPE_ORDERED_LIST_ITEM = 'o-list-item';
-    public const TYPE_UNORDERED_LIST_ITEM = 'list-item';
-    public const TYPE_HEADING1 = 'heading1';
-    public const TYPE_HEADING2 = 'heading2';
-    public const TYPE_HEADING3 = 'heading3';
-    public const TYPE_HEADING4 = 'heading4';
-    public const TYPE_HEADING5 = 'heading5';
-    public const TYPE_HEADING6 = 'heading6';
-    public const TYPE_PARAGRAPH = 'paragraph';
-    public const TYPE_PREFORMATTED = 'preformatted';
+    public const string TYPE_ORDERED_LIST_ITEM = 'o-list-item';
+    public const string TYPE_UNORDERED_LIST_ITEM = 'list-item';
+    public const string TYPE_HEADING1 = 'heading1';
+    public const string TYPE_HEADING2 = 'heading2';
+    public const string TYPE_HEADING3 = 'heading3';
+    public const string TYPE_HEADING4 = 'heading4';
+    public const string TYPE_HEADING5 = 'heading5';
+    public const string TYPE_HEADING6 = 'heading6';
+    public const string TYPE_PARAGRAPH = 'paragraph';
+    public const string TYPE_PREFORMATTED = 'preformatted';
 
     /** @var list<Span> */
     private readonly array $spans;
