@@ -19,7 +19,7 @@
             "php-http/discovery": false
         },
         "platform": {
-            "php": "8.2.99"
+            "php": "8.3.99"
         }
     },
     "autoload": {
@@ -35,7 +35,7 @@
         }
     },
     "require": {
-        "php": "~8.2 || ~8.3 || ~8.4 || ~8.5",
+        "php": "~8.3 || ~8.4 || ~8.5",
         "ext-json": "*",
         "laminas/laminas-escaper": "^2.9",
         "php-http/discovery": "^1.18.0",
@@ -52,7 +52,7 @@
         "php-http/cache-plugin": "^2.0.2",
         "php-http/curl-client": "^2.4.0",
         "php-http/mock-client": "^1.6.1",
-        "phpunit/phpunit": "^11.5.52 || ^12.0 || ^13.0",
+        "phpunit/phpunit": "^11.5.52 || ^12.5.14 || ^13.0",
         "psalm/plugin-phpunit": "^0.19.5",
         "roave/security-advisories": "dev-latest",
         "symfony/cache": "^7.4.5 || ^8.0.0",
