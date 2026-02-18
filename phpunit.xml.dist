@@ -9,7 +9,7 @@
          failOnWarning="true"
          failOnPhpunitDeprecation="true"
          colors="true">
-    <source>
+    <source ignoreIndirectDeprecations="true">
         <include>
             <directory suffix=".php">./src</directory>
         </include>

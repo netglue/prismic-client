@@ -5,10 +5,4 @@
       <code><![CDATA[withHttpResponse]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/Unit/ApiTest.php">
-    <TooManyArguments>
-      <code><![CDATA[DataProvider('cookiePayloads', false)]]></code>
-      <code><![CDATA[DataProvider('cookiePayloads', false)]]></code>
-    </TooManyArguments>
-  </file>
 </files>

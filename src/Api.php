@@ -33,10 +33,12 @@ use Throwable;
 use function array_key_exists;
 use function assert;
 use function count;
+use function hash;
 use function http_build_query;
+use function is_array;
 use function is_string;
+use function json_validate;
 use function parse_str;
-use function sha1;
 use function sprintf;
 use function str_replace;
 use function urldecode;
@@ -170,14 +172,56 @@ final class Api implements ApiClient
         return $this->data;
     }
 
+    /**
+     * In order to make stable cache keys, we must inspect the current ref and use that to generate the key.
+     *
+     * In preview mode, the ref is not stable between requests, but the preview session remains stable until a
+     * change is made in the repository.
+     *
+     * The preview session is found under `repoName.preview`
+     */
+    private function cacheKey(string $httpMethod, UriInterface $uri): string
+    {
+        // Prevent infinite recursion on first fetch of the root api data payload
+        $ref = $this->data !== null
+            ? $this->stableRef()
+            : '';
+
+        // Keys must be hashed to prevent cache exceptions due to invalid characters
+        return hash('xxh3', sprintf(
+            '%s-%s-%s',
+            $httpMethod,
+            (string) $uri,
+            $ref,
+        ));
+    }
+
+    private function stableRef(): string
+    {
+        $ref = $this->ref()->ref;
+        if (json_validate($ref)) {
+            $payload = Json::decodeArray($ref);
+            $hostName = $this->repositoryHostName();
+            if (array_key_exists($hostName, $payload) && is_array($payload[$hostName])) {
+                /** @psalm-var mixed $preview */
+                $preview = $payload[$hostName]['preview'] ?? null;
+
+                if (is_string($preview) && $preview !== '') {
+                    return $preview;
+                }
+            }
+        }
+
+        return $ref;
+    }
+
     private function jsonResponse(UriInterface $uri, string $method = 'GET'): object
     {
         if (! $this->cache) {
             return $this->decodeResponse($this->sendRequest($uri, $method));
         }
 
-        // Keys must be hashed to prevent cache exceptions due to invalid characters
-        $cacheKey = sha1($method . ' ' . (string) $uri);
+        $cacheKey = $this->cacheKey($method, $uri);
         try {
             $item = $this->cache->getItem($cacheKey);
         } catch (InvalidPsrCacheKey $e) {
@@ -411,12 +455,25 @@ final class Api implements ApiClient
          * causes the problem.
          */
         $previewHost = str_replace('.cdn.', '.', $uri->getHost());
-        $apiHost = str_replace('.cdn.', '.', $this->baseUri->getHost());
+        $apiHost = $this->repositoryHostName();
         if ($previewHost !== $apiHost) {
             throw InvalidPreviewToken::mismatchedPreviewHost($this->baseUri, $uri);
         }
 
         return $uri;
+    }
+
+    /**
+     * Return the repo host name without the cdn subdomain
+     *
+     * @return non-empty-string
+     */
+    private function repositoryHostName(): string
+    {
+        $host = str_replace('.cdn.', '.', $this->baseUri->getHost());
+        assert($host !== '');
+
+        return $host;
     }
 
     #[Override]
