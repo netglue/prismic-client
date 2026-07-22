@@ -53,7 +53,7 @@
         "php-http/curl-client": "^2.4.0",
         "php-http/mock-client": "^1.6.1",
         "phpunit/phpunit": "^12.5.14 || ^13.0",
-        "psalm/plugin-phpunit": "^0.19.5",
+        "psalm/plugin-phpunit": "^0.20.0",
         "roave/security-advisories": "dev-latest",
         "symfony/cache": "^7.4.5 || ^8.0.0",
         "vimeo/psalm": "^6.15.1"
