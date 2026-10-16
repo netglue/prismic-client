@@ -21,7 +21,7 @@ use function getenv;
 use function is_array;
 use function is_string;
 
-class TestCase extends PHPUnitTestCase
+abstract class TestCase extends PHPUnitTestCase
 {
     private static CacheItemPoolInterface|null $cache = null;
 
