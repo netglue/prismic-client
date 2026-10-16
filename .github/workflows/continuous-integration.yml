@@ -17,8 +17,8 @@ jobs:
     name: PHPUnit Coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.0
-      - uses: shivammathur/setup-php@2.37.1
+      - uses: actions/checkout@v7.0.1
+      - uses: shivammathur/setup-php@2.40.0
         with:
           php-version: ${{ env.default_php }}
           extensions: pcov
@@ -40,8 +40,8 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      - uses: actions/checkout@v7.0.0
-      - uses: shivammathur/setup-php@2.37.1
+      - uses: actions/checkout@v7.0.1
+      - uses: shivammathur/setup-php@2.40.0
         with:
           php-version: ${{ env.default_php }}
       - uses: "ramsey/composer-install@4.0.0"
@@ -58,8 +58,8 @@ jobs:
       contents: read
       security-events: write
     steps:
-      - uses: actions/checkout@v7.0.0
-      - uses: shivammathur/setup-php@2.37.1
+      - uses: actions/checkout@v7.0.1
+      - uses: shivammathur/setup-php@2.40.0
         with:
           php-version: ${{ env.default_php }}
       - uses: "ramsey/composer-install@4.0.0"
