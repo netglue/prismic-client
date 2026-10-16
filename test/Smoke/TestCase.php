@@ -21,7 +21,7 @@ use function getenv;
 use function is_array;
 use function is_string;
 
-class TestCase extends PHPUnitTestCase
+abstract class TestCase extends PHPUnitTestCase
 {
     private static CacheItemPoolInterface|null $cache = null;
 
@@ -41,7 +41,7 @@ class TestCase extends PHPUnitTestCase
         if (! self::$httpClient) {
             self::$httpClient = new PluginClient(
                 Psr18ClientDiscovery::find(),
-                [new CachePlugin(self::psrCachePool(), Psr17FactoryDiscovery::findStreamFactory())],
+                [CachePlugin::serverCache(self::psrCachePool(), Psr17FactoryDiscovery::findStreamFactory())],
             );
         }
 
