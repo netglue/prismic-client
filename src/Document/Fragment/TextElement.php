@@ -11,8 +11,6 @@ use Traversable;
 
 use function array_map;
 use function array_values;
-use function explode;
-use function implode;
 use function in_array;
 use function iterator_to_array;
 
@@ -167,10 +165,11 @@ final class TextElement implements Fragment, Stringable
     /** @param non-empty-string $label */
     public function withAddedLabel(string $label): self
     {
-        $labels = explode(' ', (string) $this->label);
-        $labels[] = $label;
+        if ($this->label === null || $this->label === '') {
+            return $this->withReplacementLabel($label);
+        }
 
-        return self::withReplacementLabel(implode(' ', $labels));
+        return $this->withReplacementLabel($this->label . ' ' . $label);
     }
 
     public function withoutSpans(): self
