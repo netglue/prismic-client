@@ -1245,16 +1245,16 @@
         },
         {
             "name": "boundwize/structarmed",
-            "version": "0.19.4",
+            "version": "0.19.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "5188c4c4a790e9237a90491b0596d4669b9944e2"
+                "reference": "457f6f55649e3dddc9aaaaa00bb29141addc6431"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/5188c4c4a790e9237a90491b0596d4669b9944e2",
-                "reference": "5188c4c4a790e9237a90491b0596d4669b9944e2",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/457f6f55649e3dddc9aaaaa00bb29141addc6431",
+                "reference": "457f6f55649e3dddc9aaaaa00bb29141addc6431",
                 "shasum": ""
             },
             "require": {
@@ -1311,7 +1311,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.19.4"
+                "source": "https://github.com/boundwize/structarmed/tree/0.19.5"
             },
             "funding": [
                 {
@@ -1319,7 +1319,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-11T11:18:52+00:00"
+            "time": "2026-10-17T08:34:45+00:00"
         },
         {
             "name": "clue/stream-filter",
