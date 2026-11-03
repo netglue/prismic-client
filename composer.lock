@@ -447,16 +447,16 @@
         },
         {
             "name": "amphp/byte-stream",
-            "version": "v2.1.2",
+            "version": "v2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/byte-stream.git",
-                "reference": "55a6bd071aec26fa2a3e002618c20c35e3df1b46"
+                "reference": "1511cdfdf868a706307358bd48f155c3df2c490f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/byte-stream/zipball/55a6bd071aec26fa2a3e002618c20c35e3df1b46",
-                "reference": "55a6bd071aec26fa2a3e002618c20c35e3df1b46",
+                "url": "https://api.github.com/repos/amphp/byte-stream/zipball/1511cdfdf868a706307358bd48f155c3df2c490f",
+                "reference": "1511cdfdf868a706307358bd48f155c3df2c490f",
                 "shasum": ""
             },
             "require": {
@@ -472,7 +472,7 @@
                 "amphp/php-cs-fixer-config": "^2",
                 "amphp/phpunit-util": "^3",
                 "phpunit/phpunit": "^9",
-                "psalm/phar": "5.22.1"
+                "psalm/phar": "6.16.1"
             },
             "type": "library",
             "autoload": {
@@ -510,7 +510,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/byte-stream/issues",
-                "source": "https://github.com/amphp/byte-stream/tree/v2.1.2"
+                "source": "https://github.com/amphp/byte-stream/tree/v2.1.3"
             },
             "funding": [
                 {
@@ -518,8 +518,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-16T17:10:27+00:00",
-            "published-time": "2025-03-16T17:22:20+00:00"
+            "time": "2026-10-31T19:10:04+00:00",
+            "published-time": "2026-10-31T19:16:39+00:00"
         },
         {
             "name": "amphp/cache",
@@ -589,16 +589,16 @@
         },
         {
             "name": "amphp/dns",
-            "version": "v2.4.1",
+            "version": "v2.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/dns.git",
-                "reference": "ec5948bfafac808f410406e18bc7b52a2d4629b7"
+                "reference": "2e2b4daa214a18b1528919d6781988ea65a9a47d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/dns/zipball/ec5948bfafac808f410406e18bc7b52a2d4629b7",
-                "reference": "ec5948bfafac808f410406e18bc7b52a2d4629b7",
+                "url": "https://api.github.com/repos/amphp/dns/zipball/2e2b4daa214a18b1528919d6781988ea65a9a47d",
+                "reference": "2e2b4daa214a18b1528919d6781988ea65a9a47d",
                 "shasum": ""
             },
             "require": {
@@ -666,7 +666,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/dns/issues",
-                "source": "https://github.com/amphp/dns/tree/v2.4.1"
+                "source": "https://github.com/amphp/dns/tree/v2.4.2"
             },
             "funding": [
                 {
@@ -674,8 +674,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-26T17:53:54+00:00",
-            "published-time": "2026-08-22T17:22:36+00:00"
+            "time": "2026-10-31T19:53:43+00:00",
+            "published-time": "2026-10-31T19:59:04+00:00"
         },
         {
             "name": "amphp/parallel",
@@ -895,16 +895,16 @@
         },
         {
             "name": "amphp/process",
-            "version": "v2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/process.git",
-                "reference": "583959df17d00304ad7b0b32285373f985935643"
+                "reference": "6ee0d11112a9b1338b7dc270d51f254e872c90b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/process/zipball/583959df17d00304ad7b0b32285373f985935643",
-                "reference": "583959df17d00304ad7b0b32285373f985935643",
+                "url": "https://api.github.com/repos/amphp/process/zipball/6ee0d11112a9b1338b7dc270d51f254e872c90b5",
+                "reference": "6ee0d11112a9b1338b7dc270d51f254e872c90b5",
                 "shasum": ""
             },
             "require": {
@@ -951,7 +951,7 @@
             "homepage": "https://amphp.org/process",
             "support": {
                 "issues": "https://github.com/amphp/process/issues",
-                "source": "https://github.com/amphp/process/tree/v2.1.0"
+                "source": "https://github.com/amphp/process/tree/v2.1.1"
             },
             "funding": [
                 {
@@ -959,8 +959,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-31T15:11:55+00:00",
-            "published-time": "2026-05-31T15:13:41+00:00"
+            "time": "2026-11-01T22:46:42+00:00",
+            "published-time": "2026-11-01T22:48:18+00:00"
         },
         {
             "name": "amphp/serialization",
@@ -1117,16 +1117,16 @@
         },
         {
             "name": "amphp/sync",
-            "version": "v2.3.0",
+            "version": "v2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amphp/sync.git",
-                "reference": "217097b785130d77cfcc58ff583cf26cd1770bf1"
+                "reference": "2f711b6651270449d59c770ffb518698655022f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amphp/sync/zipball/217097b785130d77cfcc58ff583cf26cd1770bf1",
-                "reference": "217097b785130d77cfcc58ff583cf26cd1770bf1",
+                "url": "https://api.github.com/repos/amphp/sync/zipball/2f711b6651270449d59c770ffb518698655022f7",
+                "reference": "2f711b6651270449d59c770ffb518698655022f7",
                 "shasum": ""
             },
             "require": {
@@ -1140,7 +1140,7 @@
                 "amphp/php-cs-fixer-config": "^2",
                 "amphp/phpunit-util": "^3",
                 "phpunit/phpunit": "^9",
-                "psalm/phar": "5.23"
+                "psalm/phar": "6.16.1"
             },
             "type": "library",
             "autoload": {
@@ -1180,7 +1180,7 @@
             ],
             "support": {
                 "issues": "https://github.com/amphp/sync/issues",
-                "source": "https://github.com/amphp/sync/tree/v2.3.0"
+                "source": "https://github.com/amphp/sync/tree/v2.3.1"
             },
             "funding": [
                 {
@@ -1188,8 +1188,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-03T19:31:26+00:00",
-            "published-time": "2024-08-04T17:35:41+00:00"
+            "time": "2026-06-14T17:37:39+00:00",
+            "published-time": "2026-10-31T17:39:05+00:00"
         },
         {
             "name": "boundwize/jsonrecast",
@@ -4075,12 +4075,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "8e26a62e09d971af73b5455efcc52f6d142741c9"
+                "reference": "7c964bc969c1b16050a4b85b7a55614777a3f597"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/8e26a62e09d971af73b5455efcc52f6d142741c9",
-                "reference": "8e26a62e09d971af73b5455efcc52f6d142741c9",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/7c964bc969c1b16050a4b85b7a55614777a3f597",
+                "reference": "7c964bc969c1b16050a4b85b7a55614777a3f597",
                 "shasum": ""
             },
             "conflict": {
@@ -4088,7 +4088,7 @@
                 "adaptcms/adaptcms": "<=1.3",
                 "adawolfa/isdoc": "<1.4.3|>=1.5,<1.5.1|>=1.6,<1.6.1",
                 "admidio/admidio": "<=5.0.11",
-                "adminneo-org/adminneo": ">=4.6.2,<5.5",
+                "adminneo-org/adminneo": "<5.5.1",
                 "adodb/adodb-php": "<=5.22.9",
                 "aheinze/cockpit": "<2.2",
                 "aimeos/ai-admin-graphql": ">=2022.04.1,<2022.10.10|>=2023.04.1,<2023.10.6|>=2024.04.1,<2024.07.2",
@@ -5237,8 +5237,8 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-10-30T20:26:18+00:00",
-            "published-time": "2026-10-30T20:26:22+00:00"
+            "time": "2026-10-31T00:24:47+00:00",
+            "published-time": "2026-10-31T00:24:51+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -7778,16 +7778,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "6.20.4",
+            "version": "6.20.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "e53db692e6600cf729c88190b892bcf96e1c550e"
+                "reference": "e447b655502f2058630e6ee03f2ea1c3789fe166"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/e53db692e6600cf729c88190b892bcf96e1c550e",
-                "reference": "e53db692e6600cf729c88190b892bcf96e1c550e",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/e447b655502f2058630e6ee03f2ea1c3789fe166",
+                "reference": "e447b655502f2058630e6ee03f2ea1c3789fe166",
                 "shasum": ""
             },
             "require": {
@@ -7892,8 +7892,8 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2026-10-29T10:26:19+00:00",
-            "published-time": "2026-10-29T11:27:04+00:00"
+            "time": "2026-10-31T16:01:17+00:00",
+            "published-time": "2026-10-31T16:27:05+00:00"
         },
         {
             "name": "webmozart/assert",
