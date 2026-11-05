@@ -47,14 +47,14 @@
     },
     "require-dev": {
         "ext-curl": "*",
-        "boundwize/structarmed": "^0.19",
+        "boundwize/structarmed": "^0.20",
         "doctrine/coding-standard": "^14.0.0",
         "laminas/laminas-diactoros": "^3.8.0",
         "php-http/cache-plugin": "^2.0.2",
         "php-http/curl-client": "^2.4.0",
         "php-http/mock-client": "^1.6.1",
         "phpunit/phpunit": "^12.5.14 || ^13.0",
-        "psalm/plugin-phpunit": "^0.19.5",
+        "psalm/plugin-phpunit": "^0.21.0",
         "roave/security-advisories": "dev-latest",
         "symfony/cache": "^7.4.5 || ^8.0.0",
         "vimeo/psalm": "^6.15.1"
