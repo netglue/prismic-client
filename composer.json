@@ -47,7 +47,7 @@
     },
     "require-dev": {
         "ext-curl": "*",
-        "boundwize/structarmed": "^0.21",
+        "boundwize/structarmed": "^0.22",
         "doctrine/coding-standard": "^14.0.0",
         "laminas/laminas-diactoros": "^3.8.0",
         "php-http/cache-plugin": "^2.0.2",
