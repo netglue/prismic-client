@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15feaef75a2bd4b732ac78a0b82612eb",
+    "content-hash": "a7bcc2080f4f8066f1205105fc25651b",
     "packages": [
         {
             "name": "laminas/laminas-escaper",
@@ -1263,16 +1263,16 @@
         },
         {
             "name": "boundwize/structarmed",
-            "version": "0.21.24",
+            "version": "0.22.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "92cdf87109046cf703bf04f07b565c241f87c7a4"
+                "reference": "c865e1fca98733f7ad3d8d637d9ec9690b567176"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/92cdf87109046cf703bf04f07b565c241f87c7a4",
-                "reference": "92cdf87109046cf703bf04f07b565c241f87c7a4",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/c865e1fca98733f7ad3d8d637d9ec9690b567176",
+                "reference": "c865e1fca98733f7ad3d8d637d9ec9690b567176",
                 "shasum": ""
             },
             "require": {
@@ -1329,7 +1329,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.21.24"
+                "source": "https://github.com/boundwize/structarmed/tree/0.22.9"
             },
             "funding": [
                 {
@@ -1337,8 +1337,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-11-17T05:52:19+00:00",
-            "published-time": "2026-11-17T05:52:46+00:00"
+            "time": "2026-11-25T01:48:29+00:00",
+            "published-time": "2026-11-25T01:49:03+00:00"
         },
         {
             "name": "clue/stream-filter",
